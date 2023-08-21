@@ -1,0 +1,206 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .white-gradient {
+    background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.6),
+      transparent
+    );
+  }
+  .deck-sidebar {
+    background-color: #222f3e;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+  }
+  .sidebar-container {
+    width: 400px;
+    position: sticky;
+    top: 0;
+  }
+  .main-content {
+    width: calc(100vw - 400px);
+  }
+  .deck-frame-grey {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    background-color: #dfdfdf;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+    @apply p-5;
+  }
+  .deck-frame-white {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 0.75rem;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  }
+  .sidebar-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #818181;
+  }
+  .click-here {
+    color: #222f3e;
+    font-weight: 800;
+  }
+  .filter-input {
+    @apply w-20 rounded-md border-2 text-center;
+  }
+
+  .button-87 {
+    margin: 10px;
+    padding: 15px 30px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    border-radius: 10px;
+    display: block;
+    border: 0px;
+    font-weight: 500;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    background: #09a6d7;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+
+  .button-87:hover {
+    background-position: right center;
+    /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .button-87:active {
+    transform: scale(0.95);
+  }
+
+  .range-slider {
+    width: 350px;
+    margin: auto;
+    text-align: center;
+    position: relative;
+    height: 3.4rem;
+  }
+
+  .range-slider svg,
+  .range-slider input[type="range"] {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+  }
+
+  input[type="number"] {
+    border: 1px solid #ddd;
+    text-align: center;
+    font-size: 1em;
+    margin: 6px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    /* -moz-appearance: textfield; */
+  }
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
+  input[type="number"]:invalid,
+  input[type="number"]:out-of-range {
+    border: 2px solid #ff6347;
+  }
+
+  input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+  }
+
+  input[type="range"]:focus {
+    outline: none;
+  }
+
+  input[type="range"]:focus::-webkit-slider-runnable-track {
+    background: #09a6d7;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  input[type="range"]:focus::-ms-fill-lower {
+    background: #09a6d7;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  input[type="range"]:focus::-ms-fill-upper {
+    background: #09a6d7;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  input[type="range"]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 5px;
+    cursor: pointer;
+    background: #09a6d7;
+    border-radius: 1px;
+    box-shadow: none;
+    border: 0;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    z-index: 2;
+    position: relative;
+    box-shadow: 0px 0px 0px #000;
+    border: 1px solid #09a6d7;
+    height: 16px;
+    width: 16px;
+    border-radius: 25px;
+    background: #b5e4f3;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+  }
+  .modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    z-index: 10000;
+    display: flex;
+    width: 400px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+  }
+  .create-input {
+    @apply py-2 flex justify-between w-60;
+  }
+  .action-button {
+    background-color: #09a6d7;
+    color: white;
+  }
+
+  .main-text-color {
+    color: #000000;
+  }
+}
