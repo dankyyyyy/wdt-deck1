@@ -7,6 +7,10 @@ const schema: mongoose.Schema = new mongoose.Schema(
         cloudbase: { type: Number },
         visibility: { type: Number },
         hs: { type: Number },
+        windspeedlimit: {type: Number},
+        plannedmaintenance: {type: Number},
+        troubleshootvisitings: {type: Number},
+        averagetshours: {type:Number},
     },
     { timestamps: true }
 )
