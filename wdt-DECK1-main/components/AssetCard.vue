@@ -125,7 +125,6 @@
         <p class="w-min">{{ asset.averageTsHours }}</p>
       </div>
     </div>
-
     </div>
   </div>
 </template>
