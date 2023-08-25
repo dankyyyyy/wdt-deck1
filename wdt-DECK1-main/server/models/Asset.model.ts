@@ -2,15 +2,37 @@ import mongoose from 'mongoose'
 
 const schema: mongoose.Schema = new mongoose.Schema(
     {
+        // Shared Attributes
         name: { type: String, required: true },
         category: { type: String, required: true },
-        cloudbase: { type: Number },
-        visibility: { type: Number },
         hs: { type: Number },
-        windspeedlimit: {type: Number},
-        plannedmaintenance: {type: Number},
-        troubleshootvisitings: {type: Number},
-        averagetshours: {type:Number},
+        visibility: { type: Number },
+        windSpeedLimit: {type: Number},
+        dayRate: {type: Number},
+        operationalFuelConsumption: {type: Number},
+        dailyAvailableTimePerTeam: {type: Number},
+        staffPerTeam: {type: Number},
+        totalYearlyAvailableTime: {type: Number},
+
+        // Vessel-only Attributes
+        vesselSpeed: {type: Number},
+        fuelFlowLoitering: {type: Number},
+        loitering: {type: Number},
+
+        // CTV-specific Attributes
+        transitTime: {type: Number},
+
+        // SVO-specific Attributes
+        svoWorkingHours: {type: Number},
+
+        // Helicopter-only Attributes
+        helicopterSpeed: {type: Number},
+        cloudbase: { type: Number },
+        
+        // WTG-only Attributes
+        plannedMaintenance: {type: Number},
+        troubleshootVisits: {type: Number},
+        averageTsHours: {type:Number},
     },
     { timestamps: true }
 )
