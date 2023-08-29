@@ -1,0 +1,434 @@
+[
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 1,
+        "Hour": 0,
+        "Wave height": 1.867,
+        "Wind speed": 3.315,
+        "Cloud base": 0.612
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 1,
+        "Hour": 1,
+        "Wave height": 1.863,
+        "Wind speed": 3.34,
+        "Cloud base": 0.617
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 1,
+        "Hour": 2,
+        "Wave height": 1.862,
+        "Wind speed": 3.356,
+        "Cloud base": 0.624
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 1,
+        "Hour": 3,
+        "Wave height": 1.856,
+        "Wind speed": 3.366,
+        "Cloud base": 0.632
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 1,
+        "Hour": 4,
+        "Wave height": 1.852,
+        "Wind speed": 3.368,
+        "Cloud base": 0.626
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 1,
+        "Hour": 5,
+        "Wave height": 1.852,
+        "Wind speed": 3.374,
+        "Cloud base": 0.617
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 1,
+        "Hour": 6,
+        "Wave height": 1.868,
+        "Wind speed": 3.366,
+        "Cloud base": 0.633
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 1,
+        "Hour": 7,
+        "Wave height": 1.867,
+        "Wind speed": 3.372,
+        "Cloud base": 0.636
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 1,
+        "Hour": 8,
+        "Wave height": 1.87,
+        "Wind speed": 3.38,
+        "Cloud base": 0.63
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 1,
+        "Hour": 9,
+        "Wave height": 1.871,
+        "Wind speed": 3.384,
+        "Cloud base": 0.626
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 1,
+        "Hour": 10,
+        "Wave height": 1.868,
+        "Wind speed": 3.301,
+        "Cloud base": 0.633
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 1,
+        "Hour": 11,
+        "Wave height": 1.867,
+        "Wind speed": 3.326,
+        "Cloud base": 0.642
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 1,
+        "Hour": 12,
+        "Wave height": 1.866,
+        "Wind speed": 3.356,
+        "Cloud base": 0.639
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 1,
+        "Hour": 13,
+        "Wave height": 1.86,
+        "Wind speed": 3.392,
+        "Cloud base": 0.62
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 1,
+        "Hour": 14,
+        "Wave height": 1.857,
+        "Wind speed": 3.417,
+        "Cloud base": 0.646
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 1,
+        "Hour": 15,
+        "Wave height": 1.852,
+        "Wind speed": 3.421,
+        "Cloud base": 0.639
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 1,
+        "Hour": 16,
+        "Wave height": 1.852,
+        "Wind speed": 3.409,
+        "Cloud base": 0.623
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 1,
+        "Hour": 17,
+        "Wave height": 1.851,
+        "Wind speed": 3.401,
+        "Cloud base": 0.634
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 1,
+        "Hour": 18,
+        "Wave height": 1.852,
+        "Wind speed": 3.385,
+        "Cloud base": 0.621
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 1,
+        "Hour": 19,
+        "Wave height": 1.853,
+        "Wind speed": 3.368,
+        "Cloud base": 0.614
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 1,
+        "Hour": 20,
+        "Wave height": 1.856,
+        "Wind speed": 3.352,
+        "Cloud base": 0.608
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 1,
+        "Hour": 21,
+        "Wave height": 1.858,
+        "Wind speed": 3.336,
+        "Cloud base": 0.625
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 1,
+        "Hour": 22,
+        "Wave height": 1.855,
+        "Wind speed": 3.233,
+        "Cloud base": 0.598
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 1,
+        "Hour": 23,
+        "Wave height": 1.852,
+        "Wind speed": 3.255,
+        "Cloud base": 0.597
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 2,
+        "Hour": 0,
+        "Wave height": 1.849,
+        "Wind speed": 3.289,
+        "Cloud base": 0.615
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 2,
+        "Hour": 1,
+        "Wave height": 1.846,
+        "Wind speed": 3.323,
+        "Cloud base": 0.604
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 2,
+        "Hour": 2,
+        "Wave height": 1.843,
+        "Wind speed": 3.346,
+        "Cloud base": 0.622
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 2,
+        "Hour": 3,
+        "Wave height": 1.841,
+        "Wind speed": 3.369,
+        "Cloud base": 0.616
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 2,
+        "Hour": 4,
+        "Wave height": 1.84,
+        "Wind speed": 3.383,
+        "Cloud base": 0.62
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 2,
+        "Hour": 5,
+        "Wave height": 1.833,
+        "Wind speed": 3.401,
+        "Cloud base": 0.65
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 2,
+        "Hour": 6,
+        "Wave height": 1.834,
+        "Wind speed": 3.425,
+        "Cloud base": 0.627
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 2,
+        "Hour": 7,
+        "Wave height": 1.837,
+        "Wind speed": 3.46,
+        "Cloud base": 0.644
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 2,
+        "Hour": 8,
+        "Wave height": 1.838,
+        "Wind speed": 3.486,
+        "Cloud base": 0.651
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 2,
+        "Hour": 9,
+        "Wave height": 1.841,
+        "Wind speed": 3.51,
+        "Cloud base": 0.643
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 2,
+        "Hour": 10,
+        "Wave height": 1.837,
+        "Wind speed": 3.468,
+        "Cloud base": 0.659
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 2,
+        "Hour": 11,
+        "Wave height": 1.836,
+        "Wind speed": 3.485,
+        "Cloud base": 0.667
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 2,
+        "Hour": 12,
+        "Wave height": 1.832,
+        "Wind speed": 3.508,
+        "Cloud base": 0.654
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 2,
+        "Hour": 13,
+        "Wave height": 1.827,
+        "Wind speed": 3.539,
+        "Cloud base": 0.674
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 2,
+        "Hour": 14,
+        "Wave height": 1.824,
+        "Wind speed": 3.572,
+        "Cloud base": 0.671
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 2,
+        "Hour": 15,
+        "Wave height": 1.819,
+        "Wind speed": 3.585,
+        "Cloud base": 0.671
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 2,
+        "Hour": 16,
+        "Wave height": 1.817,
+        "Wind speed": 3.582,
+        "Cloud base": 0.657
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 2,
+        "Hour": 17,
+        "Wave height": 1.819,
+        "Wind speed": 3.573,
+        "Cloud base": 0.653
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 2,
+        "Hour": 18,
+        "Wave height": 1.817,
+        "Wind speed": 3.56,
+        "Cloud base": 0.651
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 2,
+        "Hour": 19,
+        "Wave height": 1.819,
+        "Wind speed": 3.543,
+        "Cloud base": 0.653
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 2,
+        "Hour": 20,
+        "Wave height": 1.821,
+        "Wind speed": 3.516,
+        "Cloud base": 0.649
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 2,
+        "Hour": 21,
+        "Wave height": 1.826,
+        "Wind speed": 3.492,
+        "Cloud base": 0.633
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 2,
+        "Hour": 22,
+        "Wave height": 1.823,
+        "Wind speed": 3.413,
+        "Cloud base": 0.644
+    },
+    {
+        "Year": 2023,
+        "Month": 1,
+        "Day": 2,
+        "Hour": 23,
+        "Wave height": 1.822,
+        "Wind speed": 3.428,
+        "Cloud base": 0.642
+    }
+]

@@ -18,7 +18,7 @@ const schema: mongoose.Schema = new mongoose.Schema(
             type: Number,
             required: true
         },
-        "Sign. wave height (Hs)": {
+        "Wave height": {
             type: Number,
             required: true
         },
@@ -26,11 +26,7 @@ const schema: mongoose.Schema = new mongoose.Schema(
             type: Number,
             required: true
         },
-        Visibility: {
-            type: Number,
-            required: true
-        },
-        "VFR cloud": {
+        "Cloud base": {
             type: Number,
             required: true
         },

@@ -64,8 +64,9 @@
     },
     methods: {
       async postData() {
-        const weatherData = await import(`~/static/${this.location.name}-weather.json`)
+        const weatherData = await import(`../${this.location.name}.json`)
         useWeatherdataStore().postData(weatherData.default, this.location)
+        this.$emit("updated")
       }
     }
   };

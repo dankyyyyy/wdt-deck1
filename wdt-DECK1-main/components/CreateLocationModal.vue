@@ -76,6 +76,7 @@
   
   <script>
   import { useLocationStore } from "~/stores/LocationStore";
+  import axios from "axios";
   
   const store = useLocationStore();
   
@@ -97,8 +98,34 @@
       },
       async handleSaveClick() {
         await store.post(this.location)
+        const coordinates = this.decimalToCoordinates(this.location.longitude, this.location.latitude)
+        this.callRetrieve(coordinates.north, coordinates.west, coordinates.south, coordinates.east, this.location.name);
         this.$emit("hideModal");
       },
+      async callRetrieve(north, west, south, east, locName) {
+        try {
+            const c1 = north
+            const c2 = west
+            const c3 = south
+            const c4 = east
+            const name = locName
+            const response = await axios.get(`http://127.0.0.1:5555/data/${c1}/${c2}/${c3}/${c4}/${name}`); //python api url could be moved to .env
+          } catch (error) {
+          console.error('Error calling retrieve:', error);
+        }
+      },
+      decimalToCoordinates(long, lat) {
+      const longDir = long >= 0 ? (long === 0 ? 'N' : 'E') : 'W';
+      const latDir = lat >= 0 ? (lat === 0 ? 'E' : 'N') : 'S';
+      const absoluteDecimalLong = Math.abs(long);
+      const absoluteDecimalLat = Math.abs(lat);
+      return {
+      north: latDir === 'N' ? absoluteDecimalLat : absoluteDecimalLat * (-1), //?
+      south: latDir === 'S' ? absoluteDecimalLat : absoluteDecimalLat * (-1),
+      west: longDir === 'W' ? absoluteDecimalLong : absoluteDecimalLong * (-1),
+      east: longDir === 'E' ? absoluteDecimalLong : absoluteDecimalLong * (-1),
+      };
+    },
     },
   };
   </script>

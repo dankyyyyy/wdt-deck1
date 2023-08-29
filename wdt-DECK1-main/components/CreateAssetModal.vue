@@ -95,7 +95,6 @@ export default {
   data() {
     return {
       asset: {
-        id: "auto",
         name: "",
         category: "",
       },
