@@ -27,3 +27,11 @@ export interface IAsset {
     cloudbase: number;
     visibility: number;
 }
+
+//teams
+export interface ITeam {
+    _id?: string;
+    name: string;
+    numberofPersons: number;
+    shiftPeriod: number;
+}
