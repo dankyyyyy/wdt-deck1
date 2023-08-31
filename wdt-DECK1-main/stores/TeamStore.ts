@@ -28,6 +28,32 @@ export const useTeamStore = defineStore("TeamStore", {
         // handle error
       }
       this.getAll()
+    },
+
+    async update(team: ITeam){
+      try {
+        console.log("Updating the team to a database")
+        const response = await axios.put(`/api/teams/update/${team._id}`);
+        console.log(response.data.message);
+        // handle success
+      } catch (error) {
+        console.error(error);
+        // handle error
+      }
+      this.getAll()
+    },
+
+    async delete(team: ITeam){
+      try {
+        console.log("Deleting the team from the database")
+        const response = await axios.delete(`/api/teams/delete/${team._id}`);
+        console.log(response.data.message);
+        //handle success
+      } catch (error) {
+        console.error(error);
+        // handle error
+      }
+      this.getAll()
     }
   }
 });
