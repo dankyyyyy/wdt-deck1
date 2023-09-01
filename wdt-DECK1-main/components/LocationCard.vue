@@ -38,6 +38,7 @@
   
   <script>
   import { useWeatherdataStore } from "~/stores/WeatherdataStore";
+  import axios from "axios";
 
   export default {
     name: "LocationCard",
@@ -64,10 +65,16 @@
     },
     methods: {
       async postData() {
-        const weatherData = await import(`../static/${this.location.name}.json`)
+        const weatherData = await import(`~/static/${this.location.name}.json`) //sometimes works with '~' sometimes with '..' please help
         useWeatherdataStore().postData(weatherData.default, this.location).finally(() => {
         this.isDataRegistered = true; // Update the reactivity of isDataRegistered
         });
+        try {
+          const response = await axios.delete(`http://127.0.0.1:5555/delete/${this.location.name}.json`);
+          console.log('File deleted successfully:', response.data);
+        } catch (error) {
+          console.error('Error deleting file:', error);
+        }
       }
     }
   };

@@ -130,3 +130,13 @@ def retrieve(c1, c2, c3, c4, name):
         
     except Exception as e:
             return "NOT OK :(", 400
+    
+def deleteJson(name):
+    folder_name = "static"
+    file_path = os.path.join(folder_name, name)
+    
+    if os.path.exists(file_path):
+        os.remove(file_path)
+        print(f"File '{name}' deleted successfully.")
+    else:
+        print(f"File '{name}' does not exist.")
