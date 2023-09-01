@@ -3,7 +3,7 @@
       <div class="w-full h-40 flex justify-center items-center">
         Place for image
       </div>
-      <div v-if="isDataRegistered">
+      <div v-if="!isDataRegistered">
         <button @click="postData">Register data</button>
       </div>
       <div v-else>
@@ -58,15 +58,16 @@
     },
     //check if data is registered with the provided location id
     async mounted() {
-      if (!await useWeatherdataStore().checkByLocationId(this.location._id)){
+      if (await useWeatherdataStore().checkByLocationId(this.location._id)){
         this.isDataRegistered = true
       }
     },
     methods: {
       async postData() {
-        const weatherData = await import(`../${this.location.name}.json`)
-        useWeatherdataStore().postData(weatherData.default, this.location)
-        this.$emit("updated")
+        const weatherData = await import(`../static/${this.location.name}.json`)
+        useWeatherdataStore().postData(weatherData.default, this.location).finally(() => {
+        this.isDataRegistered = true; // Update the reactivity of isDataRegistered
+        });
       }
     }
   };

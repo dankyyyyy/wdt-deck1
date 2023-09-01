@@ -105,8 +105,17 @@ def retrieve(c1, c2, c3, c4, name):
                     # Add the message data to the list
                     data_list.append(message_data)
 
-        # Write the collected data to a JSON file
-        output_filename = name.replace(".grib", ".json")
+        # Specify the folder name
+        folder_name = "static"
+
+        # Ensure the folder exists, create it if not
+        if not os.path.exists(folder_name):
+          os.makedirs(folder_name)
+
+        # Construct the output filename with the folder path
+        output_filename = os.path.join(folder_name, name.replace(".grib", ".json"))
+
+        # Write the collected data to the JSON file in the "static" folder
         with open(output_filename, 'w') as json_file:
             json.dump(data_list, json_file, indent=4)
 
