@@ -1,10 +1,17 @@
 <template>
   <div class="flex">
-    <div class="sidebar-container p-5 h-screen">
-      <Sidebar />
-    </div>
-    <div class="main-content py-5 pr-5 h-min">
-      <slot />
+    <div class="main-content py-5 pr-5 h-screen w-full">
+      <StartScreen />
     </div>
   </div>
 </template>
+
+<script>
+import StartScreen from '@/components/StartScreen.vue';
+
+export default {
+  components: {
+    StartScreen,
+  },
+};
+</script>

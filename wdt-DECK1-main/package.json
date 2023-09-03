@@ -27,6 +27,7 @@
     "mongoose": "^7.1.0",
     "nuxt": "^3.3.3",
     "pinia": "^2.0.34",
+    "vue-carousel": "^0.18.0",
     "vue-chartjs": "^5.2.0",
     "yarn": "^1.22.19"
   },
