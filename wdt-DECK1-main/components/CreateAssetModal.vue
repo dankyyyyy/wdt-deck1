@@ -44,10 +44,10 @@
               <label for="windSpeedLimit">Wind Speed Limit: </label>
               <input
                 type="text"
-                v-model="asset.windspeedlimit"
+                v-model="asset.windSpeedLimit"
                 class="border-2 rounded-md text-center "
               />
-              <label for="windSpeedLimit"> m/s</label>
+              <label for="windSpeedLimit"> kt</label>
         </div>
 
         <div v-if="asset.category === 'Vessel'">
@@ -169,7 +169,7 @@
               <label for="limit">Planned Maintenance: </label>
               <input
                 type="text"
-                v-model="asset.plannedmaintenance"
+                v-model="asset.plannedMaintenance"
                 class="border-2 rounded-md text-center"
                 />
             </div>
@@ -178,7 +178,7 @@
               <label for="limit">Troubleshoot Visitings: </label>
               <input
                 type="text"
-                v-model="asset.troubleshootvisitings"
+                v-model="asset.troubleshootVisits"
                 class="border-2 rounded-md text-center"
                 />
             </div>
@@ -187,7 +187,7 @@
               <label for="limit">Average TS hours: </label>
               <input
                 type="text"
-                v-model="asset.averagetshours"
+                v-model="asset.averageTsHours"
                 class="border-2 rounded-md text-center"
                 />
             </div>

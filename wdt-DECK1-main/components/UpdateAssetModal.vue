@@ -25,7 +25,7 @@
         <div class="update-input">
           <label for="windSpeedLimit">Wind Speed Limit: </label>
           <input type="text" v-model="assetRef.windSpeedLimit" class="border-2 rounded-md text-center" />
-          <label for="windSpeedLimit"> m/s</label>
+          <label for="windSpeedLimit"> kt</label>
         </div>
 
         <div v-if="assetRef.category === 'Vessel'">
@@ -101,17 +101,17 @@
         <div v-else-if="assetRef.category === 'WindTurbineGenerator'">
           <div class="update-input">
             <label for="limit">Planned Maintenance: </label>
-            <input type="text" v-model="assetRef.plannedmaintenance" class="border-2 rounded-md text-center" />
+            <input type="text" v-model="assetRef.plannedMaintenance" class="border-2 rounded-md text-center" />
           </div>
 
           <div class="update-input">
             <label for="limit">Troubleshoot Visitings: </label>
-            <input type="text" v-model="assetRef.troubleshootvisitings" class="border-2 rounded-md text-center" />
+            <input type="text" v-model="assetRef.troubleshootVisits" class="border-2 rounded-md text-center" />
           </div>
 
           <div class="update-input">
             <label for="limit">Average TS hours: </label>
-            <input type="text" v-model="assetRef.averagetshours" class="border-2 rounded-md text-center" />
+            <input type="text" v-model="assetRef.averageTsHours" class="border-2 rounded-md text-center" />
           </div>
         </div>
       </div>

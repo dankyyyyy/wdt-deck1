@@ -20,10 +20,12 @@
           <label for="limit" class="w-min whitespace-nowrap">Fuel Flow Loitering: </label>
           <p class="w-min">{{ asset.fuelFlowLoitering }}l/h</p>
         </div>
+        
         <div class="flex justify-between">
           <label for="limit" class="w-min whitespace-nowrap">Loitering: </label>
           <p class="w-min">{{ asset.loitering }}h</p>
         </div>
+
         <div class="flex justify-between">
           <label for="limit" class="w-min whitespace-nowrap">High Engine Activity: </label>
           <p class="w-min">{{ asset.highEngineActivity }}h</p>
@@ -35,15 +37,22 @@
           <label for="limit" class="w-min whitespace-nowrap">Helicopter Speed: </label>
           <p class="w-min">{{ asset.helicopterSpeed }}kt</p>
         </div>
+
         <div class="flex justify-between">
           <label for="limit" class="w-min whitespace-nowrap">Cloudbase: </label>
           <p class="w-min">{{ asset.cloudbase }}m</p>
         </div>
+
         <div class="flex justify-between">
           <label for="limit" class="w-min whitespace-nowrap">Visibility: </label>
           <p class="w-min">{{ asset.visibility }}km</p>
         </div>
       </div>
+
+      <div class="flex justify-between">
+          <label for="limit" class="w-min whitespace-nowrap">Wind Speed Limit: </label>
+          <p class="w-min">{{ asset.windSpeedLimit }}kt</p>
+        </div>
 
       <div v-if="asset.category === 'Vessel' || asset.category === 'Helicopter'">
         <div class="flex justify-between">
@@ -57,11 +66,6 @@
           <p class="w-min">{{ asset.dayRate }}€</p>
           <!--Info box for price ranges-->
           <IconsInfo class="" />
-        </div>
-
-        <div class="flex justify-between">
-          <label for="limit" class="w-min whitespace-nowrap">Wind Speed Limit: </label>
-          <p class="w-min">{{ asset.windSpeedLimit }}m/s</p>
         </div>
 
         <div class="flex justify-between">
@@ -86,10 +90,6 @@
       </div>
 
       <div v-if="asset.category === 'WindTurbineGenerator'">
-        <div class="flex justify-between">
-          <label for="limit" class="w-min whitespace-nowrap">Wind Speed Limit: </label>
-          <p class="w-min">{{ asset.windSpeedLimit }}m/s</p>
-        </div>
         <div class="flex justify-between">
           <label for="limit" class="w-min whitespace-nowrap">Planned Maintenance: </label>
           <p class="w-min">{{ asset.plannedMaintenance }}h/WTG</p>
