@@ -15,21 +15,21 @@
           <label for="limit" class="w-min whitespace-nowrap">Vessel Speed: </label>
           <p class="w-min">{{ asset.vesselSpeed }}kt</p>
         </div>
-        
+
         <div class="flex justify-between">
           <label for="limit" class="w-min whitespace-nowrap">Fuel Flow Loitering: </label>
-          <p class="w-min">{{ asset.fuelFlowLoitering}}l/h</p>
+          <p class="w-min">{{ asset.fuelFlowLoitering }}l/h</p>
         </div>
         <div class="flex justify-between">
           <label for="limit" class="w-min whitespace-nowrap">Loitering: </label>
-          <p class="w-min">{{ asset.loitering}}h</p>
+          <p class="w-min">{{ asset.loitering }}h</p>
         </div>
         <div class="flex justify-between">
           <label for="limit" class="w-min whitespace-nowrap">High Engine Activity: </label>
-          <p class="w-min">{{ asset.highEngineActivity}}h</p>
+          <p class="w-min">{{ asset.highEngineActivity }}h</p>
         </div>
       </div>
-       
+
       <div v-if="asset.category === 'Helicopter'">
         <div class="flex justify-between">
           <label for="limit" class="w-min whitespace-nowrap">Helicopter Speed: </label>
@@ -57,7 +57,7 @@
           <p class="w-min">{{ asset.dayRate }}€</p>
           <!--Info box for price ranges-->
           <IconsInfo class="" />
-        </div>  
+        </div>
 
         <div class="flex justify-between">
           <label for="limit" class="w-min whitespace-nowrap">Wind Speed Limit: </label>
@@ -86,24 +86,24 @@
       </div>
 
       <div v-if="asset.category === 'WindTurbineGenerator'">
-        <div class ="flex justify-between">
+        <div class="flex justify-between">
           <label for="limit" class="w-min whitespace-nowrap">Wind Speed Limit: </label>
           <p class="w-min">{{ asset.windSpeedLimit }}m/s</p>
+        </div>
+        <div class="flex justify-between">
+          <label for="limit" class="w-min whitespace-nowrap">Planned Maintenance: </label>
+          <p class="w-min">{{ asset.plannedMaintenance }}h/WTG</p>
+        </div>
+        <div class="flex justify-between">
+          <label for="limit" class="w-min whitespace-nowrap">Troubleshoot Visits (annually): </label>
+          <p class="w-min">{{ asset.troubleshootVisits }}/WTG</p>
+        </div>
+        <div class="flex justify-between">
+          <label for="limit" class="w-min whitespace-nowrap">Average TS Hours (per visit):</label>
+          <!--need to signify that the hours are split up between (typically) 3 staff, resulting in n/3 h/WTG-->
+          <p class="w-min">{{ asset.averageTsHours }}</p>
+        </div>
       </div>
-      <div class = "flex justify-between">
-        <label for="limit" class="w-min whitespace-nowrap">Planned Maintenance: </label>
-        <p class="w-min">{{ asset.plannedMaintenance }}h/WTG</p>
-      </div>
-      <div class = "flex justify-between">
-        <label for="limit" class="w-min whitespace-nowrap">Troubleshoot Visits (annually): </label>
-        <p class="w-min">{{ asset.troubleshootVisits }}/WTG</p>
-      </div>
-      <div class = "flex justify-between">
-        <label for="limit" class="w-min whitespace-nowrap">Average TS Hours (per visit):</label>
-        <!--need to signify that the hours are split up between (typically) 3 staff, resulting in n/3 h/WTG-->
-        <p class="w-min">{{ asset.averageTsHours }}</p>
-      </div>
-    </div>
     </div>
   </div>
 </template>
@@ -117,7 +117,7 @@ export default {
       required: true,
     }
   },
-  data () {
+  data() {
     return {
       isModalVisible: false,
     };

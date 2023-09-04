@@ -30,10 +30,10 @@ export const useTeamStore = defineStore("TeamStore", {
       this.getAll()
     },
 
-    async update(team: ITeam){
+    async put(team: ITeam){
       try {
-        console.log("Updating the team to a database")
-        const response = await axios.put(`/api/teams/update/${team._id}`);
+        console.log('Updating team ', team.name, ' ', team._id);
+        const response = await axios.put('/api/teams/update', team);
         console.log(response.data.message);
         // handle success
       } catch (error) {
@@ -45,7 +45,7 @@ export const useTeamStore = defineStore("TeamStore", {
 
     async delete(team: ITeam){
       try {
-        console.log("Deleting the team from the database")
+        console.log('Deleting team ', team.name, ' ', team._id);
         const response = await axios.delete(`/api/teams/delete/${team._id}`);
         console.log(response.data.message);
         //handle success

@@ -1,11 +1,10 @@
 <template>
   <div class="overlay" @click="hideModal">
-    <div class="modal rounded-lg flex-col">
+    <div class="modal rounded-lg flex-col" style="max-height: 80%; overflow-y: auto;">
       <h3 class="font-semibold">Asset creation</h3>
       <div class="py-5 flex flex-col flex-wrap content-normal">
         <div
-          class="border-2 border-dashed rounded-md h-56 flex flex-col justify-center items-center"
-        >
+          class="border-2 border-dashed rounded-md h-56 flex flex-col justify-center items-center">
           <h3 class="text-center">
             Drag & drop your <br />
             asset image

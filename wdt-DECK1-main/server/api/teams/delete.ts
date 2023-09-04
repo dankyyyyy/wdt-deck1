@@ -1,21 +1,11 @@
-import TeamModel from '~/server/models/Team.model'
-
 export default defineEventHandler(async (event) => {
-    //get data from the body
     const body = await readBody(event)
+    console.log('Server-side Team: ', body);
 
-    console.log("Team ID:", body.teamId);
-    const team = await TeamModel.findOne({_id: body.teamId});
-    if (!team) {
-        throw createError({
-            message: "Team not found"
-        })
-    }
+    const selectedTeam = body;
 
-    //delete team model
     try {
-        await team.deleteOne();
-        return { message: "Team deleted" }
+        await selectedTeam.delete();
     } catch (e: any) {
         throw createError({
             message: e.message,

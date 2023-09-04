@@ -49,6 +49,14 @@ export const useLocationStore = defineStore("LocationStore",{
             }
             this.getAll()
         },
+        async put(location: ILocation) {
+            try{
+                const response = await axios.post('/api/locations/update', location);
+            } catch (error) {
+                console.error(error);
+            }
+            this.getAll()
+        },
         toggleLoading(){
             this.loading = !this.loading;
         }

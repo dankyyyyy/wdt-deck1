@@ -22,7 +22,7 @@
             class="rounded-md px-2 ml-2 action-button"
             @click="handleSaveClick"
           >
-            Save
+            Delete
           </button>
           </div>
         </div>
@@ -35,15 +35,7 @@
   const store = useTeamStore();
   
   export default {
-    name: "CreateTeamModal",
-    data() {
-      return {
-        team: {
-          numberofPersons: "",
-          shiftPeriod: "",
-        },
-      };
-    },
+    name: "DeleteTeamModal",
     methods: {
       handleCancelClick() {
         this.$emit("hideModal");
