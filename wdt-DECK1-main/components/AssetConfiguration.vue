@@ -3,13 +3,7 @@
         <div class="padding-6">Asset configuration</div>
         <div class="justify-items-stretch flex">
             <label>WDT threshold:</label>
-            <input
-              type="range"
-              min="0"
-              max="100"
-              step="5"
-              v-model="wdtThreshold"
-            />
+            <input type="range" min="0" max="100" step="5" v-model="wdtThreshold" />
             {{ wdtThreshold }}
         </div>
         <div class="font-bold">Significant Wave Height Limit (m)</div>
@@ -57,7 +51,7 @@ export default {
         };
     },
     methods: {
-        handleLimitChange(){
+        handleLimitChange() {
             updateChart(
                 this.ctv_small_limit,
                 this.ctv_big_limit,
