@@ -132,7 +132,6 @@
 <script>
 import { useAssetStore } from "~/stores/AssetStore";
 
-const store = useAssetStore();
 
 export default {
   name: "UpdateAssetModal",
@@ -154,6 +153,7 @@ export default {
       this.$emit("hideModal");
     },
     async handleSaveClick() {
+      const store = useAssetStore();
       console.log(this.assetRef);
       await store.put(this.assetRef);
       this.$emit("hideModal");

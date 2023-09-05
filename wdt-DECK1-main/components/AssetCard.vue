@@ -6,8 +6,12 @@
     <div class="w-full border-t-2 border-black p-2">
       <div class="flex justify-between">
         <h2 class="font-semibold text-lg mb-2">{{ asset.name }}</h2>
-        <UpdateAssetModal :asset="asset" v-if="isModalVisible" @hideModal="hideModal" />
-        <IconsCardOptions @click="showModal" class="cursor-pointer" />
+        <UpdateAssetModal :asset="asset" v-if="isUpdateModalVisible" @hideModal="hideModal" />
+        <DeleteAssetModal :asset="asset" v-if="isDeleteModalVisible" @hideModal="hideModal" />
+        <div class="flex space-x-2">
+            <IconsUpdate @click="showUpdateModal" class="cursor-pointer" />
+            <IconsDelete @click="showDeleteModal" class="cursor-pointer" />
+        </div>
       </div>
 
       <div v-if="asset.category === 'Vessel'">
@@ -119,15 +123,20 @@ export default {
   },
   data() {
     return {
-      isModalVisible: false,
+      isUpdateModalVisible: false,
+      isDeleteModalVisible: false,
     };
   },
   methods: {
-    showModal() {
-      this.isModalVisible = true;
+    showUpdateModal() {
+      this.isUpdateModalVisible = true;
+    },
+    showDeleteModal() {
+      this.isDeleteModalVisible = true;
     },
     hideModal() {
-      this.isModalVisible = false;
+      this.isUpdateModalVisible = false;
+      this.isDeleteModalVisible = false;
     },
   },
 };

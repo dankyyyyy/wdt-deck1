@@ -47,10 +47,14 @@ export const useAssetStore = defineStore("AssetStore", {
     async delete(asset: IAsset) {
       try {
         console.log('Deleting asset ', asset.name, ' ', asset._id);
-        const response = await axios.delete('/api/assets/delete');
+        const response = await axios.delete('/api/assets/delete', {
+          data: asset // Pass the asset object in the 'data' property
+        });
         console.log(response.data.message);
+        //handle success
       } catch (error) {
         console.error(error);
+        // handle error
       }
       this.getAll()
     }

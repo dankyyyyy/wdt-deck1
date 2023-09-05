@@ -216,7 +216,6 @@
 <script>
 import { useAssetStore } from "~/stores/AssetStore";
 
-const store = useAssetStore();
 
 export default {
   name: "CreateAssetModal",
@@ -233,6 +232,7 @@ export default {
       this.$emit("hideModal");
     },
     async handleSaveClick() {
+      const store = useAssetStore();
       await store.post(this.asset);
       this.$emit("hideModal");
     },

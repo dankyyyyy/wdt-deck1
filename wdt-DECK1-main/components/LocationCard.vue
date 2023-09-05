@@ -13,7 +13,6 @@
       <h2 class="font-semibold mb-2">{{ location.name }}</h2>
       <UpdateLocationModal :location="location" v-if="isUpdateModalVisible" @hideModal="hideModal" />
 
-      <!-- Wrap the icons in a div with flex classes to place them next to each other -->
       <div class="flex space-x-2">
           <IconsUpdate @click="showUpdateModal" class="cursor-pointer" />
           <IconsDelete @click="showDeleteModal" class="cursor-pointer" />
