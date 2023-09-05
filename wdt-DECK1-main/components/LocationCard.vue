@@ -12,16 +12,22 @@
     <div class="w-full border-t-2 border-black p-2">
       <h2 class="font-semibold mb-2">{{ location.name }}</h2>
       <UpdateLocationModal :location="location" v-if="isUpdateModalVisible" @hideModal="hideModal" />
-      <IconsUpdate @click="showUpdateModal" class="cursor-pointer" />
-      <IconsDelete @click="showDeleteModal" class="cursor-pointer "></IconsDelete>
+
+      <!-- Wrap the icons in a div with flex classes to place them next to each other -->
+      <div class="flex space-x-2">
+          <IconsUpdate @click="showUpdateModal" class="cursor-pointer" />
+          <IconsDelete @click="showDeleteModal" class="cursor-pointer" />
+      </div>
+
       <DeleteLocationModal :location="location" v-if="isDeleteModalVisible" @hideModal="hideModal" />
+    
       <label>Latitude: </label>
       <input type="text" v-model="latitude" class="w-32 border-2 rounded-md text-center" disabled />
       <label>Longitude: </label>
       <input type="text" v-model="longitude" class="w-32 border-2 rounded-md text-center" disabled />
       <label>Limit: </label>
       <input type="text" v-model="limit" class="w-32 border-2 rounded-md text-center" disabled />
-    </div>
+  </div>
   </div>
 </template>
 
