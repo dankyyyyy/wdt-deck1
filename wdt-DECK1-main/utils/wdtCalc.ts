@@ -100,19 +100,19 @@ export function start(
 function evaluateHourDay(asset: any, element: any, newDay: boolean) {
   if (!newDay) {
     if (asset) { //If it's an asset, not the site itself
-    if (asset.category === "Vessel") {
-    hoursAsset.push(
-      parseFloat(element.Sign[" wave height (Hs)"]) > asset.hs
-        ? 1 : 0
-    );
-    }
-    else if (asset.category === "Helicopter") {
-      hoursAsset.push(
-        parseFloat(element.Visibility) < asset.visibility ||
-          Number(element["VFR cloud"]) === asset.cloudbase
-          ? 1 : 0
+      if (asset.category === "Vessel") {
+        hoursAsset.push(
+        parseFloat(element.Sign[" wave height (Hs)"]) > asset.hs ? 1 : 0
       );
-    } 
+      } else if (asset.category === "Helicopter") {
+        hoursAsset.push(
+        parseFloat(element.Visibility) < asset.visibility ||
+        Number(element["VFR cloud"]) === asset.cloudbase
+        ? 1 : 0
+        );
+      } else if (asset.category === "WindTurbineGenerator") {
+        hoursAsset.push(parseFloat(element["Wind speed"]) > asset.windSpeedLimit ? 1 : 0);
+        } 
     } else {
       hoursAsset.push(parseFloat(element["Wind speed"]) > conf_site_limit ? 1 : 0);
     }
