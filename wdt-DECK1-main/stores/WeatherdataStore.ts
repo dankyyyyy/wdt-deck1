@@ -38,7 +38,7 @@ export const useWeatherdataStore = defineStore("WeatherdataStore", {
                 console.error(e)
             }
         },
-        async postData(weatherData: any[], location: ILocation) {
+        async postData(weatherData: any[], location: ILocation): Promise<Boolean> {
             weatherData.forEach((entry) => {
                 entry.location = location;
             })
@@ -47,9 +47,11 @@ export const useWeatherdataStore = defineStore("WeatherdataStore", {
                 const response = await axios.post('/api/weatherdata/create', weatherData);
                 console.log(response.data.message);
                 // handle success
+                return true;
             } catch (error) {
                 console.error(error);
                 // handle error
+                return false;
             }
         }
     }
