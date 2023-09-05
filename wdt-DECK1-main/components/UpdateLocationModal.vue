@@ -49,7 +49,6 @@
 <script>
 import { useLocationStore } from "~/stores/LocationStore";
 
-const store = useLocationStore();
 
 export default {
     name: "UpdateLocationModal",
@@ -71,6 +70,7 @@ export default {
             this.$emit("hideModal");
         },
         async handleSaveClick() {
+            const store = useLocationStore();
             console.log(this.locationRef);
             await store.put(this.locationRef);
             this.$emit("hideModal");

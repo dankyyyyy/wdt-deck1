@@ -57,6 +57,20 @@ export const useLocationStore = defineStore("LocationStore",{
             }
             this.getAll()
         },
+        async delete(location: ILocation) {
+            try {
+                console.log('Deleting location ', location.name, ' ', location._id);
+                const response = await axios.delete('/api/locations/delete', {
+                    data: location // Pass the location object in the 'data' property
+                });
+                console.log(response.data.message);
+                //handle success
+            } catch (error) {
+                console.error(error);
+                // handle error
+            }
+            this.getAll()
+        },
         toggleLoading(){
             this.loading = !this.loading;
         }

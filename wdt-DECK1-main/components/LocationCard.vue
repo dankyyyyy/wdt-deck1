@@ -11,13 +11,15 @@
     </div>
     <div class="w-full border-t-2 border-black p-2">
       <h2 class="font-semibold mb-2">{{ location.name }}</h2>
-      <UpdateLocationModal :location="location" v-if="isModalVisible" @hideModal="hideModal" />
-      <IconsCardOptions @click="showModal" class="cursor-pointer" />
-      <label for="latitude">Latitude: </label>
+      <UpdateLocationModal :location="location" v-if="isUpdateModalVisible" @hideModal="hideModal" />
+      <IconsUpdate @click="showUpdateModal" class="cursor-pointer" />
+      <IconsDelete @click="showDeleteModal" class="cursor-pointer "></IconsDelete>
+      <DeleteLocationModal :location="location" v-if="isDeleteModalVisible" @hideModal="hideModal" />
+      <label>Latitude: </label>
       <input type="text" v-model="latitude" class="w-32 border-2 rounded-md text-center" disabled />
-      <label for="longitude">Longitude: </label>
+      <label>Longitude: </label>
       <input type="text" v-model="longitude" class="w-32 border-2 rounded-md text-center" disabled />
-      <label for="limit">Limit: </label>
+      <label>Limit: </label>
       <input type="text" v-model="limit" class="w-32 border-2 rounded-md text-center" disabled />
     </div>
   </div>
@@ -42,7 +44,8 @@ export default {
       longitude: this.location.longitude,
       limit: this.location.limit,
       isDataRegistered: false,
-      isModalVisible: false,
+      isUpdateModalVisible: false,
+      isDeleteModalVisible: false,
     };
   },
   async mounted() {
@@ -64,11 +67,15 @@ export default {
         console.error('Error:', error);
       }
     },
-    showModal() {
-      this.isModalVisible = true;
+    showUpdateModal() {
+      this.isUpdateModalVisible = true;
+    },
+    showDeleteModal() {
+      this.isDeleteModalVisible = true;
     },
     hideModal() {
-      this.isModalVisible = false;
+      this.isUpdateModalVisible = false;
+      this.isDeleteModalVisible = false;
     },
   },
 };
