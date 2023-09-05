@@ -69,7 +69,7 @@
 <script>
 import { useTeamStore } from "~/stores/TeamStore";
 
-const store = useTeamStore();
+
 
 export default {
   name: "CreateTeamModal",
@@ -86,6 +86,7 @@ export default {
       this.$emit("hideModal");
     },
     async handleSaveClick() {
+      const store = useTeamStore();
       await store.post(this.team);
       this.$emit("hideModal");
     },

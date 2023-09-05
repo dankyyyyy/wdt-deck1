@@ -32,16 +32,30 @@
   <script>
   import { useTeamStore } from "~/stores/TeamStore";
   
-  const store = useTeamStore();
+
   
   export default {
     name: "DeleteTeamModal",
+    props: {
+      team: {
+        type: Object,
+        required: true,
+      }
+    },
+    setup(props) {
+      const teamRef = ref(props.team);
+
+      return {
+        teamRef,
+      }
+    },
     methods: {
       handleCancelClick() {
         this.$emit("hideModal");
       },
       async handleSaveClick() {
-        await store.delete(this.team);
+        const store = useTeamStore();
+        await store.delete(this.teamRef);
         this.$emit("hideModal");
       },
     },

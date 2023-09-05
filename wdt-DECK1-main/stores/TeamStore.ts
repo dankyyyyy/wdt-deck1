@@ -46,7 +46,9 @@ export const useTeamStore = defineStore("TeamStore", {
     async delete(team: ITeam){
       try {
         console.log('Deleting team ', team.name, ' ', team._id);
-        const response = await axios.delete(`/api/teams/delete/${team._id}`);
+        const response = await axios.delete('/api/teams/delete', {
+          data: team // Pass the team object in the 'data' property
+        });
         console.log(response.data.message);
         //handle success
       } catch (error) {

@@ -42,7 +42,7 @@
 <script>
 import { useTeamStore } from "~/stores/TeamStore";
 
-const store = useTeamStore();
+
 
 export default {
   name: "UpdateTeamModal",
@@ -64,6 +64,7 @@ export default {
       this.$emit("hideModal");
     },
     async handleSaveClick() {
+      const store = useTeamStore();
       console.log('Updated team: ', this.teamRef);
       await store.put(this.teamRef);
       this.$emit("hideModal");
