@@ -3,10 +3,10 @@
     <div class="flex w-full justify-end">
       <IconsAdd @click="showModal" class="cursor-pointer" />
     </div>
-    <CreateLocationModal v-if="isModalVisible" @hideModal="hideModal" />
+    <CreateLocationModal v-if="isModalVisible" @hideModal="hideModal" @downloaded="sendDownloadedNotification"/>
     <div v-if="!loading" class="flex flex-wrap">
       <div v-for="location in locations" :key="location._id" class="p-5">
-        <LocationCard :location="location" />
+        <LocationCard :location="location" :downloaded="downloaded" />
       </div>
     </div>
     <div v-else>
@@ -25,6 +25,7 @@ export default {
       locations: [],
       isModalVisible: false,
       loading: true,
+      downloaded: false,
     };
   },
   async mounted(){
@@ -41,6 +42,9 @@ export default {
     },
     hideModal() {
       this.isModalVisible = false;
+    },
+    sendDownloadedNotification(){
+      this.downloaded = true;
     },
   },
 };

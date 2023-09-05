@@ -63,9 +63,15 @@
         this.isDataRegistered = true
       }
     },
+    created() {
+      // Listen for the event from the event bus
+      // EventBus.$on('notifyLocationCard', () => {
+      //   this.isDataRegistered = true;
+      // });
+    },
     methods: {
       async postData() {
-        const weatherData = await import(`~/static/${this.location.name}.json`) //sometimes works with '~' sometimes with '..' please help
+        const weatherData = await import(`~/static/${this.location.name}.json`) //sometimes works with '~' sometimes with '..' please help:(
         useWeatherdataStore().postData(weatherData.default, this.location).finally(() => {
         this.isDataRegistered = true; // Update the reactivity of isDataRegistered
         });

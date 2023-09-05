@@ -78,7 +78,6 @@
   import { useLocationStore } from "~/stores/LocationStore";
   import axios from "axios";
   
-  const store = useLocationStore();
   
   export default {
     name: "CreateLocationModal",
@@ -97,6 +96,7 @@
         this.$emit("hideModal");
       },
       async handleSaveClick() {
+        const store = useLocationStore();
         await store.post(this.location)
         const coordinates = this.decimalToCoordinates(this.location.longitude, this.location.latitude)
         this.callRetrieve(coordinates.north, coordinates.west, coordinates.south, coordinates.east, this.location.name);
@@ -109,7 +109,9 @@
             const c3 = south
             const c4 = east
             const name = locName
-            const response = await axios.get(`http://127.0.0.1:5555/data/${c1}/${c2}/${c3}/${c4}/${name}`); //python api url could be moved to .env
+            const response = await axios.get(`http://127.0.0.1:5555/data/${c1}/${c2}/${c3}/${c4}/${name}`).finally( () => {
+              this.$emit("notifyLocationCard")
+            }); //python api url could be moved to .env
           } catch (error) {
           console.error('Error calling retrieve:', error);
         }
