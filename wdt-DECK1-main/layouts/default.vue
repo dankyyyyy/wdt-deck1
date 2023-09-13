@@ -1,7 +1,9 @@
 <template>
   <div class="flex">
     <div class="main-content py-5 pr-5 h-screen w-full">
-      <StartScreen />
+      <router-view presets />
+      
+
     </div>
   </div>
 </template>

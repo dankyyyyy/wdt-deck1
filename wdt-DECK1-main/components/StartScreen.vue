@@ -1,9 +1,9 @@
 <template>
-  <div class="start-screen">
+  <div class="start-screen no-scroll">
     <Logo />
     <div class="centered-boxes">
-      <ClickableBox redirectPath="/presetPage" :boxData="presetBoxData" />
-      <ClickableBox redirectPath="/customizationPage" :boxData="customizationBoxData" />
+      <ClickableBox redirectPath="/presets" :boxData="presetBoxData" />
+      <ClickableBox redirectPath="/customization" :boxData="customizationBoxData" />
     </div>
   </div>
 </template>

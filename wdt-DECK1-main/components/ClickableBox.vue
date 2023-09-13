@@ -1,9 +1,14 @@
 <template>
+  <!-- Apply the .clickable-box class to the outer div -->
   <div class="clickable-box" @click="redirectToPage">
     <!-- Box content -->
     <div class="box-content">
-      <div class="box-title">{{ boxData.title }}</div>
-      <div class="box-description">{{ boxData.description }}</div>
+      <!-- Icon above the title -->
+      <i class="clickable-box-icon">Icon</i>
+      <div class="clickable-box-text">
+        <div class="clickable-box-title">{{ boxData.title }}</div>
+        <div class="clickable-box-description">{{ boxData.description }}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -22,39 +27,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.clickable-box {
-  /* Box styles */
-  cursor: pointer; /* Add a pointer cursor to indicate it's clickable */
-  width: 500px; /* Set the width */
-  height: 300px; /* Set the height */
-  border: 3px solid #000; /* Add a 3px black border */
-  background-color: #97979791; /* Light gray background color */
-  margin: 10px; /* Add margin to separate the boxes */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
-  
-  /* Add border-radius for rounded corners */
-  border-radius: 30px; /* Adjust the value to control the roundness */
-}
-
-/* Style for box title and description */
-.box-content {
-  padding: 20px;
-}
-
-.box-title {
-  font-size: xx-large;
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-
-.box-description {
-  font-size: large;
-  color: #383838;
-}
-</style>
