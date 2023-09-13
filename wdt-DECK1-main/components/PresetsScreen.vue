@@ -111,7 +111,7 @@ export default {
     navigateToNextPage() {
       if (this.selectedPresets.length > 0) {
         // Set this to the [CalculationsPage]
-        this.$router.push('/next-page');
+        this.$router.push('/weatherDownTime');
       }
     },
   },
@@ -137,11 +137,7 @@ export default {
 }
 
 .selected {
-  background-color: rgba(173, 216, 230, 0.25); /* Change to DECK1 Blue with 25% opacity */
-}
-
-.box-content {
-  /* Add box content styles */
+  background-color: rgba(9, 166, 215, 0.25); /* Change to DECK1 Blue with 25% opacity */
 }
 
 .box-image {
