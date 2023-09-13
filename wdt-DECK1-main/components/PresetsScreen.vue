@@ -1,6 +1,8 @@
 <template>
   <div class="preset-selector">
-    <img src="assets\logo.png" class="logo" />
+    <NuxtLink to="/">
+      <IconsLogoInverted class="inline-block align-middle w-full" />
+    </NuxtLink>
     <div class="grid">
       <div
         v-for="preset in presets"
@@ -9,7 +11,9 @@
         @click="toggleSelect(preset)"
       >
         <div class="box-content">
-          <img :src="(`assets\logo.png`)" class="box-image" />
+          <NuxtLink to="/">
+            <IconsLogoInverted class="box-image inline-block align-middle w-full" />
+          </NuxtLink>
           <div class="box-title">{{ preset.title }}</div>
           <div class="box-text"> 
             <div v-for="(line, lineIndex) in preset.text" :key="line">

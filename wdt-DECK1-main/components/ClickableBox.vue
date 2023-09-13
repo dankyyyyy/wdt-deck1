@@ -17,7 +17,6 @@
 export default {
   methods: {
     redirectToPage() {
-      // Use Vue Router to navigate to the desired page
       this.$router.push(this.redirectPath);
     },
   },

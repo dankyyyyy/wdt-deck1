@@ -1,6 +1,8 @@
 <template>
   <div class="start-screen no-scroll">
-    <Logo />
+      <NuxtLink to="/">
+        <IconsLogoInverted class="inline-block align-middle w-full" />
+      </NuxtLink>
     <div class="centered-boxes">
       <ClickableBox redirectPath="/presets" :boxData="presetBoxData" />
       <ClickableBox redirectPath="/customization" :boxData="customizationBoxData" />
