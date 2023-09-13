@@ -2,21 +2,21 @@ import { useWeatherStore } from "@/stores/WeatherStore";
 
 const wdtStore = useWeatherStore()
 
-function availableDays(asset: any, monthsAsset: number[]): number {
-    var availableDays = 0;
+function unavailableDays(asset: any, monthsAsset: number[]): number {
+    var unavailableDays = 0;
     const name = asset ? asset.name : "Site";
     wdtStore.assetsWdt[name] = monthsAsset;
 
     for (let i = 0; i < monthsAsset.length; i++) {
-        availableDays += monthsAsset[i];
+        unavailableDays += monthsAsset[i];
     }
 
-    return Math.round(availableDays);
+    return Math.round(unavailableDays);
 }
 
-function unavailableDays(asset: any, monthsAsset: number[]): number {
-    const unavailableDays = Math.round(365 - availableDays(asset, monthsAsset));
-    return unavailableDays;
+function availableDays(asset: any, monthsAsset: number[]): number {
+    const availableDays = Math.round(365 - unavailableDays(asset, monthsAsset));
+    return availableDays;
 }
 
 export function workabilityPerAsset(asset: any, monthsAsset: number[]): number {
