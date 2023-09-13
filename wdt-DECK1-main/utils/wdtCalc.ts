@@ -1,13 +1,17 @@
 import { useWeatherdataStore } from "@/stores/WeatherdataStore";
 import { useWeatherStore } from "@/stores/WeatherStore";
+import "@/utils/wgtCalc";
 
 const wdtStore = useWeatherStore()
 const dataStore = useWeatherdataStore();
 
 // CONFIG LIMITS
+// placeholder for location limit
+// wind speed limit - m*s^-1
 const conf_site_limit: number = 18;
 
-// CONFIG THRESHOLDS - percentage of a day that can be no-fly 
+// CONFIG THRESHOLDS - percentage of a day that can be no-fly
+// determines availability (50%+ => available)
 const threshold: number = 0.5;
 
 //hours
@@ -24,6 +28,7 @@ let current_month: number;
 let amountOfYears: number;
 
 export function start(
+  // filter variables
   timeRangeStart: number,
   timeRangeEnd: number,
   startMonth: number,
@@ -31,6 +36,7 @@ export function start(
   years: number,
   asset: any,
 ) {
+  // filters initialized
   startMonth = startMonth;
   endMonth = endMonth;
   current_day = 1;
@@ -95,8 +101,17 @@ export function start(
   }
 
   const name = asset ? asset.name : "Site";
+  // access asset
   wdtStore.assetsWdt[name] = monthsAsset;
+  console.log(name,": ", monthsAsset);
+  console.log(workabilityPerAsset(asset, monthsAsset), "% ");
+  /*
+  console.log(annualTotalAvailableHours(asset, team, monthsAsset), " hours");
+  console.log(annualTotalRequiredHours(asset, location), "hours");
+  console.log(availablePerRequiredInPercent(asset, team, location, monthsAsset), "%");
+  */
 }
+
 function evaluateHourDay(asset: any, element: any, newDay: boolean) {
   if (!newDay) {
     if (asset) { //If it's an asset, not the site itself
@@ -114,6 +129,7 @@ function evaluateHourDay(asset: any, element: any, newDay: boolean) {
         hoursAsset.push(parseFloat(element["Wind speed"]) > asset.windSpeedLimit ? 1 : 0);
         } 
     } else {
+      // 1 = WDT, 0 = !WDT
       hoursAsset.push(parseFloat(element["Wind speed"]) > conf_site_limit ? 1 : 0);
     }
     
@@ -147,6 +163,7 @@ function evaluateMonth(
   return monthArr;
 }
 
+// shows available data in db
 function countYears(weatherData: any) {
   let maxYear = 0;
   for (const item of weatherData) {

@@ -31,6 +31,10 @@
                     <label for="limit">Limit: </label>
                     <input type="number" v-model="locationRef.limit" class="border-2 rounded-md text-center" />
                 </div>
+                <div class="update-input">
+                    <label for="limit">WTG: </label>
+                    <input type="number" v-model="locationRef.wtg" class="border-2 rounded-md text-center" />
+                </div>
             </div>
 
             <div class="flex w-full justify-end">

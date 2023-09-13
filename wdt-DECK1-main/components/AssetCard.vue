@@ -55,7 +55,7 @@
 
       <div class="flex justify-between">
           <label for="limit" class="w-min whitespace-nowrap">Wind Speed Limit: </label>
-          <p class="w-min">{{ asset.windSpeedLimit }}kt</p>
+          <p class="w-min">{{ asset.windSpeedLimit }}m/s</p>
         </div>
 
       <div v-if="asset.category === 'Vessel' || asset.category === 'Helicopter'">

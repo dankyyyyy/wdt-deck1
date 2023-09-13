@@ -7,7 +7,7 @@ import json
 import math
 import os
 
-c = cdsapi.Client()
+c = cdsapi.Client(url = "https://cds.climate.copernicus.eu/api/v2", key = "194760:1d68b23e-3621-4c23-b31a-bbb20a26e263")
 
 def retrieve(c1, c2, c3, c4, name):
     name = name + ".grib"

@@ -26,6 +26,8 @@
       <input type="text" v-model="longitude" class="w-32 border-2 rounded-md text-center" disabled />
       <label>Limit: </label>
       <input type="text" v-model="limit" class="w-32 border-2 rounded-md text-center" disabled />
+      <label>WTG: </label>
+      <input type="text" v-model="wtg" class="w-32 border-2 rounded-md text-center" disabled />
   </div>
   </div>
 </template>
@@ -48,6 +50,7 @@ export default {
       latitude: this.location.latitude,
       longitude: this.location.longitude,
       limit: this.location.limit,
+      wtg: this.location.wtg,
       isDataRegistered: false,
       isUpdateModalVisible: false,
       isDeleteModalVisible: false,
