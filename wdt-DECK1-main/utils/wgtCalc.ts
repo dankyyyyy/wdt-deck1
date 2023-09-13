@@ -34,11 +34,11 @@ export function annualTotalAvailableHours(asset: any, team: any, monthsAsset: nu
 }
 
 export function annualTotalRequiredHours(asset: any, location: any): number {
-    const amountofWTG = location.wtg;
+    const amountOfWTG = location.wtg;
     const plannedMaintenance = asset.plannedMaintenance;
     const troubleshooting = asset.troubleshootVisits * asset.averageTsHours;
     const requiredHoursPerWtg = plannedMaintenance + troubleshooting;
-    const annualTotalRequiredHours = amountofWTG * requiredHoursPerWtg;
+    const annualTotalRequiredHours = amountOfWTG * requiredHoursPerWtg;
 
     return annualTotalRequiredHours;
 }
