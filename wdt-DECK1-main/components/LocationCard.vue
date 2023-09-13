@@ -12,22 +12,21 @@
     <div class="w-full border-t-2 border-black p-2">
       <h2 class="font-semibold mb-2">{{ location.name }}</h2>
       <UpdateLocationModal :location="location" v-if="isUpdateModalVisible" @hideModal="hideModal" />
-
+      <DeleteLocationModal :location="location" v-if="isDeleteModalVisible" @hideModal="hideModal" />
+    
       <div class="flex space-x-2">
           <IconsUpdate @click="showUpdateModal" class="cursor-pointer" />
           <IconsDelete @click="showDeleteModal" class="cursor-pointer" />
       </div>
-
-      <DeleteLocationModal :location="location" v-if="isDeleteModalVisible" @hideModal="hideModal" />
-    
+      
       <label>Latitude: </label>
-      <input type="text" v-model="latitude" class="w-32 border-2 rounded-md text-center" disabled />
+      <input type="text" v-model="location.latitude" class="w-32 border-2 rounded-md text-center" disabled />
       <label>Longitude: </label>
-      <input type="text" v-model="longitude" class="w-32 border-2 rounded-md text-center" disabled />
+      <input type="text" v-model="location.longitude" class="w-32 border-2 rounded-md text-center" disabled />
       <label>Limit: </label>
-      <input type="text" v-model="limit" class="w-32 border-2 rounded-md text-center" disabled />
+      <input type="text" v-model="location.limit" class="w-32 border-2 rounded-md text-center" disabled />
       <label>WTG: </label>
-      <input type="text" v-model="wtg" class="w-32 border-2 rounded-md text-center" disabled />
+      <input type="text" v-model="location.wtg" class="w-32 border-2 rounded-md text-center" disabled />
   </div>
   </div>
 </template>
@@ -45,12 +44,7 @@ export default {
     },
   },
   data() {
-    return {
-      name: this.location.name,
-      latitude: this.location.latitude,
-      longitude: this.location.longitude,
-      limit: this.location.limit,
-      wtg: this.location.wtg,
+    return {  
       isDataRegistered: false,
       isUpdateModalVisible: false,
       isDeleteModalVisible: false,

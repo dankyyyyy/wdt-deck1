@@ -6,8 +6,10 @@
     <div class="w-full border-t-2 border-black p-2">
       <div class="flex justify-between">
         <h2 class="font-semibold text-lg mb-2">{{ asset.name }}</h2>
+        
         <UpdateAssetModal :asset="asset" v-if="isUpdateModalVisible" @hideModal="hideModal" />
         <DeleteAssetModal :asset="asset" v-if="isDeleteModalVisible" @hideModal="hideModal" />
+
         <div class="flex space-x-2">
             <IconsUpdate @click="showUpdateModal" class="cursor-pointer" />
             <IconsDelete @click="showDeleteModal" class="cursor-pointer" />

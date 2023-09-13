@@ -10,8 +10,7 @@ export const useTeamStore = defineStore("TeamStore", {
     async getAll() {
       try {
         let data = await $fetch<ITeam[]>("/api/teams")
-        this.team = data; // Update the store's team with the processed teams
-        
+        this.team = data;        
         return data;
       } catch (e) {
         console.error(e)
@@ -19,13 +18,16 @@ export const useTeamStore = defineStore("TeamStore", {
     },
     async post(team: ITeam) {
       try {
-        console.log('Registering team to database')
+        console.log('Creating team ', team.name, ' ', team._id);
         const response = await axios.post('/api/teams/create', team);
         console.log(response.data.message);
-        // handle success
+        if (response.status === 200) {
+          console.log('Team created successfully\n', response);
+        } else {
+          console.error('Team creation failed with status', response.status);
+        }
       } catch (error) {
-        console.error(error);
-        // handle error
+        console.error('Error creating team: ', error);
       }
       this.getAll()
     },
@@ -35,10 +37,13 @@ export const useTeamStore = defineStore("TeamStore", {
         console.log('Updating team ', team.name, ' ', team._id);
         const response = await axios.put('/api/teams/update', team);
         console.log(response.data.message);
-        // handle success
+        if (response.status === 200) {
+          console.log('Team updated successfully\n', response);
+        } else {
+          console.error('Team update failed with status', response.status);
+        }
       } catch (error) {
-        console.error(error);
-        // handle error
+        console.error('Error updating team: ', error);
       }
       this.getAll()
     },
@@ -47,13 +52,16 @@ export const useTeamStore = defineStore("TeamStore", {
       try {
         console.log('Deleting team ', team.name, ' ', team._id);
         const response = await axios.delete('/api/teams/delete', {
-          data: team // Pass the team object in the 'data' property
+          data: team
         });
         console.log(response.data.message);
-        //handle success
+        if (response.status === 200) {
+          console.log('Team deleted successfully\n', response);
+        } else {
+          console.error('Team deletion failed with status', response.status);
+        }
       } catch (error) {
-        console.error(error);
-        // handle error
+        console.error('Error deleting team: ', error);
       }
       this.getAll()
     }

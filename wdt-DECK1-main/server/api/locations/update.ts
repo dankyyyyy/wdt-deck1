@@ -12,6 +12,7 @@ export default defineEventHandler(async (event) => {
                     latitude: body.latitude,
                     longitude: body.longitude,
                     limit: body.limit,
+                    wtg: body.wtg,
                 },
             },
             { new: true }
@@ -19,15 +20,15 @@ export default defineEventHandler(async (event) => {
 
         if (!updatedLocation) {
             throw createError({
-                message: 'Asset not found.',
+                message: 'Location not found.',
             });
         }
 
-        console.log('Updated Asset: ', updatedLocation);
-        return { message: 'Asset updated.' }
+        console.log('Updated location: ', updatedLocation);
+        return { message: 'Location updated.' }
     } catch (error) {
         throw createError({
-            message: 'Asset found, but encountered an error during update.',
+            message: 'Location found, but encountered an error during update.',
         });
     }
 })

@@ -53,6 +53,14 @@
               class="border-2 rounded-md text-center"
             />
           </div>
+          <div class="create-input">
+            <label for="wtg">WTG: </label>
+            <input
+              type="text"
+              v-model="location.wtg"
+              class="border-2 rounded-md text-center"
+            />
+          </div>
         </div>
         <div class="flex w-full justify-end">
           <button

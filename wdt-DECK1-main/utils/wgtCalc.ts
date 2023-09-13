@@ -15,13 +15,13 @@ function unavailableDays(asset: any, monthsAsset: number[]): number {
 }
 
 function availableDays(asset: any, monthsAsset: number[]): number {
-    const availableDays = Math.round(365 - unavailableDays(asset, monthsAsset));
+    const availableDays = Math.floor(365 - unavailableDays(asset, monthsAsset));
     return availableDays;
 }
 
 export function workabilityPerAsset(asset: any, monthsAsset: number[]): number {
     const annualAvailability = availableDays(asset, monthsAsset);
-    const workability = Math.round((annualAvailability / 365) * 100);
+    const workability = Math.floor((annualAvailability / 365) * 100);
     return workability;
 }
 
@@ -46,7 +46,7 @@ export function annualTotalRequiredHours(asset: any, location: any): number {
 export function availablePerRequiredInPercent(asset: any, team: any, location: any, monthsAsset: number[]): number {
     const availableHours = annualTotalAvailableHours(asset, team, monthsAsset);
     const requiredHours = annualTotalRequiredHours(asset, location);
-    const availablePerRequired = Math.round((availableHours / requiredHours) * 100)
+    const availablePerRequired = Math.floor((availableHours / requiredHours) * 100)
     return availablePerRequired;
 }
 
