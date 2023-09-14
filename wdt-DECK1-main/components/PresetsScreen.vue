@@ -3,26 +3,7 @@
     <NuxtLink to="/">
       <IconsLogoInverted class="inline-block align-middle w-full" />
     </NuxtLink>
-    <div class="grid">
-      <div
-        v-for="preset in presets"
-        :key="preset.id"
-        :class="['preset-box', { 'selected': preset.selected }]"
-        @click="toggleSelect(preset)"
-      >
-        <div class="box-content">
-          <NuxtLink to="/">
-            <IconsLogoInverted class="box-image inline-block align-middle w-full" />
-          </NuxtLink>
-          <div class="box-title">{{ preset.title }}</div>
-          <div class="box-text"> 
-            <div v-for="(line, lineIndex) in preset.text" :key="line">
-              {{ line }}
-              <hr v-if="lineIndex !== preset.text.length - 1"/> <!-- The horizonal divider between the text lines is added here --> </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <PresetGrid :presets="presets" @toggle-select="toggleSelect" />
     <button
       class="action-button"
       :class="{ 'active': selectedPresets.length > 0 }"
@@ -34,11 +15,16 @@
 </template>
 
 <script>
+import PresetGrid from './PresetGrid.vue';
+
 export default {
+  components: {
+    PresetGrid
+  },
   data() {
     return {
       presets: [
-        {
+      {
           id: 1,
           image: 'Logo.jpg',
           title: 'Preset',
@@ -88,7 +74,6 @@ export default {
                  'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'],
           selected: false,
         },
-        // Add more presets as needed
       ],
     };
   },
@@ -99,15 +84,15 @@ export default {
   },
   methods: {
     toggleSelect(preset) {
-    if (preset.selected) {
-      preset.selected = false; // Deselect the clicked preset
-    } else {
-      this.presets.forEach(p => {
-        p.selected = false; // Deselect all presets
-      });
-      preset.selected = true; // Select the clicked preset
-    }
-  },
+      if (preset.selected) {
+        preset.selected = false; // Deselect the clicked preset
+      } else {
+        this.presets.forEach(p => {
+          p.selected = false; // Deselect all presets
+        });
+        preset.selected = true; // Select the clicked preset
+      }
+    },
     navigateToNextPage() {
       if (this.selectedPresets.length > 0) {
         // Set this to the [CalculationsPage]
@@ -118,57 +103,10 @@ export default {
 };
 </script>
 
-<!-- CSS styles moved to main.css; Import where needed and remove the following block -->
+<!-- Styles have been moved to main.css but i can't import them for the life of me. help.
+  [I think it actually works for this but the PresetGrid.vue import is defo hecked] -->
 
-<style scoped>
-
-.grid {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.preset-box {
-  width: 30%;
-  margin: 1%;
-  border: 3px solid black;
-  border-radius: 25px;
-  background-color: #f5f5f5;
-  cursor: pointer;
-}
-
-.selected {
-  background-color: rgba(9, 166, 215, 0.25); /* Change to DECK1 Blue with 25% opacity */
-}
-
-.box-image {
-  max-width: 100%;
-  margin-bottom: 3%;
-}
-
-.box-title {
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.2em;
-  margin-bottom: 2%;
-  /* Add title styles */
-}
-
-.box-text {
-  font-size: 1em;
-  text-align: center;
-  margin-left: 40px;
-  margin-right: 40px; 
-  /* Add text styles */
-}
-
-.box-text hr {
-  height: 2px; /*Width of the line*/
-  background-color: #000; 
-  margin: 0 auto; /* Centers the line */
-  width: 70%; /* Length of the line*/
-  opacity: 70%;
-}
-
+<style>
 
 .action-button {
   position: fixed;
@@ -187,4 +125,5 @@ export default {
 .active {
   background-color: #4caf50;
 }
+
 </style>

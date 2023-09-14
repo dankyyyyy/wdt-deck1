@@ -232,10 +232,10 @@
 
   /* General Box Styling */
 .clickable-box {
-  width: 400px;
-  height: 250px;
+  width: 650px;
+  height: 400px;
   background-color: #e0e0e0; 
-  border: 3px solid #333;
+  border: 4px solid #333;
   border-radius: 25px; /* Curvature of the box corners */
   margin: 25px; /* At least 50px space between boxes */
   cursor: pointer;
@@ -243,19 +243,19 @@
   position: relative; /* positioning of icon and text */
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Vertically center text and push it to the bottom */
+  justify-content: flex-end; /* Vertically center text and push it to the bottom */
 }
 
 /* Styles for the box on hover */
 .clickable-box:hover {
-  background-color: rgba(36, 118, 143, 0.5); /* #24768F at 50% opacity when hovered */
-  border-color: #000;
+  background-color: rgba(9, 166, 215, 0.25); /* Changes to DECK1 Blue with 25% opacity  */
+  border-color: #303F50;
 }
 
 /* Styles for the box when clicked */
 .clickable-box:active {
   background-color: rgba(255, 155, 56, 0.1); /* #FF9B38 at 10% opacity when clicked */
-  border-color: #000;
+  border-color: #303F50;
 }
 
 /* Text Centering */
@@ -263,26 +263,30 @@
 .clickable-box-text {
   display: flex;
   flex-direction: column;
+  justify-content: flex-end; /* Keeps the text at the bottom */
   align-items: center;
+  height: 100%;
+  margin-bottom: 25px;
 }
 
 /* Style for the title */
 .clickable-box-title {
   font-weight: bold;
-  margin-top: 10px;
-  font-size: 18px;
+  margin-top: 25px;
+  font-size: 24px;  
 }
 
 /* Style for the subtitle */
 .clickable-box-description {
-  font-size: 14px;
+  font-size: 18px;
   margin-top: 5px;
+  margin-bottom: 25px;
 }
 
 /* Style for the icon */
 .clickable-box-icon {
   position: absolute; /* position for the icon relative to the text */
-  top: 20px;
+  top: 150px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 24px; /* Icon Size */
@@ -299,39 +303,50 @@
 }
 
 .preset-box {
-  width: 30%;
+  width: 23%;
   margin: 1%;
-  border: 3px solid black;
+  border: 3px solid #303f50;
   border-radius: 25px;
   background-color: #f5f5f5;
   cursor: pointer;
 }
 
-.selected-preset-box {
-  background-color: rgba(173, 216, 230, 0.25); /* Change to DECK1 Blue with 25% opacity */
+.selected {
+  background-color: rgba(9, 166, 215, 0.25); /* Change to DECK1 Blue with 25% opacity */
 }
 
-.preset-box-content {
-  /* Add box content styles */
-}
-
-.preset-box-image {
+.box-image {
   max-width: 100%;
-  
+  margin-bottom: 3%;
+  margin-top: 25px;
 }
 
-.preset-box-title {
+.box-title {
+  text-align: center;
   font-weight: bold;
   font-size: 1.2em;
+  margin-bottom: 2%;
   /* Add title styles */
 }
 
-.preset-box-text {
-  font-size: 1em; 
+.box-text {
+  font-size: 1em;
+  text-align: center;
+  margin-left: 40px;
+  margin-right: 40px; 
+  margin-bottom: 25px;
   /* Add text styles */
 }
 
-.preset-action-button {
+.box-text hr {
+  height: 2px; /*Width of the line*/
+  background-color: #000; 
+  margin: 0 auto; /* Centers the line */
+  width: 70%; /* Length of the line*/
+  opacity: 70%;
+}
+
+.action-button {
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -347,7 +362,7 @@
 
 .active {
   background-color: #4caf50;
-}
+} 
 
 }
 
