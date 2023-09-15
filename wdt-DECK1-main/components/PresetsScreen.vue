@@ -9,7 +9,7 @@
       :class="{ 'active': selectedPresets.length > 0 }"
       @click="navigateToNextPage"
     >
-      Go
+        <IconsDoneTick class="flex items-center justify-center inline-block align-middle w-full"/>
     </button>
   </div>
 </template>
@@ -102,28 +102,3 @@ export default {
   },
 };
 </script>
-
-<!-- Styles have been moved to main.css but i can't import them for the life of me. help.
-  [I think it actually works for this but the PresetGrid.vue import is defo hecked] -->
-
-<style>
-
-.action-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #575757; /* Grey color as it's inactive by default */
-  color: white;
-  border: none;
-  border-radius: 50%;
-  font-size: 1.5em;
-  width: 60px;
-  height: 60px;
-  cursor: pointer;
-}
-
-.active {
-  background-color: #4caf50;
-}
-
-</style>
