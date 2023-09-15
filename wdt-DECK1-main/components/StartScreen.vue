@@ -22,12 +22,14 @@ export default {
   data() {
     return {
       presetBoxData: {
+        iconName: "PresetsIcon",
         title: 'Preset Page',
-        description: 'Click to go to the preset page.',
+        description: 'Choose from a wide variety of operation presets.',
       },
       customizationBoxData: {
+        iconName: "CustomizationIcon",
         title: 'Customization Page',
-        description: 'Click to go to the customization page.',
+        description: 'Create your own operation or model an existing one.',
       },
     };
   },

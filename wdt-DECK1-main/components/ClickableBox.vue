@@ -4,7 +4,7 @@
     <!-- Box content -->
     <div class="box-content">
       <!-- Icon above the title -->
-      <i class="clickable-box-icon">Icon</i>
+      <IconInterpreter :iconName="boxData.iconName" class="clickable-box-icon" />
       <div class="clickable-box-text">
         <div class="clickable-box-title">{{ boxData.title }}</div>
         <div class="clickable-box-description">{{ boxData.description }}</div>
@@ -14,7 +14,12 @@
 </template>
 
 <script>
+import IconInterpreter from "./IconInterpreter.vue";
+
 export default {
+  components:{
+    IconInterpreter
+  },
   methods: {
     redirectToPage() {
       this.$router.push(this.redirectPath);

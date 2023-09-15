@@ -7,7 +7,7 @@
         @click="toggleSelect(preset)"
       >
         <div class="box-content">
-            <IconsLogoInverted class="box-image inline-block align-middle w-full" />
+            <IconsLogoInverted class="box-image inline-block align-middle w-full" />  
           <div class="box-title">{{ preset.title }}</div>
           <div class="box-text"> 
             <div v-for="(line, lineIndex) in preset.text" :key="line">
