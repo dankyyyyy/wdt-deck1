@@ -19,6 +19,15 @@ function availableDays(asset: any, monthsAsset: number[]): number {
     return availableDays;
 }
 
+export function monthlyWorkabilityPerAsset(monthsAsset: number[]): number[] {
+    const monthlyWorkability: number[] = [];
+
+    for (let i = 0; i < monthsAsset.length; i++) {
+        monthlyWorkability[i] = Math.floor(((30 - monthsAsset[i]) / 30 ) * 100);
+    }
+    return monthlyWorkability;
+}
+
 export function workabilityPerAsset(asset: any, monthsAsset: number[]): number {
     const annualAvailability = availableDays(asset, monthsAsset);
     const workability = Math.floor((annualAvailability / 365) * 100);

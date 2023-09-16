@@ -1,6 +1,7 @@
 import { useWeatherdataStore } from "@/stores/WeatherdataStore";
 import { useWeatherStore } from "@/stores/WeatherStore";
 import "@/utils/chartUtils";
+import { monthlyWorkabilityPerAsset } from "./wgtCalc";
 
 const wdtStore = useWeatherStore()
 const dataStore = useWeatherdataStore();
@@ -40,7 +41,7 @@ export function start(
   monthsAsset = [];
 
   const weatherData: any = dataStore.currentData;
-  countYears(weatherData, amountOfYears);
+  countYears(weatherData);
 
   weatherData.forEach((element: any) => {
     if (element.Year >= amountOfYears - years + 1) {
@@ -92,7 +93,9 @@ export function start(
   }
 
   const name = asset.name;
-  wdtStore.assetsWdt[name] = monthsAsset;
+  wdtStore.assetsWdt[name] = monthlyWorkabilityPerAsset(monthsAsset);
+  console.log(`${asset.name}: `, monthlyWorkabilityPerAsset(monthsAsset));
+  // wdtStore.assetsWdt[name] = monthsAsset;
 }
 
 export function evaluateHourDay(asset: any, element: any, newDay: boolean) {
@@ -118,4 +121,32 @@ export function evaluateHourDay(asset: any, element: any, newDay: boolean) {
     );
     hoursAsset = [];
   }
+}
+
+function evaluateMonth(
+  monthArr: number[],
+  dayArr: number[],
+  month: number,
+  startMonth: number,
+  endMonth: number
+): number[] {
+  if (month >= startMonth && month <= endMonth) {
+    if (monthArr[month - 1] != null) {
+      monthArr[month - 1] += dayArr.filter((num) => num === 1).length;
+    } //amountOfYears+1 because it starts from 0
+    else {
+      monthArr[month - 1] = dayArr.filter((num) => num === 1).length;
+    }
+  }
+  return monthArr;
+}
+
+export function countYears(weatherData: any) {
+  let maxYear = 0;
+  for (const item of weatherData) {
+    if (item.Year > maxYear) {
+      maxYear = item.Year;
+    }
+  }
+  amountOfYears = maxYear;
 }

@@ -3,6 +3,7 @@ import Chart from "chart.js/auto";
 import { start } from "@/utils/wdtCalc";
 import { useWeatherStore } from "@/stores/WeatherStore";
 import { useAssetStore } from "@/stores/AssetStore";
+import { generateRandomColor } from "~/utils/chartUtils";
 
 export default {
   props: {
@@ -25,7 +26,6 @@ export default {
       const filteredAssets = assets.filter(asset => asset.category !== "WindTurbineGenerator");
       assets = filteredAssets;
       
-      //Call the calculations for each asset
       for (let i = 0; i < assets.length; i++) {
         start(
           props.filterParams.startHour,
@@ -36,7 +36,7 @@ export default {
           assets[i]
         );
       }
-            
+
       // Chart Construction
       const datasets = []
       for (const x in weatherStore.assetsWdt) {

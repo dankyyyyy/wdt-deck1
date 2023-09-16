@@ -26,33 +26,3 @@ export function generateRandomColor() {
 
     return `rgb(${randomColor.r}, ${randomColor.g}, ${randomColor.b})`;
 }
-
-export function evaluateMonth(
-    monthArr: number[],
-    dayArr: number[],
-    month: number,
-    startMonth: number,
-    endMonth: number
-): number[] {
-    if (month >= startMonth && month <= endMonth) {
-        if (monthArr[month - 1] != null) {
-            monthArr[month - 1] += dayArr.filter((num) => num === 1).length;
-        }
-        else {
-            monthArr[month - 1] = dayArr.filter((num) => num === 1).length;
-        }
-    }
-    return monthArr;
-}
-
-export function countYears(weatherData: any, amountOfYears: number) {
-    let maxYear = 0;
-    for (const item of weatherData) {
-        if (item.Year > maxYear) {
-            maxYear = item.Year;
-        }
-    }
-    amountOfYears = maxYear;
-
-    return amountOfYears;
-}
