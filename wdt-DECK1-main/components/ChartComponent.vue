@@ -64,6 +64,18 @@ export default {
             datasets,
           },
           options: {
+            plugins: {
+              tooltip: {
+                enabled: true,
+                callbacks: {
+                  label: (context) => {
+                    const assetName = context.dataset.label;
+                    const value  = context.raw;
+                    return `${assetName}: ${value}%`;
+                  },
+                },
+              },
+            },
             scales: {
               y: {
                 beginAtZero: true,
