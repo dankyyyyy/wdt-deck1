@@ -5,11 +5,6 @@ import "@/utils/chartUtils";
 const wdtStore = useWeatherStore()
 const dataStore = useWeatherdataStore();
 
-// CONFIG LIMIT
-// placeholder for location limit
-// wind speed limit - m*s^-1
-const conf_site_limit: number = 18;
-
 // CONFIG THRESHOLD - percentage of a day that can be no-fly
 // determines availability (50%+ => available)
 const threshold: number = 0.5;
@@ -86,10 +81,7 @@ export function start(
           startMonth,
           endMonth
         );
-
-        //clear days arrays
         daysAsset = [];
-        //increment current month
         current_month = Number(element.Month);
       }
     }
@@ -99,13 +91,13 @@ export function start(
     monthsAsset[i] = monthsAsset[i] / years;
   }
 
-  const name = asset ? asset.name : "Site";
+  const name = asset.name;
   wdtStore.assetsWdt[name] = monthsAsset;
 }
 
 export function evaluateHourDay(asset: any, element: any, newDay: boolean) {
   if (!newDay) {
-    if (asset) { //If it's an asset, not the site itself
+    if (asset) {
       if (asset.category === "Vessel") {
         hoursAsset.push(
           parseFloat(element.Sign[" wave height (Hs)"]) > asset.hs ? 1 : 0
@@ -116,20 +108,14 @@ export function evaluateHourDay(asset: any, element: any, newDay: boolean) {
             Number(element["VFR cloud"]) === asset.cloudbase
             ? 1 : 0
         );
-      } else if (asset.category === "WindTurbineGenerator") {
-        hoursAsset.push(parseFloat(element["Wind speed"]) > asset.windSpeedLimit ? 1 : 0);
       }
-    } else {
-      // 1 = WDT, 0 = !WDT
-      hoursAsset.push(parseFloat(element["Wind speed"]) > conf_site_limit ? 1 : 0);
     }
-  } else { //if it's the site we're evaluating
+  } else { // if next day, evaluate
     daysAsset.push(
       hoursAsset.filter((num) => num === 1).length / hoursAsset.length >=
         threshold
         ? 1 : 0
     );
-    //reset hours arrays
     hoursAsset = [];
   }
 }

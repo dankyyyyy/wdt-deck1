@@ -21,9 +21,12 @@ export default {
 
     onMounted(() => {
       if (assetStore.assets.length === 0) assetStore.getAll();
-      const assets = assetStore.assets;
+      var assets = assetStore.assets;
+      const filteredAssets = assets.filter(asset => asset.category !== "WindTurbineGenerator");
+      assets = filteredAssets;
+      
       //Call the calculations for each asset
-      for (let i = 0; i < assets.length; i++){
+      for (let i = 0; i < assets.length; i++) {
         start(
           props.filterParams.startHour,
           props.filterParams.endHour,
@@ -33,16 +36,8 @@ export default {
           assets[i]
         );
       }
-      
-      //Call the calculations for the site
-      start(
-        props.filterParams.startHour,
-        props.filterParams.endHour,
-        props.filterParams.startMonth,
-        props.filterParams.endMonth,
-        props.filterParams.years,
-        "",
-      );
+            
+      // Chart Construction
       const datasets = []
       for (const x in weatherStore.assetsWdt) {
         datasets.push({
