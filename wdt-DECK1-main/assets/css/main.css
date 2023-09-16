@@ -44,6 +44,8 @@
   }
 
   .bg-image {
+    /*background-image: url('assets\wdt_background3.png'); */
+    /* background-image: url('assets\wdt_background2_low_opacity.png'); */
     background-image: url('assets\wdt-background-temporary-blurred.png');
     background-size: cover; /* Adjust as needed */
     background-position: center center; /* Adjust as needed */
