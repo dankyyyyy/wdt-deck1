@@ -1,15 +1,15 @@
 <template>
     <div>
-      <StartScreen />
+      <PresetsScreen />
     </div>
   </template>
   
   <script>
-  import StartScreen from '@/components/StartScreen.vue';
+  import PresetsScreen from '@/components/PresetsScreen.vue';
   
   export default {
     components: {
-      StartScreen,
+      PresetsScreen,
     },
   };
   </script>
