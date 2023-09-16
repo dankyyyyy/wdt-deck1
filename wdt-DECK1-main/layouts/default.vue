@@ -1,9 +1,10 @@
 <template>
-  <div scoped class="bg-image"> 
-    <div class="flex">
-      <div class="main-content py-5 pr-5 h-screen w-full">
-       <router-view presets />
+  <div class="flex">
+    <div class="sidebar-container p-5 h-screen">
+      <Sidebar />
+    </div>
+    <div class="main-content py-5 pr-5 h-min">
+      <slot />
     </div>
   </div>
-</div>
 </template>
