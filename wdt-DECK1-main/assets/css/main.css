@@ -239,13 +239,17 @@
 
   /* General Box Styling */
 .clickable-box {
-  width: 650px;
-  height: 400px;
+  width: 80%; /* Sets the width to 80% of the parent container */
+  max-width: 600px; /* Sets a maximum width to maintain readability on larger screens */
+  min-width: fit-content;
+  height: 35vh; /* Sets height to 50% of the viewport height */
+  max-height: 400px;
+  min-height: fit-content;
   background-color: #e0e0e0; 
   border: 4px solid #333;
   border-radius: 70px; /* Curvature of the box corners */
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45); /* Drop shadow */
-  margin: 25px; /* At least 50px space between boxes */
+  margin: 2.5%; /* Percentages for margin to maintain spacing relative to the parent container */
   cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
   position: relative; /* positioning of icon and text */
@@ -274,27 +278,29 @@
   justify-content: flex-end; /* Keeps the text at the bottom */
   align-items: center;
   height: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 5%;
 }
 
 /* Style for the title */
 .clickable-box-title {
   font-weight: bold;
-  margin-top: auto;
-  font-size: 24px;  
+  font-size: 1.48em;
+  text-align: center;
+  margin-top: auto;  
 }
 
 /* Style for the subtitle */
 .clickable-box-description {
-  font-size: 18px;
-  margin-top: 5px;
-  margin-bottom: 30px;
+  font-size: 1.15em;
+  text-align: center;
+  margin-top: 2%;
+  margin-bottom: 5%;
 }
 
 /* Style for the icon */
 .clickable-box-icon {
   position: absolute; /* position for the icon relative to the text */
-  top: 100px;
+  top: 15%;
   left: 50%;
   transform: translateX(-50%);
   color: #333; /* Icon Color */
@@ -364,8 +370,8 @@
   border-radius: 50%;
   font-size: 36px;
   font-weight: bold;
-  width: 100px;
-  height: 100px;
+  width: 2.79em;
+  height: 2.79em;
   cursor: pointer;
 
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45); /* Drop shadow */
