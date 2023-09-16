@@ -5,6 +5,7 @@ export interface ILocation {
     latitude: number;
     longitude: number;
     limit: number;
+    wtg: number;
 }
 //weatherdata
 export interface IWeatherdata {
@@ -20,18 +21,39 @@ export interface IWeatherdata {
 }
 //assets
 export interface IAsset {
+    // shared attributes
     _id?: string;
     name: string;
     category: string;
     hs: number;
-    cloudbase: number;
     visibility: number;
+    windSpeedLimit: number,
+    dayRate: number,
+    operationalFuelConsumption: number,
+    dailyAvailableTimePerTeam: number,
+    staffPerTeam: number,
+    totalYearlyAvailableTime: number,
+
+    // vessel-only attributes
+    vesselSpeed: number,
+    fuelFlowLoitering: number,
+    loitering: number,
+    highEngineActivity: number,
+
+    // Helicopter-only Attributes
+    helicopterSpeed: number,
+    cloudbase: number,
+    
+    // WTG-only Attributes
+    plannedMaintenance: number,
+    troubleshootVisits: number,
+    averageTsHours: number,
 }
 
 //teams
 export interface ITeam {
     _id?: string;
     name: string;
-    numberofPersons: number;
+    numberOfPersons: number;
     shiftPeriod: number;
 }

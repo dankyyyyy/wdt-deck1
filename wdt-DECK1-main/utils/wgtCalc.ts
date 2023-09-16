@@ -19,6 +19,15 @@ function availableDays(asset: any, monthsAsset: number[]): number {
     return availableDays;
 }
 
+export function monthlyWorkabilityPerAsset(monthsAsset: number[]): number[] {
+    const monthlyWorkability: number[] = [];
+
+    for (let i = 0; i < monthsAsset.length; i++) {
+        monthlyWorkability[i] = Math.floor(((30 - monthsAsset[i]) / 30 ) * 100);
+    }
+    return monthlyWorkability;
+}
+
 export function workabilityPerAsset(asset: any, monthsAsset: number[]): number {
     const annualAvailability = availableDays(asset, monthsAsset);
     const workability = Math.floor((annualAvailability / 365) * 100);
@@ -26,7 +35,7 @@ export function workabilityPerAsset(asset: any, monthsAsset: number[]): number {
 }
 
 export function annualTotalAvailableHours(asset: any, team: any, monthsAsset: number[]): number {
-    const dailyHoursPerTeam = team.numberofPersons * team.shiftPeriod;
+    const dailyHoursPerTeam = team.numberOfPersons * team.shiftPeriod;
     const annualAvailability = (availableDays(asset, monthsAsset) * 24);
     const annualTotalAvailableHours = dailyHoursPerTeam * annualAvailability;
 
@@ -34,11 +43,11 @@ export function annualTotalAvailableHours(asset: any, team: any, monthsAsset: nu
 }
 
 export function annualTotalRequiredHours(asset: any, location: any): number {
-    const amountofWTG = location.wtg;
+    const amountOfWTG = location.wtg;
     const plannedMaintenance = asset.plannedMaintenance;
     const troubleshooting = asset.troubleshootVisits * asset.averageTsHours;
     const requiredHoursPerWtg = plannedMaintenance + troubleshooting;
-    const annualTotalRequiredHours = amountofWTG * requiredHoursPerWtg;
+    const annualTotalRequiredHours = amountOfWTG * requiredHoursPerWtg;
 
     return annualTotalRequiredHours;
 }

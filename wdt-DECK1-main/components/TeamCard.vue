@@ -12,8 +12,8 @@
         <DeleteTeamModal :team="team" v-if="isDeleteModalVisible" @hideModal="hideModal" />
       </div>
       <div class="">
-        <label for="numberofpersons">Number of persons: </label>
-        <input type="text" v-model="team.numberofPersons" class="text-center border-2 rounded" disabled />
+        <label for="numberOfPersons">Number of persons: </label>
+        <input type="text" v-model="team.numberOfPersons" class="text-center border-2 rounded" disabled />
       </div>
       <div class="">
         <label for="shiftPeriod">Shift period: </label>
