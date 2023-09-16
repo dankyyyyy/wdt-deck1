@@ -26,6 +26,10 @@ const schema: mongoose.Schema = new mongoose.Schema(
             type: Number,
             required: true
         },
+        "Visibility": {
+            type: Number,
+            required: true
+        },
         "Cloud base": {
             type: Number,
             required: true

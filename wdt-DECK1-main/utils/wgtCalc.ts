@@ -26,7 +26,7 @@ export function workabilityPerAsset(asset: any, monthsAsset: number[]): number {
 }
 
 export function annualTotalAvailableHours(asset: any, team: any, monthsAsset: number[]): number {
-    const dailyHoursPerTeam = team.numberofPersons * team.shiftPeriod;
+    const dailyHoursPerTeam = team.numberOfPersons * team.shiftPeriod;
     const annualAvailability = (availableDays(asset, monthsAsset) * 24);
     const annualTotalAvailableHours = dailyHoursPerTeam * annualAvailability;
 

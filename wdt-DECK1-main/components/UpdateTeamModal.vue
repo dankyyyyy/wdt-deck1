@@ -19,8 +19,8 @@
           <input type="text" v-model="teamRef.name" class="border-2 rounded-md text-center" />
         </div>
         <div class="create-input whitespace-nowrap">
-          <label for="numberofpersons">Number of persons: </label>
-          <input type="text" v-model="teamRef.numberofPersons" class="border-2 rounded-sm text-center" />
+          <label for="numberOfPersons">Number of persons: </label>
+          <input type="text" v-model="teamRef.numberOfPersons" class="border-2 rounded-sm text-center" />
         </div>
         <div class="create-input whitespace-nowrap">
           <label for="shiftPeriod">Shift period: </label>
