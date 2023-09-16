@@ -18,12 +18,7 @@ const schema: mongoose.Schema = new mongoose.Schema(
         vesselSpeed: {type: Number},
         fuelFlowLoitering: {type: Number},
         loitering: {type: Number},
-
-        // CTV-specific Attributes
-        transitTime: {type: Number},
-
-        // SVO-specific Attributes
-        svoWorkingHours: {type: Number},
+        highEngineActivity: {type: Number},
 
         // Helicopter-only Attributes
         helicopterSpeed: {type: Number},

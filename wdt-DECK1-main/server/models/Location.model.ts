@@ -18,6 +18,10 @@ const schema: mongoose.Schema = new mongoose.Schema(
             type: Number,
             required: true
         },
+        wtg: {
+            type: Number,
+            required: true
+        }
     },
     { timestamps: true }
 )

@@ -5,7 +5,10 @@
       <IconsAdd @click="showModal" class="cursor-pointer" />
       <!-- add on hover description like "by clicking on this "+" button you can add another asset to your fleet" -->
     </div>
+
+    <!-- CreateAssetModal-->
     <CreateAssetModal v-if="isModalVisible" @hideModal="hideModal" />
+
     <div class="flex flex-col p-5">
       <h2 class="text-lg font-semibold w-full pl-5">Vessels</h2>
       <div class="flex pb-5" v-if="assets !== undefined">

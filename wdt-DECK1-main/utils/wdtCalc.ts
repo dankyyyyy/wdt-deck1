@@ -1,17 +1,17 @@
 import { useWeatherdataStore } from "@/stores/WeatherdataStore";
 import { useWeatherStore } from "@/stores/WeatherStore";
+import "@/utils/chartUtils";
+import { monthlyWorkabilityPerAsset } from "./wgtCalc";
 
 const wdtStore = useWeatherStore()
 const dataStore = useWeatherdataStore();
 
-// CONFIG LIMITS
-const conf_site_limit: number = 18;
-
-// CONFIG THRESHOLDS - percentage of a day that can be no-fly 
+// CONFIG THRESHOLD - percentage of a day that can be no-fly
+// determines availability (50%+ => available)
 const threshold: number = 0.5;
 
 //hours
-let hoursAsset: Number[] = []
+let hoursAsset: number[] = []
 
 //days
 let daysAsset: number[] = []
@@ -24,6 +24,7 @@ let current_month: number;
 let amountOfYears: number;
 
 export function start(
+  // filter variables
   timeRangeStart: number,
   timeRangeEnd: number,
   startMonth: number,
@@ -31,6 +32,7 @@ export function start(
   years: number,
   asset: any,
 ) {
+  // filters initialized
   startMonth = startMonth;
   endMonth = endMonth;
   current_day = 1;
@@ -39,9 +41,8 @@ export function start(
   monthsAsset = [];
 
   const weatherData: any = dataStore.currentData;
-  
   countYears(weatherData);
-  
+
   weatherData.forEach((element: any) => {
     if (element.Year >= amountOfYears - years + 1) {
       if (current_day === Number(element.Day)) {
@@ -81,10 +82,7 @@ export function start(
           startMonth,
           endMonth
         );
-
-        //clear days arrays
         daysAsset = [];
-        //increment current month
         current_month = Number(element.Month);
       }
     }
@@ -94,37 +92,33 @@ export function start(
     monthsAsset[i] = monthsAsset[i] / years;
   }
 
-  const name = asset ? asset.name : "Site";
-  wdtStore.assetsWdt[name] = monthsAsset;
+  const name = asset.name;
+  wdtStore.assetsWdt[name] = monthlyWorkabilityPerAsset(monthsAsset);
+  console.log(`${asset.name}: `, monthlyWorkabilityPerAsset(monthsAsset));
+  // wdtStore.assetsWdt[name] = monthsAsset;
 }
-function evaluateHourDay(asset: any, element: any, newDay: boolean) {
+
+export function evaluateHourDay(asset: any, element: any, newDay: boolean) {
   if (!newDay) {
-    if (asset) { //If it's an asset, not the site itself
-    if (asset.category === "Vessel") {
-    hoursAsset.push(
-      parseFloat(element.Sign[" wave height (Hs)"]) > asset.hs
-        ? 1 : 0
-    );
+    if (asset) {
+      if (asset.category === "Vessel") {
+        hoursAsset.push(
+          parseFloat(element.Sign[" wave height (Hs)"]) > asset.hs ? 1 : 0
+        );
+      } else if (asset.category === "Helicopter") {
+        hoursAsset.push(
+          parseFloat(element.Visibility) < asset.visibility ||
+            Number(element["VFR cloud"]) === asset.cloudbase
+            ? 1 : 0
+        );
+      }
     }
-    else if (asset.category === "Helicopter") {
-      hoursAsset.push(
-        parseFloat(element.Visibility) < asset.visibility ||
-          Number(element["VFR cloud"]) === asset.cloudbase
-          ? 1 : 0
-      );
-    } 
-    } else {
-      hoursAsset.push(parseFloat(element["Wind speed"]) > conf_site_limit ? 1 : 0);
-    }
-    
-  } else { //if it's the site we're evaluating
+  } else { // if next day, evaluate
     daysAsset.push(
       hoursAsset.filter((num) => num === 1).length / hoursAsset.length >=
         threshold
         ? 1 : 0
     );
-    
-    //reset hours arrays
     hoursAsset = [];
   }
 }
@@ -147,7 +141,7 @@ function evaluateMonth(
   return monthArr;
 }
 
-function countYears(weatherData: any) {
+export function countYears(weatherData: any) {
   let maxYear = 0;
   for (const item of weatherData) {
     if (item.Year > maxYear) {

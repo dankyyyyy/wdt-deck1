@@ -4,20 +4,8 @@ import axios from "axios"
 
 export const useLocationStore = defineStore("LocationStore",{
     state: () => ({
-        // const location1 = reactive<object>({id: 1,name: "Location 1",latitude: "55.675758",longitude: "12.569020", limit: 15});
-        // const location2 = reactive<object>({id: 2,name: "Location 2",latitude: "59.913868",longitude: "10.752245", limit: 21});
-        // const location3 = reactive<object>({id: 3,name: "Location 3",latitude: "34.321843",longitude: "19.231034", limit: 13});
-        // const location4 = reactive<object>({id: 4,name: "Location 4",latitude: "42.497681",longitude: "27.470030", limit: 19});
         locations: [] as ILocation[],
         loading: false,
-        
-        // return{
-        //     location1,
-        //     location2,
-        //     location3,
-        //     location4,
-        //     locations,
-        // }
     }),
     actions: {
         async getByName(name: string) {
@@ -39,15 +27,50 @@ export const useLocationStore = defineStore("LocationStore",{
         },
         async post(location: ILocation) {
             try {
-                console.log('Registering location to database')
+                console.log('Creating location', location.name, ' ', location._id);
                 const response = await axios.post('/api/locations/create', location);
                 console.log(response.data.message);
-                // handle success
+                if (response.status === 200) {
+                    console.log('Location created successfully\n', response);
+                  } else {
+                    console.error('Location creation failed with status', response.status);
+                  }
             } catch (error) {
-                console.error(error);
-                // handle error
+                console.error('Error creating location: ', error);
             }
             this.getAll()
+        },
+        async put(location: ILocation) {
+            try {
+                console.log('Updating location ', location.name, ' ', location._id);
+                const response = await axios.post('/api/locations/update', location);
+                console.log(response.data.message);
+                if (response.status === 200) {
+                    console.log('Location updated successfully\n', response);
+                  } else {
+                    console.error('Location update failed with status', response.status);
+                  }
+            } catch (error) {
+                console.error('Error updating location: ', error);
+            }
+            this.getAll()
+        },
+        async delete(location: ILocation) {
+            try {
+                console.log('Deleting location ', location.name, ' ', location._id);
+                const response = await axios.delete('/api/locations/delete', {
+                    data: location
+                });
+                console.log(response.data.message);
+                if (response.status === 200) {
+                    console.log('Location deleted successfully\n', response);
+                  } else {
+                    console.error('Location delete failed with status', response.status);
+                  }
+            } catch (error) {
+                console.error('Error deleting location:', error);
+            }
+           this.getAll()
         },
         toggleLoading(){
             this.loading = !this.loading;
