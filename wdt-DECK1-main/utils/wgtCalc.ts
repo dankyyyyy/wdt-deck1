@@ -4,7 +4,7 @@ const wdtStore = useWeatherStore()
 
 function unavailableDays(asset: any, monthsAsset: number[]): number {
     var unavailableDays = 0;
-    const name = asset ? asset.name : "Site";
+    const name = asset.name;
     wdtStore.assetsWdt[name] = monthsAsset;
 
     for (let i = 0; i < monthsAsset.length; i++) {
@@ -31,6 +31,7 @@ export function monthlyWorkabilityPerAsset(monthsAsset: number[]): number[] {
 export function workabilityPerAsset(asset: any, monthsAsset: number[]): number {
     const annualAvailability = availableDays(asset, monthsAsset);
     const workability = Math.floor((annualAvailability / 365) * 100);
+    
     return workability;
 }
 
@@ -55,7 +56,8 @@ export function annualTotalRequiredHours(asset: any, location: any): number {
 export function availablePerRequiredInPercent(asset: any, team: any, location: any, monthsAsset: number[]): number {
     const availableHours = annualTotalAvailableHours(asset, team, monthsAsset);
     const requiredHours = annualTotalRequiredHours(asset, location);
-    const availablePerRequired = Math.floor((availableHours / requiredHours) * 100)
+    const availablePerRequired = Math.floor((availableHours / requiredHours) * 100);
+    
     return availablePerRequired;
 }
 
