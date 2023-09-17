@@ -36,13 +36,14 @@ export interface IAsset {
 
     // vessel-only attributes
     vesselSpeed: number,
-    fuelFlowLoitering: number,
+    loiteringFuelConsumption: number,
     loitering: number,
     highEngineActivity: number,
 
     // Helicopter-only Attributes
     helicopterSpeed: number,
     cloudbase: number,
+    flightTime: number,
     
     // WTG-only Attributes
     plannedMaintenance: number,

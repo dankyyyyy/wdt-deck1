@@ -28,6 +28,20 @@
           <label for="windSpeedLimit"> kt</label>
         </div>
 
+        <div v-if="assetRef.category === 'Vessel' || assetRef.category === 'Helicopter'">
+          <div class="update-input">
+            <label for="limit">H<sub>S</sub> Limit: </label>
+            <input type="text" v-model="assetRef.hs" class="border-2 rounded-md text-center " />
+            <label for="limit"> m</label>
+          </div>
+
+          <div class="update-input">
+            <label for="dayRate">Day Rate: </label>
+            <input type="text" v-model="assetRef.dayRate" class="border-2 rounded-md text-center " />
+            <label for="dayRate"> €</label>
+          </div>
+        </div>
+
         <div v-if="assetRef.category === 'Vessel'">
           <div class="update-input">
             <label for="vesselSpeed">Vessel Speed: </label>
@@ -38,6 +52,12 @@
           <div class="update-input">
             <label for="highEngineActivity">High Engine Activity: </label>
             <input type="text" v-model="assetRef.highEngineActivity" class="border-2 rounded-md text-center" />
+            <label for="highEngineActivity"> h</label>
+          </div>
+
+          <div class="update-input">
+            <label for="highEngineActivity">Loitering: </label>
+            <input type="text" v-model="assetRef.loitering" class="border-2 rounded-md text-center" />
             <label for="highEngineActivity"> h</label>
           </div>
         </div>
@@ -60,25 +80,29 @@
           </div>
         </div>
 
-        <div v-if="assetRef.category === 'Vessel' || assetRef.category === 'Helicopter'">
-          <div class="update-input">
-            <label for="limit">H<sub>S</sub> Limit: </label>
-            <input type="text" v-model="assetRef.hs" class="border-2 rounded-md text-center " />
-            <label for="limit"> m</label>
-          </div>
+        <div class="update-input">
+          <label for="operationalFuelConsumption">Fuel Consumption: </label>
+          <input type="text" v-model="assetRef.operationalFuelConsumption" class="border-2 rounded-md text-center " />
+          <label for="operationalFuelConsumption"> l/h</label>
+        </div>
 
+        <div v-if="assetRef.category === 'Vessel'">
           <div class="update-input">
-            <label for="dayRate">Day Rate: </label>
-            <input type="text" v-model="assetRef.dayRate" class="border-2 rounded-md text-center " />
-            <label for="dayRate"> €</label>
-          </div>
-
-          <div class="update-input">
-            <label for="operationalFuelConsumption">Fuel Consumption: </label>
-            <input type="text" v-model="assetRef.operationalFuelConsumption" class="border-2 rounded-md text-center " />
+            <label for="operationalFuelConsumption">Fuel Consumption when Loitering: </label>
+            <input type="text" v-model="assetRef.loiteringFuelConsumption" class="border-2 rounded-md text-center " />
             <label for="operationalFuelConsumption"> l/h</label>
           </div>
+        </div>
 
+        <div v-if="assetRef.category === 'Helicopter'">
+          <div class="update-input">
+            <label for="operationalFuelConsumption">Flight Time (2 round trips): </label>
+            <input type="text" v-model="assetRef.flightTime" class="border-2 rounded-md text-center " />
+            <label for="operationalFuelConsumption"> h</label>
+          </div>
+        </div>
+
+        <div v-if="assetRef.category === 'Vessel' || assetRef.category === 'Helicopter'">
           <div class="update-input">
             <label for="dailyAvailableTimePerTeam">Daily Available Time: </label>
             <input type="text" v-model="assetRef.dailyAvailableTimePerTeam" class="border-2 rounded-md text-center " />
@@ -105,7 +129,7 @@
           </div>
 
           <div class="update-input">
-            <label for="limit">Troubleshoot Visitings: </label>
+            <label for="limit">Troubleshoot Visits: </label>
             <input type="text" v-model="assetRef.troubleshootVisits" class="border-2 rounded-md text-center" />
           </div>
 
