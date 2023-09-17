@@ -35,7 +35,7 @@ export interface IAsset {
 
     // vessel-only attributes
     vesselSpeed: number,
-    fuelFlowLoitering: number,
+    loiteringFuelConsumption: number,
     loitering: number,
     highEngineActivity: number,
 

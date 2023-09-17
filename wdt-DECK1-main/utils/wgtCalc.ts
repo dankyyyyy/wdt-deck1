@@ -61,7 +61,24 @@ export function availablePerRequiredInPercent(asset: any, team: any, location: a
     return availablePerRequired;
 }
 
+export function annualCostPerAssetWithoutFuel(asset: any): number {
+    const dayRate = asset.dayRate;
+    const annualCost = dayRate * 365;
+    return annualCost;
+}
 
+function totalDailyFuelVessel(asset: any): number {
+    const totalLoitering = asset.loitering * asset.loiteringFuelConsumption;
+    const totalOperational = asset.highEngineActivity * asset.operationalFuelConsumption;
+    const totalFuel = totalLoitering + totalOperational;
+    
+    return totalFuel;
+}
+
+function totalDailyFuelHelicopter(asset: any): number {
+    const totalFuel = asset.operationalFuelConsumption * asset.flightTime;
+    return totalFuel;
+}
 
 
 
