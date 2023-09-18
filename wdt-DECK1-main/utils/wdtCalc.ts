@@ -32,6 +32,10 @@ export function start(
   years: number,
   asset: any,
 ) {
+
+  const wdtStore = useWeatherStore()
+  const dataStore = useWeatherdataStore();
+
   // filters initialized
   startMonth = startMonth;
   endMonth = endMonth;
@@ -94,7 +98,6 @@ export function start(
 
   const name = asset.name;
   wdtStore.assetsWdt[name] = monthlyWorkabilityPerAsset(monthsAsset);
-  console.log(`${asset.name}: `, monthlyWorkabilityPerAsset(monthsAsset));
   // wdtStore.assetsWdt[name] = monthsAsset;
 }
 

@@ -23,7 +23,7 @@
       <input type="text" v-model="location.latitude" class="w-32 border-2 rounded-md text-center" disabled />
       <label>Longitude: </label>
       <input type="text" v-model="location.longitude" class="w-32 border-2 rounded-md text-center" disabled />
-      <label>Limit: </label>
+      <label>Wind speed limit: </label>
       <input type="text" v-model="location.limit" class="w-32 border-2 rounded-md text-center" disabled />
       <label>WTG: </label>
       <input type="text" v-model="location.wtg" class="w-32 border-2 rounded-md text-center" disabled />
