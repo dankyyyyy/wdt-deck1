@@ -11,9 +11,9 @@ CORS(appFlask)
 # we can do so by specifying the origins parameter:
 # CORS(app, origins="http://thedomain.com")
 
-@appFlask.route("/data/<c1>/<c2>/<c3>/<c4>/<name>", methods = ['GET'])
-def getData(c1, c2, c3, c4, name):
-	result = cds_api_fetcher.retrieve(c1, c2, c3, c4, name)
+@appFlask.route("/data/<c1>/<c2>/<c3>/<c4>/<name>/<year>", methods = ['GET'])
+def getData(c1, c2, c3, c4, name, year):
+	result = cds_api_fetcher.retrieve(c1, c2, c3, c4, name, year)
 	return result[0], result[1]
 
 @appFlask.route("/delete/<filename>", methods=['DELETE'])

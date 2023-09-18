@@ -107,7 +107,7 @@
         const store = useLocationStore();
         await store.post(this.location)
         const coordinates = this.decimalToCoordinates(this.location.longitude, this.location.latitude)
-        this.callRetrieve(coordinates.north, coordinates.west, coordinates.south, coordinates.east, this.location.name);
+        this.callRetrieve(coordinates.North, coordinates.West, coordinates.South, coordinates.East, this.location.name);
         this.$emit("hideModal");
       },
       async callRetrieve(north, west, south, east, locName) {
@@ -117,24 +117,29 @@
             const c3 = south
             const c4 = east
             const name = locName
-            const response = await axios.get(`http://127.0.0.1:5555/data/${c1}/${c2}/${c3}/${c4}/${name}`).finally( () => {
-              this.$emit("notifyLocationCard")
-            }); //python api url could be moved to .env
+            const yearNow = new Date().getFullYear()
+            for (let i = yearNow; i > yearNow-20; i = i-2) {
+              console.log('asdasd');
+            const response = await axios.get(`http://127.0.0.1:5555/data/${c1}/${c2}/${c3}/${c4}/${name}/${i}`); //python api url could be moved to .env
+            }
           } catch (error) {
           console.error('Error calling retrieve:', error);
         }
       },
       decimalToCoordinates(long, lat) {
-      const longDir = long >= 0 ? (long === 0 ? 'N' : 'E') : 'W';
-      const latDir = lat >= 0 ? (lat === 0 ? 'E' : 'N') : 'S';
-      const absoluteDecimalLong = Math.abs(long);
-      const absoluteDecimalLat = Math.abs(lat);
-      return {
-      north: latDir === 'N' ? absoluteDecimalLat : absoluteDecimalLat * (-1), //?
-      south: latDir === 'S' ? absoluteDecimalLat : absoluteDecimalLat * (-1),
-      west: longDir === 'W' ? absoluteDecimalLong : absoluteDecimalLong * (-1),
-      east: longDir === 'E' ? absoluteDecimalLong : absoluteDecimalLong * (-1),
-      };
+        //!!!!!! ?
+        let north, west, south, east;
+        north = Number(lat) + 0.75
+        south = Number(lat) - 0.75
+        west = Number(long) - 0.75
+        east = Number(long) + 0.75
+        // Create an object to store the results
+        return {
+          North: north,
+          South: south,
+          East: east,
+          West: west,
+        };
     },
     },
   };

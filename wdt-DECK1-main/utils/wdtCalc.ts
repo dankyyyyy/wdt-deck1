@@ -2,9 +2,6 @@ import { useWeatherdataStore } from "@/stores/WeatherdataStore";
 import { useWeatherStore } from "@/stores/WeatherStore";
 import "@/utils/wgtCalc";
 
-const wdtStore = useWeatherStore()
-const dataStore = useWeatherdataStore();
-
 // CONFIG LIMITS
 // placeholder for location limit
 // wind speed limit - m*s^-1
@@ -36,6 +33,10 @@ export function start(
   years: number,
   asset: any,
 ) {
+
+  const wdtStore = useWeatherStore()
+  const dataStore = useWeatherdataStore();
+  
   // filters initialized
   startMonth = startMonth;
   endMonth = endMonth;
@@ -104,7 +105,7 @@ export function start(
   // access asset
   wdtStore.assetsWdt[name] = monthsAsset;
   console.log(name,": ", monthsAsset);
-  console.log(workabilityPerAsset(asset, monthsAsset), "% ");
+  // console.log(workabilityPerAsset(asset, monthsAsset), "% ");
   /*
   console.log(annualTotalAvailableHours(asset, team, monthsAsset), " hours");
   console.log(annualTotalRequiredHours(asset, location), "hours");
@@ -172,4 +173,6 @@ function countYears(weatherData: any) {
     }
   }
   amountOfYears = maxYear;
+
+  return amountOfYears
 }

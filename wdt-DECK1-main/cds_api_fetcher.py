@@ -9,8 +9,10 @@ import os
 
 c = cdsapi.Client(url = "https://cds.climate.copernicus.eu/api/v2", key = "194760:1d68b23e-3621-4c23-b31a-bbb20a26e263")
 
-def retrieve(c1, c2, c3, c4, name):
-    name = name + ".grib"
+def retrieve(c1, c2, c3, c4, name, year):
+    previousYear = int(year)-1
+    name = name + year + "-" + str(previousYear) + ".grib"
+    years = [ year, str(previousYear) ]
     variables = [
         '100m_u_component_of_wind', '100m_v_component_of_wind', 'significant_height_of_combined_wind_waves_and_swell', 'total_cloud_cover'
     ]
@@ -49,9 +51,7 @@ def retrieve(c1, c2, c3, c4, name):
                 'month': [
                     '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12',
                 ],
-                'year': [
-                    '2023'
-                ],
+                'year': years,
                 'variable': variables
             }, name)
         
@@ -71,6 +71,7 @@ def retrieve(c1, c2, c3, c4, name):
                 variable_name = variables[j]
                 j += 1
                 # print("Message {}: {} {} - {:.3f} {}".format(i, time, variable_name, values.mean(), lons.shape))
+                print(lons, ' ', lats)
                 
 
                 # Collect the required data
