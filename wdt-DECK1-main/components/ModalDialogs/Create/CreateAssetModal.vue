@@ -1,6 +1,6 @@
 <template>
   <div class="overlay" @click="hideModal">
-    <div class="modal rounded-lg flex-col" style="max-height: 80%; overflow-y: auto;">
+    <div class="modal rounded-lg flex-col" style="max-height: 80%; overflow-y: scroll; overflow-x: hidden;">
       <h3 class="font-semibold">Asset creation</h3>
       <div class="py-5 flex flex-col flex-wrap content-normal">
         <div class="border-2 border-dashed rounded-md h-56 flex flex-col justify-center items-center">
@@ -114,40 +114,23 @@
           </div>
         </div>
 
-        <div v-if="asset.category === 'Vessel' || asset.category === 'Helicopter'">
-          <div class="create-input whitespace-nowrap">
-            <label for="dailyAvailableTimePerTeam">Daily Available Time: </label>
-            <input type="text" v-model="asset.dailyAvailableTimePerTeam" class="border-2 rounded-md text-center " />
-            <label for="dailyAvailableTimePerTeam"> h/team</label>
-          </div>
-
-          <div class="create-input whitespace-nowrap">
-            <label for="staffPerTeam">Team Size: </label>
-            <input type="text" v-model="asset.staffPerTeam" class="border-2 rounded-md text-center " />
-            <label for="staffPerTeam"> people</label>
-          </div>
-
-          <div class="create-input whitespace-nowrap">
-            <label for="totalYearlyAvailableTime">Total Available Time: </label>
-            <input type="text" v-model="asset.totalYearlyAvailableTime" class="border-2 rounded-md text-center " />
-            <label for="totalYearlyAvailableTime"> /year</label>
-          </div>
-        </div>
-
         <div v-else-if="asset.category === 'WindTurbineGenerator'">
           <div class="create-input whitespace-nowrap">
             <label for="limit">Planned Maintenance: </label>
             <input type="text" v-model="asset.plannedMaintenance" class="border-2 rounded-md text-center" />
+            <label for="plannedMaintenance"> h/WTG</label>
           </div>
 
           <div class="create-input whitespace-nowrap">
-            <label for="limit">Troubleshoot Visitings: </label>
+            <label for="limit">Troubleshoot Visits: </label>
             <input type="text" v-model="asset.troubleshootVisits" class="border-2 rounded-md text-center" />
+            <label for="troubleshootVisits"> /WTG</label>
           </div>
 
           <div class="create-input whitespace-nowrap">
             <label for="limit">Average TS hours: </label>
             <input type="text" v-model="asset.averageTsHours" class="border-2 rounded-md text-center" />
+            <label for="averageTsHours"> h</label>
           </div>
         </div>
       </div>

@@ -60,8 +60,8 @@ export default {
       try {
         const response = await axios.delete(`http://127.0.0.1:5555/delete/${this.location.name}.json`);
         console.log('File deleted successfully:', response.data);
-
-        const weatherData = await import(`~/static/${this.location.name}-weather.json`);
+        
+        const weatherData = await import(/* @vite-ignore */`~/static/${this.location.name}-weather.json`);
         useWeatherdataStore().postData(weatherData.default, this.location);
 
         this.isDataRegistered = true; // Update the reactivity of isDataRegistered

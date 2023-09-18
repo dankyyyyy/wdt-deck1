@@ -8,7 +8,7 @@
     </div>
     <div class="flex flex-col">
       <div v-for="id in ids" :key="id">
-        <FiltersWdtGraphFilter :key="chartKey" @remove="handleRemove" :chartId="id" :amountOfCharts="ids.length" />
+        <FiltersFinGraphFilter :key="chartKey" @remove="handleRemove" :chartId="id" :amountOfCharts="ids.length" />
       </div>
     </div>
     <div class="w-full p-3">
@@ -19,11 +19,11 @@
     </div>
   </div>
 </template>
-
+  
 <script>
 export default {
   layout: "default",
-  name: "WeatherDownTime",
+  name: "FinancialFeasibility",
   data() {
     return {
       ids: [],

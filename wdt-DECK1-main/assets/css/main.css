@@ -26,7 +26,7 @@
     position: sticky;
     top: 0;
   }
- 
+
   .white-gradient {
     background-image: linear-gradient(
       to right,
@@ -151,6 +151,7 @@
 
   input[type="range"] {
     -webkit-appearance: none;
+    appearance: none;
     width: 100%;
   }
 
@@ -247,7 +248,7 @@
   height: 35vh; /* Sets height to 50% of the viewport height */
   max-height: 400px;
   min-height: fit-content;
-  background-color: #ffffff; 
+  background-color: #ffffff;
   border-radius: 70px; /* Curvature of the box corners */
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45); /* Drop shadow */
   margin: 2.5%; /* Percentages for margin to maintain spacing relative to the parent container */
@@ -285,7 +286,7 @@
   font-weight: bold;
   font-size: 1.48em;
   text-align: center;
-  margin-top: auto;  
+  margin-top: auto;
 }
 
 /* Style for the subtitle */
@@ -308,7 +309,6 @@
 /* =========================
    Presets Screen Section
 ========================= */
-
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -350,14 +350,14 @@
   font-size: 1em;
   text-align: center;
   margin-left: 40px;
-  margin-right: 40px; 
+  margin-right: 40px;
   margin-bottom: 25px;
   /* Add text styles */
 }
 
 .box-text hr {
   height: 2px; /*Width of the line*/
-  background-color: #000; 
+  background-color: #000;
   margin: 0 auto; /* Centers the line */
   width: 70%; /* Length of the line*/
   opacity: 70%;
@@ -382,7 +382,7 @@
 
 .active {
   background-color: #4caf50;
-} 
+}
 
 }
 
@@ -398,4 +398,34 @@
     height: 90vh;
     max-height: 90vh;
   }
+}
+
+::-webkit-scrollbar {
+  height: 1rem;
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb {
+  --tw-border-opacity: 1;
+  background-color: rgba(217, 217, 227, 0.8);
+  border-color: rgba(255,255,255,var(--tw-border-opacity));
+  border-radius: 9999px;
+  border-width: 1px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #333;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
 }

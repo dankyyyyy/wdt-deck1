@@ -25,7 +25,7 @@
         <div class="update-input">
           <label for="windSpeedLimit">Wind Speed Limit: </label>
           <input type="text" v-model="assetRef.windSpeedLimit" class="border-2 rounded-md text-center" />
-          <label for="windSpeedLimit"> kt</label>
+          <label for="windSpeedLimit"> m/s</label>
         </div>
 
         <div v-if="assetRef.category === 'Vessel' || assetRef.category === 'Helicopter'">
@@ -72,11 +72,13 @@
           <div class="update-input">
             <label for="limit">Cloudbase: </label>
             <input type="text" v-model="assetRef.cloudbase" class="border-2 rounded-md text-center" />
+            <label for="cloudbase"> m</label>
           </div>
 
           <div class="update-input">
             <label for="limit">Visibility: </label>
             <input type="text" v-model="assetRef.visibility" class="border-2 rounded-md text-center" />
+            <label for="visibility"> km</label>
           </div>
         </div>
 
@@ -102,40 +104,23 @@
           </div>
         </div>
 
-        <div v-if="assetRef.category === 'Vessel' || assetRef.category === 'Helicopter'">
-          <div class="update-input">
-            <label for="dailyAvailableTimePerTeam">Daily Available Time: </label>
-            <input type="text" v-model="assetRef.dailyAvailableTimePerTeam" class="border-2 rounded-md text-center " />
-            <label for="dailyAvailableTimePerTeam"> h/team</label>
-          </div>
-
-          <div class="update-input">
-            <label for="staffPerTeam">Team Size: </label>
-            <input type="text" v-model="assetRef.staffPerTeam" class="border-2 rounded-md text-center " />
-            <label for="staffPerTeam"> people</label>
-          </div>
-
-          <div class="update-input">
-            <label for="totalYearlyAvailableTime">Total Available Time: </label>
-            <input type="text" v-model="assetRef.totalYearlyAvailableTime" class="border-2 rounded-md text-center " />
-            <label for="totalYearlyAvailableTime"> /year</label>
-          </div>
-        </div>
-
         <div v-else-if="assetRef.category === 'WindTurbineGenerator'">
           <div class="update-input">
             <label for="limit">Planned Maintenance: </label>
             <input type="text" v-model="assetRef.plannedMaintenance" class="border-2 rounded-md text-center" />
+            <label for="plannedMaintenance"> h/WTG</label>
           </div>
 
           <div class="update-input">
             <label for="limit">Troubleshoot Visits: </label>
             <input type="text" v-model="assetRef.troubleshootVisits" class="border-2 rounded-md text-center" />
+            <label for="troubleshootVisits"> /WTG</label>
           </div>
 
           <div class="update-input">
             <label for="limit">Average TS hours: </label>
             <input type="text" v-model="assetRef.averageTsHours" class="border-2 rounded-md text-center" />
+            <label for="averageTsHours"> h</label>
           </div>
         </div>
       </div>

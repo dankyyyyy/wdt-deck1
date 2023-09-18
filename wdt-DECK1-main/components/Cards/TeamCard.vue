@@ -7,9 +7,9 @@
       <div class="flex justify-between">
         <h2 class="font-semibold text-lg mb-2">{{ team.name }}</h2>
         <IconsUpdate @click="showUpdateModal" class="cursor-pointer "></IconsUpdate>
-        <UpdateTeamModal :team="team" v-if="isUpdateModalVisible" @hideModal="hideModal" />
+        <ModalDialogsUpdateTeamModal :team="team" v-if="isUpdateModalVisible" @hideModal="hideModal" />
         <IconsDelete @click="showDeleteModal" class="cursor-pointer "></IconsDelete>
-        <DeleteTeamModal :team="team" v-if="isDeleteModalVisible" @hideModal="hideModal" />
+        <ModalDialogsDeleteTeamModal :team="team" v-if="isDeleteModalVisible" @hideModal="hideModal" />
       </div>
       <div class="">
         <label for="numberOfPersons">Number of persons: </label>
