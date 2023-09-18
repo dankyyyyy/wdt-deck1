@@ -11,8 +11,8 @@
     </div>
     <div class="w-full border-t-2 border-black p-2">
       <h2 class="font-semibold mb-2">{{ location.name }}</h2>
-      <UpdateLocationModal :location="location" v-if="isUpdateModalVisible" @hideModal="hideModal" />
-      <DeleteLocationModal :location="location" v-if="isDeleteModalVisible" @hideModal="hideModal" />
+      <ModalDialogsUpdateLocationModal :location="location" v-if="isUpdateModalVisible" @hideModal="hideModal" />
+      <ModalDialogsDeleteLocationModal :location="location" v-if="isDeleteModalVisible" @hideModal="hideModal" />
     
       <div class="flex space-x-2">
           <IconsUpdate @click="showUpdateModal" class="cursor-pointer" />
