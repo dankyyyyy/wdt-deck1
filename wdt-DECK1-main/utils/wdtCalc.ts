@@ -98,7 +98,6 @@ export function start(
 
   const name = asset.name;
   wdtStore.assetsWdt[name] = monthlyWorkabilityPerAsset(monthsAsset);
-  // wdtStore.assetsWdt[name] = monthsAsset;
 }
 
 export function evaluateHourDay(asset: any, element: any, newDay: boolean) {
