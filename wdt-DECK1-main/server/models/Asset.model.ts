@@ -5,29 +5,28 @@ const schema: mongoose.Schema = new mongoose.Schema(
         // Shared Attributes
         name: { type: String, required: true },
         category: { type: String, required: true },
-        hs: { type: Number },
-        visibility: { type: Number },
-        windSpeedLimit: {type: Number},
-        dayRate: {type: Number},
-        operationalFuelConsumption: {type: Number},
-        dailyAvailableTimePerTeam: {type: Number},
-        staffPerTeam: {type: Number},
-        totalYearlyAvailableTime: {type: Number},
+
+        windSpeedLimit: {type: Number}, // m*s^-1
+        hs: { type: Number }, // m
+        dayRate: {type: Number}, // €
+        operationalFuelConsumption: {type: Number}, // l/h
 
         // Vessel-only Attributes
-        vesselSpeed: {type: Number},
-        fuelFlowLoitering: {type: Number},
-        loitering: {type: Number},
-        highEngineActivity: {type: Number},
+        vesselSpeed: {type: Number}, // kt
+        loitering: {type: Number}, // h
+        highEngineActivity: {type: Number}, // h
+        loiteringFuelConsumption: {type: Number}, // l/h
 
         // Helicopter-only Attributes
-        helicopterSpeed: {type: Number},
-        cloudbase: { type: Number },
+        helicopterSpeed: {type: Number}, // kt
+        cloudbase: { type: Number }, // m
+        visibility: { type: Number }, // km
+        flightTime: { type: Number }, // h
         
         // WTG-only Attributes
-        plannedMaintenance: {type: Number},
+        plannedMaintenance: {type: Number}, // h
         troubleshootVisits: {type: Number},
-        averageTsHours: {type:Number},
+        averageTsHours: {type:Number}, // h
     },
     { timestamps: true }
 )

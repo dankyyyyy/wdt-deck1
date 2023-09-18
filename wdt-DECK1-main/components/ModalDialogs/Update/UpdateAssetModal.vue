@@ -25,39 +25,7 @@
         <div class="update-input">
           <label for="windSpeedLimit">Wind Speed Limit: </label>
           <input type="text" v-model="assetRef.windSpeedLimit" class="border-2 rounded-md text-center" />
-          <label for="windSpeedLimit"> kt</label>
-        </div>
-
-        <div v-if="assetRef.category === 'Vessel'">
-          <div class="update-input">
-            <label for="vesselSpeed">Vessel Speed: </label>
-            <input type="text" v-model="assetRef.vesselSpeed" class="border-2 rounded-md text-center " />
-            <label for="vesselSpeed"> kt</label>
-          </div>
-
-          <div class="update-input">
-            <label for="highEngineActivity">High Engine Activity: </label>
-            <input type="text" v-model="assetRef.highEngineActivity" class="border-2 rounded-md text-center" />
-            <label for="highEngineActivity"> h</label>
-          </div>
-        </div>
-
-        <div v-else-if="assetRef.category === 'Helicopter'">
-          <div class="update-input">
-            <label for="helicopterSpeed">Helicopter Speed: </label>
-            <input type="text" v-model="assetRef.helicopterSpeed" class="border-2 rounded-md text-center" />
-            <label for="helicopterSpeed"> kt</label>
-          </div>
-
-          <div class="update-input">
-            <label for="limit">Cloudbase: </label>
-            <input type="text" v-model="assetRef.cloudbase" class="border-2 rounded-md text-center" />
-          </div>
-
-          <div class="update-input">
-            <label for="limit">Visibility: </label>
-            <input type="text" v-model="assetRef.visibility" class="border-2 rounded-md text-center" />
-          </div>
+          <label for="windSpeedLimit"> m/s</label>
         </div>
 
         <div v-if="assetRef.category === 'Vessel' || assetRef.category === 'Helicopter'">
@@ -72,29 +40,67 @@
             <input type="text" v-model="assetRef.dayRate" class="border-2 rounded-md text-center " />
             <label for="dayRate"> €</label>
           </div>
+        </div>
+
+        <div v-if="assetRef.category === 'Vessel'">
+          <div class="update-input">
+            <label for="vesselSpeed">Vessel Speed: </label>
+            <input type="text" v-model="assetRef.vesselSpeed" class="border-2 rounded-md text-center " />
+            <label for="vesselSpeed"> kt</label>
+          </div>
 
           <div class="update-input">
-            <label for="operationalFuelConsumption">Fuel Consumption: </label>
-            <input type="text" v-model="assetRef.operationalFuelConsumption" class="border-2 rounded-md text-center " />
+            <label for="highEngineActivity">High Engine Activity: </label>
+            <input type="text" v-model="assetRef.highEngineActivity" class="border-2 rounded-md text-center" />
+            <label for="highEngineActivity"> h</label>
+          </div>
+
+          <div class="update-input">
+            <label for="highEngineActivity">Loitering: </label>
+            <input type="text" v-model="assetRef.loitering" class="border-2 rounded-md text-center" />
+            <label for="highEngineActivity"> h</label>
+          </div>
+        </div>
+
+        <div v-else-if="assetRef.category === 'Helicopter'">
+          <div class="update-input">
+            <label for="helicopterSpeed">Helicopter Speed: </label>
+            <input type="text" v-model="assetRef.helicopterSpeed" class="border-2 rounded-md text-center" />
+            <label for="helicopterSpeed"> kt</label>
+          </div>
+
+          <div class="update-input">
+            <label for="limit">Cloudbase: </label>
+            <input type="text" v-model="assetRef.cloudbase" class="border-2 rounded-md text-center" />
+            <label for="cloudbase"> m</label>
+          </div>
+
+          <div class="update-input">
+            <label for="limit">Visibility: </label>
+            <input type="text" v-model="assetRef.visibility" class="border-2 rounded-md text-center" />
+            <label for="visibility"> km</label>
+          </div>
+        </div>
+
+        <div class="update-input">
+          <label for="operationalFuelConsumption">Fuel Consumption: </label>
+          <input type="text" v-model="assetRef.operationalFuelConsumption" class="border-2 rounded-md text-center " />
+          <label for="operationalFuelConsumption"> l/h</label>
+        </div>
+
+        <div v-if="assetRef.category === 'Vessel'">
+          <div class="update-input">
+            <label for="operationalFuelConsumption">Fuel Consumption when Loitering: </label>
+            <input type="text" v-model="assetRef.loiteringFuelConsumption" class="border-2 rounded-md text-center " />
             <label for="operationalFuelConsumption"> l/h</label>
           </div>
+        </div>
 
+        <div v-if="assetRef.category === 'Helicopter'">
           <div class="update-input">
-            <label for="dailyAvailableTimePerTeam">Daily Available Time: </label>
-            <input type="text" v-model="assetRef.dailyAvailableTimePerTeam" class="border-2 rounded-md text-center " />
-            <label for="dailyAvailableTimePerTeam"> h/team</label>
-          </div>
-
-          <div class="update-input">
-            <label for="staffPerTeam">Team Size: </label>
-            <input type="text" v-model="assetRef.staffPerTeam" class="border-2 rounded-md text-center " />
-            <label for="staffPerTeam"> people</label>
-          </div>
-
-          <div class="update-input">
-            <label for="totalYearlyAvailableTime">Total Available Time: </label>
-            <input type="text" v-model="assetRef.totalYearlyAvailableTime" class="border-2 rounded-md text-center " />
-            <label for="totalYearlyAvailableTime"> /year</label>
+            <label for="operationalFuelConsumption">Flight Time (2 round trips): </label>
+            <input type="text" v-model="assetRef.flightTime" class="border-2 rounded-md text-center " />
+            <label for="operationalFuelConsumption"> h</label>
           </div>
         </div>
 
@@ -102,16 +108,19 @@
           <div class="update-input">
             <label for="limit">Planned Maintenance: </label>
             <input type="text" v-model="assetRef.plannedMaintenance" class="border-2 rounded-md text-center" />
+            <label for="plannedMaintenance"> h/WTG</label>
           </div>
 
           <div class="update-input">
-            <label for="limit">Troubleshoot Visitings: </label>
+            <label for="limit">Troubleshoot Visits: </label>
             <input type="text" v-model="assetRef.troubleshootVisits" class="border-2 rounded-md text-center" />
+            <label for="troubleshootVisits"> /WTG</label>
           </div>
 
           <div class="update-input">
             <label for="limit">Average TS hours: </label>
             <input type="text" v-model="assetRef.averageTsHours" class="border-2 rounded-md text-center" />
+            <label for="averageTsHours"> h</label>
           </div>
         </div>
       </div>

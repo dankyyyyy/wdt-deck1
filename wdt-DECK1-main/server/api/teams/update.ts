@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
             {
                 $set: {
                     name: body.name,
-                    numberofPersons: body.numberofPersons,
+                    numberOfPersons: body.numberOfPersons,
                     shiftPeriod: body.shiftPeriod,
                 },
             },

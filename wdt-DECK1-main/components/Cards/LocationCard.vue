@@ -11,8 +11,8 @@
     </div>
     <div class="w-full border-t-2 border-black p-2">
       <h2 class="font-semibold mb-2">{{ location.name }}</h2>
-      <UpdateLocationModal :location="location" v-if="isUpdateModalVisible" @hideModal="hideModal" />
-      <DeleteLocationModal :location="location" v-if="isDeleteModalVisible" @hideModal="hideModal" />
+      <ModalDialogsUpdateLocationModal :location="location" v-if="isUpdateModalVisible" @hideModal="hideModal" />
+      <ModalDialogsDeleteLocationModal :location="location" v-if="isDeleteModalVisible" @hideModal="hideModal" />
     
       <div class="flex space-x-2">
           <IconsUpdate @click="showUpdateModal" class="cursor-pointer" />
@@ -60,8 +60,8 @@ export default {
       try {
         const response = await axios.delete(`http://127.0.0.1:5555/delete/${this.location.name}.json`);
         console.log('File deleted successfully:', response.data);
-
-        const weatherData = await import(`~/static/${this.location.name}-weather.json`);
+        
+        const weatherData = await import(/* @vite-ignore */`~/static/${this.location.name}-weather.json`);
         useWeatherdataStore().postData(weatherData.default, this.location);
 
         this.isDataRegistered = true; // Update the reactivity of isDataRegistered

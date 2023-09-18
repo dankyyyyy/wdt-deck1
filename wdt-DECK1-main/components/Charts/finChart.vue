@@ -3,6 +3,7 @@ import Chart from "chart.js/auto";
 import { start } from "@/utils/wdtCalc";
 import { useWeatherStore } from "@/stores/WeatherStore";
 import { useAssetStore } from "@/stores/AssetStore";
+import { generateRandomColor } from "~/utils/chartUtils";
 
 export default {
   props: {
@@ -21,9 +22,11 @@ export default {
 
     onMounted(() => {
       if (assetStore.assets.length === 0) assetStore.getAll();
-      const assets = assetStore.assets;
-      //Call the calculations for each asset
-      for (let i = 0; i < assets.length; i++){
+      var assets = assetStore.assets;
+      const filteredAssets = assets.filter(asset => asset.category !== "WindTurbineGenerator");
+      assets = filteredAssets;
+      
+      for (let i = 0; i < assets.length; i++) {
         start(
           props.filterParams.startHour,
           props.filterParams.endHour,
@@ -33,27 +36,8 @@ export default {
           assets[i]
         );
       }
-      
-      function generateRandomColor() {
-        // Generate random values for red, green, and blue channels
-        var red = Math.floor(Math.random() * 256);
-        var green = Math.floor(Math.random() * 256);
-        var blue = Math.floor(Math.random() * 256);
 
-        // Construct the RGB color string
-        var color = "rgb(" + red + ", " + green + ", " + blue + ")";
-
-        return color;
-      }
-      //Call the calculations for the site
-      start(
-        props.filterParams.startHour,
-        props.filterParams.endHour,
-        props.filterParams.startMonth,
-        props.filterParams.endMonth,
-        props.filterParams.years,
-        "",
-      );
+      // Chart Construction
       const datasets = []
       for (const x in weatherStore.assetsWdt) {
         datasets.push({
@@ -69,7 +53,7 @@ export default {
       }
       //Create chart object
       const myChart = new Chart(
-        document.getElementById("wdtChart" + props.filterParams.chartId),
+        document.getElementById("finChart" + props.filterParams.chartId),
         {
           type: "bar",
           data: {
@@ -80,6 +64,18 @@ export default {
             datasets,
           },
           options: {
+            plugins: {
+              tooltip: {
+                enabled: true,
+                callbacks: {
+                  label: (context) => {
+                    const assetName = context.dataset.label;
+                    const value  = context.raw;
+                    return `${assetName}: ${value}%`;
+                  },
+                },
+              },
+            },
             scales: {
               y: {
                 beginAtZero: true,
@@ -95,6 +91,6 @@ export default {
 
 <template>
   <div class="deck-frame-white">
-      <canvas v-bind:id="'wdtChart' + filterParams.chartId"></canvas>
+      <canvas v-bind:id="'finChart' + filterParams.chartId"></canvas>
     </div>
 </template>

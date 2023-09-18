@@ -3,30 +3,28 @@
     <div class="w-4/5 p-3">
       <div class="flex text-lg justify-between w-full py-5">
         <div
-          class="flex gap-1.5 items-center hover:text-gray-400 group hover:translate-y-[-3px] transition-all ease-in-out cursor-pointer"
-        >
+          class="flex gap-1.5 items-center hover:text-gray-400 group hover:translate-y-[-3px] transition-all ease-in-out cursor-pointer">
           <IconsHide class="stroke-1 group-hover:text-yellow-400" />
           <p class="text-decoration font-semibold" @click="hideToggle">Hide</p>
         </div>
       </div>
-        <div v-if="loading">
-            <section class="flex items-center justify-center h-full w-full">
-        <div class="h-20 w-20 mr-10 rounded-full bg-blue-300 animate-pulse"></div>
-        <div class="h-20 w-20 mr-10 rounded-full bg-blue-300 animate-pulse"></div>
-        <div class="h-20 w-20 mr-10 rounded-full bg-blue-300 animate-pulse"></div>
-        <div class="h-20 w-20 mr-10 rounded-full bg-blue-300 animate-pulse"></div>
-        <div class="h-20 w-20 rounded-full bg-blue-300 animate-pulse"></div>
-      </section>
-        </div>
-        <div v-else>
-        <ChartComponent :key="chartComponentKey" :filterParams="filterParams" /></div>
+      <div v-if="loading">
+        <section class="flex items-center justify-center h-full w-full">
+          <div class="h-20 w-20 mr-10 rounded-full bg-blue-300 animate-pulse"></div>
+          <div class="h-20 w-20 mr-10 rounded-full bg-blue-300 animate-pulse"></div>
+          <div class="h-20 w-20 mr-10 rounded-full bg-blue-300 animate-pulse"></div>
+          <div class="h-20 w-20 mr-10 rounded-full bg-blue-300 animate-pulse"></div>
+          <div class="h-20 w-20 rounded-full bg-blue-300 animate-pulse"></div>
+        </section>
+      </div>
+      <div v-else>
+        <ChartsWdtChart :key="wdtChartKey" :filterParams="filterParams" />
+      </div>
     </div>
     <div class="w-1/5 h-full p-3">
       <div class="flex flex-row-reverse text-lg w-full py-5">
-        <div
-          v-if="this.amountOfCharts > 1"
-          class="flex gap-1.5 flex-row-reverse items-center hover:text-gray-400 group hover:translate-y-[-3px] transition-all ease-in-out cursor-pointer"
-        >
+        <div v-if="this.amountOfCharts > 1"
+          class="flex gap-1.5 flex-row-reverse items-center hover:text-gray-400 group hover:translate-y-[-3px] transition-all ease-in-out cursor-pointer">
           <IconsRemove class="stroke-1 group-hover:text-red-400" />
           <p class="text-decoration font-semibold" @click="emitRemove">
             Remove
@@ -39,8 +37,7 @@
   </div>
   <div v-else class="py-10">
     <div
-      class="flex gap-1.5 p-3 items-center hover:text-gray-400 group hover:translate-y-[-3px] transition-all ease-in-out cursor-pointer"
-    >
+      class="flex gap-1.5 p-3 items-center hover:text-gray-400 group hover:translate-y-[-3px] transition-all ease-in-out cursor-pointer">
       <IconsHide class="stroke-1 group-hover:text-yellow-400" />
       <p class="text-decoration" @click="hideToggle">Show graph...</p>
     </div>
@@ -59,7 +56,7 @@ export default {
   },
   data(props) {
     return {
-      chartComponentKey: false,
+      wdtChartKey: false,
       showComponents: true,
       filterParams: {
         startHour: ref(0),
@@ -79,7 +76,7 @@ export default {
       this.filterParams.startMonth = data.startMonth;
       this.filterParams.endMonth = data.endMonth;
       this.filterParams.years = data.years;
-      this.chartComponentKey = !this.chartComponentKey;
+      this.wdtChartKey = !this.wdtChartKey;
     },
     emitRemove() {
       this.$emit("remove", this.chartId);

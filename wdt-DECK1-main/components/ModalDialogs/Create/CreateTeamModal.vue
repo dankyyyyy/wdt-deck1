@@ -30,10 +30,10 @@
           />
           </div>
         <div class="create-input whitespace-nowrap">
-            <label for="numberofpersons">Number of persons: </label>
+            <label for="numberOfPersons">Number of persons: </label>
             <input
               type="text"
-              v-model="team.numberofPersons"
+              v-model="team.numberOfPersons"
               class="border-2 rounded-sm text-center"
               />
               </div>
@@ -76,7 +76,7 @@ export default {
   data() {
     return {
       team: {
-        numberofPersons: "",
+        numberOfPersons: "",
         shiftPeriod: "",
       },
     };
