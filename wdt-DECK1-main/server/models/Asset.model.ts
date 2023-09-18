@@ -11,10 +11,6 @@ const schema: mongoose.Schema = new mongoose.Schema(
         dayRate: {type: Number}, // €
         operationalFuelConsumption: {type: Number}, // l/h
 
-        dailyAvailableTimePerTeam: {type: Number}, // h
-        staffPerTeam: {type: Number},
-        totalYearlyAvailableTime: {type: Number}, // h
-
         // Vessel-only Attributes
         vesselSpeed: {type: Number}, // kt
         loitering: {type: Number}, // h

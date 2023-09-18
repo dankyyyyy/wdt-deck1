@@ -11,21 +11,22 @@ export default defineEventHandler(async (event) => {
           $set: {
             name: body.name, 
             category: body.category,
-            hs: body.hs,
-            visibility: body.visibility,
             windSpeedLimit: body.windSpeedLimit,
+
+            hs: body.hs,
             dayRate: body.dayRate,
             operationalFuelConsumption: body.operationalFuelConsumption,
-            dailyAvailableTimePerTeam: body.dailyAvailableTimePerTeam,
-            staffPerTeam: body.staffPerTeam,
-            totalYearlyAvailableTime: body.totalYearlyAvailableTime,
+
             vesselSpeed: body.vesselSpeed,
             loiteringFuelConsumption: body.loiteringFuelConsumption,
             loitering: body.loitering,
             highEngineActivity: body.highEngineActivity,
+          
             helicopterSpeed: body.helicopterSpeed,
-            flightTime: body.flightTime,
+            visibility: body.visibility,
             cloudbase: body.cloudbase,
+            flightTime: body.flightTime,
+
             plannedMaintenance: body.plannedMaintenance,
             troubleshootVisits: body.troubleshootVisits,
             averageTsHours: body.averageTsHours,
