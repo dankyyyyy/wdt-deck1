@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 const schema: mongoose.Schema = new mongoose.Schema(
     {
         // Shared Attributes
+        presetId:{ type: Number},
         name: { type: String, required: true },
         category: { type: String, required: true },
         hs: { type: Number },

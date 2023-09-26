@@ -1,9 +1,12 @@
 <template>
-  <div class="preset-selector">
+  <div>
     <NuxtLink to="/">
-      <IconsLogoInverted class="inline-block align-middle w-full" />
+        <IconsLogoInverted class="inline-block align-middle w-full" />
     </NuxtLink>
-    <PresetGrid :presets="presets" @toggle-select="toggleSelect" />
+    <PresetGrid
+      :presets="presets"
+      @toggle-select="toggleSelect"
+    />
     <button
       class="action-button"
       :class="{ 'active': selectedPresets.length > 0 }"
@@ -23,82 +26,65 @@ export default {
   },
   data() {
     return {
-      presets: [
-      {
-          id: 1,
-          image: 'Logo.jpg',
-          title: 'Preset',
-          text: ['Location',
-                  'Helicopers',
-                  'Vessels',
-                  'WTGs'],
-          selected: false,
-        },
-        {
-          id: 2,
-          image: 'Logo.jpg',
-          title: 'Preset',
-          text: ['Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-                 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'],
-          selected: false,
-        },
-        {
-          id: 3,
-          image: 'Logo.jpg',
-          title: 'Preset',
-          text: ['Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-                 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'],
-          selected: false,
-        },
-        {
-          id: 4,
-          image: 'Logo.jpg',
-          title: 'Preset',
-          text: ['Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-                 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'],
-          selected: false,
-        },
-        {
-          id: 5,
-          image: 'Logo.jpg',
-          title: 'Preset',
-          text: ['Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-                 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'],
-          selected: false,
-        },
-      ],
+      presets: [ /* Your presets data here */ ],
+      selectedPresets: [],
+      objects: [ /* Your objects data here, including presetId */ ],
+      objectsByPresetId: {}
     };
   },
-  computed: {
-    selectedPresets() {
-      return this.presets.filter(preset => preset.selected);
-    },
+
+  async mounted() {
+    this.fetchObjects(); // Call the method to fetch objects
   },
+
   methods: {
+    async fetchObjects() {
+      try {
+        // Fetch locations
+        const locationsResponse = await fetch('~/server/api/locations/index.get.ts');
+        const locationsData = await locationsResponse.json();
+
+        // Fetch assets
+        const assetsResponse = await fetch('~/server/api/assets/index.get.ts');
+        const assetsData = await assetsResponse.json();
+
+        // Merge locations and assets into objects
+        this.objects = [...locationsData, ...assetsData];
+
+        // Group objects by presetId
+        this.groupObjectsByPresetId();
+      } catch (error) {
+        console.error('Error fetching objects:', error);
+      }
+    },
+    groupObjectsByPresetId() {
+      this.objectsByPresetId = this.objects.reduce((acc, obj) => {
+        if (!acc[obj.presetId]) {
+          acc[obj.presetId] = [];
+        }
+        acc[obj.presetId].push(obj);
+        return acc;
+      }, {});
+    },
     toggleSelect(preset) {
+      this.$set(preset, 'selected', !preset.selected);
       if (preset.selected) {
-        preset.selected = false; // Deselect the clicked preset
+        this.selectedPresets.push(preset);
       } else {
-        this.presets.forEach(p => {
-          p.selected = false; // Deselect all presets
-        });
-        preset.selected = true; // Select the clicked preset
+        const index = this.selectedPresets.findIndex(p => p.id === preset.id);
+        if (index !== -1) this.selectedPresets.splice(index, 1);
       }
     },
-    navigateToNextPage() {
-      if (this.selectedPresets.length > 0) {
-        // Set this to the [CalculationsPage]
-        this.$router.push('/weatherDownTime');
-      }
-    },
-  },
-};
+    confirmSelection() {
+      const selectedObjects = this.selectedPresets.flatMap(preset => preset.objects);
+      // Duplicates the selected objects
+
+      // Pass duplicates to next page
+      this.$router.push({
+        path: 'pages/weatherDownTime.vue', //TODO update path or change/remove this segment entirely
+        query: { duplicates: JSON.stringify(duplicates) }
+      });
+    }
+  }
+}
 </script>
