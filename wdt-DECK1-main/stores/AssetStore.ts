@@ -4,9 +4,22 @@ import axios from "axios"
 
 export const useAssetStore = defineStore("AssetStore", {
   state: () => ({
-    assets: [] as IAsset[]
+    assets: [] as IAsset[],
+    selectedAsset1: null as unknown as IAsset,
+    selectedAsset2: null as unknown as IAsset,
+    selectedWtg: null as unknown as IAsset,
   }),
   actions: {
+    async getByName(name: string) {
+      try {
+        let data = await $fetch<IAsset[]>("/api/assets")
+        const filteredData = data.filter(asset => asset.name === name);
+        data = filteredData;
+        return data as IAsset[]
+      } catch (e) {
+        console.error(e)
+      }
+    },
     async getAll() {
       try {
         let data = await $fetch<IAsset[]>("/api/assets")
@@ -62,6 +75,24 @@ export const useAssetStore = defineStore("AssetStore", {
         console.error('Error deleting asset: ', error);
       }
       this.getAll()
+    },
+    setSelectedAsset1(asset1: IAsset) {
+      this.selectedAsset1 = asset1;
+    },
+    getSelectedAsset1() {
+      return this.selectedAsset1;
+    },
+    setSelectedAsset2(asset2: IAsset) {
+      this.selectedAsset2 = asset2;
+    },
+    getSelectedAsset2() {
+      return this.selectedAsset2;
+    },
+    setSelectedWtg(wtg: IAsset) {
+      this.selectedWtg = wtg;
+    },
+    getSelectedWtg() {
+      return this.selectedWtg;
     }
   }
 });
