@@ -3,20 +3,12 @@ import { useWeatherStore } from "@/stores/WeatherStore";
 import "@/utils/chartUtils";
 import { monthlyWorkabilityPerAsset } from "./wgtCalc";
 
-const wdtStore = useWeatherStore()
-const dataStore = useWeatherdataStore();
-
-// CONFIG THRESHOLD - percentage of a day that can be no-fly
+// THRESHOLD - percentage of a day that can be no-fly
 // determines availability (50%+ => available)
 const threshold: number = 0.5;
 
-//hours
 let hoursAsset: number[] = []
-
-//days
 let daysAsset: number[] = []
-
-//months
 let monthsAsset: number[] = []
 
 let current_day: number;
@@ -24,7 +16,6 @@ let current_month: number;
 let amountOfYears: number;
 
 export function start(
-  // filter variables
   timeRangeStart: number,
   timeRangeEnd: number,
   startMonth: number,
@@ -35,8 +26,7 @@ export function start(
 
   const wdtStore = useWeatherStore()
   const dataStore = useWeatherdataStore();
-  
-  // filters initialized
+
   startMonth = startMonth;
   endMonth = endMonth;
   current_day = 1;
@@ -54,25 +44,22 @@ export function start(
           Number(element.Hour) >= timeRangeStart &&
           Number(element.Hour) <= timeRangeEnd
         ) {
-          //evaluate hour wdt
           evaluateHourDay(asset, element, false);
         }
       } else {
-        //evaluate day wdt
         evaluateHourDay(asset, element, true);
 
-        //without this part, one hour is skipped
+        // without this part, one hour is skipped
         if (
           Number(element.Hour) >= timeRangeStart &&
           Number(element.Hour) <= timeRangeEnd
         ) {
           evaluateHourDay(asset, element, false);
         }
-
-        //increment current day
+        // increment current day
         current_day = Number(element.Day);
       }
-      //if month changes -> evaluate
+      // if month changes -> evaluate
       if (
         current_month != Number(element.Month) ||
         (Number(element.Month) === 12 &&
@@ -95,11 +82,8 @@ export function start(
   for (let i = 0; i < 12; i++) {
     monthsAsset[i] = monthsAsset[i] / years;
   }
-
   const name = asset.name;
   wdtStore.assetsWdt[name] = monthlyWorkabilityPerAsset(monthsAsset);
-  console.log(`${asset.name}: `, monthlyWorkabilityPerAsset(monthsAsset));
-  // wdtStore.assetsWdt[name] = monthsAsset;
 }
 
 export function evaluateHourDay(asset: any, element: any, newDay: boolean) {
@@ -137,7 +121,7 @@ function evaluateMonth(
   if (month >= startMonth && month <= endMonth) {
     if (monthArr[month - 1] != null) {
       monthArr[month - 1] += dayArr.filter((num) => num === 1).length;
-    } //amountOfYears+1 because it starts from 0
+    } // amountOfYears + 1 because it starts from 0
     else {
       monthArr[month - 1] = dayArr.filter((num) => num === 1).length;
     }

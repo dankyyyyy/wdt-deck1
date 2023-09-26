@@ -1,10 +1,11 @@
 <template>
   <div class="w-full h-full deck-frame-grey inline-block">
-    <div class="w-1/5 h-20 p-3">
-      <LocationDropdown @loading="toggleChartKey" />
+    <div class="w-1/5 h-20 p-3 flex">
+      <DropDownsSectionLocationDropdown class="mr-10"/>
+      <DropDownsSectionSubmitButton @loading="toggleChartKey" class="h-auto px-4 py-2"/>
     </div>
     <div class="w-4/5 h-20 p-3">
-      <RecommendationPopUp />
+      <DropDownsSectionRecommendationPopUp />
     </div>
     <div class="flex flex-col">
       <div v-for="id in ids" :key="id">

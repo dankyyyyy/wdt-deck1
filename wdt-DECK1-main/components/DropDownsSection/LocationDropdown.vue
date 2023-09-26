@@ -10,8 +10,6 @@
 </template>
 
 <script>
-import { useFilterStore } from "~/stores/FilterStore";
-import { useWeatherdataStore } from "~/stores/WeatherdataStore";
 import { useLocationStore } from "~/stores/LocationStore";
 
 export default {
@@ -22,31 +20,15 @@ export default {
       options: [],
     };
   },
-  async mounted(){
+  async mounted() {
     const locations = await useLocationStore().getAll()
     locations.forEach((entry) => {
       this.options.push(entry.name)
     })
   },
-  setup() {
-    const filterStore = useFilterStore();
-    const weatherStore = useWeatherdataStore();
-
-    return {
-      filterStore,
-      weatherStore,
-    };
-  },
   methods: {
     async handleLocationChange() {
-      this.filterStore.hideRecommendation = false;
-      useLocationStore().toggleLoading();
-      this.$emit("loading")
-      let locationId = await useLocationStore().getByName(this.location)
-      locationId = locationId.map(location => location._id)
-      await useWeatherdataStore().getByLocationId(locationId)
-      useLocationStore().toggleLoading();
-      this.$emit("loading")
+      useLocationStore().setSelectedLocation(this.location);
     },
   },
 };

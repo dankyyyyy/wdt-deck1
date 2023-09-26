@@ -2,6 +2,8 @@ import { useWeatherStore } from "@/stores/WeatherStore";
 
 const wdtStore = useWeatherStore()
 
+
+
 function unavailableDays(asset: any, monthsAsset: number[]): number {
     var unavailableDays = 0;
     const name = asset.name;
@@ -67,7 +69,7 @@ export function annualCostPerAssetWithoutFuel(asset: any): number {
     return annualCost;
 }
 
-function totalDailyFuelVessel(asset: any): number {
+export function totalDailyFuelVessel(asset: any): number {
     const totalLoitering = asset.loitering * asset.loiteringFuelConsumption;
     const totalOperational = asset.highEngineActivity * asset.operationalFuelConsumption;
     const totalFuel = totalLoitering + totalOperational;
@@ -75,7 +77,7 @@ function totalDailyFuelVessel(asset: any): number {
     return totalFuel;
 }
 
-function totalDailyFuelHelicopter(asset: any): number {
+export function totalDailyFuelHelicopter(asset: any): number {
     const totalFuel = asset.operationalFuelConsumption * asset.flightTime;
     return totalFuel;
 }

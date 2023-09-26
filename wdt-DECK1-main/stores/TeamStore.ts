@@ -7,6 +7,16 @@ export const useTeamStore = defineStore("TeamStore", {
     team: [] as ITeam[]
   }),
   actions: {
+    async getByName(name: string) {
+      try {
+          let data = await $fetch<ITeam[]>("/api/teams")
+          const filteredData = data.filter(team => team.name === name);
+          data = filteredData;
+          return data as ITeam[]
+      } catch (e) {
+          console.error(e)
+      }
+  },
     async getAll() {
       try {
         let data = await $fetch<ITeam[]>("/api/teams")
