@@ -4,25 +4,27 @@
 
 @layer base {
   .white-gradient {
-    background-image: linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0.6),
-      transparent
-    );
+    background-image: linear-gradient(to right,
+        rgba(255, 255, 255, 0.6),
+        transparent);
   }
+
   .deck-sidebar {
     background-color: #222f3e;
     border-radius: 12px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
   }
+
   .sidebar-container {
     width: 400px;
     position: sticky;
     top: 0;
   }
+
   .main-content {
     width: calc(100vw - 400px);
   }
+
   .deck-frame-grey {
     display: flex;
     flex-wrap: wrap;
@@ -32,6 +34,7 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
     @apply p-5;
   }
+
   .deck-frame-white {
     display: flex;
     flex-wrap: wrap;
@@ -41,16 +44,19 @@
     padding: 0.75rem;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   }
+
   .sidebar-item {
     display: flex;
     justify-content: center;
     align-items: center;
     color: #818181;
   }
+
   .click-here {
     color: #222f3e;
     font-weight: 800;
   }
+
   .filter-input {
     @apply w-20 rounded-md border-2 text-center;
   }
@@ -181,6 +187,7 @@
     background-color: rgba(0, 0, 0, 0.6);
     z-index: 9999;
   }
+
   .modal {
     position: fixed;
     top: 50%;
@@ -193,9 +200,11 @@
     width: 400px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
   }
+
   .create-input {
     @apply py-2 flex justify-between w-60;
   }
+
   .action-button {
     background-color: #09a6d7;
     color: white;
@@ -214,7 +223,7 @@
 ::-webkit-scrollbar-thumb {
   --tw-border-opacity: 1;
   background-color: rgba(217, 217, 227, 0.8);
-  border-color: rgba(255,255,255,var(--tw-border-opacity));
+  border-color: rgba(255, 255, 255, var(--tw-border-opacity));
   border-radius: 9999px;
   border-width: 1px;
 }
@@ -247,4 +256,27 @@
   justify-content: center;
   align-items: center;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.error-bar {
+  opacity: 1;
+  transition: opacity 1s;
+  position: fixed;
+  top: 30px;
+  left: 40%;
+  width: 30%;
+  background-color: #688ba8;
+  font-weight: bold;
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.error-bar.fade-out {
+  opacity: 0;
+}
+
+.error-message {
+  color: #fff;
 }

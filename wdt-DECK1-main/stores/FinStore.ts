@@ -6,10 +6,11 @@ export const useFinStore = defineStore("FinStore", {
 
         }
         const labels = ref<String[]>([
-            "Yearly Available Hours",
-            "Cost Without Fuel",
-            "Cost of Fuel",
             "Total Cost",
+            "Cost of Lease",
+            "Cost of Fuel",
+            "Cost Salary",
+            "CO2 Tax",
         ]);
         return {
             assetsFin,

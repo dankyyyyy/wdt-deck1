@@ -18,7 +18,7 @@
           </section>
         </div>
         <div v-else>
-          <ChartsFinChart :key="finChartKey" :filterParams="filterParams" />
+          <ChartsAvailChart :key="availChartKey" :filterParams="filterParams" />
         </div>
       </div>
       <div class="w-1/5 h-full p-3">
@@ -49,14 +49,14 @@
   
   export default {
     layout: "default",
-    name: "FinancialFeasibility",
+    name: "Availability",
     props: {
       chartId: Number,
       amountOfCharts: Number,
     },
     data(props) {
       return {
-        finChartKey: false,
+        wdtChartKey: false,
         showComponents: true,
         filterParams: {
           startHour: ref(0),
@@ -76,7 +76,7 @@
         this.filterParams.startMonth = data.startMonth;
         this.filterParams.endMonth = data.endMonth;
         this.filterParams.years = data.years;
-        this.finChartKey = !this.finChartKey;
+        this.availChartKey = !this.availChartKey;
       },
       emitRemove() {
         this.$emit("remove", this.chartId);

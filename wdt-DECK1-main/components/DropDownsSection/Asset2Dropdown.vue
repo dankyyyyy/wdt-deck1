@@ -31,7 +31,8 @@
     },
     methods: {
       async handleAsset2Change() {
-        useAssetStore().setSelectedAsset2(this.asset2);
+        const asset = await useAssetStore().getByName(this.asset2);
+        useAssetStore().setSelectedAsset2(asset);
       },
     },
   };

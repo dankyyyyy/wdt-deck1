@@ -1,11 +1,11 @@
 <template>
   <div class="w-full h-full deck-frame-grey inline-block">
+  <div class="w-4/5 h-20 p-3">
+      <DropDownsSectionRecommendationPopUp />
+    </div>
     <div class="w-1/5 h-20 p-3 flex">
       <DropDownsSectionLocationDropdown class="mr-10"/>
       <DropDownsSectionSubmitButton @loading="toggleChartKey" class="h-auto px-4 py-2"/>
-    </div>
-    <div class="w-4/5 h-20 p-3">
-      <DropDownsSectionRecommendationPopUp />
     </div>
     <div class="flex flex-col">
       <div v-for="id in ids" :key="id">
@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import { nullify } from '~/utils/chartUtils';
+
 export default {
   layout: "default",
   name: "WeatherDownTime",
@@ -33,6 +35,8 @@ export default {
   },
   mounted() {
     this.ids.push(1);
+    nullify();
+
   },
   methods: {
     addGraph() {
