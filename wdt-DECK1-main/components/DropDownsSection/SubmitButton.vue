@@ -33,7 +33,7 @@ export default {
                 const asset1 = useAssetStore().getSelectedAsset1();
                 const asset2 = useAssetStore().getSelectedAsset2();
 
-                if (asset1 === asset2) {
+                if (asset1 === asset2 && asset1 !== null && asset2 !== null) {
                     showError("Assets cannot be identical.");
                     return;
                 }
