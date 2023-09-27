@@ -1,27 +1,19 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+import { IAsset, ILocation, ITeam, IWindTurbineGenerator } from "~/types";
 
-const schema = new mongoose.Schema({
-  
-    //name of the preset
-    name: {
-    type: String,
-    required: true
-  },
+const schema: mongoose.Schema = new mongoose.Schema(
+    {
+        name: { type: String, required: true },
 
-    //location object
-    location: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Location',
-        required: true
+        //VERIFY THAT THIS WORKS
+        location: { type: Object, required: true },
+        wtg: { type: Object, required: true },
+        asset1: { type: Object, required: true },
+        asset2: { type: Object, required: true },
+        team1: { type: Object, required: true },
+        team2: { type: Object, required: true },
     },
-    //asset objects
-    assets: [
-        {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Asset',
-        required: true
-        }
-    ]
-    });
+    { timestamps: true }
+)
 
-export default mongoose.model('Preset', schema);
+export default mongoose.model("Preset", schema)

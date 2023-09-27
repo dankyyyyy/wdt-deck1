@@ -1,7 +1,6 @@
 import PresetModel from '~/server/models/Preset.model';
 
 export default defineEventHandler(async (event) => {
-  try {
     // Get data from the request body
     const body = await readBody(event);
 
@@ -11,14 +10,12 @@ export default defineEventHandler(async (event) => {
     const preset = await PresetModel.create(body);
 
     // Return a success message with the created preset data
-    return {
-      message: 'Preset created',
-      data: preset,
-    };
+    try {
+      await PresetModel.create(body);
+      return { message: "Asset created" }
   } catch (e: any) {
-    // Handle errors and return an error response
-    throw createError({
-      message: e.message,
-    });
+      throw createError({
+          message: e.message,
+      })
   }
-});
+})

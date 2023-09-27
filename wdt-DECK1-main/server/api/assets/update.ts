@@ -25,9 +25,6 @@ export default defineEventHandler(async (event) => {
             highEngineActivity: body.highEngineActivity,
             helicopterSpeed: body.helicopterSpeed,
             cloudbase: body.cloudbase,
-            plannedMaintenance: body.plannedMaintenance,
-            troubleshootVisits: body.troubleshootVisits,
-            averageTsHours: body.averageTsHours,
           },
         },
         { new: true }

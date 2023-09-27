@@ -2,7 +2,6 @@ import mongoose from 'mongoose'
 
 const schema: mongoose.Schema = new mongoose.Schema(
     {
-        presetId: {type: Number},
         name: { type: String, required: true },
         latitude: { type: Number, required: true },
         longitude: { type: Number, required: true },

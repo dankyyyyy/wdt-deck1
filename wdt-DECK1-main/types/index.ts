@@ -7,18 +7,17 @@ export interface ILocation {
     limit: number;
     wtg: number;
 }
-//weatherdata
-export interface IWeatherdata {
-    Year: number;
-    Month: number;
-    Day: number;
-    Hour: number;
-    Hs: number;
-    Windspeed: number;
-    Visibility: number;
-    Cloud: number;
-    locationId: ILocation;
+
+//wind turbine generator
+export interface IWindTurbineGenerator {
+    _id?: string;
+    name: string;
+    windSpeedLimit: number,
+    plannedMaintenance: number,
+    troubleshootVisits: number,
+    averageTsHours: number,
 }
+
 //assets
 export interface IAsset {
     // shared attributes
@@ -43,11 +42,6 @@ export interface IAsset {
     // Helicopter-only Attributes
     helicopterSpeed: number,
     cloudbase: number,
-    
-    // WTG-only Attributes
-    plannedMaintenance: number,
-    troubleshootVisits: number,
-    averageTsHours: number,
 }
 
 //teams
@@ -56,4 +50,29 @@ export interface ITeam {
     name: string;
     numberOfPersons: number;
     shiftPeriod: number;
+}
+
+//preset
+export interface IPreset {
+    _id?: string;
+    name: string;
+    location:ILocation;
+    wtg: IWindTurbineGenerator;
+    asset1: IAsset;
+    asset2: IAsset;
+    team1: ITeam;
+    team2: ITeam;
+}
+
+//weatherdata
+export interface IWeatherdata {
+    Year: number;
+    Month: number;
+    Day: number;
+    Hour: number;
+    Hs: number;
+    Windspeed: number;
+    Visibility: number;
+    Cloud: number;
+    locationId: ILocation;
 }
