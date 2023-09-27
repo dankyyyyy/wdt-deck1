@@ -31,7 +31,8 @@
     },
     methods: {
       async handleWtgChange() {
-        useAssetStore().setSelectedWtg(this.wtg);
+        const wtg = await useAssetStore().getByName(this.wtg);
+        useAssetStore().setSelectedWtg(wtg);
       },
     },
   };

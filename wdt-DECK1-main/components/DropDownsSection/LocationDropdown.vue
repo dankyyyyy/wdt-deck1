@@ -28,7 +28,8 @@ export default {
   },
   methods: {
     async handleLocationChange() {
-      useLocationStore().setSelectedLocation(this.location);
+      const location = await useLocationStore().getByName(this.location);
+      useLocationStore().setSelectedLocation(location);
     },
   },
 };

@@ -1,3 +1,7 @@
+import { useLocationStore } from "~/stores/LocationStore";
+import { useAssetStore } from "~/stores/AssetStore";
+import { IAsset, ILocation } from "~/types";
+
 export function generateRandomColor() {
     var materialColors = [
         { r: 244, g: 67, b: 54 },   // #F44336
@@ -25,4 +29,36 @@ export function generateRandomColor() {
     var randomColor = materialColors[randomIndex];
 
     return `rgb(${randomColor.r}, ${randomColor.g}, ${randomColor.b})`;
+}
+
+export function showError(message: string) {
+    const errorBar = document.createElement("div");
+    errorBar.classList.add("error-bar");
+
+    const errorMessage = document.createElement("span");
+    errorMessage.classList.add("error-message");
+    errorMessage.textContent = message;
+
+    errorBar.appendChild(errorMessage);
+    document.body.appendChild(errorBar);
+
+    setTimeout(() => {
+        errorBar.classList.add("fade-out");
+        setTimeout(() => {
+            document.body.removeChild(errorBar);
+        }, 500);
+    }, 5000);
+}
+
+export function nullify() {
+    useLocationStore().setSelectedLocation(null as unknown as ILocation);
+    useAssetStore().setSelectedAsset1(null as unknown as IAsset);
+    useAssetStore().setSelectedAsset2(null as unknown as IAsset);
+    useAssetStore().setSelectedWtg(null as unknown as IAsset);
+}
+
+export function formatNumberWithDecimal(value: number) {
+    const parts = value.toString().split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return parts.join('.');
 }

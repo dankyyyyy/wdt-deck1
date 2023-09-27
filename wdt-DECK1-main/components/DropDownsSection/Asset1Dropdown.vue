@@ -20,7 +20,7 @@
         options: [],
       };
     },
-    async mounted(){
+    async mounted() {
       var assets = await useAssetStore().getAll();
       const filteredAssets = assets.filter(asset1 => asset1.category !== "WindTurbineGenerator");
       assets = filteredAssets;
@@ -31,7 +31,8 @@
     },
     methods: {
       async handleAsset1Change() {
-        useAssetStore().setSelectedAsset1(this.asset1);
+        const asset = await useAssetStore().getByName(this.asset1);
+        useAssetStore().setSelectedAsset1(asset);
       },
     },
   };

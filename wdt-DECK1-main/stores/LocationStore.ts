@@ -12,7 +12,10 @@ export const useLocationStore = defineStore("LocationStore",{
         async getByName(name: string) {
             try {
                 let data = await $fetch<ILocation[]>(`/api/locations/${name}`);
-                return data as ILocation[]
+                if (data.length === 1) {
+                    const location = data[0];
+                    return location;
+                }
             } catch (e) {
                 console.error(e)
             }

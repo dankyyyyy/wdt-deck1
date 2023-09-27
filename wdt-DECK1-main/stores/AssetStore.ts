@@ -5,9 +5,9 @@ import axios from "axios"
 export const useAssetStore = defineStore("AssetStore", {
   state: () => ({
     assets: [] as IAsset[],
-    selectedAsset1: null as unknown as IAsset,
-    selectedAsset2: null as unknown as IAsset,
-    selectedWtg: null as unknown as IAsset,
+    selectedAsset1: null as unknown | IAsset,
+    selectedAsset2: null as unknown | IAsset,
+    selectedWtg: null as unknown | IAsset,
   }),
   actions: {
     async getByName(name: string) {
@@ -15,7 +15,10 @@ export const useAssetStore = defineStore("AssetStore", {
         let data = await $fetch<IAsset[]>("/api/assets")
         const filteredData = data.filter(asset => asset.name === name);
         data = filteredData;
-        return data as IAsset[]
+        if (data.length === 1) {
+          const asset = data[0];
+          return asset as IAsset 
+        }         
       } catch (e) {
         console.error(e)
       }
@@ -79,19 +82,19 @@ export const useAssetStore = defineStore("AssetStore", {
     setSelectedAsset1(asset1: IAsset) {
       this.selectedAsset1 = asset1;
     },
-    getSelectedAsset1() {
+    getSelectedAsset1(): unknown | IAsset {
       return this.selectedAsset1;
     },
     setSelectedAsset2(asset2: IAsset) {
       this.selectedAsset2 = asset2;
     },
-    getSelectedAsset2() {
+    getSelectedAsset2(): unknown | IAsset {
       return this.selectedAsset2;
     },
     setSelectedWtg(wtg: IAsset) {
       this.selectedWtg = wtg;
     },
-    getSelectedWtg() {
+    getSelectedWtg(): unknown | IAsset {
       return this.selectedWtg;
     }
   }

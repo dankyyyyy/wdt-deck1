@@ -1,7 +1,7 @@
 import { useWeatherdataStore } from "@/stores/WeatherdataStore";
 import { useWeatherStore } from "@/stores/WeatherStore";
 import "@/utils/chartUtils";
-import { monthlyWorkabilityPerAsset } from "./wgtCalc";
+import { monthlyWorkabilityPerAsset } from "../calculationUtils";
 
 // THRESHOLD - percentage of a day that can be no-fly
 // determines availability (50%+ => available)
@@ -83,10 +83,10 @@ export function start(
     monthsAsset[i] = monthsAsset[i] / years;
   }
   const name = asset.name;
-  wdtStore.assetsWdt[name] = monthlyWorkabilityPerAsset(monthsAsset);
+  wdtStore.assetsWdt[name] = monthsAsset;
 }
 
-export function evaluateHourDay(asset: any, element: any, newDay: boolean) {
+function evaluateHourDay(asset: any, element: any, newDay: boolean) {
   if (!newDay) {
     if (asset) {
       if (asset.category === "Vessel") {
@@ -129,7 +129,7 @@ function evaluateMonth(
   return monthArr;
 }
 
-export function countYears(weatherData: any) {
+function countYears(weatherData: any) {
   let maxYear = 0;
   for (const item of weatherData) {
     if (item.Year > maxYear) {
