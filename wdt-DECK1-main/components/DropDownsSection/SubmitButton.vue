@@ -9,6 +9,7 @@ import { useLocationStore } from '~/stores/LocationStore';
 import { useAssetStore } from '~/stores/AssetStore';
 import { useFilterStore } from '~/stores/FilterStore';
 import { useWeatherdataStore } from '~/stores/WeatherdataStore';
+import { useWindTurbineGeneratorStore } from '~/stores/WindTurbineGeneratorStore';
 import { showError } from '~/utils/chartUtils';
 
 export default {
@@ -29,7 +30,7 @@ export default {
             const currentPath = window.location.pathname;
 
             if (currentPath.includes('financialFeasibility') || currentPath.includes('availability')) {
-                const wtg = useAssetStore().getSelectedWtg();
+                const wtg = useWindTurbineGeneratorStore().getSelectedWtg();
                 const asset1 = useAssetStore().getSelectedAsset1();
                 const asset2 = useAssetStore().getSelectedAsset2();
 

@@ -7,7 +7,6 @@ export const useAssetStore = defineStore("AssetStore", {
     assets: [] as IAsset[],
     selectedAsset1: null as unknown | IAsset,
     selectedAsset2: null as unknown | IAsset,
-    selectedWtg: null as unknown | IAsset,
   }),
   actions: {
     async getByName(name: string) {
@@ -91,11 +90,5 @@ export const useAssetStore = defineStore("AssetStore", {
     getSelectedAsset2(): unknown | IAsset {
       return this.selectedAsset2;
     },
-    setSelectedWtg(wtg: IAsset) {
-      this.selectedWtg = wtg;
-    },
-    getSelectedWtg(): unknown | IAsset {
-      return this.selectedWtg;
-    }
   }
 });

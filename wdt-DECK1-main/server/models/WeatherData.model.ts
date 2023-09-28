@@ -2,22 +2,10 @@ import mongoose from 'mongoose'
 
 const schema: mongoose.Schema = new mongoose.Schema(
     {
-        Year: {
-            type: Number,
-            required: true
-        },
-        Month: {
-            type: Number,
-            required: true
-        }, 
-        Day: {
-            type: Number,
-            required: true
-        },
-        Hour: {
-            type: Number,
-            required: true
-        },
+        Year: { type: Number, required: true },
+        Month: { type: Number, required: true },
+        Day: { type: Number, required: true },
+        Hour: { type: Number, required: true },
         "Wave height": {
             type: Number,
             required: true
@@ -38,7 +26,7 @@ const schema: mongoose.Schema = new mongoose.Schema(
             type: Object,
             required: true,
         }
-    },  
+    },
     { timestamps: true }
 )
 

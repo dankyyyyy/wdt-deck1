@@ -25,9 +25,9 @@
       </div>
 
       <h2 class="text-lg font-semibold w-full pl-5 pt-5">Wind Turbine Generators</h2>
-      <div class="flex flex-wrap pb-5" v-if="assets !== undefined">
-        <div v-for="asset in assets.filter((x) => x.category === 'WindTurbineGenerator')" :key="asset.id" class="p-5">
-          <CardsAssetCard :asset="asset" />
+      <div class="flex flex-wrap pb-5" v-if="wtgs !== undefined">
+        <div v-for="wtg in wtgs" :key="wtg.id" class="p-5">
+          <CardsAssetCard :asset="wtg" />
         </div>
       </div>
     </div>
@@ -36,12 +36,14 @@
 
 <script>
 import { useAssetStore } from "~/stores/AssetStore";
+import { useWindTurbineGeneratorStore } from "~/stores/WindTurbineGeneratorStore";
 
 export default {
   name: "AssetList",
   data() {
     return {
       assets: [],
+      wtgs: [],
       isModalVisible: false,
       loading: false,
     };
@@ -49,10 +51,16 @@ export default {
   async mounted() {
     this.assets = await useAssetStore().getAll();
     this.assets.length == 0 ? "" : this.loading = false;
+
+    this.wtgs = await useWindTurbineGeneratorStore().getAll();
+    this.wtgs.length == 0 ? "" : this.loading = false;
   },
   async updated() {
     this.assets = await useAssetStore().getAll();
     this.assets.length == 0 ? "" : this.loading = false;
+
+    this.wtgs = await useWindTurbineGeneratorStore().getAll();
+    this.wtgs.length == 0 ? "" : this.loading = false;
   },
   methods: {
     showModal() {
