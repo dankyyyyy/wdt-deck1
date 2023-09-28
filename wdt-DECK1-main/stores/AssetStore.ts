@@ -22,6 +22,7 @@ export const useAssetStore = defineStore("AssetStore", {
         console.error(e)
       }
     },
+
     async getAll() {
       try {
         let data = await $fetch<IAsset[]>("/api/assets")
@@ -31,6 +32,7 @@ export const useAssetStore = defineStore("AssetStore", {
         console.error(e)
       }
     },
+
     async post(asset: IAsset) {
       try {
         console.log('Creating asset ', asset.name, ' ', asset._id);
@@ -46,6 +48,7 @@ export const useAssetStore = defineStore("AssetStore", {
       }
       this.getAll()
     },
+
     async put(asset: IAsset) {
       try {
         console.log('Updating asset ', asset.name, ' ', asset._id);
@@ -61,6 +64,7 @@ export const useAssetStore = defineStore("AssetStore", {
       }
       this.getAll()
     },
+
     async delete(asset: IAsset) {
       try {
         console.log('Deleting asset ', asset.name, ' ', asset._id);
@@ -78,6 +82,7 @@ export const useAssetStore = defineStore("AssetStore", {
       }
       this.getAll()
     },
+    
     setSelectedAsset1(asset1: IAsset) {
       this.selectedAsset1 = asset1;
     },

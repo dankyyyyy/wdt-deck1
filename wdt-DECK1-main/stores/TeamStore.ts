@@ -4,28 +4,34 @@ import axios from "axios"
 
 export const useTeamStore = defineStore("TeamStore", {
   state: () => ({
-    team: [] as ITeam[]
+    teams: [] as ITeam[],
+    selectedTeam: null as unknown | ITeam,
   }),
   actions: {
     async getByName(name: string) {
       try {
-          let data = await $fetch<ITeam[]>("/api/teams")
-          const filteredData = data.filter(team => team.name === name);
-          data = filteredData;
-          return data as ITeam[]
+        let data = await $fetch<ITeam[]>("/api/teams")
+        const filteredData = data.filter(team => team.name === name);
+        data = filteredData;
+        if (data.length === 1) {
+          const team = data[0];
+          return team as ITeam
+        }
       } catch (e) {
-          console.error(e)
+        console.error(e)
       }
-  },
+    },
+
     async getAll() {
       try {
         let data = await $fetch<ITeam[]>("/api/teams")
-        this.team = data;        
+        this.teams = data;
         return data;
       } catch (e) {
         console.error(e)
       }
     },
+
     async post(team: ITeam) {
       try {
         console.log('Creating team ', team.name, ' ', team._id);
@@ -42,7 +48,7 @@ export const useTeamStore = defineStore("TeamStore", {
       this.getAll()
     },
 
-    async put(team: ITeam){
+    async put(team: ITeam) {
       try {
         console.log('Updating team ', team.name, ' ', team._id);
         const response = await axios.put('/api/teams/update', team);
@@ -58,7 +64,7 @@ export const useTeamStore = defineStore("TeamStore", {
       this.getAll()
     },
 
-    async delete(team: ITeam){
+    async delete(team: ITeam) {
       try {
         console.log('Deleting team ', team.name, ' ', team._id);
         const response = await axios.delete('/api/teams/delete', {
@@ -74,6 +80,14 @@ export const useTeamStore = defineStore("TeamStore", {
         console.error('Error deleting team: ', error);
       }
       this.getAll()
-    }
+    },
+
+    setSelectedTeam(team: ITeam) {
+      this.selectedTeam = team;
+    },
+
+    getSelectedTeam(): unknown | ITeam {
+      return this.selectedTeam;
+    },
   }
 });

@@ -7,6 +7,8 @@ import { useFinStore } from "~/stores/FinStore";
 import { generateRandomColor } from "~/utils/chartUtils";
 import { useLocationStore } from "~/stores/LocationStore";
 import "~/utils/calculationUtils";
+import { downtimeSalaryCost, helicopterCarbonTaxCost, vesselCarbonTaxCost } from "~/utils/calculationUtils";
+import { useTeamStore } from "~/stores/TeamStore";
 
 export default {
   props: {
@@ -23,9 +25,10 @@ export default {
     const weatherStore = useWeatherStore();
     const assetStore = useAssetStore();
     const finStore = useFinStore();
+    const teamStore = useTeamStore();
 
     if (useLocationStore().getSelectedLocation() != null) {
-      onMounted(() => {
+      onMounted(async () => {
         const assets = [useAssetStore().getSelectedAsset1(), useAssetStore().getSelectedAsset2()];
         console.log(useAssetStore().getSelectedAsset1())
         console.log(assets);
@@ -34,6 +37,14 @@ export default {
         var assets = assetStore.assets;
         const filteredAssets = assets.filter(asset => asset.category !== "WindTurbineGenerator");
         assets = filteredAssets;*/
+
+        if (teamStore.teams.length === 0) teamStore.getAll();
+        const teams = await useTeamStore().getAll();
+        console.log(teams);
+
+        // const teams = [useTeamStore().getSelectedTeam()];
+        // console.log(useTeamStore.getSelectedTeam());
+        // console.log(teams);
 
         for (let i = 0; i < assets.length; i++) {
           start(
@@ -53,18 +64,44 @@ export default {
           const asset = assets[i];
           const annualWorkability = finStore.assetsFin[asset.name];
           finStore.assetsFin[asset.name] = [];
+          var team;
+          console.log(team);
+
+          if (asset.category === 'Helicopter') {
+            const filteredTeams = teams.filter(team => team.name.includes('Helicopter'));
+            if (filteredTeams.length === 1) {
+              team = filteredTeams[0];
+              console.log(team);
+            }
+            else if (asset.category === 'Vessel') {
+              if (asset.name.includes('CTV')) {
+                const filteredTeams = teams.filter(team => team.name.includes('CTV'));
+                if (filteredTeams.length === 1) {
+                  team = filteredTeams[0];
+                  console.log(team);
+                }
+              } else if (asset.name.includes('SOV')) {
+                const filteredTeams = teams.filter(team => team.name.includes('SOV'));
+                if (filteredTeams.length === 1) {
+                  team = filteredTeams[0];
+                  console.log(team);
+                }
+              }
+            }
+          }
 
           if (asset.category === 'Vessel') {
             finStore.assetsFin[asset.name].push(totalAnnualCostVessel(asset, annualWorkability));
-            // console.log(totalAnnualCostVessel(asset, annualWorkability));
-            finStore.assetsFin[asset.name].push(totalAnnualFuelCostVessel(asset, annualWorkability));
-            // console.log(totalAnnualFuelCostVessel(asset, annualWorkability));
             finStore.assetsFin[asset.name].push(annualCostPerAssetWithoutFuel(asset));
+            finStore.assetsFin[asset.name].push(totalAnnualFuelCostVessel(asset, annualWorkability));
+            finStore.assetsFin[asset.name].push(downtimeSalaryCost(team, annualWorkability));
+            finStore.assetsFin[asset.name].push(vesselCarbonTaxCost(asset, annualWorkability));
           } else if (asset.category === 'Helicopter') {
             finStore.assetsFin[asset.name].push(totalAnnualCostHelicopter(asset, annualWorkability));
-            finStore.assetsFin[asset.name].push(totalAnnualFuelCostHelicopter(asset, annualWorkability));
-            // console.log(totalAnnualFuelCostHelicopter(asset, annualWorkability));
             finStore.assetsFin[asset.name].push(annualCostPerAssetWithoutFuel(asset));
+            finStore.assetsFin[asset.name].push(totalAnnualFuelCostHelicopter(asset, annualWorkability));
+            finStore.assetsFin[asset.name].push(downtimeSalaryCost(team, annualWorkability));
+            finStore.assetsFin[asset.name].push(helicopterCarbonTaxCost(asset, annualWorkability));
           }
           console.log(finStore.assetsFin[asset.name]);
         }
