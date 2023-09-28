@@ -1,17 +1,12 @@
-
-/*************************
- * 
- *      Workability
- * 
- */
+/* ==============
+    Workability
+=============== */
 
 function unavailableDays(monthsAsset: number[]): number {
     var unavailableDays = 0;
-
     for (let i = 0; i < monthsAsset.length; i++) {
         unavailableDays += monthsAsset[i];
     }
-
     return Math.round(unavailableDays);
 }
 
@@ -31,21 +26,17 @@ export function monthlyWorkabilityPerAsset(monthsAsset: number[]): number[] {
 export function yearlyWorkabilityPerAsset(monthsAsset: number[]): number {
     const annualAvailability = availableDays(monthsAsset);
     const workability = Math.floor((annualAvailability / 365) * 100) / 100;
-    
     return workability;
 }
 
-/*************************
- * 
- *      Available & Required Hours
- * 
- */
+/* ===========================
+   Available & Required Hours
+=========================== */
 
 export function annualTotalAvailableHours(team: any, monthsAsset: number[]): number {
     const dailyHoursPerTeam = team.numberOfPersons * team.shiftPeriod;
     const annualAvailability = (availableDays(monthsAsset) * 24);
     const annualTotalAvailableHours = dailyHoursPerTeam * annualAvailability;
-
     return annualTotalAvailableHours;
 }
 
@@ -55,7 +46,6 @@ export function annualTotalRequiredHours(wtg: any, location: any): number {
     const troubleshooting = wtg.troubleshootVisits * wtg.averageTsHours;
     const requiredHoursPerWtg = plannedMaintenance + troubleshooting;
     const annualTotalRequiredHours = amountOfWTG * requiredHoursPerWtg;
-
     return annualTotalRequiredHours;
 }
 
@@ -63,15 +53,12 @@ export function availablePerRequiredInPercent(wtg: any, team: any, location: any
     const availableHours = annualTotalAvailableHours(team, monthsAsset);
     const requiredHours = annualTotalRequiredHours(wtg, location);
     const availablePerRequired = Math.floor((availableHours / requiredHours) * 100);
-    
     return availablePerRequired;
 }
 
-/*************************
- * 
- *      Fuel Totals and Costs
- * 
- */
+/* =====================
+    Fuel Totals & Costs
+===================== */
 
 export function annualCostPerAssetWithoutFuel(asset: any): number {
     const dayRate = asset.dayRate;
@@ -111,23 +98,17 @@ export function totalAnnualFuelCostHelicopter(asset: any, annualWorkability: num
     return totalFuelCost;
 }
 
-/*************************
- * 
- *      Salary Costs
- * 
- */
+/* ==============
+   Salary Costs
+============== */
 
-/*************************
- * 
- *      CO2 Tax
- * 
- */
+/* ==============
+   CO2 Tax
+============== */
 
-/*************************
- * 
- *      Total Costs
- * 
- */
+/* ==============
+   Total Costs
+============== */
 
 export function totalAnnualCostVessel(asset: any, annualWorkability: number): number {
     const totalCost = totalAnnualFuelCostVessel(asset, annualWorkability) + annualCostPerAssetWithoutFuel(asset);
@@ -138,10 +119,3 @@ export function totalAnnualCostHelicopter(asset: any, annualWorkability: number)
     const totalCost = totalAnnualFuelCostHelicopter(asset, annualWorkability) + annualCostPerAssetWithoutFuel(asset);
     return totalCost;
 }
-
-
-
-
-
-
-
