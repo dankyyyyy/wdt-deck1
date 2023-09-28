@@ -45,8 +45,10 @@
     /*background-image: url('assets\wdt_background3.png'); */
     /* background-image: url('assets\wdt_background2_low_opacity.png'); */
     background-image: url('assets\wdt-background-temporary-blurred.png');
-    background-size: cover; /* Adjust as needed */
-    background-position: center center; /* Adjust as needed */
+    background-size: cover;
+    /* Adjust as needed */
+    background-position: center center;
+    /* Adjust as needed */
     /* TODO Add a blur filter  */
   }
 
@@ -235,166 +237,186 @@
   }
 }
 
-@layer components{
+@layer components {
 
   /* ===================
    Start Screen Section
   =================== */
 
   /* General Box Styling */
-.clickable-box {
-  width: 80%; /* Sets the width to 80% of the parent container */
-  max-width: 600px; /* Sets a maximum width to maintain readability on larger screens */
-  min-width: fit-content;
-  height: 35vh; /* Sets height to 50% of the viewport height */
-  max-height: 400px;
-  min-height: fit-content;
-  background-color: #ffffff;
-  border-radius: 70px; /* Curvature of the box corners */
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45); /* Drop shadow */
-  margin: 2.5%; /* Percentages for margin to maintain spacing relative to the parent container */
-  cursor: pointer;
-  transition: background-color 0.3s, border-color 0.3s;
-  position: relative; /* positioning of icon and text */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end; /* Vertically center text and push it to the bottom */
-}
+  .clickable-box {
+    width: 80%;
+    /* Sets the width to 80% of the parent container */
+    max-width: 600px;
+    /* Sets a maximum width to maintain readability on larger screens */
+    min-width: fit-content;
+    height: 35vh;
+    /* Sets height to 50% of the viewport height */
+    max-height: 400px;
+    min-height: fit-content;
+    background-color: #ffffff;
+    border-radius: 70px;
+    /* Curvature of the box corners */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+    /* Drop shadow */
+    margin: 2.5%;
+    /* Percentages for margin to maintain spacing relative to the parent container */
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+    position: relative;
+    /* positioning of icon and text */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    /* Vertically center text and push it to the bottom */
+  }
 
-/* Styles for the box on hover */
-.clickable-box:hover {
-  background-color: #abd5e5; /* Changes to DECK1 Blue with 25% opacity  */
-}
+  /* Styles for the box on hover */
+  .clickable-box:hover {
+    background-color: #abd5e5;
+    /* Changes to DECK1 Blue with 25% opacity  */
+  }
 
-/* Styles for the box when clicked */
-.clickable-box:active {
-  background-color: rgba(255, 155, 56, 0.1); /* #FF9B38 at 10% opacity when clicked */
-}
+  /* Styles for the box when clicked */
+  .clickable-box:active {
+    background-color: rgba(255, 155, 56, 0.1);
+    /* #FF9B38 at 10% opacity when clicked */
+  }
 
-/* Text Centering */
+  /* Text Centering */
 
-.clickable-box-text {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end; /* Keeps the text at the bottom */
-  align-items: center;
-  height: 100%;
-  margin-bottom: 5%;
-}
+  .clickable-box-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    /* Keeps the text at the bottom */
+    align-items: center;
+    height: 100%;
+    margin-bottom: 5%;
+  }
 
-/* Style for the title */
-.clickable-box-title {
-  font-weight: bold;
-  font-size: 1.48em;
-  text-align: center;
-  margin-top: auto;
-}
+  /* Style for the title */
+  .clickable-box-title {
+    font-weight: bold;
+    font-size: 1.48em;
+    text-align: center;
+    margin-top: auto;
+  }
 
-/* Style for the subtitle */
-.clickable-box-description {
-  font-size: 1.15em;
-  text-align: center;
-  margin-top: 2%;
-  margin-bottom: 5%;
-}
+  /* Style for the subtitle */
+  .clickable-box-description {
+    font-size: 1.15em;
+    text-align: center;
+    margin-top: 2%;
+    margin-bottom: 5%;
+  }
 
-/* Style for the icon */
-.clickable-box-icon {
-  position: absolute; /* position for the icon relative to the text */
-  top: 15%;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #333; /* Icon Color */
-}
+  /* Style for the icon */
+  .clickable-box-icon {
+    position: absolute;
+    /* position for the icon relative to the text */
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #333;
+    /* Icon Color */
+  }
 
-/* =========================
+  /* =========================
    Presets Screen Section
 ========================= */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .grid-item {
+    padding: 16px;
+  }
+
+  .preset-box {
+    width: 23%;
+    margin: 1%;
+    border-radius: 70px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+    /* Drop shadow */
+    background-color: #ffffff;
+    cursor: pointer;
+  }
+
+  .selected {
+    background-color: #abd5e5;
+    /* Change to DECK1 Blue with 25% opacity */
+  }
+
+  .box-image {
+    max-width: 100%;
+    margin-bottom: 3%;
+    margin-top: 25px;
+  }
+
+  .box-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 2%;
+    /* Add title styles */
+  }
+
+  .box-text {
+    font-size: 1em;
+    text-align: center;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-bottom: 25px;
+    /* Add text styles */
+  }
+
+  .box-text hr {
+    height: 2px;
+    /*Width of the line*/
+    background-color: #000;
+    margin: 0 auto;
+    /* Centers the line */
+    width: 70%;
+    /* Length of the line*/
+    opacity: 70%;
+  }
+
+  .action-button {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background-color: #575757;
+    /* Grey color as it's inactive by default */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 36px;
+    font-weight: bold;
+    width: 2.79em;
+    height: 2.79em;
+    cursor: pointer;
+
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+    /* Drop shadow */
+  }
+
+  .active {
+    background-color: #4caf50;
+  }
+
 }
 
-.grid-item {
-  padding: 16px;
-}
-
-.preset-box {
-  width: 23%;
-  margin: 1%;
-  border-radius: 70px;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45); /* Drop shadow */
-  background-color: #ffffff;
-  cursor: pointer;
-}
-
-.selected {
-  background-color: #abd5e5; /* Change to DECK1 Blue with 25% opacity */
-}
-
-.box-image {
-  max-width: 100%;
-  margin-bottom: 3%;
-  margin-top: 25px;
-}
-
-.box-title {
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.2em;
-  margin-bottom: 2%;
-  /* Add title styles */
-}
-
-.box-text {
-  font-size: 1em;
-  text-align: center;
-  margin-left: 40px;
-  margin-right: 40px;
-  margin-bottom: 25px;
-  /* Add text styles */
-}
-
-.box-text hr {
-  height: 2px; /*Width of the line*/
-  background-color: #000;
-  margin: 0 auto; /* Centers the line */
-  width: 70%; /* Length of the line*/
-  opacity: 70%;
-}
-
-.action-button {
-  position: fixed;
-  bottom: 25px;
-  right: 25px;
-  background-color: #575757; /* Grey color as it's inactive by default */
-  color: white;
-  border: none;
-  border-radius: 50%;
-  font-size: 36px;
-  font-weight: bold;
-  width: 2.79em;
-  height: 2.79em;
-  cursor: pointer;
-
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45); /* Drop shadow */
-}
-
-.active {
-  background-color: #4caf50;
-}
-
-}
-
-@layer utilities{
+@layer utilities {
 
   /* ================
    Utilities Section
   ================ */
 
   /* import into pages to prevent horizontal and vertical scrolling */
-  .no-scroll{
+  .no-scroll {
     overflow: hidden;
     height: 90vh;
     max-height: 90vh;
@@ -432,6 +454,8 @@
 }
 
 .submit-button {
+  background-color: #09a6d7;
+  color: white;
   width: 60px;
   height: 60px;
   border-radius: 50%;

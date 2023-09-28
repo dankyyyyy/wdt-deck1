@@ -1,5 +1,5 @@
 <template>
-    <button class="submit-button action-button" @click="startChart">
+    <button class="submit-button" @click="startChart">
         <IconsDoneTick />
     </button>
 </template>
