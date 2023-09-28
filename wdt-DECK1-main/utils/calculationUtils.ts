@@ -49,19 +49,19 @@ export function annualTotalAvailableHours(team: any, monthsAsset: number[]): num
     return annualTotalAvailableHours;
 }
 
-export function annualTotalRequiredHours(asset: any, location: any): number {
+export function annualTotalRequiredHours(wtg: any, location: any): number {
     const amountOfWTG = location.wtg;
-    const plannedMaintenance = asset.plannedMaintenance;
-    const troubleshooting = asset.troubleshootVisits * asset.averageTsHours;
+    const plannedMaintenance = wtg.plannedMaintenance;
+    const troubleshooting = wtg.troubleshootVisits * wtg.averageTsHours;
     const requiredHoursPerWtg = plannedMaintenance + troubleshooting;
     const annualTotalRequiredHours = amountOfWTG * requiredHoursPerWtg;
 
     return annualTotalRequiredHours;
 }
 
-export function availablePerRequiredInPercent(asset: any, team: any, location: any, monthsAsset: number[]): number {
+export function availablePerRequiredInPercent(wtg: any, team: any, location: any, monthsAsset: number[]): number {
     const availableHours = annualTotalAvailableHours(team, monthsAsset);
-    const requiredHours = annualTotalRequiredHours(asset, location);
+    const requiredHours = annualTotalRequiredHours(wtg, location);
     const availablePerRequired = Math.floor((availableHours / requiredHours) * 100);
     
     return availablePerRequired;

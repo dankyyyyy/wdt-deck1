@@ -29,10 +29,13 @@ export interface IAsset {
     windSpeedLimit: number,
     dayRate: number,
     operationalFuelConsumption: number,
+    dailyAvailableTimePerTeam: number,
+    staffPerTeam: number,
+    totalYearlyAvailableTime: number,
 
     // vessel-only attributes
     vesselSpeed: number,
-    loiteringFuelConsumption: number,
+    fuelFlowLoitering: number,
     loitering: number,
     highEngineActivity: number,
 

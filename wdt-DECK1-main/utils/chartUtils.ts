@@ -1,6 +1,7 @@
 import { useLocationStore } from "~/stores/LocationStore";
 import { useAssetStore } from "~/stores/AssetStore";
-import { IAsset, ILocation } from "~/types";
+import { useWindTurbineGeneratorStore } from "~/stores/WindTurbineGeneratorStore";
+import { IAsset, ILocation, IWindTurbineGenerator } from "~/types";
 
 export function generateRandomColor() {
     var materialColors = [
@@ -54,7 +55,7 @@ export function nullify() {
     useLocationStore().setSelectedLocation(null as unknown as ILocation);
     useAssetStore().setSelectedAsset1(null as unknown as IAsset);
     useAssetStore().setSelectedAsset2(null as unknown as IAsset);
-    useAssetStore().setSelectedWtg(null as unknown as IAsset);
+    useWindTurbineGeneratorStore().setSelectedWtg(null as unknown as IWindTurbineGenerator);
 }
 
 export function formatNumberWithDecimal(value: number) {
