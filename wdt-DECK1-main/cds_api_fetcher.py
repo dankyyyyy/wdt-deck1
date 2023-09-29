@@ -7,7 +7,8 @@ import json
 import math
 import os
 
-c = cdsapi.Client(url = "https://cds.climate.copernicus.eu/api/v2", key = "194760:1d68b23e-3621-4c23-b31a-bbb20a26e263")
+c = cdsapi.Client(url="https://cds.climate.copernicus.eu/api/v2",
+                  key="194760:1d68b23e-3621-4c23-b31a-bbb20a26e263")
 
 def retrieve(c1, c2, c3, c4, name, year):
     previousYear = int(year)-1
@@ -54,12 +55,12 @@ def retrieve(c1, c2, c3, c4, name, year):
                 'year': years,
                 'variable': variables
             }, name)
-        
+
         if not response.error:
             print("Data succesfully fetched")
         else:
             print(response.error)
-        
+
         data_list = []
 
         with open('./' + name, 'rb') as stream:
@@ -71,8 +72,6 @@ def retrieve(c1, c2, c3, c4, name, year):
                 variable_name = variables[j]
                 j += 1
                 # print("Message {}: {} {} - {:.3f} {}".format(i, time, variable_name, values.mean(), lons.shape))
-                print(lons, ' ', lats)
-                
 
                 # Collect the required data
                 year = time.year
@@ -94,7 +93,8 @@ def retrieve(c1, c2, c3, c4, name, year):
 
                 if j == len(variables):
                     j = 0
-                    windspeed = round(math.sqrt(windU**2 + windV**2), 3) # Calculate windspeed from the wind components through: windspeed = sqrt(u^2 + v^2).
+                    # Calculate windspeed from the wind components through: windspeed = sqrt(u^2 + v^2).
+                    windspeed = round(math.sqrt(windU**2 + windV**2), 3)
                     # Create a dictionary for the current message's data
                     message_data = {
                         "Year": year,
@@ -113,10 +113,11 @@ def retrieve(c1, c2, c3, c4, name, year):
 
         # Ensure the folder exists, create it if not
         if not os.path.exists(folder_name):
-          os.makedirs(folder_name)
+            os.makedirs(folder_name)
 
         # Construct the output filename with the folder path
-        output_filename = os.path.join(folder_name, name.replace(".grib", ".json"))
+        output_filename = os.path.join(
+            folder_name, name.replace(".grib", ".json"))
 
         # Write the collected data to the JSON file in the "static" folder
         with open(output_filename, 'w') as json_file:
@@ -128,16 +129,17 @@ def retrieve(c1, c2, c3, c4, name, year):
             print(f"File '{name}' deleted successfully.")
         else:
             print(f"File '{name}' does not exist.")
-                
+
         return "OK", 200
-        
+
     except Exception as e:
-            return "NOT OK :(", 400
-    
+        return "NOT OK :(", 400
+
+
 def deleteJson(name):
     folder_name = "static"
     file_path = os.path.join(folder_name, name)
-    
+
     if os.path.exists(file_path):
         os.remove(file_path)
         print(f"File '{name}' deleted successfully.")

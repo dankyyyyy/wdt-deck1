@@ -31,6 +31,7 @@
     "pyodide": "^0.23.4",
     "vue-carousel": "^0.18.0",
     "vue-chartjs": "^5.2.0",
+    "winston": "^3.10.0",
     "yarn": "^1.22.19"
   },
   "overrides": {

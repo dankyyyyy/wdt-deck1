@@ -9,8 +9,29 @@
     <SidebarItem path="/weatherDownTime" text="Weather Down Time" />
     <SidebarItem path="/financialFeasibility" text="Financial Feasibility" />
     <SidebarItem path="/availability" text="Availability"/>
+    <SidebarItem path="/presets" text="Presets"/>
     <SidebarItem path="/assets" text="Assets" />
     <SidebarItem path="/locations" text="Locations" />
     <SidebarItem path="/teams" text="Teams" />
   </div>
 </template>
+
+<!--Conditional Sidebar -- leaves empty space where it used to be, must adjust-->
+<!--<script>
+export default {
+  data() {
+    return {
+      currentPath: String,
+    };
+  },
+  onMounted() {
+    this.currentPath = window.location.pathname;
+  },
+  computed: {
+    showSidebar() {
+      const pathsWhereVisible = ["/weatherDownTime", "/financialFeasibility", "/availability"];
+      return pathsWhereVisible.includes(this.currentPath);
+    }
+  }
+}
+</script>-->

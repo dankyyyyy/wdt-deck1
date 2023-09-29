@@ -4,7 +4,8 @@ import axios from "axios"
 
 export const usePresetStore = defineStore("PresetStore", {
   state: () => ({
-    presets: [] as IPreset[]
+    presets: [] as IPreset[],
+    selectedPreset: null as unknown | IPreset,
   }),
   actions: {
     async getByName(name: string) {
@@ -75,6 +76,12 @@ export const usePresetStore = defineStore("PresetStore", {
         console.error('Error deleting preset: ', error);
       }
       this.getAll()
-    }
-  }
+    },
+    setSelectedPreset(preset: IPreset) {
+      this.selectedPreset = preset;
+    },
+    getSelectedPreset(): unknown | IPreset {
+      return this.selectedPreset;
+    },
+  } 
 });

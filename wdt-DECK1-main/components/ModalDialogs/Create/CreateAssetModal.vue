@@ -26,7 +26,6 @@
           <select name="category" v-model="asset.category" class="border-2 rounded-md text-left">
             <option value="Vessel">Vessel</option>
             <option value="Helicopter">Helicopter</option>
-            <option value="WindTurbineGenerator">Wind Turbine Generator</option>
           </select>
         </div>
 

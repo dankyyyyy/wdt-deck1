@@ -27,9 +27,9 @@
       <h2 class="text-lg font-semibold w-full pl-5 pt-5">Wind Turbine Generators</h2>
       <div class="flex flex-wrap pb-5" v-if="wtgs !== undefined">
         <div v-for="wtg in wtgs" :key="wtg.id" class="p-5">
-          <CardsAssetCard :asset="wtg" />
+          <CardsWtgCard :wtg="wtg" />
         </div>
-      </div>
+      </div>    
     </div>
   </div>
 </template>

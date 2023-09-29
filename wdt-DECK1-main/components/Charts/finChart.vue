@@ -1,14 +1,14 @@
 <script>
 import Chart from "chart.js/auto";
+import { Colors } from 'chart.js';
 import { start } from "@/utils/chartCalc/wdtCalc";
 import { useWeatherStore } from "@/stores/WeatherStore";
-import { useAssetStore } from "@/stores/AssetStore";
 import { useFinStore } from "~/stores/FinStore";
-import { generateRandomColor } from "~/utils/chartUtils";
 import { useLocationStore } from "~/stores/LocationStore";
+import { usePresetStore } from "~/stores/PresetStore";
 import "~/utils/calculationUtils";
-import { downtimeSalaryCost, helicopterCarbonTaxCost, vesselCarbonTaxCost } from "~/utils/calculationUtils";
-import { useTeamStore } from "~/stores/TeamStore";
+
+Chart.register(Colors);
 
 export default {
   props: {
@@ -23,28 +23,30 @@ export default {
   },
   setup(props) {
     const weatherStore = useWeatherStore();
-    const assetStore = useAssetStore();
     const finStore = useFinStore();
-    const teamStore = useTeamStore();
+    const presetStore = usePresetStore();
 
     if (useLocationStore().getSelectedLocation() != null) {
-      onMounted(async () => {
-        const assets = [useAssetStore().getSelectedAsset1(), useAssetStore().getSelectedAsset2()];
-        console.log(useAssetStore().getSelectedAsset1())
-        console.log(assets);
+      onMounted(() => {
+        // const assets = [useAssetStore().getSelectedAsset1(), useAssetStore().getSelectedAsset2()];
 
         /*if (assetStore.assets.length === 0) assetStore.getAll();
-        var assets = assetStore.assets;
-        const filteredAssets = assets.filter(asset => asset.category !== "WindTurbineGenerator");
-        assets = filteredAssets;*/
+        var assets = assetStore.assets;*/
 
-        if (teamStore.teams.length === 0) teamStore.getAll();
-        const teams = await useTeamStore().getAll();
-        console.log(teams);
+        // const currentPreset = presetStore.getSelectedPreset();
 
-        // const teams = [useTeamStore().getSelectedTeam()];
-        // console.log(useTeamStore.getSelectedTeam());
-        // console.log(teams);
+        const presets = presetStore.getAll();
+        var currentPreset;
+        if (presets.length === 1) {
+          currentPreset = presets[0];
+        }
+
+        const assets = [currentPreset.asset1, currentPreset.asset2];
+        console.log(presets);
+        console.log(assets);
+        console.log(currentPreset.location);
+        console.log(currentPreset.team1);
+        console.log(currentPreset.team2);
 
         for (let i = 0; i < assets.length; i++) {
           start(
@@ -64,30 +66,12 @@ export default {
           const asset = assets[i];
           const annualWorkability = finStore.assetsFin[asset.name];
           finStore.assetsFin[asset.name] = [];
-          var team;
-          console.log(team);
 
-          if (asset.category === 'Helicopter') {
-            const filteredTeams = teams.filter(team => team.name.includes('Helicopter'));
-            if (filteredTeams.length === 1) {
-              team = filteredTeams[0];
-              console.log(team);
-            }
-            else if (asset.category === 'Vessel') {
-              if (asset.name.includes('CTV')) {
-                const filteredTeams = teams.filter(team => team.name.includes('CTV'));
-                if (filteredTeams.length === 1) {
-                  team = filteredTeams[0];
-                  console.log(team);
-                }
-              } else if (asset.name.includes('SOV')) {
-                const filteredTeams = teams.filter(team => team.name.includes('SOV'));
-                if (filteredTeams.length === 1) {
-                  team = filteredTeams[0];
-                  console.log(team);
-                }
-              }
-            }
+          var team;
+          if (i === 0) {
+            team = currentPreset.team1
+          } else {
+            currentPreset.team2;
           }
 
           if (asset.category === 'Vessel') {
@@ -103,7 +87,6 @@ export default {
             finStore.assetsFin[asset.name].push(downtimeSalaryCost(team, annualWorkability));
             finStore.assetsFin[asset.name].push(helicopterCarbonTaxCost(asset, annualWorkability));
           }
-          console.log(finStore.assetsFin[asset.name]);
         }
 
         // Chart Construction
@@ -112,12 +95,11 @@ export default {
           datasets.push({
             label: x,
             data: finStore.assetsFin[x],
-            backgroundColor: generateRandomColor(),
-            borderColor: "#333333",
             borderRadius: 10,
           })
         }
         //Create chart object
+        let delayed;
         const myChart = new Chart(
           document.getElementById("finChart" + props.filterParams.chartId),
           {
@@ -127,7 +109,22 @@ export default {
               datasets,
             },
             options: {
+              animation: {
+                onComplete: () => {
+                  delayed = true;
+                },
+                delay: (context) => {
+                  let delay = 0;
+                  if (context.type === 'data' && context.mode === 'default' && !delayed) {
+                    delay = context.dataIndex * 300 + context.datasetIndex * 100;
+                  }
+                  return delay;
+                },
+              },
               plugins: {
+                colors: {
+                  enabled: true,
+                },
                 tooltip: {
                   enabled: true,
                   callbacks: {

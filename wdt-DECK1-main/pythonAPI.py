@@ -5,9 +5,9 @@ from flask_cors import CORS
 appFlask = Flask(__name__)
 
 CORS(appFlask)
-# The code above enables CORS for all routes in Flask app. 
-# This means that it allows cross-origin requests from any domain. 
-# To restrict it to a specific origin (e.g., the Vue.js app's domain), 
+# The code above enables CORS for all routes in Flask app.
+# This means that it allows cross-origin requests from any domain.
+# To restrict it to a specific origin (e.g., the Vue.js app's domain),
 # we can do so by specifying the origins parameter:
 # CORS(app, origins="http://thedomain.com")
 
@@ -27,5 +27,5 @@ def deleteFile(filename):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-if __name__ == "__main__":	
+if __name__ == "__main__":
 	appFlask.run(debug=True, host="127.0.0.1", port=5555)

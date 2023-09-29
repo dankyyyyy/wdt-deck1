@@ -9,7 +9,7 @@ export const useFinStore = defineStore("FinStore", {
             "Total Cost",
             "Cost of Lease",
             "Cost of Fuel",
-            "Cost Salary",
+            "Cost of Salary",
             "CO2 Tax",
         ]);
         return {

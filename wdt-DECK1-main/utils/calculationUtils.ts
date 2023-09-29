@@ -94,7 +94,7 @@ export function totalAnnualFuelCostVessel(asset: any, annualWorkability: number)
 }
 
 export function totalAnnualFuelCostHelicopter(asset: any, annualWorkability: number): number {
-    const totalFuelCost = totalAnnualFuelHelicopter(asset, annualWorkability) * 0.75;
+    const totalFuelCost = totalAnnualFuelHelicopter(asset, annualWorkability) * 0.75; // fuel in liters, costant was 750€ per metric ton
     return totalFuelCost;
 }
 
@@ -123,7 +123,7 @@ export function helicopterCarbonOutput(asset: any, annualWorkability: number): n
 
 export function vesselCarbonOutput(asset: any, annualWorkability: number): number {
     const conversionDecimal = 0.00273; //divide by 1000, multiply by 2.73 [conversion rate for diesel]
-    const usedFuel = totalAnnualFuelVessel(asset, annualWorkability); 
+    const usedFuel = totalAnnualFuelVessel(asset, annualWorkability);
     const carbonEmmissions = conversionDecimal * usedFuel;
     return carbonEmmissions;
 }

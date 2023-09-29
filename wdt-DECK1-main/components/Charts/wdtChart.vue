@@ -1,10 +1,13 @@
 <script>
 import Chart from "chart.js/auto";
+import { Colors } from 'chart.js';
 import { start } from "@/utils/chartCalc/wdtCalc";
 import { useWeatherStore } from "@/stores/WeatherStore";
 import { useAssetStore } from "@/stores/AssetStore";
-import { generateRandomColor } from "~/utils/chartUtils";
 import { useLocationStore } from "~/stores/LocationStore";
+import { usePresetStore } from "~/stores/PresetStore";
+
+Chart.register(Colors);
 
 export default {
   props: {
@@ -20,13 +23,12 @@ export default {
   setup(props) {
     const weatherStore = useWeatherStore();
     const assetStore = useAssetStore();
+    const presetStore = usePresetStore();
 
-    if (useLocationStore().getSelectedLocation() != null) {
+    if (presetStore.getSelectedPreset() != null) {
       onMounted(() => {
         if (assetStore.assets.length === 0) assetStore.getAll();
         var assets = assetStore.assets;
-        const filteredAssets = assets.filter(asset => asset.category !== "WindTurbineGenerator");
-        assets = filteredAssets;
 
         for (let i = 0; i < assets.length; i++) {
           start(
@@ -50,8 +52,6 @@ export default {
               props.filterParams.startMonth - 1,
               props.filterParams.endMonth
             ),
-            backgroundColor: generateRandomColor(),
-            borderColor: "#333333",
             borderRadius: 10,
           })
         }
@@ -69,6 +69,9 @@ export default {
             },
             options: {
               plugins: {
+                colors: {
+                  enabled: true,
+                },
                 tooltip: {
                   enabled: true,
                   callbacks: {

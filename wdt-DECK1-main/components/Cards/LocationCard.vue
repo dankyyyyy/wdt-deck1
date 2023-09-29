@@ -52,6 +52,12 @@ export default {
   },
   async mounted() {
     if (await useWeatherdataStore().checkByLocationId(this.location._id)) {
+      const currentDate = new Date();
+      const currentYear = currentDate.getFullYear();
+
+      const currentData = await useWeatherdataStore().getByLocationId(this.location._id);
+      // const latestData = currentData[currentData.length - 1];
+      
       this.isDataRegistered = true;
     }
   },

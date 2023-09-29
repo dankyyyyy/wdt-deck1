@@ -53,6 +53,12 @@ export const useWeatherdataStore = defineStore("WeatherdataStore", {
                 // handle error
                 return false;
             }
-        }
+        },
+        setCurrentData(currentData: IWeatherdata[]) {
+            this.currentData = currentData;
+        },
+        getCurrentData(): unknown | IWeatherdata[] {
+            return this.currentData;
+        },
     }
 })

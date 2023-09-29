@@ -5,7 +5,6 @@ const schema: mongoose.Schema = new mongoose.Schema(
     {
         name: { type: String, required: true },
 
-        //VERIFY THAT THIS WORKS
         location: { type: Object, required: true },
         wtg: { type: Object, required: true },
         asset1: { type: Object, required: true },

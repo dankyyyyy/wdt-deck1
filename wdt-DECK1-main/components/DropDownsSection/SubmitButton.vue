@@ -10,7 +10,7 @@ import { useAssetStore } from '~/stores/AssetStore';
 import { useFilterStore } from '~/stores/FilterStore';
 import { useWeatherdataStore } from '~/stores/WeatherdataStore';
 import { useWindTurbineGeneratorStore } from '~/stores/WindTurbineGeneratorStore';
-import { showError } from '~/utils/chartUtils';
+import { usePresetStore } from '~/stores/PresetStore';
 
 export default {
     name: "SubmitButton",
@@ -25,32 +25,29 @@ export default {
     },
     methods: {
         async startChart() {
-            const location = useLocationStore().getSelectedLocation();
-
-            const currentPath = window.location.pathname;
-
-            if (currentPath.includes('financialFeasibility') || currentPath.includes('availability')) {
-                const wtg = useWindTurbineGeneratorStore().getSelectedWtg();
-                const asset1 = useAssetStore().getSelectedAsset1();
-                const asset2 = useAssetStore().getSelectedAsset2();
-
-                if (asset1 === asset2 && asset1 !== null && asset2 !== null) {
-                    showError("Assets cannot be identical.");
-                    return;
-                }
-
-                if (wtg === null || asset1 === null || asset2 === null) {
-                    showError("Please make sure all attributes have been selected.");
-                    return;
-                }
-            }
-
+            const currentPreset = usePresetStore().getSelectedPreset();
+            const currentLocation = currentPreset.location;
+            
             this.filterStore.hideRecommendation = false;
             useLocationStore().toggleLoading();
-            this.$emit("loading")
-            await useWeatherdataStore().getByLocationId(location._id)
+            this.$emit("loading");
+            await useWeatherdataStore().getByLocationId(currentLocation._id)
             useLocationStore().toggleLoading();
             this.$emit("loading")
+
+            /*const statusCode = await checkConnection(currentLocation);
+            console.log(statusCode);
+            if (statusCode === 200) {
+                this.filterStore.hideRecommendation = false;
+                useLocationStore().toggleLoading();
+                this.$emit("loading");
+                await useWeatherdataStore().getByLocationId(currentLocation._id)
+                useLocationStore().toggleLoading();
+                this.$emit("loading")
+            } else {
+                showError(`An error with the status code ${statusCode} occurred. Please try again later.`);
+                return;
+            }*/
         }
     }
 }

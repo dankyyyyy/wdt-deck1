@@ -1,7 +1,6 @@
 import { useWeatherdataStore } from "@/stores/WeatherdataStore";
 import { useWeatherStore } from "@/stores/WeatherStore";
 import "@/utils/chartUtils";
-import { monthlyWorkabilityPerAsset } from "../calculationUtils";
 
 // THRESHOLD - percentage of a day that can be no-fly
 // determines availability (50%+ => available)

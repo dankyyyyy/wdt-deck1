@@ -25,6 +25,8 @@
   </template>
     
   <script>
+  import { nullify } from '~/utils/chartUtils';
+  
   export default {
     layout: "default",
     name: "Availability",
@@ -36,6 +38,7 @@
     },
     mounted() {
       this.ids.push(1);
+      nullify();
     },
     methods: {
       addGraph() {
