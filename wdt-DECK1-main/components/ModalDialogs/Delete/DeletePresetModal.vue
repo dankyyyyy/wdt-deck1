@@ -4,7 +4,7 @@
             <h3 class="font-semibold">Delete Asset</h3>
             <div class="py-5 flex flex-col flex-wrap content-normal">
                 <h3 class="text-center w-auto my-5">
-                    Are you sure you want to delete this asset?
+                    Are you sure you want to delete this preset?
 
                 </h3>
 
@@ -22,23 +22,23 @@
 </template>
   
 <script>
-import { useAssetStore } from "~/stores/AssetStore";
+import { usePresetStore } from '~/stores/PresetStore';
 
 
 
 export default {
-    name: "DeleteAssetModal",
+    name: "DeletePresetModal",
     props: {
-        asset: {
+        preset: {
             type: Object,
             required: true,
         }
     },
     setup(props) {
-        const assetRef = ref(props.asset);
+        const presetRef = ref(props.preset);
 
         return {
-            assetRef,
+            presetRef,
         }
     },
     methods: {
@@ -46,8 +46,8 @@ export default {
             this.$emit("hideModal");
         },
         async handleSaveClick() {
-            const store = useAssetStore();
-            await store.delete(this.assetRef);
+            const store = usePresetStore();
+            await store.delete(this.presetRef);
             this.$emit("hideModal");
         },
     },

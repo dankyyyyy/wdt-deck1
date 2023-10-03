@@ -4,7 +4,7 @@
         <h3 class="font-semibold">Delete Team</h3>
         <div class="py-5 flex flex-col flex-wrap content-normal">
             <h3 class="text-center w-auto my-5">
-              Are you sure you want to delete the current team?
+              Are you sure you want to delete this team?
 
             </h3>
             

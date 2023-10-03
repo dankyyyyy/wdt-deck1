@@ -9,8 +9,6 @@ const schema: mongoose.Schema = new mongoose.Schema(
         wtg: { type: Object, required: true },
         asset1: { type: Object, required: true },
         asset2: { type: Object, required: true },
-        team1: { type: Object, required: true },
-        team2: { type: Object, required: true },
     },
     { timestamps: true }
 )

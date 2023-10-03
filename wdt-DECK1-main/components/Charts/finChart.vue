@@ -4,7 +4,6 @@ import { Colors } from 'chart.js';
 import { start } from "@/utils/chartCalc/wdtCalc";
 import { useWeatherStore } from "@/stores/WeatherStore";
 import { useFinStore } from "~/stores/FinStore";
-import { useLocationStore } from "~/stores/LocationStore";
 import { usePresetStore } from "~/stores/PresetStore";
 import "~/utils/calculationUtils";
 
@@ -26,27 +25,15 @@ export default {
     const finStore = useFinStore();
     const presetStore = usePresetStore();
 
-    if (useLocationStore().getSelectedLocation() != null) {
+    if (presetStore.getSelectedPreset() != null) {
       onMounted(() => {
-        // const assets = [useAssetStore().getSelectedAsset1(), useAssetStore().getSelectedAsset2()];
-
-        /*if (assetStore.assets.length === 0) assetStore.getAll();
-        var assets = assetStore.assets;*/
-
-        // const currentPreset = presetStore.getSelectedPreset();
-
-        const presets = presetStore.getAll();
-        var currentPreset;
-        if (presets.length === 1) {
-          currentPreset = presets[0];
-        }
+        const currentPreset = presetStore.getSelectedPreset();
 
         const assets = [currentPreset.asset1, currentPreset.asset2];
-        console.log(presets);
         console.log(assets);
         console.log(currentPreset.location);
-        console.log(currentPreset.team1);
-        console.log(currentPreset.team2);
+        console.log(currentPreset.asset1.team);
+        console.log(currentPreset.asset2.team);
 
         for (let i = 0; i < assets.length; i++) {
           start(
@@ -64,17 +51,17 @@ export default {
 
         for (let i = 0; i < assets.length; i++) {
           const asset = assets[i];
+          const team = assets[i].team;
           const annualWorkability = finStore.assetsFin[asset.name];
           finStore.assetsFin[asset.name] = [];
 
-          var team;
-          if (i === 0) {
-            team = currentPreset.team1
-          } else {
-            currentPreset.team2;
-          }
+          finStore.assetsFin[asset.name].push(totalAnnualCost(asset, team, annualWorkability));
+          finStore.assetsFin[asset.name].push(annualCharterCostsWdt(asset, annualWorkability));
+          finStore.assetsFin[asset.name].push(annualFuelCost(asset, annualWorkability));
+          finStore.assetsFin[asset.name].push(downtimeSalaryCost(team, annualWorkability));
+          finStore.assetsFin[asset.name].push(annualCarbonTax(asset, annualWorkability));
 
-          if (asset.category === 'Vessel') {
+          /*if (asset.category === 'Vessel') {
             finStore.assetsFin[asset.name].push(totalAnnualCostVessel(asset, annualWorkability));
             finStore.assetsFin[asset.name].push(annualCostPerAssetWithoutFuel(asset));
             finStore.assetsFin[asset.name].push(totalAnnualFuelCostVessel(asset, annualWorkability));
@@ -86,7 +73,7 @@ export default {
             finStore.assetsFin[asset.name].push(totalAnnualFuelCostHelicopter(asset, annualWorkability));
             finStore.assetsFin[asset.name].push(downtimeSalaryCost(team, annualWorkability));
             finStore.assetsFin[asset.name].push(helicopterCarbonTaxCost(asset, annualWorkability));
-          }
+          }*/
         }
 
         // Chart Construction

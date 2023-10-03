@@ -6,10 +6,8 @@
   
 <script>
 import { useLocationStore } from '~/stores/LocationStore';
-import { useAssetStore } from '~/stores/AssetStore';
 import { useFilterStore } from '~/stores/FilterStore';
 import { useWeatherdataStore } from '~/stores/WeatherdataStore';
-import { useWindTurbineGeneratorStore } from '~/stores/WindTurbineGeneratorStore';
 import { usePresetStore } from '~/stores/PresetStore';
 
 export default {
@@ -27,7 +25,14 @@ export default {
         async startChart() {
             const currentPreset = usePresetStore().getSelectedPreset();
             const currentLocation = currentPreset.location;
-            
+
+            console.log(currentPreset.location);
+            console.log(currentPreset.asset1);
+            console.log(currentPreset.asset2);
+            console.log(currentPreset.asset1.team);
+            console.log(currentPreset.asset2.team);
+
+
             this.filterStore.hideRecommendation = false;
             useLocationStore().toggleLoading();
             this.$emit("loading");

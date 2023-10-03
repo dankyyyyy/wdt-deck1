@@ -6,6 +6,11 @@
         <div class="w-full border-t-2 border-black p-2">
             <div class="flex justify-between">
                 <h2 class="font-semibold text-lg mb-2">{{ preset.name }}</h2>
+                <ModalDialogsDeletePresetModal :preset="preset" v-if="isDeleteModalVisible" @hideModal="hideModal" />
+
+                <div class="flex space-x-2">
+                    <IconsDelete @click="showDeleteModal" class="cursor-pointer" />
+                </div>
             </div>
 
             <div class="flex justify-between">
@@ -27,21 +32,12 @@
                 <label for="asset2">Asset2: </label>
                 <p class="w-min whitespace-nowrap">{{ preset.asset2.name }}</p>
             </div>
-
-            <div class="flex justify-between">
-                <label for="team1">Team1: </label>
-                <p class="w-min whitespace-nowrap">{{ preset.team1.name }}</p>
-            </div>
-
-            <div class="flex justify-between">
-                <label for="team2">Team1: </label>
-                <p class="w-min whitespace-nowrap">{{ preset.team2.name }}</p>
-            </div>
         </div>
     </div>
 </template>
 
 <script>
+
 export default {
     name: "PresetCard",
     props: {
@@ -50,5 +46,19 @@ export default {
             required: true,
         }
     },
+    data() {
+    return {
+      isUpdateModalVisible: false,
+      isDeleteModalVisible: false,
+    };
+  },
+  methods: {
+    showDeleteModal() {
+      this.isDeleteModalVisible = true;
+    },
+    hideModal() {
+      this.isDeleteModalVisible = false;
+    },
+  },
 }
 </script>

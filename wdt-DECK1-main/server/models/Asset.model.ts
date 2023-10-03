@@ -10,19 +10,18 @@ const schema: mongoose.Schema = new mongoose.Schema(
         windSpeedLimit: { type: Number },
         dayRate: { type: Number },
         operationalFuelConsumption: { type: Number },
-        dailyAvailableTimePerTeam: { type: Number },
-        staffPerTeam: { type: Number },
-        totalYearlyAvailableTime: { type: Number },
 
         // Vessel-only Attributes
         vesselSpeed: { type: Number },
-        fuelFlowLoitering: { type: Number },
         loitering: { type: Number },
+        loiteringFuelConsumption: { type: Number },
         highEngineActivity: { type: Number },
 
         // Helicopter-only Attributes
         helicopterSpeed: { type: Number },
         cloudbase: { type: Number },
+
+        team: { type: Object, required: true },
     },
     { timestamps: true }
 )

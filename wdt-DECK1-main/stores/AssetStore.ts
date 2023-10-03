@@ -5,8 +5,6 @@ import axios from "axios"
 export const useAssetStore = defineStore("AssetStore", {
   state: () => ({
     assets: [] as IAsset[],
-    selectedAsset1: null as unknown | IAsset,
-    selectedAsset2: null as unknown | IAsset,
   }),
   actions: {
     async getByName(name: string) {
@@ -81,19 +79,6 @@ export const useAssetStore = defineStore("AssetStore", {
         console.error('Error deleting asset: ', error);
       }
       this.getAll()
-    },
-    
-    setSelectedAsset1(asset1: IAsset) {
-      this.selectedAsset1 = asset1;
-    },
-    getSelectedAsset1(): unknown | IAsset {
-      return this.selectedAsset1;
-    },
-    setSelectedAsset2(asset2: IAsset) {
-      this.selectedAsset2 = asset2;
-    },
-    getSelectedAsset2(): unknown | IAsset {
-      return this.selectedAsset2;
     },
   }
 });

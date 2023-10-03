@@ -42,6 +42,8 @@ export interface IAsset {
     // Helicopter-only Attributes
     helicopterSpeed: number,
     cloudbase: number,
+
+    team: ITeam,
 }
 
 //teams
@@ -60,8 +62,6 @@ export interface IPreset {
     wtg: IWindTurbineGenerator;
     asset1: IAsset;
     asset2: IAsset;
-    team1: ITeam;
-    team2: ITeam;
 }
 
 //weatherdata

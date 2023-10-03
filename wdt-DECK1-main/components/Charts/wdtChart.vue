@@ -4,7 +4,6 @@ import { Colors } from 'chart.js';
 import { start } from "@/utils/chartCalc/wdtCalc";
 import { useWeatherStore } from "@/stores/WeatherStore";
 import { useAssetStore } from "@/stores/AssetStore";
-import { useLocationStore } from "~/stores/LocationStore";
 import { usePresetStore } from "~/stores/PresetStore";
 
 Chart.register(Colors);
