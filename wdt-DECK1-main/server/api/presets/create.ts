@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
     const body = await readBody(event);
 
     //TODO validations
-    
+
     // Return a success message with the created preset data
     try {
       await PresetModel.create(body);

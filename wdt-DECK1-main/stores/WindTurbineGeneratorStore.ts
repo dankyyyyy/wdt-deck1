@@ -14,8 +14,8 @@ export const useWindTurbineGeneratorStore = defineStore("WindTurbineGeneratorSto
         data = filteredData;
         if (data.length === 1) {
           const WindTurbineGenerator = data[0];
-          return WindTurbineGenerator as IWindTurbineGenerator 
-        }         
+          return WindTurbineGenerator as IWindTurbineGenerator
+        }
       } catch (e) {
         console.error(e)
       }

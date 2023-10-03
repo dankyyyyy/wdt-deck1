@@ -4,11 +4,6 @@
       <DropDownsSectionRecommendationPopUp />
     </div>
     <div class="w-1/5 h-20 p-3 flex">
-      <!--<DropDownsSectionLocationDropdown class="mr-4"/>
-      <DropDownsSectionWtgDropdown class="mr-4"/>
-      <DropDownsSectionAsset1Dropdown class="mr-4"/>
-      <DropDownsSectionAsset2Dropdown class="mr-20"/>-->
-
       <DropDownsSectionPresetDropdown class="mr-20"/>
       <DropDownsSectionSubmitButton @loading="toggleChartKey" class="h-auto px-4 py-2"/>
     </div>
@@ -25,7 +20,7 @@
     </div>
   </div>
 </template>
-  
+
 <script>
 import { nullify } from '~/utils/chartUtils';
 

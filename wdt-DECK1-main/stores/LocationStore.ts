@@ -6,6 +6,7 @@ export const useLocationStore = defineStore("LocationStore",{
     state: () => ({
         locations: [] as ILocation[],
         loading: false,
+        selectedLocation: null as unknown as ILocation,
     }),
     actions: {
         async getByName(name: string) {

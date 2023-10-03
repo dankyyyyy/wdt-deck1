@@ -1,9 +1,9 @@
 <template>
-    <button class="submit-button action-button" @click="startChart">
+    <button class="submit-button" @click="startChart">
         <IconsDoneTick />
     </button>
 </template>
-  
+
 <script>
 import { useLocationStore } from '~/stores/LocationStore';
 import { useFilterStore } from '~/stores/FilterStore';

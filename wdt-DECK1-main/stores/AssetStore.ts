@@ -14,8 +14,8 @@ export const useAssetStore = defineStore("AssetStore", {
         data = filteredData;
         if (data.length === 1) {
           const asset = data[0];
-          return asset as IAsset 
-        }         
+          return asset as IAsset
+        }
       } catch (e) {
         console.error(e)
       }

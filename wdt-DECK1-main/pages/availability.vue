@@ -23,10 +23,10 @@
       </div>
     </div>
   </template>
-    
+
   <script>
   import { nullify } from '~/utils/chartUtils';
-  
+
   export default {
     layout: "default",
     name: "Availability",

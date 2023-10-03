@@ -86,7 +86,6 @@ export default {
           })
         }
         //Create chart object
-        let delayed;
         const myChart = new Chart(
           document.getElementById("finChart" + props.filterParams.chartId),
           {
@@ -96,22 +95,7 @@ export default {
               datasets,
             },
             options: {
-              animation: {
-                onComplete: () => {
-                  delayed = true;
-                },
-                delay: (context) => {
-                  let delay = 0;
-                  if (context.type === 'data' && context.mode === 'default' && !delayed) {
-                    delay = context.dataIndex * 300 + context.datasetIndex * 100;
-                  }
-                  return delay;
-                },
-              },
               plugins: {
-                colors: {
-                  enabled: true,
-                },
                 tooltip: {
                   enabled: true,
                   callbacks: {

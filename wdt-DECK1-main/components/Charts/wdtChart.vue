@@ -40,7 +40,7 @@ export default {
           );
           const asset = assets[i];
           weatherStore.assetsWdt[asset.name] = monthlyWorkabilityPerAsset(weatherStore.assetsWdt[asset.name]);
-        }       
+        }
 
         // Chart Construction
         const datasets = []

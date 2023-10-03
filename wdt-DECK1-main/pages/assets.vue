@@ -29,7 +29,7 @@
         <div v-for="wtg in wtgs" :key="wtg.id" class="p-5">
           <CardsWtgCard :wtg="wtg" />
         </div>
-      </div>    
+      </div>
     </div>
   </div>
 </template>
