@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div class="w-full h-full deck-frame-grey">
         <div class="flex w-full justify-between p-5">
             <h1 class="text-2xl font-semibold">Presets</h1>
@@ -45,4 +45,20 @@ export default {
         },
     },
 }
-</script>
+</script> -->
+
+<template>
+    <div>
+      <PresetsScreen />
+    </div>
+  </template>
+  
+  <script>
+  import PresetsScreen from '@/components/PresetsScreen.vue';
+  
+  export default {
+    components: {
+      PresetsScreen,
+    },
+  };
+  </script>

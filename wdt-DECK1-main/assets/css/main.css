@@ -226,7 +226,7 @@
     @apply py-2 flex justify-between w-60;
   }
 
-  .action-button {
+  .dialog-button {
     background-color: #09a6d7;
     color: white;
   }
