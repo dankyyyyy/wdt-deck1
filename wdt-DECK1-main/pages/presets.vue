@@ -1,17 +1,17 @@
-<!-- <template>
-    <div class="w-full h-full deck-frame-grey">
-        <div class="flex w-full justify-between p-5">
-            <h1 class="text-2xl font-semibold">Presets</h1>
-            <IconsAdd @click="showModal" class="cursor-pointer" />
-        </div>
-
-        <ModalDialogsCreatePresetModal v-if="isModalVisible" @hideModal="hideModal" />
-
+<template>
+    <div class="w-full h-full">
+        <NuxtLink to="/">
+            <IconsLogoInverted class="inline-block align-middle w-full" />
+        </NuxtLink>
         <div class="flex flex-wrap pb-5" v-if="presets !== undefined">
             <div v-for="preset in presets" :key="preset.id" class="p-5">
-                <CardsPresetCard :preset="preset" />
+                <CardsPresetCard :preset="preset" @click="toggleSelect" />
             </div>
         </div>
+        <button class="action-button" :class="{ 'active': isActionButtonActive }" :disabled="!isActionButtonActive"
+            @click="navigateToNextPage">
+            <IconsDoneTick class="flex items-center justify-center inline-block align-middle w-full" />
+        </button>
     </div>
 </template>
 
@@ -25,40 +25,42 @@ export default {
             presets: [],
             isModalVisible: false,
             loading: false,
+            selectedPreset: null,
         };
     },
-    async onMounted() {
+    computed: {
+        isActionButtonActive() { return this.selectedPreset !== null; },
+    },
+    async mounted() {
         this.presets = await usePresetStore().getAll();
         this.presets.length == 0 ? "" : this.loading = false;
-        console.log(`Presets: ${this.presets}`);
     },
     async updated() {
         this.presets = await usePresetStore().getAll();
         this.presets.length == 0 ? "" : this.loading = false;
     },
     methods: {
-        showModal() {
-            this.isModalVisible = true;
+        toggleSelect(preset) {
+
+            const presetStore = usePresetStore();
+
+            if (this.selectedPreset !== preset) {
+                // Select a new preset
+                presetStore.setSelectedPreset(preset);
+                this.selectedPreset = preset;
+            } else {
+                presetStore.setSelectedPreset(null);
+                this.selectedPreset = null; // Deselect the preset
+            }
+
+            this.isActionButtonActive = this.selectedPreset !== null;
         },
-        hideModal() {
-            this.isModalVisible = false;
+        navigateToNextPage() {
+            if (this.selectedPreset) {
+                // Set this to the [CalculationsPage]
+                this.$router.push('/weatherDownTime');
+            }
         },
     },
 }
-</script> -->
-
-<template>
-    <div>
-      <PresetsScreen />
-    </div>
-  </template>
-  
-  <script>
-  import PresetsScreen from '@/components/PresetsScreen.vue';
-  
-  export default {
-    components: {
-      PresetsScreen,
-    },
-  };
-  </script>
+</script>
