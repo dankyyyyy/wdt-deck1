@@ -13,7 +13,7 @@
                 <button type="submit" class="border-2 rounded-md px-2" @click="handleCancelClick">
                     Cancel
                 </button>
-                <button type="submit" class="rounded-md px-2 ml-2 action-button" @click="handleSaveClick">
+                <button type="submit" class="rounded-md px-2 ml-2 dialog-button" @click="handleSaveClick">
                     Delete
                 </button>
             </div>
