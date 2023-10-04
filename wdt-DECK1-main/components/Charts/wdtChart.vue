@@ -3,7 +3,6 @@ import Chart from "chart.js/auto";
 import { Colors } from 'chart.js';
 import { start } from "@/utils/chartCalc/wdtCalc";
 import { useWeatherStore } from "@/stores/WeatherStore";
-import { useAssetStore } from "@/stores/AssetStore";
 import { usePresetStore } from "~/stores/PresetStore";
 
 Chart.register(Colors);
@@ -21,13 +20,11 @@ export default {
   },
   setup(props) {
     const weatherStore = useWeatherStore();
-    const assetStore = useAssetStore();
     const presetStore = usePresetStore();
 
     if (presetStore.getSelectedPreset() != null) {
       onMounted(() => {
-        if (assetStore.assets.length === 0) assetStore.getAll();
-        var assets = assetStore.assets;
+        const assets = [presetStore.getSelectedPreset().asset1, presetStore.getSelectedPreset().asset2];
 
         for (let i = 0; i < assets.length; i++) {
           start(

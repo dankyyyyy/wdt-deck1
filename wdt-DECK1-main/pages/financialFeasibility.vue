@@ -1,15 +1,11 @@
 <template>
   <div class="w-full h-full deck-frame-grey inline-block">
     <div class="w-4/5 h-20 p-3">
-      <DropDownsSectionRecommendationPopUp />
-    </div>
-    <div class="w-1/5 h-20 p-3 flex">
-      <DropDownsSectionPresetDropdown class="mr-20"/>
-      <DropDownsSectionSubmitButton @loading="toggleChartKey" class="h-auto px-4 py-2"/>
+      <RecommendationPopUp />
     </div>
     <div class="flex flex-col">
       <div v-for="id in ids" :key="id">
-        <FiltersFinGraphFilter :key="chartKey" @remove="handleRemove" :chartId="id" :amountOfCharts="ids.length" />
+        <FiltersFinGraphFilter :key="chartKey" @loading="toggleChartKey" @remove="handleRemove" :chartId="id" :amountOfCharts="ids.length" />
       </div>
     </div>
     <div class="w-full p-3">

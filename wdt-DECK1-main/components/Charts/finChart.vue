@@ -30,10 +30,6 @@ export default {
         const currentPreset = presetStore.getSelectedPreset();
 
         const assets = [currentPreset.asset1, currentPreset.asset2];
-        console.log(assets);
-        console.log(currentPreset.location);
-        console.log(currentPreset.asset1.team);
-        console.log(currentPreset.asset2.team);
 
         for (let i = 0; i < assets.length; i++) {
           start(

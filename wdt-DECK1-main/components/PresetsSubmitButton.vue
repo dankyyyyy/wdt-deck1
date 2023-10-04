@@ -1,17 +1,22 @@
 <template>
-    <button class="submit-button" @click="startChart">
-        <IconsDoneTick />
+    <button class="proceed-button" @click="startChart" :disabled="!isActive" :class="{ 'active': isActive }">
+        <IconsDoneTick class="flex items-center justify-center inline-block align-middle w-full" />
     </button>
 </template>
 
 <script>
-import { useLocationStore } from '~/stores/LocationStore';
+import { usePresetStore } from '~/stores/PresetStore';
 import { useFilterStore } from '~/stores/FilterStore';
 import { useWeatherdataStore } from '~/stores/WeatherdataStore';
-import { usePresetStore } from '~/stores/PresetStore';
+import { useLocationStore } from '~/stores/LocationStore';
 
 export default {
-    name: "SubmitButton",
+    name: "PresetsSubmitButton",
+    computed: {
+        isActive() {
+            return usePresetStore().getSelectedPreset() !== null;
+        }
+    },
     setup() {
         const filterStore = useFilterStore();
         const weatherStore = useWeatherdataStore();
@@ -53,7 +58,8 @@ export default {
                 showError(`An error with the status code ${statusCode} occurred. Please try again later.`);
                 return;
             }*/
-        }
+        },
     }
 }
+
 </script>

@@ -5,13 +5,11 @@
         </NuxtLink>
         <div class="flex flex-wrap pb-5" v-if="presets !== undefined">
             <div v-for="preset in presets" :key="preset.id" class="p-5">
-                <CardsPresetCard :preset="preset" @click="toggleSelect" />
+                <CardsPresetCard :preset="preset" @preset-selected="handlePresetSelected"
+                    @preset-deselected="handlePresetDeselected" />
             </div>
         </div>
-        <button class="action-button" :class="{ 'active': isActionButtonActive }" :disabled="!isActionButtonActive"
-            @click="navigateToNextPage">
-            <IconsDoneTick class="flex items-center justify-center inline-block align-middle w-full" />
-        </button>
+        <PresetsSubmitButton @click="navigateToNextPage"/>
     </div>
 </template>
 
@@ -25,11 +23,7 @@ export default {
             presets: [],
             isModalVisible: false,
             loading: false,
-            selectedPreset: null,
         };
-    },
-    computed: {
-        isActionButtonActive() { return this.selectedPreset !== null; },
     },
     async mounted() {
         this.presets = await usePresetStore().getAll();
@@ -40,27 +34,26 @@ export default {
         this.presets.length == 0 ? "" : this.loading = false;
     },
     methods: {
-        toggleSelect(preset) {
-
-            const presetStore = usePresetStore();
-
-            if (this.selectedPreset !== preset) {
-                // Select a new preset
-                presetStore.setSelectedPreset(preset);
-                this.selectedPreset = preset;
-            } else {
-                presetStore.setSelectedPreset(null);
-                this.selectedPreset = null; // Deselect the preset
-            }
-
-            this.isActionButtonActive = this.selectedPreset !== null;
+        handlePresetSelected(preset) {
+            usePresetStore().setSelectedPreset(preset);
+        },
+        handlePresetDeselected() {
+            usePresetStore().setSelectedPreset(null);
+            console.log(usePresetStore().getSelectedPreset());
         },
         navigateToNextPage() {
-            if (this.selectedPreset) {
-                // Set this to the [CalculationsPage]
+            if (usePresetStore().getSelectedPreset() !== null) {
                 this.$router.push('/weatherDownTime');
+                
             }
-        },
+        }
     },
 }
 </script>
+
+<style scoped>
+.selected {
+    background-color: #abd5e5;
+    /* Change to DECK1 Blue with 25% opacity */
+}
+</style>

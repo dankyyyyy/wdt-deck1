@@ -1,6 +1,6 @@
 <template>
     <div class="grid">
-        <div class="preset-box" :class= "{'selected-preset': isSelected }">
+        <div class="preset-box" @click="selectPreset" :class="{ 'selected': isSelected }">
             <div class="box-content">
                 <IconsLogoInverted class="box-image inline-block align-middle w-full" />
                 <div class="box-title">{{ preset.name }}</div>
@@ -26,6 +26,7 @@
 <script>
 import { usePresetStore } from '~/stores/PresetStore';
 
+
 export default {
     name: "PresetCard",
     props: {
@@ -34,15 +35,27 @@ export default {
             required: true,
         }
     },
-    computed: {
-        isSelected(){
-            const presetStore = usePresetStore();
-            return this.preset === presetStore.getSelectedPreset();
-        },
+    data() {
+        return {
+            isSelected: false,
+        }
     },
     methods: {
-        toggleSelect(preset) {
-            this.$emit('toggle-select', preset);
+        selectPreset() {
+            const preset = this.preset;
+            
+            if (usePresetStore().getSelectedPreset() === null) {
+                this.isSelected = true;
+                this.$emit("preset-selected", preset);
+            /*} else if (usePresetStore().getSelectedPreset() !== preset && usePresetStore().getSelectedPreset() !== null) {
+                const oldPreset = usePresetStore().getSelectedPreset();
+                this.$emit("preset-deselected", oldPreset);
+                this.$emit("preset-selected", preset);
+                this.isSelected = true;*/
+            } else if (usePresetStore().getSelectedPreset()._id === preset._id) {
+                this.isSelected = false;
+                this.$emit("preset-deselected");
+            }
         },
     },
 }
@@ -52,5 +65,10 @@ export default {
 .grid {
     display: flex;
     flex-wrap: wrap;
+}
+
+.selected {
+    background-color: #abd5e5;
+    /* Change to DECK1 Blue with 25% opacity */
 }
 </style>
