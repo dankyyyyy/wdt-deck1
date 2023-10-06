@@ -38,12 +38,10 @@
   .bg-image {
     /*background-image: url('assets\wdt_background3.png'); */
     /* background-image: url('assets\wdt_background2_low_opacity.png'); */
-    background-image: url('assets\wdt-background-temporary-blurred.png');
+    background-image: url('assets/wdt-background-temporary-blurred.png');
     background-size: cover;
-    /* Adjust as needed */
     background-position: center center;
-    /* Adjust as needed */
-    /* TODO Add a blur filter  */
+    overflow-x: scroll;
   }
 
   .deck-frame-grey {
@@ -324,20 +322,16 @@
   /* =========================
    Presets Screen Section
 ========================= */
+
   .grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    grid-template-columns: repeat(auto-fit, minmax(min(30rem, 100%), 1fr));
     gap: 16px;
   }
 
-  .grid-item {
-    padding: 16px;
-  }
-
   .preset-box {
-    width: 23%;
-    min-width: 400px;
-    margin: 1%;
+    width: 25rem;
+    margin: 10px;
     border-radius: 70px;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
     /* Drop shadow */

@@ -3,8 +3,8 @@
         <NuxtLink to="/">
             <IconsLogoInverted class="inline-block align-middle w-full" />
         </NuxtLink>
-        <div class="flex flex-wrap pb-5" v-if="presets !== undefined">
-            <div v-for="preset in presets" :key="preset.id" class="p-5">
+        <div class="grid" v-if="presets !== undefined">
+            <div v-for="preset in presets" :key="preset.id">
                 <CardsPresetCard :preset="preset" @preset-selected="handlePresetSelected"
                     @preset-deselected="handlePresetDeselected" />
             </div>
