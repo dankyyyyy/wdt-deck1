@@ -1,8 +1,8 @@
 <template>
   <div class="start-screen no-scroll">
-      <NuxtLink to="/">
-        <IconsLogoInverted class="inline-block align-middle w-full" />
-      </NuxtLink>
+    <NuxtLink to="/">
+      <IconsLogoInverted class="inline-block align-middle w-full" />
+    </NuxtLink>
     <div class="centered-boxes">
       <ClickableBox redirectPath="/presets" :boxData="presetBoxData" />
       <ClickableBox redirectPath="/customization" :boxData="customizationBoxData" />
@@ -13,6 +13,7 @@
 <script>
 import Logo from './icons/Logo.vue';
 import ClickableBox from './ClickableBox.vue';
+import { usePresetStore } from '~/stores/PresetStore';
 
 export default {
   components: {
@@ -32,6 +33,9 @@ export default {
         description: 'Create your own operation or model an existing one.',
       },
     };
+  },
+  mounted() {
+    usePresetStore().setSelectedPreset(null);
   },
 };
 </script>

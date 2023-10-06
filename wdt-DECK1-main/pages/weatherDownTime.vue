@@ -3,7 +3,7 @@
     <div class="sidebar-container p-5 h-screen">
       <Sidebar />
     </div>
-    <div class="w-full h-full deck-frame-grey inline-block">
+    <div class="w-full h-full deck-frame-grey inline-block" @loading="toggleChartKey" >
       <div class="w-4/5 h-20 p-3">
         <RecommendationPopUp />
       </div>
@@ -24,6 +24,11 @@
 
 <script>
 
+import { usePresetStore } from '~/stores/PresetStore';
+import { useFilterStore } from '~/stores/FilterStore';
+import { useLocationStore } from '~/stores/LocationStore';
+import { useWeatherdataStore } from '~/stores/WeatherdataStore';
+
 export default {
   layout: "default",
   name: "WeatherDownTime",
@@ -33,21 +38,42 @@ export default {
       chartKey: false,
     };
   },
-  mounted() {
+  async mounted() {
     this.ids.push(1);
 
+    await this.startChart();
   },
   methods: {
     addGraph() {
       this.ids.push(this.ids[this.ids.length - 1] + 1);
     },
+
     handleRemove(id) {
       if (this.ids.length !== 1) {
         this.ids = this.ids.filter((el) => el !== id);
       }
     },
+
     toggleChartKey() {
       this.chartKey = !this.chartKey;
+    },
+
+    async startChart() {
+      const currentPreset = usePresetStore().getSelectedPreset();
+      const currentLocation = currentPreset.location;
+
+      console.log(currentPreset.location);
+      console.log(currentPreset.asset1);
+      console.log(currentPreset.asset2);
+      console.log(currentPreset.asset1.team);
+      console.log(currentPreset.asset2.team);
+
+      useFilterStore().hideRecommendation = false;
+      useLocationStore().toggleLoading();
+      this.$emit("loading");
+      await useWeatherdataStore().getByLocationId(currentLocation._id);
+      useLocationStore().toggleLoading();
+      this.$emit("loading");
     },
   },
 };
