@@ -9,7 +9,7 @@
       </div>
       <div class="flex flex-col">
         <div v-for="id in ids" :key="id">
-          <FiltersFinGraphFilter :key="chartKey" @loading="toggleChartKey" @remove="handleRemove" :chartId="id"
+          <FiltersAvailGraphFilter :key="chartKey" @remove="handleRemove" :chartId="id"
             :amountOfCharts="ids.length" />
         </div>
       </div>
@@ -24,7 +24,10 @@
 </template>
 
 <script>
-import { nullify } from '~/utils/chartUtils';
+import { useLocationStore } from '~/stores/LocationStore';
+import { useFilterStore } from '~/stores/FilterStore';
+import { useWeatherdataStore } from '~/stores/WeatherdataStore';
+import { usePresetStore } from '~/stores/PresetStore';
 
 export default {
   layout: "default",
@@ -35,8 +38,10 @@ export default {
       chartKey: false,
     };
   },
-  mounted() {
+  async mounted() {
     this.ids.push(1);
+    await this.startChart();
+    this.toggleChartKey();
   },
   methods: {
     addGraph() {
@@ -49,6 +54,17 @@ export default {
     },
     toggleChartKey() {
       this.chartKey = !this.chartKey;
+    },
+    async startChart() {
+      const currentPreset = usePresetStore().getSelectedPreset();
+      const currentLocation = currentPreset.location;
+
+      useFilterStore().hideRecommendation = false;
+      useLocationStore().toggleLoading();
+      this.$emit("loading");
+      await useWeatherdataStore().getByLocationId(currentLocation._id);
+      useLocationStore().toggleLoading();
+      this.$emit("loading");
     },
   },
 };

@@ -1,16 +1,18 @@
 import { defineStore } from "pinia";
+import { generateLabelsFromAssets } from "~/utils/chartUtils";
 
 export const useAvailStore = defineStore("AvailStore", {
     state: () => {
         const assetsAvailability: any = {
 
         }
-        const labels = ref<String[]>([
-            "Total Required Hours",
-            "Total Available Hours",
-        ]);
+        const datasets: any = {
+
+        }
+        const labels = generateLabelsFromAssets();
         return {
             assetsAvailability,
+            datasets,
             labels,
         };
     },

@@ -9,6 +9,7 @@
     <SidebarItem path="/weatherDownTime" text="Weather Down Time" />
     <SidebarItem path="/financialFeasibility" text="Financial Feasibility" />
     <SidebarItem path="/availability" text="Availability"/>
+    <SidebarItem path="/pricePerWtg" text="Price Per WTG"/>
     <!-- <SidebarItem path="/presets" text="Presets"/>
     <SidebarItem path="/assets" text="Assets" />
     <SidebarItem path="/locations" text="Locations" />

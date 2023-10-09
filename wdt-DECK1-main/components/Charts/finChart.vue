@@ -28,7 +28,6 @@ export default {
     if (presetStore.getSelectedPreset() != null) {
       onMounted(() => {
         const currentPreset = presetStore.getSelectedPreset();
-
         const assets = [currentPreset.asset1, currentPreset.asset2];
 
         for (let i = 0; i < assets.length; i++) {
@@ -56,20 +55,6 @@ export default {
           finStore.assetsFin[asset.name].push(annualFuelCost(asset, annualWorkability));
           finStore.assetsFin[asset.name].push(downtimeSalaryCost(team, annualWorkability));
           finStore.assetsFin[asset.name].push(annualCarbonTax(asset, annualWorkability));
-
-          /*if (asset.category === 'Vessel') {
-            finStore.assetsFin[asset.name].push(totalAnnualCostVessel(asset, annualWorkability));
-            finStore.assetsFin[asset.name].push(annualCostPerAssetWithoutFuel(asset));
-            finStore.assetsFin[asset.name].push(totalAnnualFuelCostVessel(asset, annualWorkability));
-            finStore.assetsFin[asset.name].push(downtimeSalaryCost(team, annualWorkability));
-            finStore.assetsFin[asset.name].push(vesselCarbonTaxCost(asset, annualWorkability));
-          } else if (asset.category === 'Helicopter') {
-            finStore.assetsFin[asset.name].push(totalAnnualCostHelicopter(asset, annualWorkability));
-            finStore.assetsFin[asset.name].push(annualCostPerAssetWithoutFuel(asset));
-            finStore.assetsFin[asset.name].push(totalAnnualFuelCostHelicopter(asset, annualWorkability));
-            finStore.assetsFin[asset.name].push(downtimeSalaryCost(team, annualWorkability));
-            finStore.assetsFin[asset.name].push(helicopterCarbonTaxCost(asset, annualWorkability));
-          }*/
         }
 
         // Chart Construction

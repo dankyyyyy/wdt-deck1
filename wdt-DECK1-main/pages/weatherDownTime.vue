@@ -3,7 +3,7 @@
     <div class="sidebar-container p-5 h-screen">
       <Sidebar />
     </div>
-    <div class="w-full h-full deck-frame-grey inline-block" @loading="toggleChartKey" >
+    <div class="w-full h-full deck-frame-grey inline-block" >
       <div class="w-4/5 h-20 p-3">
         <RecommendationPopUp />
       </div>
@@ -40,8 +40,8 @@ export default {
   },
   async mounted() {
     this.ids.push(1);
-
     await this.startChart();
+    this.toggleChartKey();
   },
   methods: {
     addGraph() {
@@ -61,12 +61,6 @@ export default {
     async startChart() {
       const currentPreset = usePresetStore().getSelectedPreset();
       const currentLocation = currentPreset.location;
-
-      console.log(currentPreset.location);
-      console.log(currentPreset.asset1);
-      console.log(currentPreset.asset2);
-      console.log(currentPreset.asset1.team);
-      console.log(currentPreset.asset2.team);
 
       useFilterStore().hideRecommendation = false;
       useLocationStore().toggleLoading();

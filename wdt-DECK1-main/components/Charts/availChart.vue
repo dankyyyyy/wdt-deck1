@@ -3,9 +3,9 @@ import Chart from "chart.js/auto";
 import { Colors } from 'chart.js';
 import { start } from "@/utils/chartCalc/wdtCalc";
 import { useWeatherStore } from "@/stores/WeatherStore";
-import { useAssetStore } from "@/stores/AssetStore";
 import { useAvailStore } from "~/stores/AvailStore";
-import { useWindTurbineGeneratorStore } from "~/stores/WindTurbineGeneratorStore";
+import { usePresetStore } from "~/stores/PresetStore";
+import "~/utils/calculationUtils";
 
 Chart.register(Colors);
 
@@ -23,18 +23,11 @@ export default {
   setup(props) {
     const availStore = useAvailStore();
     const weatherStore = useWeatherStore();
-    const assetStore = useAssetStore();
-    const wtgStore = useWindTurbineGeneratorStore();
 
-    if (useLocationStore().getSelectedLocation() != null) {
+    if (usePresetStore().getSelectedPreset() != null) {
       onMounted(() => {
-        // const assets = [useAssetStore().getSelectedAsset1(), useAssetStore().getSelectedAsset2()];
-        const wtg = useWindTurbineGeneratorStore().getSelectedWtg();
-
-        if (assetStore.assets.length === 0) assetStore.getAll();
-        var assets = assetStore.assets;
-        const filteredAssets = assets.filter(asset => asset.category !== "WindTurbineGenerator");
-        assets = filteredAssets;
+        const currentPreset = usePresetStore().getSelectedPreset();
+        const assets = [currentPreset.asset1, currentPreset.asset2];
 
         for (let i = 0; i < assets.length; i++) {
           start(
@@ -47,22 +40,41 @@ export default {
           );
           const asset = assets[i];
           availStore.assetsAvailability = weatherStore.assetsWdt;
-          
+          availStore.assetsAvailability[asset.name] = yearlyWorkabilityPerAsset(availStore.assetsAvailability[asset.name]);
+        }
+
+        for (let j = 0; j < availStore.labels.length; j++) {
+          for (let i = 0; i < assets.length; i++) {
+            const asset = assets[i];
+            const team = asset.team;
+            const location = usePresetStore().getSelectedPreset().location;
+            const wtg = usePresetStore().getSelectedPreset().wtg;
+            const annualWorkability = availStore.assetsAvailability[asset.name];
+            availStore.assetsAvailability[asset.name] = [];
+
+            availStore.assetsAvailability[asset.name] = (annualTotalRequiredHours(wtg, location));
+            availStore.assetsAvailability[asset.name] = (annualDeployableHours(team, annualWorkability));
+            availStore.assetsAvailability[asset.name] = (annualTotalHoursDifference(team, annualWorkability, location, wtg));
+          }
+          const asset = assets[j];
+          availStore.requiredHours = [];
+          availStore.availableHours = [];
+          availStore.hoursDifference = [];
+
+          availStore.requiredHours.push(availStore.assetsAvailability[asset.name][0]);
+          availStore.availableHours.push(availStore.assetsAvailability[asset.name][1]);
+          availStore.hoursDifference.push(availStore.assetsAvailability[asset.name][2]);
         }
 
         // Chart Construction
         const datasets = []
-        for (const x in weatherStore.assetsWdt) {
+        for (const x in availStore.requiredHours) {
           datasets.push({
             label: x,
-            data: weatherStore.assetsWdt[x].slice(
-              props.filterParams.startMonth - 1,
-              props.filterParams.endMonth
-            ),
+            data: availStore.requiredHours[x],
             borderRadius: 10,
           })
         }
-        //Create chart object
         const myChart = new Chart(
           document.getElementById("availChart" + props.filterParams.chartId),
           {
@@ -80,9 +92,9 @@ export default {
                   enabled: true,
                   callbacks: {
                     label: (context) => {
-                      const assetName = context.dataset.label;
+                      const dataType = context.dataset.label;
                       const value = context.raw;
-                      return `${assetName}: ${value}%`;
+                      return `${dataType}: ${value} hours`;
                     },
                   },
                 },
