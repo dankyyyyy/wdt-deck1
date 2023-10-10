@@ -1,3 +1,9 @@
+<template>
+  <div class="deck-frame-white">
+    <canvas v-bind:id="'finChart' + filterParams.chartId" class="chart-canvas"></canvas>
+  </div>
+</template>
+
 <script>
 import Chart from "chart.js/auto";
 import { Colors } from 'chart.js';
@@ -76,6 +82,7 @@ export default {
               datasets,
             },
             options: {
+              maintainAspectRatio: false,
               plugins: {
                 tooltip: {
                   enabled: true,
@@ -102,9 +109,3 @@ export default {
   },
 };
 </script>
-
-<template>
-  <div class="deck-frame-white">
-    <canvas v-bind:id="'finChart' + filterParams.chartId"></canvas>
-  </div>
-</template>

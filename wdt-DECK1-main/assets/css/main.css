@@ -13,6 +13,9 @@
     background-color: #222f3e;
     border-radius: 12px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+    height: 15rem;
+    max-height: 600px;
+    min-width: 250px;
   }
 
   .sidebar-container {
@@ -41,7 +44,16 @@
     background-image: url('assets/wdt-background-temporary-blurred.png');
     background-size: cover;
     background-position: center center;
-    overflow-x: scroll;
+    overflow-x: hidden;
+  }
+
+  .deck-frame-grey-container {
+    flex-wrap: wrap;
+    overflow-x: hidden;
+    max-width: 85%;
+    height: 40%;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
   }
 
   .deck-frame-grey {
@@ -50,7 +62,6 @@
     align-content: flex-start;
     background-color: #dfdfdf;
     border-radius: 12px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
     @apply p-5;
   }
 
@@ -60,7 +71,7 @@
     align-content: flex-start;
     background-color: #ffffff;
     border-radius: 12px;
-    padding: 0.75rem;
+    padding: 0.25rem;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   }
 
@@ -319,9 +330,9 @@
     /* Icon Color */
   }
 
-  /* =========================
-   Presets Screen Section
-========================= */
+  /* ========================
+     Presets Screen Section
+  ======================== */
 
   .grid {
     display: flex;
@@ -412,6 +423,15 @@
     cursor: pointer;
   }
 
+}
+
+/* =================
+     Charts Section
+  ================= */
+
+.chart-canvas {
+  width: 100%;
+  /* max-width: 1220px; */
 }
 
 @layer utilities {

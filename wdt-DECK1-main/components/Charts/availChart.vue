@@ -1,3 +1,15 @@
+<template>
+  <div class="deck-frame-white">
+    <canvas v-bind:id="'availChart' + filterParams.chartId" class="chart-canvas"></canvas>
+  </div>
+</template>
+
+<style scoped>
+.chart-canvas {
+  width: 100em
+}
+</style>
+
 <script>
 import Chart from "chart.js/auto";
 import { Colors } from 'chart.js';
@@ -44,9 +56,9 @@ export default {
           availStore.assetsAvailability[asset.name] = yearlyWorkabilityPerAsset(availStore.assetsAvailability[asset.name]);
         }
 
-        availStore.datasets['requiredHours'] = [];
-        availStore.datasets['availableHours'] = [];
-        availStore.datasets['hoursDifference'] = [];
+        availStore.datasets['Required Hours'] = [];
+        availStore.datasets['Available Hours'] = [];
+        availStore.datasets['Difference in Hours'] = [];
 
         for (let i = 0; i < assets.length; i++) {
           const asset = assets[i];
@@ -55,9 +67,9 @@ export default {
           const wtg = usePresetStore().getSelectedPreset().wtg;
           const annualWorkability = availStore.assetsAvailability[asset.name];
 
-          availStore.datasets['requiredHours'].push(annualTotalRequiredHours(wtg, location));
-          availStore.datasets['availableHours'].push(annualDeployableHours(team, annualWorkability));
-          availStore.datasets['hoursDifference'].push(annualTotalHoursDifference(team, annualWorkability, location, wtg));
+          availStore.datasets['Required Hours'].push(annualTotalRequiredHours(wtg, location));
+          availStore.datasets['Available Hours'].push(annualDeployableHours(team, annualWorkability));
+          availStore.datasets['Difference in Hours'].push(annualTotalHoursDifference(team, annualWorkability, location, wtg));
           console.log(availStore.datasets['requiredHours']);
           console.log(availStore.datasets['availableHours']);
           console.log(availStore.datasets['hoursDifference']);
@@ -81,6 +93,7 @@ export default {
               datasets,
             },
             options: {
+              maintainAspectRatio: false,
               plugins: {
                 colors: {
                   enabled: true,
@@ -110,9 +123,3 @@ export default {
   },
 };
 </script>
-
-<template>
-  <div class="deck-frame-white">
-    <canvas v-bind:id="'availChart' + filterParams.chartId"></canvas>
-  </div>
-</template>

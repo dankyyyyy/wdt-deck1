@@ -1,6 +1,6 @@
 <template>
   <div class="deck-frame-white">
-    <canvas v-bind:id="'wdtChart' + filterParams.chartId"></canvas>
+    <canvas v-bind:id="'wdtChart' + filterParams.chartId" class="chart-canvas"></canvas>
   </div>
 </template>
 
@@ -70,6 +70,7 @@ export default {
               datasets,
             },
             options: {
+              maintainAspectRatio: false,
               plugins: {
                 colors: {
                   enabled: true,
