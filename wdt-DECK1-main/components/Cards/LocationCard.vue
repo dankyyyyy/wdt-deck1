@@ -3,11 +3,15 @@
     <div class="w-full h-40 flex justify-center items-center">
       Place for image
     </div>
-    <div v-if="!isDataRegistered">
-      <button @click="postData">Register data</button>
+    <div v-if="dataInformation.isFetching">
+      ⏳
+    </div>
+    <div v-else-if="dataInformation.isDataRegistered">
+      <p>Data is present</p>
+      <p>Latest record is {{dataInformation.latestDataYear }}</p>
     </div>
     <div v-else>
-      <p>Data is present</p>
+      <p class="font-semibold">Data is missing</p>
     </div>
     <div class="w-full border-t-2 border-black p-2">
       <h2 class="font-semibold mb-2">{{ location.name }}</h2>
@@ -33,7 +37,6 @@
 
 <script>
 import { useWeatherdataStore } from "~/stores/WeatherdataStore";
-import axios from "axios";
 
 export default {
   name: "LocationCard",
@@ -44,37 +47,25 @@ export default {
     },
   },
   data() {
-    return {  
-      isDataRegistered: false,
+    return {
+      dataInformation: {
+        isFetching: true,
+        isDataRegistered: false,
+        latestDataYear: null,
+      },
       isUpdateModalVisible: false,
       isDeleteModalVisible: false,
     };
   },
   async mounted() {
-    if (await useWeatherdataStore().checkByLocationId(this.location._id)) {
-      const currentDate = new Date();
-      const currentYear = currentDate.getFullYear();
-
-      const currentData = await useWeatherdataStore().getByLocationId(this.location._id);
-      // const latestData = currentData[currentData.length - 1];
-      
-      this.isDataRegistered = true;
+    const foundData = await useWeatherdataStore().checkByLocationId(this.location._id)
+    if (foundData !== undefined) {
+      this.dataInformation.isDataRegistered = true;
+      this.dataInformation.latestDataYear = foundData.Year;
     }
+    this.dataInformation.isFetching = false;
   },
   methods: {
-    async postData() {
-      try {
-        const response = await axios.delete(`http://127.0.0.1:5555/delete/${this.location.name}.json`);
-        console.log('File deleted successfully:', response.data);
-        
-        const weatherData = await import(/* @vite-ignore */`~/static/${this.location.name}-weather.json`);
-        useWeatherdataStore().postData(weatherData.default, this.location);
-
-        this.isDataRegistered = true; // Update the reactivity of isDataRegistered
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    },
     showUpdateModal() {
       this.isUpdateModalVisible = true;
     },
