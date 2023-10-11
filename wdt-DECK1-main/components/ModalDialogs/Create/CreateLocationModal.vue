@@ -16,7 +16,7 @@
             <label for="id">Id: </label>
             <input
               type="text"
-              v-model="this.location.id"
+              v-model="location.id"
               class="border-2 rounded-md text-center"
               disabled
             />
@@ -84,6 +84,7 @@
   
   <script>
   import { useLocationStore } from "~/stores/LocationStore";
+  import { useWeatherdataStore } from "~/stores/WeatherdataStore";
   import axios from "axios";
   
   
@@ -92,10 +93,11 @@
     data() {
       return {
         location: {
+          _id: null,
           name: "",
           latitude: 0,
           longitude: 0,
-          limit: "",
+          limit: 0,
         },
       };
     },
@@ -106,6 +108,9 @@
       async handleSaveClick() {
         const store = useLocationStore();
         await store.post(this.location)
+        const newLoc = await store.getByName(this.location.name)
+        this.location._id = newLoc._id;
+
         const coordinates = this.decimalToCoordinates(this.location.longitude, this.location.latitude)
         this.callRetrieve(coordinates.North, coordinates.West, coordinates.South, coordinates.East, this.location.name);
         this.$emit("hideModal");
@@ -119,11 +124,19 @@
             const name = locName
             const yearNow = new Date().getFullYear()
             for (let i = yearNow; i > yearNow-20; i = i-2) {
-              console.log('asdasd');
-            const response = await axios.get(`http://127.0.0.1:5555/data/${c1}/${c2}/${c3}/${c4}/${name}/${i}`); //python api url could be moved to .env
+            const response = await axios.get(`http://127.0.0.1:5555/data/${c1}/${c2}/${c3}/${c4}/${name}/${i}`) //python api url could be moved to .env
+            this.postData(response.data)
             }
           } catch (error) {
           console.error('Error calling retrieve:', error);
+        }
+        this.$emit("newAdded")
+      },
+      async postData(weatherData) {
+        try {
+          await useWeatherdataStore().postData(weatherData, this.location);
+        } catch (error) {
+          console.error('Error:', error);
         }
       },
       decimalToCoordinates(long, lat) {

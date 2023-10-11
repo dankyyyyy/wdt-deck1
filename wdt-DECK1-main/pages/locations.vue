@@ -3,11 +3,10 @@
     <div class="flex w-full justify-end">
       <IconsAdd @click="showModal" class="cursor-pointer" />
     </div>
-    <ModalDialogsCreateLocationModal v-if="isModalVisible" @hideModal="hideModal"
-      @downloaded="sendDownloadedNotification" />
+    <ModalDialogsCreateLocationModal v-if="isModalVisible" @hideModal="hideModal" @newAdded="toggleCardKey" />
     <div v-if="!loading" class="flex flex-wrap">
       <div v-for="location in locations" :key="location._id" class="p-5">
-        <CardsLocationCard :location="location" :downloaded="downloaded" />
+        <CardsLocationCard :location="location" :key="cardKey" />
       </div>
     </div>
     <div v-else>
@@ -26,7 +25,7 @@ export default {
       locations: [],
       isModalVisible: false,
       loading: true,
-      downloaded: false,
+      cardKey: false,
     };
   },
   async mounted() {
@@ -44,9 +43,10 @@ export default {
     hideModal() {
       this.isModalVisible = false;
     },
-    sendDownloadedNotification() {
-      this.downloaded = true;
-    },
+    toggleCardKey(){
+      console.log('toggling');
+      this.cardKey = !this.cardKey;
+    }
   },
 };
 </script>

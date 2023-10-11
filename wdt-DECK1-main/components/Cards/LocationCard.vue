@@ -58,7 +58,9 @@ export default {
     };
   },
   async mounted() {
+    console.log("checking: ", this.location._id);
     const foundData = await useWeatherdataStore().checkByLocationId(this.location._id)
+    console.log(foundData);
     if (foundData !== undefined) {
       this.dataInformation.isDataRegistered = true;
       this.dataInformation.latestDataYear = foundData.Year;

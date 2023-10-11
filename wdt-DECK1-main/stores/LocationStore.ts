@@ -64,7 +64,7 @@ export const useLocationStore = defineStore("LocationStore",{
                 const response = await axios.delete('/api/locations/delete', {
                     data: location
                 });
-                console.log(response.data.message);
+                console.log(response.data);
                 if (response.status === 200) {
                     console.log('Location deleted successfully\n', response);
                   } else {

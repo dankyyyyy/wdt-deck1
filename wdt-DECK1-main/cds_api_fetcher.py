@@ -110,7 +110,7 @@ def retrieve(c1, c2, c3, c4, name, year):
                     }
                     # Add the message data to the list
                     jsonData.append(message_data)
-
+                    jsonDatas = json.dumps(jsonData, indent=2)
         #--------------------------------------------Write json to static folder OLD SOLUTION
         # # Specify the folder name
         # folder_name = "static"
@@ -136,7 +136,7 @@ def retrieve(c1, c2, c3, c4, name, year):
         else:
             print(f"File '{name}' does not exist.")
 
-        return jsonData, 200
+        return jsonDatas, 200
 
     except Exception as e:
         return "NOT OK :(", 400
