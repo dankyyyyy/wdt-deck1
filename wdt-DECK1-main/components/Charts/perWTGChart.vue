@@ -1,6 +1,6 @@
 <template>
   <div class="deck-frame-white">
-    <canvas v-bind:id="'finChart' + filterParams.chartId" class="chart-canvas"></canvas>
+    <canvas v-bind:id="'perWTGChart'" class="chart-canvas"></canvas>
   </div>
 </template>
 
@@ -8,8 +8,7 @@
 import Chart from "chart.js/auto";
 import { Colors } from 'chart.js';
 import { start } from "@/utils/chartCalc/wdtCalc";
-import { useWeatherStore } from "@/stores/WeatherStore";
-import { useFinStore } from "~/stores/FinStore";
+import { useChartStore } from "~/stores/ChartStore";
 import { usePresetStore } from "~/stores/PresetStore";
 import "~/utils/calculationUtils";
 
@@ -27,58 +26,40 @@ export default {
     },
   },
   setup(props) {
-    const weatherStore = useWeatherStore();
-    const finStore = useFinStore();
+    const chartStore = useChartStore();
     const presetStore = usePresetStore();
 
     if (presetStore.getSelectedPreset() != null) {
       onMounted(() => {
         const currentPreset = presetStore.getSelectedPreset();
-        const assets = [currentPreset.asset1, currentPreset.asset2];
-
-        for (let i = 0; i < assets.length; i++) {
-          start(
-            props.filterParams.startHour,
-            props.filterParams.endHour,
-            props.filterParams.startMonth,
-            props.filterParams.endMonth,
-            props.filterParams.years,
-            assets[i]
-          );
-          const asset = assets[i];
-          finStore.assetsFin = weatherStore.assetsWdt;
-          finStore.assetsFin[asset.name] = yearlyWorkabilityPerAsset(finStore.assetsFin[asset.name]);
-        }
+        const assets = currentPreset.assets;
 
         for (let i = 0; i < assets.length; i++) {
           const asset = assets[i];
           const team = assets[i].team;
-          const annualWorkability = finStore.assetsFin[asset.name];
-          finStore.assetsFin[asset.name] = [];
+          const location = currentPreset.location;
 
-          finStore.assetsFin[asset.name].push(totalAnnualCost(asset, team, annualWorkability));
-          finStore.assetsFin[asset.name].push(annualCharterCostsWdt(asset, annualWorkability));
-          finStore.assetsFin[asset.name].push(annualFuelCost(asset, annualWorkability));
-          finStore.assetsFin[asset.name].push(downtimeSalaryCost(team, annualWorkability));
-          finStore.assetsFin[asset.name].push(annualCarbonTax(asset, annualWorkability));
+          const annualWorkability = yearlyWorkabilityPerAsset(chartStore.wdtData[asset.name]);
+
+          chartStore.perWTGData[asset.name] = [];
+          chartStore.perWTGData[asset.name].push(wdtCostsPerWtg(asset, team, location, annualWorkability));
         }
 
-        // Chart Construction
         const datasets = []
-        for (const x in finStore.assetsFin) {
+        for (const x in chartStore.perWTGData) {
           datasets.push({
             label: x,
-            data: finStore.assetsFin[x],
+            data: chartStore.perWTGData[x],
             borderRadius: 10,
           })
         }
-        //Create chart object
-        const myChart = new Chart(
-          document.getElementById("finChart" + props.filterParams.chartId),
+
+        const WTGChart = new Chart(
+          document.getElementById("perWTGChart"),
           {
             type: "bar",
             data: {
-              labels: finStore.labels,
+              labels: chartStore.finChartLabels.at[0],
               datasets,
             },
             options: {

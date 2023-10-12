@@ -8,7 +8,7 @@
 import Chart from "chart.js/auto";
 import { Colors } from 'chart.js';
 import { start } from "@/utils/chartCalc/wdtCalc";
-import { useWeatherStore } from "@/stores/WeatherStore";
+import { useChartStore } from "~/stores/ChartStore";
 import { usePresetStore } from "~/stores/PresetStore";
 
 Chart.register(Colors);
@@ -25,12 +25,14 @@ export default {
     },
   },
   setup(props) {
-    const weatherStore = useWeatherStore();
+    const chartStore = useChartStore();
     const presetStore = usePresetStore();
 
     if (presetStore.getSelectedPreset() != null) {
       onMounted(() => {
-        const assets = [presetStore.getSelectedPreset().asset1, presetStore.getSelectedPreset().asset2];
+        const currentPreset = presetStore.getSelectedPreset();
+        const assets = currentPreset.assets;
+        const monthlyWorkability = [];
 
         for (let i = 0; i < assets.length; i++) {
           start(
@@ -42,15 +44,15 @@ export default {
             assets[i]
           );
           const asset = assets[i];
-          weatherStore.assetsWdt[asset.name] = monthlyWorkabilityPerAsset(weatherStore.assetsWdt[asset.name]);
+          monthlyWorkability[asset.name] = monthlyWorkabilityPerAsset(chartStore.wdtData[asset.name]);
         }
 
         // Chart Construction
         const datasets = []
-        for (const x in weatherStore.assetsWdt) {
+        for (const x in monthlyWorkability) {
           datasets.push({
             label: x,
-            data: weatherStore.assetsWdt[x].slice(
+            data: monthlyWorkability[x].slice(
               props.filterParams.startMonth - 1,
               props.filterParams.endMonth
             ),
@@ -63,7 +65,7 @@ export default {
           {
             type: "bar",
             data: {
-              labels: weatherStore.labels.slice(
+              labels: chartStore.wdtLabels.slice(
                 props.filterParams.startMonth - 1,
                 props.filterParams.endMonth
               ),

@@ -13,11 +13,10 @@
                         <label for="wtg">WTG (Model): </label>
                         <p class="box-text-type">{{ preset.wtg.name }}</p>
                         <hr />
-                        <label for="asset1">Asset1: </label>
-                        <p class="box-text-type">{{ preset.asset1.name }}</p>
-                        <hr />
-                        <label for="asset2">Asset2: </label>
-                        <p class="box-text-type">{{ preset.asset2.name }}</p>
+                        <label for="asset2">Assets: </label>
+                        <div v-for="(asset, key) in preset.assets" :key="key">
+                            <p class="box-text-type">{{ asset.name }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -35,7 +34,7 @@ export default {
         preset: {
             type: Object,
             required: true,
-        }
+        },
     },
     data() {
         return {
@@ -49,11 +48,6 @@ export default {
             if (usePresetStore().getSelectedPreset() === null) {
                 this.isSelected = true;
                 this.$emit("preset-selected", preset);
-                /*} else if (usePresetStore().getSelectedPreset() !== preset && usePresetStore().getSelectedPreset() !== null) {
-                    const oldPreset = usePresetStore().getSelectedPreset();
-                    this.$emit("preset-deselected", oldPreset);
-                    this.$emit("preset-selected", preset);
-                    this.isSelected = true;*/
             } else if (usePresetStore().getSelectedPreset()._id === preset._id) {
                 this.isSelected = false;
                 this.$emit("preset-deselected");

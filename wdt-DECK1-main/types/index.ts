@@ -60,8 +60,7 @@ export interface IPreset {
     name: string;
     location:ILocation;
     wtg: IWindTurbineGenerator;
-    asset1: IAsset;
-    asset2: IAsset;
+    assets: IAsset[];
 }
 
 //weatherdata

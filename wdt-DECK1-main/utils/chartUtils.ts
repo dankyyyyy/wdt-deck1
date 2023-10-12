@@ -10,7 +10,14 @@ export function formatNumberWithDecimal(value: number) {
 }
 
 export function generateLabelsFromAssets(): String[] {
-    const preset = usePresetStore().getSelectedPreset() as { asset1: { name: string }, asset2: { name: string } };
-    const names = [preset.asset1.name, preset.asset2.name];
+    const preset = usePresetStore().getSelectedPreset() as IPreset;
+    const assets = preset.assets;
+    const names = [];
+
+    for (let i = 0; i < assets.length; i++) {
+        const name = assets[i].name;
+        names.push(name);
+    }
+
     return names;
 }

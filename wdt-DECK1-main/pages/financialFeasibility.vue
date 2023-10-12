@@ -8,10 +8,19 @@
         <div class="w-4/5 h-20 p-3">
           <RecommendationPopUp />
         </div>
-        <div class="flex flex-col">
-          <div v-for="id in ids" :key="id">
+        <!-- <div v-for="id in ids" :key="id">
             <FiltersFinGraphFilter :key="chartKey" @remove="handleRemove" :chartId="id" :amountOfCharts="ids.length" />
+          </div> -->
+        <div style="display: flex; justify-content: space-between;">
+          <div>
+            <ChartsPerWTGChart style="width: 590px; height: 550px" />
           </div>
+          <div>
+            <ChartsPerReqWrkHrChart style="width: 590px; height: 550px" />
+          </div>
+        </div>
+        <div class="p-5">
+          <ChartsFinTable />
         </div>
         <div class="w-full p-3">
           <button v-if="ids.length !== 3" type="button"
@@ -42,6 +51,7 @@ export default {
   },
   async mounted() {
     this.ids.push(1);
+    this.ids.push(2);
     await this.startChart();
     this.toggleChartKey();
   },
@@ -60,7 +70,6 @@ export default {
     async startChart() {
       const currentPreset = usePresetStore().getSelectedPreset();
       const currentLocation = currentPreset.location;
-
       useFilterStore().hideRecommendation = false;
       useLocationStore().toggleLoading();
       this.$emit("loading");

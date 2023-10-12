@@ -3,6 +3,13 @@
         <NuxtLink to="/">
             <IconsLogoInverted class="inline-block align-middle w-full" />
         </NuxtLink>
+        <div class="flex w-full justify-between p-5">
+            <h1 class="text-2xl font-semibold"></h1>
+            <IconsAdd @click="showModal" class="cursor-pointer" />
+        </div>
+
+        <ModalDialogsCreatePresetModal v-if="isModalVisible" @hideModal="hideModal" />
+
         <div class="grid" v-if="presets !== undefined">
             <div v-for="preset in presets" :key="preset.id">
                 <CardsPresetCard :preset="preset" @preset-selected="handlePresetSelected"
@@ -39,7 +46,6 @@ export default {
         },
         handlePresetDeselected() {
             usePresetStore().setSelectedPreset(null);
-            console.log(usePresetStore().getSelectedPreset());
         },
         navigateToNextPage() {
             if (usePresetStore().getSelectedPreset() !== null) {
@@ -47,7 +53,13 @@ export default {
                 // this.$router.push('/financialFeasibility');
                 // this.$router.push('/availability');
             }
-        }
+        },
+        showModal() {
+            this.isModalVisible = true;
+        },
+        hideModal() {
+            this.isModalVisible = false;
+        },
     },
 }
 </script>

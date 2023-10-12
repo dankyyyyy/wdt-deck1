@@ -87,7 +87,7 @@ export function availablePerRequiredInPercent(wtg: any, team: any, location: any
 export function annualCharterCostsWdt(asset: any, annualWorkability: number): number {
     const dayRate = asset.dayRate;
     const weatherDownTime = unavailableDaysFromPercentage(annualWorkability);
-    const annualCharterCost = dayRate * weatherDownTime;
+    const annualCharterCost = Math.round(dayRate * weatherDownTime);
     return annualCharterCost;
 }
 
@@ -111,7 +111,7 @@ export function annualFuelWdt(asset: any, annualWorkability: number): number {
 }
 
 export function annualFuelCost(asset: any, annualWorkability: number): number {
-    const fuelCost = annualFuelWdt(asset, annualWorkability);
+    const fuelCost = Math.round(annualFuelWdt(asset, annualWorkability));
     return fuelCost;
 }
 
@@ -123,7 +123,7 @@ export function downtimeSalaryCost(team: any, annualWorkability: number): number
     const salary = 1500; //€
     const wdt = unavailableDaysFromPercentage(annualWorkability);
     const teamSize = team.numberOfPersons; //amount of people
-    const downtimeSalary = salary * wdt * teamSize;
+    const downtimeSalary = Math.round(salary * wdt * teamSize);
     return downtimeSalary;
 }
 
@@ -146,7 +146,7 @@ export function annualCarbonOutput(asset: any, annualWorkability: number): numbe
 export function annualCarbonTax(asset: any, annualWorkability: number): number {
     const carbonTaxPerTon = 42; //€; tax for the Netherlands
     const carbonEmitted = annualCarbonOutput(asset, annualWorkability);
-    const annualCarbonTax = carbonTaxPerTon * carbonEmitted;
+    const annualCarbonTax = Math.round(carbonTaxPerTon * carbonEmitted);
     return annualCarbonTax;
 }
 
@@ -155,8 +155,8 @@ export function annualCarbonTax(asset: any, annualWorkability: number): number {
 =======================*/
 
 export function totalAnnualCost(asset: any, team: any, annualWorkability: number): number {
-    const totalCost = annualFuelCost(asset, annualWorkability) + annualCharterCostsWdt(asset, annualWorkability)
-        + annualCarbonTax(asset, annualWorkability) + downtimeSalaryCost(team, annualWorkability);
+    const totalCost = Math.round(annualFuelCost(asset, annualWorkability) + annualCharterCostsWdt(asset, annualWorkability)
+        + annualCarbonTax(asset, annualWorkability) + downtimeSalaryCost(team, annualWorkability));
     return totalCost;
 }
 

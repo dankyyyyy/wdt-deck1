@@ -1,33 +1,18 @@
-import AssetModel from '~/server/models/Asset.model'
+import PresetModel from '~/server/models/Preset.model';
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event)
-    console.log('Server-side Asset: ', body);
+    console.log('Server-side Preset: ', body);
 
     try {
-      const updatedAsset = await AssetModel.findByIdAndUpdate(
+      const updatedAsset = await PresetModel.findByIdAndUpdate(
         body._id,
         {
           $set: {
             name: body.name, 
-            category: body.category,
-            hs: body.hs,
-            visibility: body.visibility,
-            windSpeedLimit: body.windSpeedLimit,
-            dayRate: body.dayRate,
-            operationalFuelConsumption: body.operationalFuelConsumption,
-            dailyAvailableTimePerTeam: body.dailyAvailableTimePerTeam,
-            staffPerTeam: body.staffPerTeam,
-            totalYearlyAvailableTime: body.totalYearlyAvailableTime,
-            vesselSpeed: body.vesselSpeed,
-            fuelFlowLoitering: body.fuelFlowLoitering,
-            loitering: body.loitering,
-            highEngineActivity: body.highEngineActivity,
-            helicopterSpeed: body.helicopterSpeed,
-            cloudbase: body.cloudbase,
-            plannedMaintenance: body.plannedMaintenance,
-            troubleshootVisits: body.troubleshootVisits,
-            averageTsHours: body.averageTsHours,
+            location: body.location,
+            wtg: body.wtg,
+            assets: body.assets,
           },
         },
         { new: true }
