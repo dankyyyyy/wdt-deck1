@@ -431,7 +431,53 @@
 
 .chart-canvas {
   width: 100%;
-  /* max-width: 1220px; */
+}
+
+
+/* Dual Charts */
+
+.dual-chart-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cost-per-charts {
+  width: 100%;
+  max-width: 40rem;
+  height: 550px;
+  margin: 2rem;
+}
+
+/* Financial Feasibility Table */
+
+.table-container {
+  display: flex;
+  justify-content: center;
+}
+
+.fin-table {
+  width: 82.3%;
+  max-width: 82.3%;
+  height: 11.8rem;
+  max-height: 20rem;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.fin-table .ag-root-wrapper {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.fin-table .ag-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fin-table .ag-header-cell-label {
+  justify-content: center;
 }
 
 @layer utilities {

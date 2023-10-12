@@ -1,6 +1,5 @@
 <template>
-    <ag-grid-vue style="width: 1200px; height: 350px; position: relative; overflow: hidden;" class="ag-theme-alpine"
-        :columnDefs="columnDefs" :rowData="rowData" />
+        <ag-grid-vue class="ag-theme-alpine fin-table" :columnDefs="columnDefs" :rowData="rowData" />
 </template>
 
 <script>
@@ -41,7 +40,7 @@ export default {
                     const asset = assets[i];
                     const team = assets[i].team;
                     const annualWorkability = yearlyWorkabilityPerAsset(chartStore.wdtData[asset.name]);
-                    
+
                     const row = {
                         AssetName: asset.name,
                         AssetType: asset.category,

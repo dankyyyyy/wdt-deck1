@@ -11,15 +11,15 @@
         <!-- <div v-for="id in ids" :key="id">
             <FiltersFinGraphFilter :key="chartKey" @remove="handleRemove" :chartId="id" :amountOfCharts="ids.length" />
           </div> -->
-        <div style="display: flex; justify-content: space-between;">
+        <div class="dual-chart-container">
           <div>
-            <ChartsPerWTGChart style="width: 590px; height: 550px" />
+            <ChartsPerWTGChart class="cost-per-charts" />
           </div>
           <div>
-            <ChartsPerReqWrkHrChart style="width: 590px; height: 550px" />
+            <ChartsPerReqWrkHrChart class="cost-per-charts" />
           </div>
         </div>
-        <div class="p-5">
+        <div class="table-container">
           <ChartsFinTable />
         </div>
         <div class="w-full p-3">
