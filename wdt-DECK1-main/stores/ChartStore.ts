@@ -21,6 +21,12 @@ export const useChartStore = defineStore("ChartStore", {
             "Dec",
         ]);
 
+        const wdtTableLabels = ref<String[]>([
+            "Asset Name",
+            "Asset Type",
+            "Annual Availability",
+        ]);
+
         const perWTGData: any = {
 
         }
@@ -48,9 +54,12 @@ export const useChartStore = defineStore("ChartStore", {
 
         }
 
+
+
         return {
             wdtData,
             wdtLabels,
+            wdtTableLabels,
             perWTGData,
             perWRKHRData,
             finChartLabels,
