@@ -38,12 +38,17 @@ export default {
     return {
       ids: [],
       chartKey: false,
+      loading: true,
     };
   },
   async mounted() {
     this.ids.push(1);
     await this.startChart();
     this.toggleChartKey();
+    this.loading = false;
+  },
+  fetch() {
+    return this.startChart();
   },
   methods: {
     addGraph() {
@@ -64,9 +69,12 @@ export default {
       useFilterStore().hideRecommendation = false;
       useLocationStore().toggleLoading();
       this.$emit("loading");
+
       await useWeatherdataStore().getByLocationId(currentLocation._id);
+
       useLocationStore().toggleLoading();
       this.$emit("loading");
+      this.loading = false;
     },
   },
 };

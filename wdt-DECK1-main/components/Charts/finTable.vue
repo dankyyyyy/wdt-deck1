@@ -1,10 +1,11 @@
 <template>
-        <ag-grid-vue class="ag-theme-alpine fin-table" :columnDefs="columnDefs" :rowData="rowData" />
+    <ag-grid-vue class="ag-theme-alpine fin-table" :columnDefs="columnDefs" :rowData="rowData" />
 </template>
 
 <script>
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
+import {start} from "~/utils/chartCalc/wdtCalc";
 import { AgGridVue } from "ag-grid-vue3";
 import { useChartStore } from "~/stores/ChartStore";
 import { usePresetStore } from "~/stores/PresetStore";
@@ -14,6 +15,16 @@ export default {
     name: "FinancialTable",
     components: {
         AgGridVue,
+    },
+    props: {
+        filterParams: {
+            startHour: Number,
+            endHour: Number,
+            startMonth: Number,
+            endMonth: Number,
+            years: Number,
+            chartId: Number,
+        },
     },
     data() {
         return {
@@ -26,7 +37,7 @@ export default {
         };
     },
     methods: {
-        getRowData() {
+        getRowData(props) {
             const chartStore = useChartStore();
             const presetStore = usePresetStore();
             const tempRowData = [];
@@ -34,9 +45,17 @@ export default {
             if (presetStore.getSelectedPreset() != null) {
                 const currentPreset = presetStore.getSelectedPreset();
                 const assets = currentPreset.assets;
-                // const assets = [currentPreset.asset1, currentPreset.asset2];
 
                 for (let i = 0; i < assets.length; i++) {
+                    start(
+                        props.filterParams.startHour,
+                        props.filterParams.endHour,
+                        props.filterParams.startMonth,
+                        props.filterParams.endMonth,
+                        props.filterParams.years,
+                        assets[i]
+                    );
+
                     const asset = assets[i];
                     const team = assets[i].team;
                     const annualWorkability = yearlyWorkabilityPerAsset(chartStore.wdtData[asset.name]);

@@ -83,10 +83,11 @@ export default {
       useFilterStore().hideRecommendation = false;
       useLocationStore().toggleLoading();
       this.$emit("loading");
+
       await useWeatherdataStore().getByLocationId(currentLocation._id);
+      
       useLocationStore().toggleLoading();
       this.$emit("loading");
-
       this.loading = false;
     },
   },

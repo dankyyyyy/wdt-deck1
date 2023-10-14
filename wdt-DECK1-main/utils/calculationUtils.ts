@@ -2,9 +2,10 @@
     Workability
 =============== */
 
-function unavailableDays(annualWorkability: number[]): number {
+function unavailableDays(annualWorkability: number[], startMonth: number, endMonth: number): number {
     var unavailableDays = 0;
-    for (let i = 0; i < annualWorkability.length; i++) {
+    console.log(`${startMonth}, ${endMonth}`);
+    for (let i = startMonth; i < endMonth; i++) {
         unavailableDays += annualWorkability[i];
     }
     return Math.round(unavailableDays);
@@ -15,8 +16,8 @@ function unavailableDaysFromPercentage(annualWorkability: number): number {
     return unavailableDays;
 }
 
-function availableDays(annualWorkability: number[]): number {
-    const availableDays = Math.floor(365 - unavailableDays(annualWorkability));
+function availableDays(annualWorkability: number[], startMonth: number, endMonth: number): number {
+    const availableDays = Math.floor(365 - unavailableDays(annualWorkability, startMonth, endMonth));
     return availableDays;
 }
 
@@ -33,8 +34,8 @@ export function monthlyWorkabilityPerAsset(annualWorkability: number[]): number[
     return monthlyWorkability;
 }
 
-export function yearlyWorkabilityPerAsset(annualWorkability: number[]): number {
-    const annualAvailability = availableDays(annualWorkability);
+export function yearlyWorkabilityPerAsset(annualWorkability: number[], startMonth: number, endMonth: number): number {
+    const annualAvailability = availableDays(annualWorkability, startMonth, endMonth);
     const workability = Math.floor((annualAvailability / 365) * 100) / 100;
     return workability;
 }
