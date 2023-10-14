@@ -49,9 +49,11 @@ export default {
         },
         navigateToNextPage() {
             if (usePresetStore().getSelectedPreset() !== null) {
-                this.$router.push('/weatherDownTime');
+                // this.$router.push('/dashboard');
+                // this.$router.push('/weatherDownTime');
                 // this.$router.push('/financialFeasibility');
-                // this.$router.push('/availability');
+                this.$router.push('/availability');
+                
             }
         },
         showModal() {

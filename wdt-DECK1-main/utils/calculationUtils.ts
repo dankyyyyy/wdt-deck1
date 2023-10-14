@@ -151,13 +151,22 @@ export function annualCarbonTax(asset: any, annualWorkability: number): number {
 }
 
 /* ======================
+   Complete Annual Cost
+=======================*/
+
+export function yearlyCommitment(asset: any, team: any, annualWorkability: number) : number {
+const totalCost = Math.round(totalAnnualCost(asset, team, annualWorkability) + directAnnualCost(asset));
+return totalCost
+}
+
+/* ======================
    Indirect Annual Cost
 =======================*/
 
 export function totalAnnualCost(asset: any, team: any, annualWorkability: number): number {
-    const totalCost = Math.round(annualFuelCost(asset, annualWorkability) + annualCharterCostsWdt(asset, annualWorkability)
+    const totalDowntimeCost = Math.round(annualFuelCost(asset, annualWorkability) + annualCharterCostsWdt(asset, annualWorkability)
         + annualCarbonTax(asset, annualWorkability) + downtimeSalaryCost(team, annualWorkability));
-    return totalCost;
+    return totalDowntimeCost;
 }
 
 /* ===================

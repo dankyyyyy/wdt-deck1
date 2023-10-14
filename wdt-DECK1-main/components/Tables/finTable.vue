@@ -44,7 +44,7 @@ export default {
                     const row = {
                         AssetName: asset.name,
                         AssetType: asset.category,
-                        TotalCost: `${formatNumberWithDecimal(totalAnnualCost(asset, team, annualWorkability))}€`,
+                        YearlyCommitment: `${formatNumberWithDecimal(directAnnualCost(asset))}€`,
                         CostofLease: `${formatNumberWithDecimal(annualCharterCostsWdt(asset, annualWorkability))}€`,
                         CostofFuel: `${formatNumberWithDecimal(annualFuelCost(asset, annualWorkability))}€`,
                         CostofSalary: `${formatNumberWithDecimal(downtimeSalaryCost(team, annualWorkability))}€`,

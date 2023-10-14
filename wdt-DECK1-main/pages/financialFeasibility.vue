@@ -11,16 +11,11 @@
         <!-- <div v-for="id in ids" :key="id">
             <FiltersFinGraphFilter :key="chartKey" @remove="handleRemove" :chartId="id" :amountOfCharts="ids.length" />
           </div> -->
-        <div class="dual-chart-container">
-          <div>
-            <ChartsPerWTGChart class="cost-per-charts" />
-          </div>
-          <div>
-            <ChartsPerReqWrkHrChart class="cost-per-charts" />
-          </div>
+        <div class="table-container">
+          <TablesYearlyCommitmentRiskTable />
         </div>
         <div class="table-container">
-          <ChartsFinTable />
+          <TablesYearlyDirectCostTable />
         </div>
         <div class="w-full p-3">
           <button v-if="ids.length !== 3" type="button"

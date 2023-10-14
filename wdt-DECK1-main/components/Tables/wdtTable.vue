@@ -1,5 +1,5 @@
 <template>
-    <ag-grid-vue class="ag-theme-alpine wdt-table" :columnDefs="columnDefs" :rowData="rowData" />
+    <ag-grid-vue class="ag-theme-alpine dashboard-table" :columnDefs="columnDefs" :rowData="rowData" />
 </template>
 
 <script>
@@ -44,7 +44,6 @@ export default {
 
                     const row = {
                         AssetName: asset.name,
-                        AssetType: asset.category,
                         AnnualAvailability: annualWorkability,
                     }
                     tempRowData.push(row);

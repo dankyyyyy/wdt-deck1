@@ -91,6 +91,10 @@
     @apply w-20 rounded-md border-2 text-center;
   }
 
+  .wdt-filter-container {
+    align-content: end;
+  }
+
   .button-87 {
     margin: 10px;
     padding: 15px 30px;
@@ -454,17 +458,47 @@
 .table-container {
   display: flex;
   justify-content: center;
+  min-width: 20.8rem;
 }
 
-/* Annual Availability Table [WDT] */
+/* Dashboard Tables */
 
-.wdt-table {
-  width: 31.79%;
+.dashboard-table {
+  width: 20.8rem;
   height: 11.8rem;
   max-height: 20rem;
   position: relative;
   overflow: hidden;
   border-radius: 12px;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.dashboard-table .ag-root-wrapper {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.dashboard-table .ag-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboard-table .ag-header-cell-label {
+  justify-content: center;
+}
+
+/* Annual Availability Table [WDT] */
+
+.wdt-table {
+  width: 20.8rem;
+  height: 11.8rem;
+  max-height: 20rem;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-top: 2rem;
 }
 
 .wdt-table .ag-root-wrapper {
@@ -485,14 +519,22 @@
 /* Financial Feasibility Table */
 
 .fin-table {
-  width: 82.3%;
-  max-width: 101.5%;
+  max-width: 51.7rem;
   height: 11.8rem;
   max-height: 20rem;
   position: relative;
   overflow: hidden;
   border-radius: 12px;
 }
+
+.direct-cost {
+  width: 51.7rem;
+}
+
+.yearly-commitment {
+  width: 41.4rem;
+}
+
 
 .fin-table .ag-root-wrapper {
   border-radius: 16px;
