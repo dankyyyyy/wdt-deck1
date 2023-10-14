@@ -8,12 +8,7 @@
         <div class="w-4/5 h-20 p-3">
           <RecommendationPopUp />
         </div>
-        <div v-for="id in ids" :key="id">
-          <FiltersFinGraphFilter/>
-        </div>
-        <div class="table-container">
-          <ChartsFinTable />
-        </div>
+        <FiltersFinGraphFilter :tableKey="tableKey"/>
       </div>
     </div>
   </div>
@@ -30,12 +25,15 @@ export default {
   name: "FinancialFeasibility",
   data() {
     return {
-      ids: [],
+      loading: true,
     };
   },
-  async mounted() {},
+  async mounted() {
+    this.startTables();
+    this.toggleTableKey();
+  },
   methods: {
-    async startChart() {
+    async startTables() {
       const currentPreset = usePresetStore().getSelectedPreset();
       const currentLocation = currentPreset.location;
       useFilterStore().hideRecommendation = false;
@@ -44,6 +42,10 @@ export default {
       await useWeatherdataStore().getByLocationId(currentLocation._id);
       useLocationStore().toggleLoading();
       this.$emit("loading");
+      this.loading = false;
+    },
+    toggleTableKey() {
+      this.tableKey = !this.tableKey;
     },
   },
 };

@@ -1,25 +1,21 @@
 <template>
-    <div class="w-4/5 p-3">
-      <div v-if="loading">
-        <section class="flex items-center justify-center h-full w-full">
-          <div class="h-20 w-20 mr-10 rounded-full bg-blue-300 animate-pulse"></div>
-          <div class="h-20 w-20 mr-10 rounded-full bg-blue-300 animate-pulse"></div>
-          <div class="h-20 w-20 mr-10 rounded-full bg-blue-300 animate-pulse"></div>
-          <div class="h-20 w-20 mr-10 rounded-full bg-blue-300 animate-pulse"></div>
-          <div class="h-20 w-20 rounded-full bg-blue-300 animate-pulse"></div>
-        </section>
-      </div>
-      <div v-else>
-        <div class="dual-chart-container">
-          <div>
-            <!-- Placeholder for table -->
-          </div>
-        </div>
+  <div class="w-4/5 p-3">
+    <div v-if="loading">
+      <section class="flex items-center justify-center h-full w-full">
+        <div class="h-20 w-20 mr-10 rounded-full bg-blue-300 animate-pulse"></div>
+        <div class="h-20 w-20 mr-10 rounded-full bg-blue-300 animate-pulse"></div>
+        <div class="h-20 w-20 mr-10 rounded-full bg-blue-300 animate-pulse"></div>
+        <div class="h-20 w-20 mr-10 rounded-full bg-blue-300 animate-pulse"></div>
+        <div class="h-20 w-20 rounded-full bg-blue-300 animate-pulse"></div>
+      </section>
+    </div>
+    <div v-else>
+      <TablesWdtFinTable :key="tableKey" :filterParams="filterParams" />
+      <div class="w-1/5 h-full p-3">
+        <Filters @buttonClick="handleApplyChanges" :filterProps="filterParams"/>
       </div>
     </div>
-    <div class="w-1/5 h-full p-3">
-      <Filters @buttonClick="handleApplyChanges" :filterProps="filterParams" />
-    </div>
+  </div>
 </template>
   
 <script>
@@ -28,8 +24,9 @@ import { useLocationStore } from "~/stores/LocationStore";
 export default {
   layout: "default",
   name: "FinancialFeasibility",
-  data(props) {
+  data() {
     return {
+      tableKey: false,
       showComponents: true,
       filterParams: {
         startHour: ref(0),
@@ -48,6 +45,7 @@ export default {
       this.filterParams.startMonth = props.startMonth;
       this.filterParams.endMonth = props.endMonth;
       this.filterParams.years = props.years;
+      this.tableKey = !this.tableKey;
     },
   },
 };

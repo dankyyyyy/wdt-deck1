@@ -44,7 +44,7 @@ export default {
             assets[i]
           );
           const asset = assets[i];
-          monthlyWorkability[asset.name] = monthlyWorkabilityPerAsset(chartStore.wdtData[asset.name]);
+          monthlyWorkability[asset.name] = monthlyWorkabilityPerAsset(chartStore.wdtData[asset.name], props.filterParams.startMonth, props.filterParams.endMonth);
         }
 
         // Chart Construction

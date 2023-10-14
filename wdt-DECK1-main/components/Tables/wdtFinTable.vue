@@ -5,7 +5,7 @@
 <script>
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import {start} from "~/utils/chartCalc/wdtCalc";
+import { start } from "~/utils/chartCalc/wdtCalc";
 import { AgGridVue } from "ag-grid-vue3";
 import { useChartStore } from "~/stores/ChartStore";
 import { usePresetStore } from "~/stores/PresetStore";
@@ -23,21 +23,11 @@ export default {
             startMonth: Number,
             endMonth: Number,
             years: Number,
-            chartId: Number,
+            tableKey: Boolean,
         },
     },
-    data() {
-        return {
-            columnDefs: useChartStore().finTableLabels.map(label => ({
-                headerName: label,
-                field: label.replace(/ /g, ''),
-                width: 165,
-            })),
-            rowData: this.getRowData(),
-        };
-    },
-    methods: {
-        getRowData(props) {
+    setup(props) {
+        const getRowData = () => {
             const chartStore = useChartStore();
             const presetStore = usePresetStore();
             const tempRowData = [];
@@ -58,22 +48,32 @@ export default {
 
                     const asset = assets[i];
                     const team = assets[i].team;
-                    const annualWorkability = yearlyWorkabilityPerAsset(chartStore.wdtData[asset.name]);
+                    const annualWorkability = yearlyWorkabilityPerAsset(chartStore.wdtData[asset.name], props.filterParams.startMonth, props.filterParams.endMonth);
 
                     const row = {
                         AssetName: asset.name,
-                        AssetType: asset.category,
-                        TotalCost: `${formatNumberWithDecimal(totalAnnualCost(asset, team, annualWorkability))}€`,
-                        CostofLease: `${formatNumberWithDecimal(annualCharterCostsWdt(asset, annualWorkability))}€`,
-                        CostofFuel: `${formatNumberWithDecimal(annualFuelCost(asset, annualWorkability))}€`,
-                        CostofSalary: `${formatNumberWithDecimal(downtimeSalaryCost(team, annualWorkability))}€`,
-                        CO2Tax: `${formatNumberWithDecimal(annualCarbonTax(asset, annualWorkability))}€`,
+                        TotalCost: `${formatNumberWithDecimal(wdtAnnualCost(asset, team, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
+                        LostCharter: `${formatNumberWithDecimal(annualCharterLoss(asset, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
+                        LostSalary: `${formatNumberWithDecimal(downtimeSalaryCost(team, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
                     }
                     tempRowData.push(row);
                 }
                 return tempRowData;
             }
         }
+
+        const columnDefs = useChartStore().finTableLabels.map(label => ({
+            headerName: label,
+            field: label.replace(/ /g, ''),
+            width: 165,
+        }));
+        
+        const rowData = getRowData();
+
+        return {
+            columnDefs,
+            rowData,
+        };
     },
 };
 </script>
