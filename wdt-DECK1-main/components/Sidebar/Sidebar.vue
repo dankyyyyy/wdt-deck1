@@ -6,6 +6,7 @@
       </NuxtLink>
     </div>
 
+    <SidebarItem path="/dashboard" text="Dashboard" />
     <SidebarItem path="/weatherDownTime" text="Weather Down Time" />
     <SidebarItem path="/financialFeasibility" text="Financial Feasibility" />
     <SidebarItem path="/availability" text="Availability"/>

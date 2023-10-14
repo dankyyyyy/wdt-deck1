@@ -17,9 +17,6 @@
                   :amountOfCharts="ids.length" />
               </div>
             </div>
-            <div class="table-container">
-              <ChartsWdtTable />
-            </div>
             <div class="w-full p-3">
               <button v-if="ids.length !== 3" type="button"
                 class="w-full border-2 border-gray-400 rounded-full py-1 font-semibold text-xl text-gray-600"

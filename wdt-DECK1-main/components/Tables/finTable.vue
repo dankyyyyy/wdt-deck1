@@ -1,5 +1,5 @@
 <template>
-    <ag-grid-vue class="ag-theme-alpine dashboard-table" :columnDefs="columnDefs" :rowData="rowData" />
+        <ag-grid-vue class="ag-theme-alpine fin-table" :columnDefs="columnDefs" :rowData="rowData" />
 </template>
 
 <script>
@@ -8,20 +8,19 @@ import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridVue } from "ag-grid-vue3";
 import { useChartStore } from "~/stores/ChartStore";
 import { usePresetStore } from "~/stores/PresetStore";
-import "~/utils/chartUtils";
+import { formatNumberWithDecimal } from "~/utils/chartUtils";
 
 export default {
-    name: "wdtTable",
+    name: "FinancialTable",
     components: {
         AgGridVue,
     },
     data() {
         return {
-            columnDefs: useChartStore().wdtTableLabels.map(label => ({
+            columnDefs: useChartStore().finTableLabels.map(label => ({
                 headerName: label,
                 field: label.replace(/ /g, ''),
                 width: 165,
-                valueFormatter: this.formatPercentage,
             })),
             rowData: this.getRowData(),
         };
@@ -44,22 +43,18 @@ export default {
 
                     const row = {
                         AssetName: asset.name,
-                        AnnualAvailability: annualWorkability,
+                        AssetType: asset.category,
+                        YearlyCommitment: `${formatNumberWithDecimal(directAnnualCost(asset))}€`,
+                        CostofLease: `${formatNumberWithDecimal(annualCharterCostsWdt(asset, annualWorkability))}€`,
+                        CostofFuel: `${formatNumberWithDecimal(annualFuelCost(asset, annualWorkability))}€`,
+                        CostofSalary: `${formatNumberWithDecimal(downtimeSalaryCost(team, annualWorkability))}€`,
+                        CO2Tax: `${formatNumberWithDecimal(annualCarbonTax(asset, annualWorkability))}€`,
                     }
                     tempRowData.push(row);
                 }
                 return tempRowData;
             }
-        },
-        formatPercentage(params) {
-            const columnName = params.colDef.field;
-
-            if (columnName === 'AnnualAvailability') {
-                return (params.value * 100).toFixed(0) + '%';
-            }
-
-            return params.value;
-        },
+        }
     },
 };
 </script>
