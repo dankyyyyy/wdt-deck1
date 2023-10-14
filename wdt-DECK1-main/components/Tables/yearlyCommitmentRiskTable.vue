@@ -11,47 +11,58 @@ import { usePresetStore } from "~/stores/PresetStore";
 import "~/utils/chartUtils";
 
 export default {
-name: "YearlyCommitmentRiskTable",
-components: {
-    AgGridVue,
-},
-data() {
-    return {
-        columnDefs: useChartStore().yearlyCommitmentRiskTableLabels.map(label => ({
+    name: "YearlyCommitmentRiskTable",
+    components: {
+        AgGridVue,
+    },
+    props: {
+        filterParams: {
+            startHour: Number,
+            endHour: Number,
+            startMonth: Number,
+            endMonth: Number,
+            years: Number,
+            tableKey: Boolean,
+        },
+    },
+    setup(props) {
+        const getRowData = () => {
+            const chartStore = useChartStore();
+            const presetStore = usePresetStore();
+            const tempRowData = [];
+
+            if (presetStore.getSelectedPreset() != null) {
+                const currentPreset = presetStore.getSelectedPreset();
+                const assets = currentPreset.assets;
+
+                for (let i = 0; i < assets.length; i++) {
+                    const asset = assets[i];
+                    const team = assets[i].team;
+                    const annualWorkability = yearlyWorkabilityPerAsset(chartStore.wdtData[asset.name], props.filterParams.startMonth, props.filterParams.endMonth);
+
+                    const row = {
+                        AssetName: asset.name,
+                        YearlyCommitment: `${formatNumberWithDecimal(yearlyCommitment(asset, team, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
+                        DowntimeCost: `${formatNumberWithDecimal(wdtAnnualCost(asset, team, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
+                        DirectCost: `${formatNumberWithDecimal(directAnnualCost(asset, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
+                    }
+                    tempRowData.push(row);
+                }
+                return tempRowData;
+            }
+        }
+        const columnDefs = useChartStore().yearlyCommitmentRiskTableLabels.map(label => ({
             headerName: label,
             field: label.replace(/ /g, ''),
             width: 165,
-        })),
-        rowData: this.getRowData(),
-    };
-},
-methods: {
-    getRowData() {
-        const chartStore = useChartStore();
-        const presetStore = usePresetStore();
-        const tempRowData = [];
+        }));
 
-        if (presetStore.getSelectedPreset() != null) {
-            const currentPreset = presetStore.getSelectedPreset();
-            const assets = currentPreset.assets;
-            // const assets = [currentPreset.asset1, currentPreset.asset2];
+        const rowData = getRowData();
 
-            for (let i = 0; i < assets.length; i++) {
-                const asset = assets[i];
-                const team = assets[i].team;
-                const annualWorkability = yearlyWorkabilityPerAsset(chartStore.wdtData[asset.name]);
-
-                const row = {
-                    AssetName: asset.name,
-                    YearlyCommitment: `${formatNumberWithDecimal(yearlyCommitment(asset, team, annualWorkability))}€`,
-                    DirectCost: `${formatNumberWithDecimal(directAnnualCost(asset))}€`,
-                    DowntimeCost: `${formatNumberWithDecimal(totalAnnualCost(asset, team, annualWorkability))}€`,
-                }
-                tempRowData.push(row);
-            }
-            return tempRowData;
-        }
-    }
-},
+        return {
+            columnDefs,
+            rowData,
+        };
+    },
 };
 </script>

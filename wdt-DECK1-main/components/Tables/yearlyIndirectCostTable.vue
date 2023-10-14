@@ -1,5 +1,5 @@
 <template>
-    <ag-grid-vue class="ag-theme-alpine fin-table" :columnDefs="columnDefs" :rowData="rowData" />
+    <ag-grid-vue class="ag-theme-alpine fin-table yearly-commitment" :columnDefs="columnDefs" :rowData="rowData" />
 </template>
 
 <script>
@@ -52,7 +52,7 @@ export default {
 
                     const row = {
                         AssetName: asset.name,
-                        TotalCost: `${formatNumberWithDecimal(wdtAnnualCost(asset, team, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
+                        DowntimeCost: `${formatNumberWithDecimal(wdtAnnualCost(asset, team, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
                         LostCharter: `${formatNumberWithDecimal(annualCharterLoss(asset, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
                         LostSalary: `${formatNumberWithDecimal(downtimeSalaryCost(team, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
                     }

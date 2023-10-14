@@ -85,6 +85,15 @@ export function availablePerRequiredInPercent(wtg: any, team: any, location: any
 }
 
 /* ======================
+   Complete Annual Cost
+=======================*/
+
+export function yearlyCommitment(asset: any, team: any, annualWorkability: number, startMonth: number, endMonth: number): number {
+    const totalCost = Math.round(wdtAnnualCost(asset, team, annualWorkability, startMonth, endMonth) + directAnnualCost(asset, annualWorkability, startMonth, endMonth));
+    return totalCost
+}
+
+/* ======================
    Indirect Annual Cost
 =======================*/
 

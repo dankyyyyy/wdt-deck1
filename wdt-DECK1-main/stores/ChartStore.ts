@@ -41,7 +41,7 @@ export const useChartStore = defineStore("ChartStore", {
 
         const finTableLabels = ref<String[]>([
             "Asset Name",
-            "Total Cost",
+            "Downtime Cost",
             "Lost Charter",
             "Lost Salary",
         ]);
@@ -49,13 +49,13 @@ export const useChartStore = defineStore("ChartStore", {
         const yearlyCommitmentRiskTableLabels = ref<String[]>([
             "Asset Name",
             "Yearly Commitment",
-            "Direct Cost",
             "Downtime Cost",
+            "Direct Cost",
         ]);
 
         const yearlyDirectCostTableLabels = ref<String[]>([
             "Asset Name",
-            "Yearly Direct Cost",
+            "Direct Cost",
             "Charter",
             "Fuel",
             "CO2 Tax",

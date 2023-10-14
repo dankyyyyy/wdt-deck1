@@ -10,9 +10,15 @@
       </section>
     </div>
     <div v-else>
-      <TablesWdtFinTable :key="tableKey" :filterParams="filterParams" />
-      <div class="w-1/5 h-full p-3">
-        <Filters @buttonClick="handleApplyChanges" :filterProps="filterParams"/>
+      <div style="justify-items: space-between; display: flex;">
+        <div class="" style="justify-content: center;">
+          <TablesYearlyCommitmentRiskTable :key="tableKey" :filterParams="filterParams" />
+          <TablesYearlyIndirectCostTable :key="tableKey" :filterParams="filterParams" />
+          <TablesYearlyDirectCostTable :key="tableKey" :filterParams="filterParams" />
+        </div>
+        <div class="w-1/5 h-full p-3">
+          <Filters @buttonClick="handleApplyChanges" :filterProps="filterParams" />
+        </div>
       </div>
     </div>
   </div>

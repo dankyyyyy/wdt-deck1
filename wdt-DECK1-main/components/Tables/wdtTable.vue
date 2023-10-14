@@ -35,11 +35,9 @@ export default {
             if (presetStore.getSelectedPreset() != null) {
                 const currentPreset = presetStore.getSelectedPreset();
                 const assets = currentPreset.assets;
-                // const assets = [currentPreset.asset1, currentPreset.asset2];
 
                 for (let i = 0; i < assets.length; i++) {
                     const asset = assets[i];
-                    const team = assets[i].team;
                     const annualWorkability = yearlyWorkabilityPerAsset(chartStore.wdtData[asset.name]);
 
                     const row = {
