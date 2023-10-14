@@ -59,11 +59,11 @@ export default {
           const team = asset.team;
           const location = currentPreset.location;
           const wtg = currentPreset.wtg;
-          const annualWorkability = yearlyWorkabilityPerAsset(chartStore.wdtData[asset.name]);
+          const annualWorkability = yearlyWorkabilityPerAsset(chartStore.wdtData[asset.name], props.filterParams.startMonth, props.filterParams.endMonth);
 
           chartStore.availData['Required Hours'].push(annualTotalRequiredHours(wtg, location));
-          chartStore.availData['Available Hours'].push(annualDeployableHours(team, annualWorkability));
-          chartStore.availData['Difference in Hours'].push(annualTotalHoursDifference(team, annualWorkability, location, wtg));
+          chartStore.availData['Available Hours'].push(annualDeployableHours(team, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth));
+          chartStore.availData['Difference in Hours'].push(annualTotalHoursDifference(team, annualWorkability, location, wtg, props.filterParams.startMonth, props.filterParams.endMonth));
         }
 
         // Chart Construction

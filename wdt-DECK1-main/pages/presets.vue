@@ -53,7 +53,6 @@ export default {
                 // this.$router.push('/weatherDownTime');
                 // this.$router.push('/financialFeasibility');
                 this.$router.push('/availability');
-                
             }
         },
         showModal() {
