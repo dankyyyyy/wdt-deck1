@@ -11,7 +11,7 @@ import { usePresetStore } from "~/stores/PresetStore";
 import "~/utils/chartUtils";
 
 export default {
-    name: "YearlyCommitmentTable",
+    name: "wdtTable",
     components: {
         AgGridVue,
     },
@@ -37,12 +37,11 @@ export default {
 
                 for (let i = 0; i < assets.length; i++) {
                     const asset = assets[i];
-                    const team = assets[i].team;
                     const annualWorkability = yearlyWorkabilityPerAsset(chartStore.wdtData[asset.name], props.filterParams.startMonth, props.filterParams.endMonth);
 
                     const row = {
                         AssetName: asset.name,
-                        YearlyCommitment: `${formatNumberWithDecimal(yearlyCommitment(asset, team, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
+                        AnnualWorkability: annualWorkability,
                     }
                     tempRowData.push(row);
                 }
@@ -50,18 +49,23 @@ export default {
             }
         };
 
-        const columnDefs = useChartStore().yearlyCommitmentTableLabels.map(label => ({
+        const columnDefs = useChartStore().wdtTableLabels.map(label => ({
             headerName: label,
             field: label.replace(/ /g, ''),
             width: 165,
+            valueFormatter: (params) => {
+                if (params.colDef.field === 'AnnualWorkability') {
+                    return (params.value * 100).toFixed(0) + '%';
+                }
+            }
         }));
 
         const rowData = getRowData();
 
         return {
             columnDefs,
-            rowData
+            rowData,
         };
-    }
+    },
 }
 </script>

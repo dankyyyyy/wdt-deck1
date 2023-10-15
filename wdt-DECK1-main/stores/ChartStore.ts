@@ -23,7 +23,7 @@ export const useChartStore = defineStore("ChartStore", {
 
         const wdtTableLabels = ref<String[]>([
             "Asset Name",
-            "Annual Availability",
+            "Annual Workability",
         ]);
 
         const perWTGData: any = {
@@ -66,9 +66,9 @@ export const useChartStore = defineStore("ChartStore", {
             "Yearly Commitment"
         ]);
 
-        const assetWorkabilityTableLabels =  ref<String[]>([
+        const assetAvailabilityTableLabels =  ref<String[]>([
             "Asset Name",
-            "Annual Workability"
+            "Annual Availability"
         ]);
 
         const availData: any = {
@@ -88,7 +88,7 @@ export const useChartStore = defineStore("ChartStore", {
             yearlyCommitmentRiskTableLabels,
             yearlyDirectCostTableLabels,
             yearlyCommitmentTableLabels,
-            assetWorkabilityTableLabels,
+            assetAvailabilityTableLabels,
             availData,
         }
     }

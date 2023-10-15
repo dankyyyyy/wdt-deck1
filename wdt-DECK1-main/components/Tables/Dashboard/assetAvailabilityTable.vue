@@ -11,23 +11,22 @@ import { usePresetStore } from "~/stores/PresetStore";
 import "~/utils/chartUtils";
 
 export default {
-    name: "wdtTable",
+    name: "AssetWorkabilityTable",
     components: {
         AgGridVue,
     },
-    data() {
-        return {
-            columnDefs: useChartStore().wdtTableLabels.map(label => ({
-                headerName: label,
-                field: label.replace(/ /g, ''),
-                width: 165,
-                valueFormatter: this.formatPercentage,
-            })),
-            rowData: this.getRowData(),
-        };
+    props: {
+        filterParams: {
+            startHour: Number,
+            endHour: Number,
+            startMonth: Number,
+            endMonth: Number,
+            years: Number,
+            tableKey: Boolean,
+        },
     },
-    methods: {
-        getRowData() {
+    setup(props) {
+        const getRowData = () => {
             const chartStore = useChartStore();
             const presetStore = usePresetStore();
             const tempRowData = [];
@@ -38,26 +37,31 @@ export default {
 
                 for (let i = 0; i < assets.length; i++) {
                     const asset = assets[i];
-                    const annualWorkability = yearlyWorkabilityPerAsset(chartStore.wdtData[asset.name]);
+                    const team = assets[i].team;
+                    const annualWorkability = yearlyWorkabilityPerAsset(chartStore.wdtData[asset.name], props.filterParams.startMonth, props.filterParams.endMonth);
 
                     const row = {
                         AssetName: asset.name,
-                        AnnualAvailability: annualWorkability,
+                        AnnualAvailability: `${annualDeployableHours(team, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth)} hours`,
                     }
                     tempRowData.push(row);
                 }
                 return tempRowData;
             }
-        },
-        formatPercentage(params) {
-            const columnName = params.colDef.field;
+        }
 
-            if (columnName === 'AnnualAvailability') {
-                return (params.value * 100).toFixed(0) + '%';
-            }
+        const columnDefs = useChartStore().assetAvailabilityTableLabels.map(label => ({
+            headerName: label,
+            field: label.replace(/ /g, ''),
+            width: 165,
+        }));
 
-            return params.value;
-        },
+        const rowData = getRowData();
+
+        return {
+            columnDefs,
+            rowData,
+        };
     },
-};
+}
 </script>

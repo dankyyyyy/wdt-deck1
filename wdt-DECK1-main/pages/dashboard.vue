@@ -8,19 +8,14 @@
                 </div>
                 <div class="deck-frame-grey-container">
                     <div class="w-full h-full deck-frame-grey inline-block">
-                        <div class="w-4/5 h-20 p-3">
+                        <!-- <div class="w-4/5 h-20 p-3">
                             <RecommendationPopUp />
-                        </div>
+                        </div> -->
                         <div class="flex flex-col">
                             <div v-for="id in ids" :key="id">
-                                <FiltersWdtGraphFilter :key="chartKey" @remove="handleRemove" :chartId="id"
+                                <FiltersWdtGraphFilter :key="chartKey" :tableKey="tableKey" @remove="handleRemove" :chartId="id"
                                     :amountOfCharts="ids.length" />
                             </div>
-                        </div>
-                        <div class="table-container">
-                            <TablesDashboardYearlyCommitmentTable />
-                            <TablesDashboardAssetWorkabilityTable />
-                            <TablesWdtTable />
                         </div>
                         <div class="w-full p-3">
                             <button v-if="ids.length !== 3" type="button"
@@ -52,12 +47,15 @@ export default {
             loading: true,
             ids: [],
             chartKey: false,
+            tableKey: false,
         };
     },
     async mounted() {
         this.ids.push(1);
         await this.startChart();
+        await this.startTables();
         this.toggleChartKey();
+        this.toggleTableKey();
         this.loading = false;
     },
     fetch() {
@@ -67,17 +65,14 @@ export default {
         addGraph() {
             this.ids.push(this.ids[this.ids.length - 1] + 1);
         },
-
         handleRemove(id) {
             if (this.ids.length !== 1) {
                 this.ids = this.ids.filter((el) => el !== id);
             }
         },
-
         toggleChartKey() {
             this.chartKey = !this.chartKey;
         },
-
         async startChart() {
             const currentPreset = usePresetStore().getSelectedPreset();
             const currentLocation = currentPreset.location;
@@ -91,6 +86,12 @@ export default {
 
             this.loading = false;
         },
+        async startTables() {
+
+        },
+        toggleTableKey() {
+            this.tableKey = !this.tableKey;
+        }
     },
 };
 </script>

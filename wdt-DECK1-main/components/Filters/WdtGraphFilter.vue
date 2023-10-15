@@ -18,7 +18,14 @@
         </section>
       </div>
       <div v-else>
-        <ChartsWdtChart :key="wdtChartKey" :filterParams="filterParams" />
+        <div class="p-3">
+          <ChartsWdtChart :key="wdtChartKey" :filterParams="filterParams" />
+        </div>
+        <div class="table-container">
+          <TablesDashboardYearlyCommitmentTable :key="tableKey" :filterParams="filterParams" />
+          <TablesDashboardAssetAvailabilityTable :key="tableKey" :filterParams="filterParams" />
+          <TablesDashboardWdtTable :key="tableKey" :filterParams="filterParams" />
+        </div>
       </div>
     </div>
     <div class="w-1/5 h-full p-3">
@@ -57,6 +64,7 @@ export default {
   data(props) {
     return {
       wdtChartKey: false,
+      tableKey: false,
       showComponents: true,
       filterParams: {
         startHour: ref(0),
@@ -77,6 +85,7 @@ export default {
       this.filterParams.endMonth = data.endMonth;
       this.filterParams.years = data.years;
       this.wdtChartKey = !this.wdtChartKey;
+      this.tableKey = !this.tableKey;
     },
     emitRemove() {
       this.$emit("remove", this.chartId);

@@ -51,14 +51,14 @@ export function annualDeployableHours(team: any, annualWorkability: number, star
     const dailyHoursPerTeam = team.numberOfPersons * team.shiftPeriod;
     const annualAvailability = availableDaysFromPercentage(annualWorkability, startMonth, endMonth);
     const annualDeployableHours = dailyHoursPerTeam * annualAvailability;
-    return annualDeployableHours;
+    return Math.floor(annualDeployableHours);
 }
 
 export function annualLostAvailableHours(team: any, annualWorkability: number, startMonth: number, endMonth: number): number { // available hours lost due to wdt
     const dailyHoursPerTeam = team.numberOfPersons * team.shiftPeriod;
     const annualUnavailableDays = unavailableDaysFromPercentage(annualWorkability, startMonth, endMonth);
     const annualLostAvailableHours = dailyHoursPerTeam * annualUnavailableDays;
-    return annualLostAvailableHours;
+    return Math.ceil(annualLostAvailableHours);
 }
 
 export function annualTotalRequiredHours(wtg: any, location: any): number {
@@ -74,7 +74,7 @@ export function annualTotalHoursDifference(team: any, annualWorkability: number,
     const availableHours = annualDeployableHours(team, annualWorkability, startMonth, endMonth);
     const requiredHours = annualTotalRequiredHours(wtg, location);
     const totalDifference = availableHours - requiredHours;
-    return totalDifference;
+    return Math.floor(totalDifference);
 }
 
 export function availablePerRequiredInPercent(wtg: any, team: any, location: any, annualWorkability: number, startMonth: number, endMonth: number): number {
