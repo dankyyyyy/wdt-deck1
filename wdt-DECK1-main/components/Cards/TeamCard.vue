@@ -33,6 +33,7 @@ export default {
   },
   data() {
     return {
+      isSelected: false,
       isUpdateModalVisible: false,
       isDeleteModalVisible: false,
     };
@@ -48,6 +49,17 @@ export default {
       this.isUpdateModalVisible = false;
       this.isDeleteModalVisible = false;
     },
+    selectTeam() {
+      const team = this.team;
+
+      if (useTeamStore().getSelectedTeam() === null) {
+        this.isSelected = true;
+        this.$emit("team-selected", team);
+      } else if (useTeamStore().getSelectedTeam._id === team._id) {
+        this.isSelected = false,
+        this.$emit("team-deselected");
+      }
+    }
   },
 };
 </script>

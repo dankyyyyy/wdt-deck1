@@ -3,15 +3,6 @@
     <div class="modal rounded-lg flex-col">
       <h3 class="font-semibold">Team creation</h3>
       <div class="py-5 flex flex-col flex-wrap content-normal">
-        <div
-          class="border-2 border-dashed rounded-md h-56 flex flex-col justify-center items-center"
-        >
-          <h3 class="text-center">
-            Drag & drop your <br />
-            team image
-          </h3>
-          <IconsDrop />
-        </div>
         <div class="create-input">
           <label for="id">Id: </label>
           <input

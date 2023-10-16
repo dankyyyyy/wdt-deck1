@@ -1,7 +1,7 @@
 <template>
   <div class="grid-container">
     <div class="grid">
-      <div class="preset-box">
+      <div class="card-box" @click="selectLocation" :class="{ 'selected': isSelected }">
         <div class="box-content">
           <IconsLogoInverted class="box-image inline-block align-middle w-full" />
           <!-- <div v-if="!isDataRegistered">
@@ -41,6 +41,7 @@
 <script>
 import { useWeatherdataStore } from "~/stores/WeatherdataStore";
 import axios from "axios";
+import { useLocationStore } from "~/stores/LocationStore";
 
 export default {
   name: "LocationCard",
@@ -55,16 +56,11 @@ export default {
       isDataRegistered: false,
       isUpdateModalVisible: false,
       isDeleteModalVisible: false,
+      isSelected: false,
     };
   },
   async mounted() {
     if (await useWeatherdataStore().checkByLocationId(this.location._id)) {
-      const currentDate = new Date();
-      const currentYear = currentDate.getFullYear();
-
-      const currentData = await useWeatherdataStore().getByLocationId(this.location._id);
-      // const latestData = currentData[currentData.length - 1];
-
       this.isDataRegistered = true;
     }
   },
@@ -92,6 +88,17 @@ export default {
       this.isUpdateModalVisible = false;
       this.isDeleteModalVisible = false;
     },
+    selectLocation() {
+      const location = this.location;
+
+      if (useLocationStore().getSelectedLocation() === null) {
+        this.isSelected = true,
+        this.$emit("location-selected", location)
+      } else if (useLocationStore().getSelectedLocation()._id === this.location._id) {
+        this.isSelected = false;
+        this.$emit("location-deselected");
+      }
+    }
   },
 };
 </script>

@@ -5,6 +5,7 @@ import axios from "axios"
 export const useWindTurbineGeneratorStore = defineStore("WindTurbineGeneratorStore", {
   state: () => ({
     wtgs: [] as IWindTurbineGenerator[],
+    selectedWtg: null as unknown as IWindTurbineGenerator,
   }),
   actions: {
     async getByName(name: string) {
@@ -75,6 +76,12 @@ export const useWindTurbineGeneratorStore = defineStore("WindTurbineGeneratorSto
         console.error('Error deleting WindTurbineGenerator: ', error);
       }
       this.getAll()
+    },
+    setSelectedWtg(wtg: IWindTurbineGenerator) {
+      this.selectedWtg = wtg;
+    },
+    getSelectedWtg(): unknown | IWindTurbineGenerator {
+      return this.selectedWtg;
     },
   }
 });

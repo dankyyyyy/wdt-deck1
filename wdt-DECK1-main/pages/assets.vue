@@ -16,23 +16,25 @@
       <h2 class="text-lg font-semibold w-full pl-5">Vessels</h2>
       <div class="grid" v-if="assets !== undefined">
         <div v-for="asset in assets.filter((x) => x.category === 'Vessel')" :key="asset.id" class="p-5">
-          <CardsAssetCard :asset="asset" />
+          <CardsAssetCard :asset="asset" @asset-selected="handleAssetSelected"
+            @asset-deselected="handleAssetDeselected" />
         </div>
       </div>
 
       <h2 class="text-lg font-semibold w-full pl-5 pt-5">Helicopters</h2>
       <div class="grid" v-if="assets !== undefined">
         <div v-for="asset in assets.filter((x) => x.category === 'Helicopter')" :key="asset.id" class="p-5">
-          <CardsAssetCard :asset="asset" />
+          <CardsAssetCard :asset="asset" @asset-selected="handleAssetSelected"
+            @asset-deselected="handleAssetDeselected" />
         </div>
       </div>
     </div>
+    <SubmitButton @click="navigateToNextPage" />
   </div>
 </template>
 
 <script>
 import { useAssetStore } from "~/stores/AssetStore";
-import { useWindTurbineGeneratorStore } from "~/stores/WindTurbineGeneratorStore";
 
 export default {
   name: "AssetList",
@@ -47,16 +49,10 @@ export default {
   async mounted() {
     this.assets = await useAssetStore().getAll();
     this.assets.length == 0 ? "" : this.loading = false;
-
-    this.wtgs = await useWindTurbineGeneratorStore().getAll();
-    this.wtgs.length == 0 ? "" : this.loading = false;
   },
   async updated() {
     this.assets = await useAssetStore().getAll();
     this.assets.length == 0 ? "" : this.loading = false;
-
-    this.wtgs = await useWindTurbineGeneratorStore().getAll();
-    this.wtgs.length == 0 ? "" : this.loading = false;
   },
   methods: {
     showModal() {
@@ -64,6 +60,17 @@ export default {
     },
     hideModal() {
       this.isModalVisible = false;
+    },
+    handleAssetSelected(asset) {
+      useAssetStore().addSelectedAsset(asset);
+    },
+    handleAssetDeselected(asset) {
+      useAssetStore().removeSelectedAsset(asset);
+    },
+    navigateToNextPage() {
+      if (useAssetStore().getSelectedAssets() !== null) {
+        this.$router.push('/locations');
+      }
     },
   },
 };

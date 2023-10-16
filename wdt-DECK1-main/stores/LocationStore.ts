@@ -79,5 +79,11 @@ export const useLocationStore = defineStore("LocationStore",{
         toggleLoading() {
             this.loading = !this.loading;
         },
+        setSelectedLocation(location: ILocation) {
+            this.selectedLocation = location;
+        },
+        getSelectedLocation(): unknown | ILocation {
+            return this.selectedLocation;
+        },
     }
 });

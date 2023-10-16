@@ -10,8 +10,10 @@
       @downloaded="sendDownloadedNotification" />
     <div v-if="!loading" class="grid">
       <div v-for="location in locations" :key="location._id">
-        <CardsLocationCard :location="location" :downloaded="downloaded" />
+        <CardsLocationCard :location="location" :downloaded="downloaded" @location-selected="handleLocationSelected"
+          @location-deselected="handleLocationDeselected" />
       </div>
+      <SubmitButton @click="navigateToNextPage" />
     </div>
     <div v-else>
       Loading data...
@@ -50,6 +52,17 @@ export default {
     sendDownloadedNotification() {
       this.downloaded = true;
     },
+    handleLocationSelected(location) {
+      useLocationStore().setSelectedLocation(location);
+    },
+    handleLocationDeselected() {
+      useLocationStore().setSelectedLocation(null);
+    },
+    navigateToNextPage() {
+      if (useLocationStore().getSelectedLocation() !== null) {
+        this.$router.push('/wtgs');
+      }
+    }
   },
 };
 </script>

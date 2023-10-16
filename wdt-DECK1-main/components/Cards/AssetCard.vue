@@ -1,7 +1,7 @@
 <template>
   <div class="grid-container">
     <div class="grid">
-      <div class="preset-box">
+      <div class="card-box" @click="selectAsset" :class="{ 'selected': isSelected }">
         <div class="box-content">
           <IconsLogoInverted class="box-image inline-block align-middle w-full" />
           <h2 class="box-title">{{ asset.name }}</h2>
@@ -14,12 +14,10 @@
             <IconsDelete @click="showDeleteModal" class="cursor-pointer" />
           </div>
 
-
           <div class="box-text">
             <label for="limit">Wind Speed Limit: </label>
             <p class="box-text-type">{{ asset.windSpeedLimit }}m/s</p>
             <hr />
-
 
             <div v-if="asset.category === 'Vessel' || asset.category === 'Helicopter'">
               <label for="limit">H<sub>s</sub> Limit:</label>
@@ -79,6 +77,8 @@
 </template>
 
 <script>
+import { useAssetStore } from '~/stores/AssetStore';
+
 export default {
   name: "AssetCard",
   props: {
@@ -89,6 +89,7 @@ export default {
   },
   data() {
     return {
+      isSelected: false,
       isUpdateModalVisible: false,
       isDeleteModalVisible: false,
     };
@@ -103,6 +104,23 @@ export default {
     hideModal() {
       this.isUpdateModalVisible = false;
       this.isDeleteModalVisible = false;
+    },
+    selectAsset() {
+      const asset = this.asset;
+      const selectedAssets = useAssetStore().getSelectedAssets();
+      var found = false;
+
+      for (let i = 0; i < selectedAssets.length; i++) {
+        if (selectedAssets[i]._id === asset._id) found = true;
+      }
+
+      if (found) {
+        this.isSelected = false;
+        this.$emit("asset-deselected", asset);
+      } else {
+        this.isSelected = true;
+        this.$emit("asset-selected", asset);
+      }
     },
   },
 };

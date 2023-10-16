@@ -5,7 +5,8 @@
     </NuxtLink>
     <div class="centered-boxes">
       <ClickableBox redirectPath="/presets" :boxData="presetBoxData" />
-      <ClickableBox redirectPath="/customization" :boxData="customizationBoxData" />
+      <!--<ClickableBox redirectPath="/customization" :boxData="customizationBoxData" /> -->
+      <ClickableBox redirectPath="/assets" :boxData="customizationBoxData" />
     </div>
   </div>
 </template>
@@ -13,7 +14,7 @@
 <script>
 import Logo from './icons/Logo.vue';
 import ClickableBox from './ClickableBox.vue';
-import { usePresetStore } from '~/stores/PresetStore';
+import { nullify } from '~/utils/chartUtils';
 
 export default {
   components: {
@@ -35,7 +36,7 @@ export default {
     };
   },
   mounted() {
-    usePresetStore().setSelectedPreset(null);
+    nullify();
   },
 };
 </script>

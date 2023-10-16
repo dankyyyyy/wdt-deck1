@@ -50,6 +50,12 @@ export default {
     hideModal() {
       this.isModalVisible = false;
     },
+    handleTeamSelected(team) {
+      useTeamStore().setSelectedTeam(team);
+    },
+    handleTeamDeselected() {
+      useTeamStore().setSelectedTeam(null);
+    },
   },
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
     <div class="grid-container">
         <div class="grid">
-            <div class="preset-box" @click="selectPreset" :class="{ 'selected': isSelected }">
+            <div class="card-box" @click="selectPreset" :class="{ 'selected': isSelected }">
                 <div class="box-content">
                     <IconsLogoInverted class="box-image inline-block align-middle w-full" />
                     <div class="box-title">{{ preset.name }}</div>
@@ -71,6 +71,5 @@ export default {
 
 .selected {
     background-color: #abd5e5;
-    /* Change to DECK1 Blue with 25% opacity */
 }
 </style>

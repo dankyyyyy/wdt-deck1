@@ -78,8 +78,6 @@ import { useWindTurbineGeneratorStore } from "~/stores/WindTurbineGeneratorStore
           location: null,
           wtg: null,
           assets: null,
-          asset1: null,
-          asset2: null,
         },
         assets: [],
         wtgs: [],
@@ -97,7 +95,6 @@ import { useWindTurbineGeneratorStore } from "~/stores/WindTurbineGeneratorStore
       },
       async handleSaveClick() {
         const store = usePresetStore();
-        console.log(`Preset: ${this.preset.name}, ${this.preset.location}, ${this.assets}, ${this.preset.wtg}`);
         await store.post(this.preset);
         this.$emit("hideModal");
       },

@@ -8,7 +8,7 @@
             <IconsAdd @click="showModal" class="cursor-pointer" />
         </div>
 
-        <ModalDialogsCreatePresetModal v-if="isModalVisible" @hideModal="hideModal" />
+        <!-- <ModalDialogsCreatePresetModal v-if="isModalVisible" @hideModal="hideModal" /> -->
 
         <div class="grid" v-if="presets !== undefined">
             <div v-for="preset in presets" :key="preset.id">
@@ -16,7 +16,7 @@
                     @preset-deselected="handlePresetDeselected" />
             </div>
         </div>
-        <PresetsSubmitButton @click="navigateToNextPage" />
+        <SubmitButton @click="navigateToNextPage" />
     </div>
 </template>
 
@@ -35,6 +35,7 @@ export default {
     async mounted() {
         this.presets = await usePresetStore().getAll();
         this.presets.length == 0 ? "" : this.loading = false;
+        console.log(usePresetStore().getSelectedPreset());
     },
     async updated() {
         this.presets = await usePresetStore().getAll();
@@ -49,9 +50,6 @@ export default {
         },
         navigateToNextPage() {
             if (usePresetStore().getSelectedPreset() !== null) {
-                // this.$router.push('/dashboard');
-                // this.$router.push('/weatherDownTime');
-                // this.$router.push('/financialFeasibility');
                 this.$router.push('/availability');
             }
         },
@@ -68,6 +66,5 @@ export default {
 <style scoped>
 .selected {
     background-color: #abd5e5;
-    /* Change to DECK1 Blue with 25% opacity */
 }
 </style>

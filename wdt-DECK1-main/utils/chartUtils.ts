@@ -1,8 +1,16 @@
+import { useAssetStore } from "~/stores/AssetStore";
+import { useLocationStore } from "~/stores/LocationStore";
 import { usePresetStore } from "~/stores/PresetStore";
-import { IPreset } from "~/types";
+import { useTeamStore } from "~/stores/TeamStore";
+import { useWindTurbineGeneratorStore } from "~/stores/WindTurbineGeneratorStore";
+import { IPreset, ITeam, ILocation, IWindTurbineGenerator } from "~/types";
 
 export function nullify() {
     usePresetStore().setSelectedPreset(null as unknown as IPreset);
+    useAssetStore().nullifySelectedAssets();
+    useLocationStore().setSelectedLocation(null as unknown as ILocation);
+    useWindTurbineGeneratorStore().setSelectedWtg(null as unknown as IWindTurbineGenerator);
+    useTeamStore().setSelectedTeam(null as unknown as ITeam);
 }
 
 export function formatNumberWithDecimal(value: number) {
