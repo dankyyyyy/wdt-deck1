@@ -1,12 +1,15 @@
 <template>
-  <div class="w-full h-full deck-frame-grey">
+  <div class="w-full h-full">
+    <NuxtLink to="/">
+      <IconsLogoInverted class="inline-block align-middle w-full" />
+    </NuxtLink>
     <div class="flex w-full justify-end">
       <IconsAdd @click="showModal" class="cursor-pointer" />
     </div>
     <ModalDialogsCreateLocationModal v-if="isModalVisible" @hideModal="hideModal"
       @downloaded="sendDownloadedNotification" />
-    <div v-if="!loading" class="flex flex-wrap">
-      <div v-for="location in locations" :key="location._id" class="p-5">
+    <div v-if="!loading" class="grid">
+      <div v-for="location in locations" :key="location._id">
         <CardsLocationCard :location="location" :downloaded="downloaded" />
       </div>
     </div>
