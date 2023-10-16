@@ -15,6 +15,7 @@ import { usePresetStore } from '~/stores/PresetStore';
 import { useAssetStore } from '~/stores/AssetStore';
 import { useWindTurbineGeneratorStore } from '~/stores/WindTurbineGeneratorStore';
 import { useLocationStore } from '~/stores/LocationStore';
+import { showError } from '~/utils/globalErrorHandling';
 
 export default {
     name: "PresetSummary",
@@ -30,10 +31,12 @@ export default {
     },
     methods: {
         async createPreset() {
-            if (this.preset.name !== null) {
+            if (this.preset.name !== "") {
                 const store = usePresetStore();
                 await store.post(this.preset);
                 usePresetStore().setSelectedPreset(this.preset);
+            } else if (this.preset.name === "") {
+                showError("Please select a name for your preset before proceeding.");
             }
 
             if (usePresetStore().getSelectedPreset() !== null) {

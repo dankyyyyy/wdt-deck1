@@ -10,14 +10,14 @@
           <div v-else>
             <p>Data is present</p>
           </div> -->
-          <h2 class="box-title">{{ location.name }}</h2>
+          <!-- <h2 class="box-title">{{ location.name }}</h2>
           <ModalDialogsUpdateLocationModal :location="location" v-if="isUpdateModalVisible" @hideModal="hideModal" />
           <ModalDialogsDeleteLocationModal :location="location" v-if="isDeleteModalVisible" @hideModal="hideModal" />
 
           <div class="flex space-x-2">
             <IconsUpdate @click="showUpdateModal" class="cursor-pointer" />
             <IconsDelete @click="showDeleteModal" class="cursor-pointer" />
-          </div>
+          </div> -->
 
           <div class="box-text">
             <label for="latitude">Latitude: </label>

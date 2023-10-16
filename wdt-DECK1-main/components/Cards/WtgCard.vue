@@ -9,10 +9,10 @@
           <!---<ModalDialogsUpdateAssetModal :wtg="wtg" v-if="isUpdateModalVisible" @hideModal="hideModal" />
             <ModalDialogsDeleteAssetModal :wtg="wtg" v-if="isDeleteModalVisible" @hideModal="hideModal" />-->
 
-          <div class="flex space-x-2">
+          <!-- <div class="flex space-x-2">
             <IconsUpdate @click="showUpdateModal" class="cursor-pointer" />
             <IconsDelete @click="showDeleteModal" class="cursor-pointer" />
-          </div>
+          </div> -->
         </div>
         <div class="box-text">
           <label for="limit">Wind Speed Limit: </label>

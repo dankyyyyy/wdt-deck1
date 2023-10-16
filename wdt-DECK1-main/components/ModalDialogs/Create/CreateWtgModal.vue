@@ -3,19 +3,6 @@
         <div class="modal rounded-lg flex-col" style="max-height: 80%; overflow-y: scroll; overflow-x: hidden;">
             <h3 class="font-semibold">WTG creation</h3>
             <div class="py-5 flex flex-col flex-wrap content-normal">
-                <div class="border-2 border-dashed rounded-md h-56 flex flex-col justify-center items-center">
-                    <h3 class="text-center">
-                        Drag & drop your <br />
-                        asset image
-                    </h3>
-                    <IconsDrop />
-                </div>
-
-                <div class="create-input">
-                    <label for="id">Id: </label>
-                    <input type="text" v-model="this.wtg.id" class="border-2 rounded-md text-left" disabled />
-                </div>
-
                 <div class="create-input">
                     <label for="name">Name: </label>
                     <input type="text" v-model="wtg.name" class="border-2 rounded-md text-center" />
