@@ -11,7 +11,7 @@
 
   .deck-sidebar {
     background-color: #222f3e;
-    border-radius: 12px;
+    border-radius: 70px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
     height: 15rem;
     max-height: 600px;
@@ -62,6 +62,28 @@
     align-content: flex-start;
     background-color: #dfdfdf;
     border-radius: 12px;
+    @apply p-5;
+  }
+
+  .deck-frame-translucent {
+    width: 98%;
+    border-radius: 70px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+    /* Drop shadow */
+    background-color: #dfdfdfdb;
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
+    @apply p-5;
+  }
+
+  .deck-frame-translucent-w-sidebar {
+    width: 82%;
+    border-radius: 70px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+    /* Drop shadow */
+    background-color: #dfdfdfdb;
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
     @apply p-5;
   }
 
@@ -429,6 +451,49 @@
 
 }
 
+/* ================================
+     Customization Cards Section
+================================ */
+
+.customize-card-box {
+  width: 25rem;
+  margin: 10px;
+  border-radius: 70px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+  /* Drop shadow */
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.customize-box-text {
+  font-size: 1em;
+  text-align: center;
+  margin-left: 40px;
+  margin-right: 40px;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.customize-box-text-type {
+  font-size: 1em;
+  text-align: center;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  margin-top: 2px;
+  font-weight: 450;
+}
+
+.customize-box-text hr {
+  height: 2px;
+  /*Width of the line*/
+  background-color: #000;
+  margin: 0 auto;
+  /* Centers the line */
+  width: 70%;
+  /* Length of the line*/
+  opacity: 70%;
+}
+
 /* =================
      Charts Section
   ================= */
@@ -458,7 +523,8 @@
 .table-container {
   display: flex;
   justify-content: center;
-  min-width: 20.8rem;
+  flex-wrap: wrap;
+  min-width: 10.8rem;
 }
 
 /* Dashboard Tables */
@@ -520,8 +586,10 @@
 
 .fin-table {
   max-width: 51.7rem;
+  min-height: 9rem;
   height: 11.8rem;
   max-height: 20rem;
+  margin-bottom: 1.5rem;
   position: relative;
   overflow: hidden;
   border-radius: 12px;
@@ -549,6 +617,14 @@
 
 .fin-table .ag-header-cell-label {
   justify-content: center;
+}
+
+/* ==================================
+   Generic Text Formatting Section
+================================== */
+
+.generic-header{
+
 }
 
 @layer utilities {

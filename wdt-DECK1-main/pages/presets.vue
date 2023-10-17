@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full h-full">
+    <div class="h-full align-middle deck-frame-translucent">
         <NuxtLink to="/">
             <IconsLogoInverted class="inline-block align-middle w-full" />
         </NuxtLink>

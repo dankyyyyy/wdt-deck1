@@ -3,14 +3,9 @@
     <div class="sidebar-container p-5 h-screen">
       <Sidebar />
     </div>
-    <div class="deck-frame-grey-container">
-      <div class="w-full h-full deck-frame-grey inline-block">
-        <div class="w-4/5 h-20 p-3">
-          <RecommendationPopUp />
-        </div>
+      <div class="h-full deck-frame-translucent-w-sidebar inline-block">
         <FiltersFinGraphFilter :tableKey="tableKey"/>
       </div>
-    </div>
   </div>
 </template>
 

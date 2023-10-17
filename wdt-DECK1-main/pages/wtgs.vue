@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full h-full">
+    <div class="h-full align-middle deck-frame-translucent">
         <NuxtLink to="/">
             <IconsLogoInverted class="inline-block align-middle w-full" />
         </NuxtLink>
@@ -11,8 +11,7 @@
 
         <!-- CreateAssetModal-->
         <ModalDialogsCreateWtgModal v-if="isModalVisible" @hideModal="hideModal" />
-
-        <h2 class="text-lg font-semibold w-full pl-5 pt-5">Wind Turbine Generators</h2>
+        
         <div class="flex flex-wrap pb-5" v-if="wtgs !== undefined">
             <div v-for="wtg in  wtgs " :key="wtg.id" class="p-5">
                 <CardsWtgCard :wtg="wtg" @wtg-selected="handleWtgSelected" @wtg-deselected="handleWtgDeselected" />

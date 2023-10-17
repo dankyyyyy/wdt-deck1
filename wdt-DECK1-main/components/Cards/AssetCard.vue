@@ -14,58 +14,60 @@
             <IconsDelete @click="showDeleteModal" class="cursor-pointer" />
           </div> -->
 
-          <div class="box-text">
+          <div class="customize-box-text">
             <label for="limit">Wind Speed Limit: </label>
-            <p class="box-text-type">{{ asset.windSpeedLimit }}m/s</p>
+            <p class="customize-box-text-type">{{ asset.windSpeedLimit }}m/s</p>
             <hr />
 
             <div v-if="asset.category === 'Vessel' || asset.category === 'Helicopter'">
               <label for="limit">H<sub>s</sub> Limit:</label>
-              <p class="box-text-type">{{ asset.hs }}m</p>
+              <p class="customize-box-text-type">{{ asset.hs }}m</p>
               <hr />
               <label for="dayRate">Day Rate: </label>
-              <p class="box-text-type">{{ asset.dayRate }}€</p>
+              <p class="customize-box-text-type">{{ asset.dayRate }}€</p>
               <!--Info box for price ranges-->
               <hr />
             </div>
 
             <div v-if="asset.category === 'Vessel'">
               <label for="limit">Vessel Speed: </label>
-              <p class="box-text-type">{{ asset.vesselSpeed }}kt</p>
+              <p class="customize-box-text-type">{{ asset.vesselSpeed }}kt</p>
               <hr />
               <label for="limit">High Engine Activity: </label>
-              <p class="box-text-type">{{ asset.highEngineActivity }}h</p>
+              <p class="customize-box-text-type">{{ asset.highEngineActivity }}h</p>
               <hr />
               <label for="limit">Loitering: </label>
-              <p class="box-text-type">{{ asset.loitering }}h</p>
+              <p class="customize-box-text-type">{{ asset.loitering }}h</p>
               <hr />
+            </div>
 
               <div v-if="asset.category === 'Helicopter'">
                 <label for="limit">Helicopter Speed: </label>
-                <p class="box-text-type">{{ asset.helicopterSpeed }}kt</p>
+                <p class="customize-box-text-type">{{ asset.helicopterSpeed }}kt</p>
                 <hr />
                 <label for="limit">Cloudbase: </label>
-                <p class="box-text-type">{{ asset.cloudbase }}m</p>
+                <p class="customize-box-text-type">{{ asset.cloudbase }}m</p>
                 <hr />
                 <label for="limit">Visibility: </label>
-                <p class="box-text-type">{{ asset.visibility }}km</p>
+                <p class="customize-box-text-type">{{ asset.visibility }}km</p>
+                <hr />
               </div>
 
               <div v-if="asset.category === 'Vessel' || asset.category === 'Helicopter'">
                 <label for="limit">Fuel Consumption: </label>
-                <p class="box-text-type">{{ asset.operationalFuelConsumption }}l/h</p>
+                <p class="customize-box-text-type">{{ asset.operationalFuelConsumption }}l/h</p>
                 <hr />
               </div>
 
               <div v-if="asset.category === 'Vessel'">
                 <label for="limit">Fuel Consumption when Loitering: </label>
-                <p class="box-text-type">{{ asset.loiteringFuelConsumption }}l/h</p>
+                <p class="customize-box-text-type">{{ asset.loiteringFuelConsumption }}l/h</p>
               </div>
 
               <div v-if="asset.category === 'Helicopter'">
 
                 <label for="limit">Flight Time (2 round trips): </label>
-                <p class="box-text-type">{{ asset.flightTime }}h</p>
+                <p class="customize-box-text-type">{{ asset.flightTime }}h</p>
 
               </div>
             </div>
@@ -73,7 +75,6 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>

@@ -30,10 +30,10 @@ export function generateLabelsFromAssets(): String[] {
     return names;
 }
 
-export function isString(value: any): Boolean {
+export function isString(value: any): value is string {
     return typeof value === 'string';
 }
 
-export function isNumber(value: any): Boolean {
+export function isNumber(value: any): value is number {
     return typeof value === 'number';
 }

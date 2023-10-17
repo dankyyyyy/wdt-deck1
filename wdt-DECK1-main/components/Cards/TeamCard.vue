@@ -1,7 +1,7 @@
 <template>
   <div class="grid-container">
     <div class="grid">
-      <div class="preset-box">
+      <div class="customize-preset-box">
         <div class="box-content">
           <IconsLogoInverted class="box-image inline-block align-middle w-full" />
           <h2 class="box-title">{{ team.name }}</h2>

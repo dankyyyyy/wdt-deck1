@@ -1,7 +1,7 @@
 <template>
   <div class="grid-container">
     <div class="grid">
-      <div class="card-box" @click="selectLocation" :class="{ 'selected': isSelected }">
+      <div class="customize-card-box" @click="selectLocation" :class="{ 'selected': isSelected }">
         <div class="box-content">
           <IconsLogoInverted class="box-image inline-block align-middle w-full" />
           <!-- <div v-if="!isDataRegistered">

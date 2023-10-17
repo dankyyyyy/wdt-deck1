@@ -1,13 +1,14 @@
 <template>
-    <div class="deck-frame-grey-container">
-        <div class="w-full h-full deck-frame-grey inline-block">
-            <div class="create-input">
-                <label for="name">Name: </label>
-                <input type="text" v-model="preset.name" class="border-2 rounded-md text-center" />
-            </div>
+    <div class="h-full align-middle deck-frame-translucent">
+        <NuxtLink to="/">
+            <IconsLogoInverted class="inline-block align-middle w-full" />
+        </NuxtLink>
+        <div class="create-input">
+            <label for="name" class="box-title justify-center">Name: </label>
+            <input type="text" v-model="preset.name" class="border-2 rounded-md text-center justify-center" />
         </div>
-        <SubmitButton @click="createPreset" />
     </div>
+    <SubmitButton @click="createPreset" />
 </template>
 
 <script>

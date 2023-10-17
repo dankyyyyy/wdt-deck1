@@ -3,23 +3,17 @@
     <div class="sidebar-container p-5 h-screen">
       <Sidebar />
     </div>
-    <div class="deck-frame-grey-container">
-      <div class="w-full h-full deck-frame-grey inline-block">
-        <div class="w-4/5 h-20 p-3">
-          <RecommendationPopUp />
+    <div class="h-full deck-frame-translucent-w-sidebar inline-block">
+      <div class="flex flex-col">
+        <div v-for="id in ids" :key="id">
+          <FiltersAvailGraphFilter :key="chartKey" @remove="handleRemove" :chartId="id" :amountOfCharts="ids.length" />
         </div>
-        <div class="flex flex-col">
-          <div v-for="id in ids" :key="id">
-            <FiltersAvailGraphFilter :key="chartKey" @remove="handleRemove" :chartId="id" :amountOfCharts="ids.length" />
-          </div>
-        </div>
-        <div class="w-full p-3">
-          <button v-if="ids.length !== 3" type="button"
-            class="w-full border-2 border-gray-400 rounded-full py-1 font-semibold text-xl text-gray-600"
-            @click="addGraph">
-            Add more graphs
-          </button>
-        </div>
+      </div>
+      <div class="w-full p-3">
+        <button v-if="ids.length !== 3" type="button"
+          class="w-full border-2 border-gray-400 rounded-full py-1 font-semibold text-xl text-gray-600" @click="addGraph">
+          Add more graphs
+        </button>
       </div>
     </div>
   </div>
