@@ -25,6 +25,8 @@
           <TablesDashboardYearlyCommitmentTable :key="tableKey" :filterParams="filterParams" />
           <TablesDashboardAssetAvailabilityTable :key="tableKey" :filterParams="filterParams" />
           <TablesDashboardWdtTable :key="tableKey" :filterParams="filterParams" />
+          <TablesDashboardPricePerWtgTable :key="tableKey" :filterParams="filterParams" />
+          <TablesDashboardPricePerReqWrkHrTable :key="tableKey" :filterParams="filterParams" />
         </div>
       </div>
     </div>
