@@ -38,6 +38,8 @@
   
 <script>
 import { useLocationStore } from "~/stores/LocationStore";
+import { isNumeric } from "~/utils/chartUtils";
+import { showError } from "~/utils/globalErrorHandling";
 import axios from "axios";
 
 
@@ -76,11 +78,10 @@ export default {
       if (await this.isADupe(location)) {
         showError("Name already taken, please select a different one.");
       } else if (
-        !isString(location.name) ||
-        !isNumber(location.longitude) ||
-        !isNumber(location.latitude) ||
-        !isNumber(location.limit) ||
-        !isNumber(location.wtg)
+        !isNumeric(location.longitude) ||
+        !isNumeric(location.latitude) ||
+        !isNumeric(location.limit) ||
+        !isNumeric(location.wtg)
       ) {
         showError("Please make sure all attributes except name are numerical.");
       } else if (

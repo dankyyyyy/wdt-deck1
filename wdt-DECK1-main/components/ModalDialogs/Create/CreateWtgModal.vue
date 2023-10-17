@@ -46,6 +46,8 @@
   
 <script>
 import { useWindTurbineGeneratorStore } from '~/stores/WindTurbineGeneratorStore';
+import { isNumeric } from "~/utils/chartUtils";
+import { showError } from "~/utils/globalErrorHandling";
 
 export default {
     name: "CreateAssetModal",
@@ -79,11 +81,10 @@ export default {
             if (await this.isADupe(wtg)) {
                 showError("Name already taken, please select a different one.");
             } else if (
-                !isString(wtg.name) ||
-                !isNumber(wtg.windSpeedLimit) ||
-                !isNumber(wtg.plannedMaintenance) ||
-                !isNumber(wtg.troubleshootVisits) ||
-                !isNumber(wtg.averageTsHours)
+                !isNumeric(wtg.windSpeedLimit) ||
+                !isNumeric(wtg.plannedMaintenance) ||
+                !isNumeric(wtg.troubleshootVisits) ||
+                !isNumeric(wtg.averageTsHours)
             ) {
                 showError("Please make sure all attributes except for name are numerical.");
             } else if (

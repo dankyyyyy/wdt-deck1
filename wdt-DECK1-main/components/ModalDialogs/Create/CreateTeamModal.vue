@@ -31,7 +31,7 @@
 <script>
 import { useTeamStore } from "~/stores/TeamStore";
 import { showError } from "~/utils/globalErrorHandling";
-import "~/utils/chartUtils";
+import { isNumeric } from "~/utils/chartUtils";
 
 export default {
   name: "CreateTeamModal",
@@ -66,9 +66,8 @@ export default {
       if (await this.isADupe(team)) {
         showError("Name already taken, please select a different one.");
       } else if (
-        !isString(team.name) ||
-        !isNumber(team.numberOfPersons) ||
-        !isNumber(team.shiftPeriod)
+        !isNumeric(team.numberOfPersons) ||
+        !isNumeric(team.shiftPeriod)
       ) {
         showError("Please make sure all attributes except for name are numerical.");
       } else if (
@@ -82,7 +81,7 @@ export default {
         await store.post(team);
         this.$emit("hideModal");
       }
-    }
+    },
   },
 };
 </script>

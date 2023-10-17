@@ -129,6 +129,8 @@
 <script>
 import { useAssetStore } from "~/stores/AssetStore";
 import { useTeamStore } from "~/stores/TeamStore";
+import { showError } from "~/utils/globalErrorHandling";
+import { isNumeric } from "~/utils/chartUtils";
 
 export default {
   name: "CreateAssetModal",
@@ -168,22 +170,6 @@ export default {
       if (await this.isADupe(asset)) {
         showError("Name already taken, please select a different one.");
       } else if (
-        !isString(asset.name) ||
-        !isNumber(asset.windSpeedLimit) ||
-        !isNumber(asset.hs) ||
-        !isNumber(asset.dayRate) ||
-        !isNumber(asset.vesselSpeed) ||
-        !isNumber(asset.highEngineActivity) ||
-        !isNumber(asset.loitering) ||
-        !isNumber(asset.helicopterSpeed) ||
-        !isNumber(asset.cloudbase) ||
-        !isNumber(asset.visibility) ||
-        !isNumber(asset.operationalFuelConsumption) ||
-        !isNumber(asset.loiteringFuelConsumption) ||
-        !isNumber(asset.flightTime)
-      ) {
-        showError("Please make sure all attributes except name are numerical.");
-      } else if (
         asset.name === "" ||
         asset.windSpeedLimit === null ||
         asset.hs === null ||
@@ -199,7 +185,30 @@ export default {
         asset.flightTime === null
       ) {
         showError("Please make sure all fields are filled in.");
+      } else if (asset.category === 'Vessel' && (
+        !isNumeric(asset.windSpeedLimit) ||
+        !isNumeric(asset.hs) ||
+        !isNumeric(asset.dayRate) ||
+        !isNumeric(asset.vesselSpeed) ||
+        !isNumeric(asset.highEngineActivity) ||
+        !isNumeric(asset.loitering) ||
+        !isNumeric(asset.operationalFuelConsumption) ||
+        !isNumeric(asset.loiteringFuelConsumption)
+      )) {
+        showError("Please make sure all attributes except name are numerical.");
+      } else if (asset.category === 'Helicopter' && (
+        !isNumeric(asset.windSpeedLimit) ||
+        !isNumeric(asset.hs) ||
+        !isNumeric(asset.dayRate) ||
+        !isNumeric(asset.helicopterSpeed) ||
+        !isNumeric(asset.cloudbase) ||
+        !isNumeric(asset.visibility) ||
+        !isNumeric(asset.operationalFuelConsumption) ||
+        !isNumeric(asset.flightTime)
+      )) {
+        showError("Please make sure all attributes except name are numerical.");
       } else {
+        const store = useAssetStore();
         await store.post(this.asset);
         this.$emit("hideModal");
       }
