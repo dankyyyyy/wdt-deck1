@@ -3,10 +3,10 @@
         <NuxtLink to="/">
             <IconsLogoInverted class="inline-block align-middle w-full" />
         </NuxtLink>
-        <div class="flex w-full justify-between p-5">
+        <!-- <div class="flex w-full justify-between p-5">
             <h1 class="text-2xl font-semibold"></h1>
             <IconsAdd @click="showModal" class="cursor-pointer" />
-        </div>
+        </div> -->
 
         <!-- <ModalDialogsCreatePresetModal v-if="isModalVisible" @hideModal="hideModal" /> -->
 
