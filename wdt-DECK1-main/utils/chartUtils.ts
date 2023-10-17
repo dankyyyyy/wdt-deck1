@@ -29,3 +29,11 @@ export function generateLabelsFromAssets(): String[] {
 
     return names;
 }
+
+export function isString(value: any): Boolean {
+    return typeof value === 'string';
+}
+
+export function isNumber(value: any): Boolean {
+    return typeof value === 'number';
+}

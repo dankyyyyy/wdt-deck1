@@ -31,19 +31,35 @@ export default {
     },
     methods: {
         async createPreset() {
-            if (this.preset.name !== "") {
-                const store = usePresetStore();
-                await store.post(this.preset);
-                usePresetStore().setSelectedPreset(this.preset);
-            } else if (this.preset.name === "") {
-                showError("Please select a name for your preset before proceeding.");
-            }
+            await this.validatePreset(this.preset);
+        },
+        async isADupe(preset) {
+            var isADupe = false;
+            const presets = await usePresetStore().getAll();
 
-            if (usePresetStore().getSelectedPreset() !== null) {
-                this.$router.push('/availability');
+            for (let i = 0; i < presets.length; i++) {
+                if (presets[i].name === preset.name) {
+                    isADupe = true;
+                    break;
+                }
+            }
+            return isADupe;
+        },
+        async validatePreset(preset) {
+            if (await this.isADupe(preset)) {
+                showError("Name already taken, please select a different one.");
+            } else if (preset.name === "") {
+                showError("Please select a name for your preset before proceeding.");
+            } else {
+                const store = usePresetStore();
+                await store.post(preset);
+                usePresetStore().setSelectedPreset(preset);
+
+                if (usePresetStore().getSelectedPreset() !== null) {
+                    this.$router.push('/availability');
+                }
             }
         },
-    },
+    }
 }
-
 </script>

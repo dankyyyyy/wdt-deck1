@@ -1,7 +1,7 @@
 <template>
   <div class="overlay" @click="hideModal">
     <div class="modal rounded-lg flex-col" style="max-height: 80%; overflow-y: scroll; overflow-x: hidden;">
-      <h3 class="font-semibold">Asset creation</h3>
+      <h3 class="font-semibold box-title">Asset Creation</h3>
       <div class="py-5 flex flex-col flex-wrap content-normal">
         <div class="create-input">
           <label for="name">Name: </label>
@@ -150,9 +150,59 @@ export default {
       this.$emit("hideModal");
     },
     async handleSaveClick() {
-      const store = useAssetStore();
-      await store.post(this.asset);
-      this.$emit("hideModal");
+      await this.validateAsset(this.asset);
+    },
+    async isADupe(asset) {
+      const assets = await useAssetStore().getAll();
+      var isADupe = false;
+
+      for (let i = 0; i < assets.length; i++) {
+        if (assets[i].name === asset.name) {
+          isADupe = true;
+          break;
+        }
+      }
+      return isADupe;
+    },
+    async validateAsset(asset) {
+      if (await this.isADupe(asset)) {
+        showError("Name already taken, please select a different one.");
+      } else if (
+        !isString(asset.name) ||
+        !isNumber(asset.windSpeedLimit) ||
+        !isNumber(asset.hs) ||
+        !isNumber(asset.dayRate) ||
+        !isNumber(asset.vesselSpeed) ||
+        !isNumber(asset.highEngineActivity) ||
+        !isNumber(asset.loitering) ||
+        !isNumber(asset.helicopterSpeed) ||
+        !isNumber(asset.cloudbase) ||
+        !isNumber(asset.visibility) ||
+        !isNumber(asset.operationalFuelConsumption) ||
+        !isNumber(asset.loiteringFuelConsumption) ||
+        !isNumber(asset.flightTime)
+      ) {
+        showError("Please make sure all attributes except name are numerical.");
+      } else if (
+        asset.name === "" ||
+        asset.windSpeedLimit === null ||
+        asset.hs === null ||
+        asset.dayRate === null ||
+        asset.vesselSpeed === null ||
+        asset.highEngineActivity === null ||
+        asset.loitering === null ||
+        asset.helicopterSpeed === null ||
+        asset.cloudbase === null ||
+        asset.visibility === null ||
+        asset.operationalFuelConsumption === null ||
+        asset.loiteringFuelConsumption === null ||
+        asset.flightTime === null
+      ) {
+        showError("Please make sure all fields are filled in.");
+      } else {
+        await store.post(this.asset);
+        this.$emit("hideModal");
+      }
     },
     showTeamModal() {
       this.isTeamModalVisible = true;

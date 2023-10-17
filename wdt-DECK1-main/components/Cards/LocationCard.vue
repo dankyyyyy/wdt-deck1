@@ -10,8 +10,8 @@
           <div v-else>
             <p>Data is present</p>
           </div> -->
-          <!-- <h2 class="box-title">{{ location.name }}</h2>
-          <ModalDialogsUpdateLocationModal :location="location" v-if="isUpdateModalVisible" @hideModal="hideModal" />
+          <h2 class="box-title">{{ location.name }}</h2>
+          <!--<ModalDialogsUpdateLocationModal :location="location" v-if="isUpdateModalVisible" @hideModal="hideModal" />
           <ModalDialogsDeleteLocationModal :location="location" v-if="isDeleteModalVisible" @hideModal="hideModal" />
 
           <div class="flex space-x-2">
@@ -93,7 +93,7 @@ export default {
 
       if (useLocationStore().getSelectedLocation() === null) {
         this.isSelected = true,
-        this.$emit("location-selected", location)
+          this.$emit("location-selected", location)
       } else if (useLocationStore().getSelectedLocation()._id === this.location._id) {
         this.isSelected = false;
         this.$emit("location-deselected");

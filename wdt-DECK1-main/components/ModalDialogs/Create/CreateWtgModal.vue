@@ -1,7 +1,7 @@
 <template>
     <div class="overlay" @click="hideModal">
         <div class="modal rounded-lg flex-col" style="max-height: 80%; overflow-y: scroll; overflow-x: hidden;">
-            <h3 class="font-semibold">WTG creation</h3>
+            <h3 class="font-semibold box-title">WTG Creation</h3>
             <div class="py-5 flex flex-col flex-wrap content-normal">
                 <div class="create-input">
                     <label for="name">Name: </label>
@@ -61,11 +61,46 @@ export default {
             this.$emit("hideModal");
         },
         async handleSaveClick() {
-            const store = useWindTurbineGeneratorStore();
-            await store.post(this.wtg);
-            this.$emit("hideModal");
+            await this.validateWtg(this.wtg);
         },
+        async isADupe(wtg) {
+            const wtgs = await useWindTurbineGeneratorStore().getAll();
+            var isADupe = false;
+
+            for (let i = 0; i < wtgs.length; i++) {
+                if (wtgs[i].name === wtg.name) {
+                    isADupe = true;
+                    break;
+                }
+            }
+            return isADupe;
+        },
+        async validateWtg(wtg) {
+            if (await this.isADupe(wtg)) {
+                showError("Name already taken, please select a different one.");
+            } else if (
+                !isString(wtg.name) ||
+                !isNumber(wtg.windSpeedLimit) ||
+                !isNumber(wtg.plannedMaintenance) ||
+                !isNumber(wtg.troubleshootVisits) ||
+                !isNumber(wtg.averageTsHours)
+            ) {
+                showError("Please make sure all attributes except for name are numerical.");
+            } else if (
+                wtg.name === "" ||
+                wtg.windSpeedLimit === null ||
+                wtg.plannedMaintenance === null ||
+                wtg.troubleshootVisits === null ||
+                wtg.averageTsHours === null
+            ) {
+                showError("Please make sure all fields are filled in.");
+            } else {
+                const store = useWindTurbineGeneratorStore();
+                await store.post(wtg);
+                this.$emit("hideModal");
+            }
+        }
     },
-};
+}
 </script>
   
