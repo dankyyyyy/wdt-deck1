@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { IAsset, ILocation, ITeam, IWindTurbineGenerator } from "~/types";
 
 const schema: mongoose.Schema = new mongoose.Schema(
     {
@@ -7,8 +6,7 @@ const schema: mongoose.Schema = new mongoose.Schema(
 
         location: { type: Object, required: true },
         wtg: { type: Object, required: true },
-        asset1: { type: Object, required: true },
-        asset2: { type: Object, required: true },
+        assets: { type: Array, required: true},
     },
     { timestamps: true }
 )

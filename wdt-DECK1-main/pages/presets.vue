@@ -1,17 +1,22 @@
 <template>
-    <div class="w-full h-full deck-frame-grey">
-        <div class="flex w-full justify-between p-5">
-            <h1 class="text-2xl font-semibold">Presets</h1>
+    <div class="h-full align-middle deck-frame-translucent">
+        <NuxtLink to="/">
+            <IconsLogoInverted class="inline-block align-middle w-full" />
+        </NuxtLink>
+        <!-- <div class="flex w-full justify-between p-5">
+            <h1 class="text-2xl font-semibold"></h1>
             <IconsAdd @click="showModal" class="cursor-pointer" />
-        </div>
+        </div> -->
 
-        <ModalDialogsCreatePresetModal v-if="isModalVisible" @hideModal="hideModal" />
+        <!-- <ModalDialogsCreatePresetModal v-if="isModalVisible" @hideModal="hideModal" /> -->
 
-        <div class="flex flex-wrap pb-5" v-if="presets !== undefined">
-            <div v-for="preset in presets" :key="preset.id" class="p-5">
-                <CardsPresetCard :preset="preset" />
+        <div class="grid" v-if="presets !== undefined">
+            <div v-for="preset in presets" :key="preset.id">
+                <CardsPresetCard :preset="preset" @preset-selected="handlePresetSelected"
+                    @preset-deselected="handlePresetDeselected" />
             </div>
         </div>
+        <SubmitButton @click="navigateToNextPage" />
     </div>
 </template>
 
@@ -27,16 +32,27 @@ export default {
             loading: false,
         };
     },
-    async onMounted() {
+    async mounted() {
         this.presets = await usePresetStore().getAll();
         this.presets.length == 0 ? "" : this.loading = false;
-        console.log(`Presets: ${this.presets}`);
+        console.log(usePresetStore().getSelectedPreset());
     },
     async updated() {
         this.presets = await usePresetStore().getAll();
         this.presets.length == 0 ? "" : this.loading = false;
     },
     methods: {
+        handlePresetSelected(preset) {
+            usePresetStore().setSelectedPreset(preset);
+        },
+        handlePresetDeselected() {
+            usePresetStore().setSelectedPreset(null);
+        },
+        navigateToNextPage() {
+            if (usePresetStore().getSelectedPreset() !== null) {
+                this.$router.push('/availability');
+            }
+        },
         showModal() {
             this.isModalVisible = true;
         },
@@ -46,3 +62,9 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+.selected {
+    background-color: #abd5e5;
+}
+</style>

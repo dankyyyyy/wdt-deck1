@@ -1,21 +1,8 @@
 <template>
   <div class="overlay" @click="hideModal">
     <div class="modal rounded-lg flex-col" style="max-height: 80%; overflow-y: scroll; overflow-x: hidden;">
-      <h3 class="font-semibold">Asset creation</h3>
+      <h3 class="font-semibold box-title">Asset Creation</h3>
       <div class="py-5 flex flex-col flex-wrap content-normal">
-        <div class="border-2 border-dashed rounded-md h-56 flex flex-col justify-center items-center">
-          <h3 class="text-center">
-            Drag & drop your <br />
-            asset image
-          </h3>
-          <IconsDrop />
-        </div>
-
-        <div class="create-input">
-          <label for="id">Id: </label>
-          <input type="text" v-model="this.asset.id" class="border-2 rounded-md text-left" disabled />
-        </div>
-
         <div class="create-input">
           <label for="name">Name: </label>
           <input type="text" v-model="asset.name" class="border-2 rounded-md text-center" />
@@ -29,13 +16,23 @@
           </select>
         </div>
 
-        <div class="create-input whitespace-nowrap">
-          <label for="windSpeedLimit">Wind Speed Limit: </label>
-          <input type="text" v-model="asset.windSpeedLimit" class="border-2 rounded-md text-center " />
-          <label for="windSpeedLimit"> m/s</label>
+        <div class="create-input">
+          <label for="name">Team:</label>
+          <select id="team" v-model="asset.team" class="border-2 rounded-md text-left">
+            <option value="" disabled selected>Team</option>
+            <option v-for="(option, index) in teams" :key="index" :value="option">
+              {{ option.name }}
+            </option>
+          </select>
         </div>
 
         <div v-if="asset.category === 'Vessel' || asset.category === 'Helicopter'">
+          <div class="create-input whitespace-nowrap">
+            <label for="windSpeedLimit">Wind Speed Limit: </label>
+            <input type="text" v-model="asset.windSpeedLimit" class="border-2 rounded-md text-center " />
+            <label for="windSpeedLimit"> m/s</label>
+          </div>
+
           <div class="create-input whitespace-nowrap">
             <label for="limit">H<sub>S</sub> Limit: </label>
             <input type="text" v-model="asset.hs" class="border-2 rounded-md text-center " />
@@ -112,34 +109,18 @@
             <label for="highEngineActivity"> h</label>
           </div>
         </div>
-
-        <div v-else-if="asset.category === 'WindTurbineGenerator'">
-          <div class="create-input whitespace-nowrap">
-            <label for="limit">Planned Maintenance: </label>
-            <input type="text" v-model="asset.plannedMaintenance" class="border-2 rounded-md text-center" />
-            <label for="plannedMaintenance"> h/WTG</label>
-          </div>
-
-          <div class="create-input whitespace-nowrap">
-            <label for="limit">Troubleshoot Visits: </label>
-            <input type="text" v-model="asset.troubleshootVisits" class="border-2 rounded-md text-center" />
-            <label for="troubleshootVisits"> /WTG</label>
-          </div>
-
-          <div class="create-input whitespace-nowrap">
-            <label for="limit">Average TS hours: </label>
-            <input type="text" v-model="asset.averageTsHours" class="border-2 rounded-md text-center" />
-            <label for="averageTsHours"> h</label>
-          </div>
-        </div>
       </div>
-      <div class="flex w-full justify-end">
-        <button type="submit" class="border-2 rounded-md px-2" @click="handleCancelClick">
-          Cancel
-        </button>
-        <button type="submit" class="rounded-md px-2 ml-2 action-button" @click="handleSaveClick">
-          Save
-        </button>
+      <div class="flex w-full justify-between">
+        <button type="submit" class="border-2 rounded-md px-2" @click="showTeamModal">Create a Team</button>
+        <ModalDialogsCreateTeamModal v-if="isTeamModalVisible" @hideModal="hideTeamModal" />
+        <div class="flex w-full justify-end">
+          <button type="submit" class="border-2 rounded-md px-2" @click="handleCancelClick">
+            Cancel
+          </button>
+          <button type="submit" class="rounded-md px-2 ml-2 dialog-button" @click="handleSaveClick">
+            Save
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -147,6 +128,9 @@
 
 <script>
 import { useAssetStore } from "~/stores/AssetStore";
+import { useTeamStore } from "~/stores/TeamStore";
+import { showError } from "~/utils/globalErrorHandling";
+import { isNumeric } from "~/utils/chartUtils";
 
 export default {
   name: "CreateAssetModal",
@@ -156,16 +140,84 @@ export default {
         name: "",
         category: "",
       },
+      teams: [],
+      isTeamModalVisible: false,
     };
+  },
+  async mounted() {
+    this.teams = await useTeamStore().getAll();
   },
   methods: {
     handleCancelClick() {
       this.$emit("hideModal");
     },
     async handleSaveClick() {
-      const store = useAssetStore();
-      await store.post(this.asset);
-      this.$emit("hideModal");
+      await this.validateAsset(this.asset);
+    },
+    async isADupe(asset) {
+      const assets = await useAssetStore().getAll();
+      var isADupe = false;
+
+      for (let i = 0; i < assets.length; i++) {
+        if (assets[i].name === asset.name) {
+          isADupe = true;
+          break;
+        }
+      }
+      return isADupe;
+    },
+    async validateAsset(asset) {
+      if (await this.isADupe(asset)) {
+        showError("Name already taken, please select a different one.");
+      } else if (
+        asset.name === "" ||
+        asset.windSpeedLimit === null ||
+        asset.hs === null ||
+        asset.dayRate === null ||
+        asset.vesselSpeed === null ||
+        asset.highEngineActivity === null ||
+        asset.loitering === null ||
+        asset.helicopterSpeed === null ||
+        asset.cloudbase === null ||
+        asset.visibility === null ||
+        asset.operationalFuelConsumption === null ||
+        asset.loiteringFuelConsumption === null ||
+        asset.flightTime === null
+      ) {
+        showError("Please make sure all fields are filled in.");
+      } else if (asset.category === 'Vessel' && (
+        !isNumeric(asset.windSpeedLimit) ||
+        !isNumeric(asset.hs) ||
+        !isNumeric(asset.dayRate) ||
+        !isNumeric(asset.vesselSpeed) ||
+        !isNumeric(asset.highEngineActivity) ||
+        !isNumeric(asset.loitering) ||
+        !isNumeric(asset.operationalFuelConsumption) ||
+        !isNumeric(asset.loiteringFuelConsumption)
+      )) {
+        showError("Please make sure all attributes except name are numerical.");
+      } else if (asset.category === 'Helicopter' && (
+        !isNumeric(asset.windSpeedLimit) ||
+        !isNumeric(asset.hs) ||
+        !isNumeric(asset.dayRate) ||
+        !isNumeric(asset.helicopterSpeed) ||
+        !isNumeric(asset.cloudbase) ||
+        !isNumeric(asset.visibility) ||
+        !isNumeric(asset.operationalFuelConsumption) ||
+        !isNumeric(asset.flightTime)
+      )) {
+        showError("Please make sure all attributes except name are numerical.");
+      } else {
+        const store = useAssetStore();
+        await store.post(this.asset);
+        this.$emit("hideModal");
+      }
+    },
+    showTeamModal() {
+      this.isTeamModalVisible = true;
+    },
+    hideTeamModal() {
+      this.isTeamModalVisible = false;
     },
   },
 };

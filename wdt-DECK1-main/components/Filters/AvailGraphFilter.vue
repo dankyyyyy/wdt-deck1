@@ -56,7 +56,7 @@
     },
     data(props) {
       return {
-        wdtChartKey: false,
+        availChartKey: false,
         showComponents: true,
         filterParams: {
           startHour: ref(0),

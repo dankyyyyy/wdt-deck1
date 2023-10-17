@@ -1,5 +1,5 @@
 import { useWeatherdataStore } from "@/stores/WeatherdataStore";
-import { useWeatherStore } from "@/stores/WeatherStore";
+import { useChartStore } from "~/stores/ChartStore";
 import "@/utils/chartUtils";
 
 // THRESHOLD - percentage of a day that can be no-fly
@@ -23,7 +23,7 @@ export function start(
   asset: any,
 ) {
 
-  const wdtStore = useWeatherStore()
+  const chartStore = useChartStore();
   const dataStore = useWeatherdataStore();
 
   startMonth = startMonth;
@@ -82,7 +82,7 @@ export function start(
     monthsAsset[i] = monthsAsset[i] / years;
   }
   const name = asset.name;
-  wdtStore.assetsWdt[name] = monthsAsset;
+  chartStore.wdtData[name] = monthsAsset;
 }
 
 function evaluateHourDay(asset: any, element: any, newDay: boolean) {

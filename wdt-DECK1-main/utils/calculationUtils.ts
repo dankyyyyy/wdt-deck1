@@ -2,30 +2,44 @@
     Workability
 =============== */
 
-function unavailableDays(annualWorkability: number[]): number {
+function unavailableDays(annualWorkability: number[], startMonth: number, endMonth: number): number {
     var unavailableDays = 0;
-    for (let i = 0; i < annualWorkability.length; i++) {
+    for (let i = startMonth; i < endMonth; i++) {
         unavailableDays += annualWorkability[i];
     }
-    return Math.round(unavailableDays);
+    return Math.ceil(unavailableDays);
 }
 
-function availableDays(annualWorkability: number[]): number {
-    const availableDays = Math.floor(365 - unavailableDays(annualWorkability));
+function availableDays(annualWorkability: number[], startMonth: number, endMonth: number): number {
+    const amountOfMonths = Math.abs(startMonth - endMonth) + 1;
+    const availableDays = Math.floor((amountOfMonths * 30) - unavailableDays(annualWorkability, startMonth, endMonth));
     return availableDays;
 }
 
-export function monthlyWorkabilityPerAsset(annualWorkability: number[]): number[] {
+function unavailableDaysFromPercentage(annualWorkability: number, startMonth: number, endMonth: number): number {
+    const amountOfMonths = Math.abs(startMonth - endMonth) + 1;
+    const unavailableDays = Math.ceil((amountOfMonths * 30) * annualWorkability);
+    return unavailableDays;
+}
+
+function availableDaysFromPercentage(annualWorkability: number, startMonth: number, endMonth: number): number {
+    var amountOfMonths = Math.abs(startMonth - endMonth) + 1;
+    const availableDays = (amountOfMonths * 30) * annualWorkability;
+    return availableDays;
+}
+
+export function monthlyWorkabilityPerAsset(annualWorkability: number[], startMonth: number, endMonth: number): number[] {
     const monthlyWorkability: number[] = [];
-    for (let i = 0; i < annualWorkability.length; i++) {
+    for (let i = startMonth - 1; i < endMonth; i++) {
         monthlyWorkability[i] = Math.floor(((30 - annualWorkability[i]) / 30) * 100);
     }
     return monthlyWorkability;
 }
 
-export function yearlyWorkabilityPerAsset(annualWorkability: number[]): number {
-    const annualAvailability = availableDays(annualWorkability);
-    const workability = Math.floor((annualAvailability / 365) * 100) / 100;
+export function yearlyWorkabilityPerAsset(annualWorkability: number[], startMonth: number, endMonth: number): number {
+    var amountOfMonths = Math.abs(startMonth - endMonth) + 1;
+    const annualAvailability = availableDays(annualWorkability, startMonth, endMonth);
+    const workability = Math.floor((annualAvailability / (amountOfMonths * 30)) * 100) / 100;
     return workability;
 }
 
@@ -33,18 +47,18 @@ export function yearlyWorkabilityPerAsset(annualWorkability: number[]): number {
    Available & Required Hours
 =========================== */
 
-export function annualDeployableHours(team: any, annualWorkability: number[]): number {
+export function annualDeployableHours(team: any, annualWorkability: number, startMonth: number, endMonth: number): number {
     const dailyHoursPerTeam = team.numberOfPersons * team.shiftPeriod;
-    const annualAvailability = availableDays(annualWorkability);
+    const annualAvailability = availableDaysFromPercentage(annualWorkability, startMonth, endMonth);
     const annualDeployableHours = dailyHoursPerTeam * annualAvailability;
-    return annualDeployableHours;
+    return Math.floor(annualDeployableHours);
 }
 
-export function annualLostAvailableHours(team: any, annualWorkability: number[]): number { // available hours lost due to wdt
+export function annualLostAvailableHours(team: any, annualWorkability: number, startMonth: number, endMonth: number): number { // available hours lost due to wdt
     const dailyHoursPerTeam = team.numberOfPersons * team.shiftPeriod;
-    const annualUnavailableDays = unavailableDays(annualWorkability);
+    const annualUnavailableDays = unavailableDaysFromPercentage(annualWorkability, startMonth, endMonth);
     const annualLostAvailableHours = dailyHoursPerTeam * annualUnavailableDays;
-    return annualLostAvailableHours;
+    return Math.ceil(annualLostAvailableHours);
 }
 
 export function annualTotalRequiredHours(wtg: any, location: any): number {
@@ -56,32 +70,63 @@ export function annualTotalRequiredHours(wtg: any, location: any): number {
     return annualTotalRequiredHours;
 }
 
-export function annualTotalHoursDifference(team: any, annualWorkability: number[], location: any, wtg: any): number {
-    const availableHours = annualDeployableHours(team, annualWorkability);
+export function annualTotalHoursDifference(team: any, annualWorkability: number, location: any, wtg: any, startMonth: number, endMonth: number): number {
+    const availableHours = annualDeployableHours(team, annualWorkability, startMonth, endMonth);
     const requiredHours = annualTotalRequiredHours(wtg, location);
     const totalDifference = availableHours - requiredHours;
-    return totalDifference;
+    return Math.floor(totalDifference);
 }
 
-export function availablePerRequiredInPercent(wtg: any, team: any, location: any, annualWorkability: number[]): number {
-    const availableHours = annualDeployableHours(team, annualWorkability);
+export function availablePerRequiredInPercent(wtg: any, team: any, location: any, annualWorkability: number, startMonth: number, endMonth: number): number {
+    const availableHours = annualDeployableHours(team, annualWorkability, startMonth, endMonth);
     const requiredHours = annualTotalRequiredHours(wtg, location);
     const availablePerRequired = Math.floor((availableHours / requiredHours) * 100);
     return availablePerRequired;
 }
 
-/* ==============================
-    Downtime Fuel Totals & Costs
-============================== */
+/* ======================
+   Complete Annual Cost
+=======================*/
 
-export function annualCharterCostsWdt(asset: any, annualWorkability: number[]): number {
+export function yearlyCommitment(asset: any, team: any, annualWorkability: number, startMonth: number, endMonth: number): number {
+    const totalCost = Math.round(wdtAnnualCost(asset, team, annualWorkability, startMonth, endMonth) + directAnnualCost(asset, annualWorkability, startMonth, endMonth));
+    return totalCost
+}
+
+/* ======================
+   Indirect Annual Cost
+=======================*/
+
+export function wdtAnnualCost(asset: any, team: any, annualWorkability: number, startMonth: number, endMonth: number): number {
+    const wdtCost = annualCharterLoss(asset, annualWorkability, startMonth, endMonth) + downtimeSalaryCost(team, annualWorkability, startMonth, endMonth);
+    return wdtCost;
+}
+
+export function annualCharterLoss(asset: any, annualWorkability: number, startMonth: number, endMonth: number): number {
     const dayRate = asset.dayRate;
-    const weatherDownTime = unavailableDays(annualWorkability);
-    const annualCharterCost = dayRate * weatherDownTime;
+    const weatherDownTime = unavailableDaysFromPercentage(annualWorkability, startMonth, endMonth);
+    const annualCharterCost = Math.round(dayRate * weatherDownTime);
     return annualCharterCost;
 }
 
-export function dailyFuel(asset: any): number {
+export function downtimeSalaryCost(team: any, annualWorkability: number, startMonth: number, endMonth: number): number {
+    const salary = 1500; //€
+    const wdt = unavailableDaysFromPercentage(annualWorkability, startMonth, endMonth);
+    const teamSize = team.numberOfPersons; //amount of people
+    const downtimeSalary = Math.round(salary * wdt * teamSize);
+    return downtimeSalary;
+}
+
+/* ===================
+   Direct Annual Cost
+=====================*/
+
+export function directAnnualCost(asset: any, annualAvailability: number, startMonth: number, endMonth: number): number {
+    const directCost = fuelCost(asset, annualAvailability, startMonth, endMonth) + carbonTax(asset, annualAvailability, startMonth, endMonth) + charterCost(asset, annualAvailability, startMonth, endMonth);
+    return directCost;
+}
+
+function dailyFuel(asset: any): number {
     var totalDailyFuel = 0;
     if (asset.category === 'Vessel') {
         const totalLoitering = asset.loitering * asset.loiteringFuelConsumption;
@@ -93,110 +138,48 @@ export function dailyFuel(asset: any): number {
     return totalDailyFuel;
 }
 
-export function annualFuelWdt(asset: any, annualWorkability: number[]): number {
-    const fuelPerDay = dailyFuel(asset);
-    const annualUnavailableDays = unavailableDays(annualWorkability);
-    const annualFuelWdt = fuelPerDay * annualUnavailableDays;
-    return annualFuelWdt;
-}
-
-export function annualFuelCost(asset: any, annualWorkability: number[]): number {
-    const fuelCost = annualFuelWdt(asset, annualWorkability);
-    return fuelCost;
-}
-
-/* =======================
-   Downtime Salary Costs
-======================= */
-
-export function downtimeSalaryCost(team: any, annualWorkability: number[]): number {
-    const salary = 1500; //€
-    const wdt = unavailableDays(annualWorkability);
-    const teamSize = team.numberOfPersons; //amount of people
-    const downtimeSalary = salary * wdt * teamSize;
-    return downtimeSalary;
-}
-
-/* ===================
-   CO2 Tax (WDT only)
-=================== */
-
-export function annualCarbonOutput(asset: any, annualWorkability: number[]): number {
-    var conversionDecimal = 0;
-    if (asset.category === 'Vessel') {
-        conversionDecimal = 0.00273; //divide by 1000, multiply by 2.73 [conversion rate for diesel]
-    } else if (asset.category === 'Helicopter') {
-        conversionDecimal = 0.00255; //divide by 1000, multiply by 2.55 [conversion rate for kerosene]
-    }
-    const usedFuel = annualFuelWdt(asset, annualWorkability);
-    const carbonEmissions = conversionDecimal * usedFuel;
-    return carbonEmissions;
-}
-
-export function annualCarbonTax(asset: any, annualWorkability: number[]): number {
-    const carbonTaxPerTon = 42; //€; tax for the Netherlands
-    const carbonEmitted = annualCarbonOutput(asset, annualWorkability);
-    const annualCarbonTax = carbonTaxPerTon * carbonEmitted;
-    return annualCarbonTax;
-}
-
-/* ======================
-   Indirect Annual Cost
-=======================*/
-
-export function totalAnnualCost(asset: any, team: any, annualWorkability: number[]): number {
-    const totalCost = annualFuelCost(asset, annualWorkability) + annualCharterCostsWdt(asset, annualWorkability)
-        + annualCarbonTax(asset, annualWorkability) + downtimeSalaryCost(team, annualWorkability);
-    return totalCost;
-}
-
-/* ===================
-   Direct Annual Cost
-=====================*/
-
-export function directFuelCost(asset: any) {
+export function fuelCost(asset: any, annualAvailability: number, startMonth: number, endMonth: number) {
     const fuelPerDay = dailyFuel(asset);
     const costPerLiter = 0.75;
-    const directFuelCost = (fuelPerDay * 365) * costPerLiter;
+    const availableDays = availableDaysFromPercentage(annualAvailability, startMonth, endMonth);
+    const directFuelCost = ((fuelPerDay) * availableDays) * costPerLiter;
     return directFuelCost;
 }
 
-export function directCharterCost(asset: any) {
+export function charterCost(asset: any, annualAvailability: number, startMonth: number, endMonth: number) {
     const dayRate = asset.dayRate;
-    const directCharterCost = dayRate * 365;
+    const availableDays = availableDaysFromPercentage(annualAvailability, startMonth, endMonth);
+    const directCharterCost = dayRate * availableDays;
     return directCharterCost;
 }
 
-export function directCarbonOutput(asset: any): number {
+function carbonOutput(asset: any, annualAvailability: number, startMonth: number, endMonth: number): number {
     var conversionDecimal = 0;
     if (asset.category === 'Vessel') {
         conversionDecimal = 0.00273; //divide by 1000, multiply by 2.73 [conversion rate for diesel]
     } else if (asset.category === 'Helicopter') {
         conversionDecimal = 0.00255; //divide by 1000, multiply by 2.55 [conversion rate for kerosene]
     }
-    const usedFuel = dailyFuel(asset) * 365;
+    const availableDays = availableDaysFromPercentage(annualAvailability, startMonth, endMonth)
+    const usedFuel = dailyFuel(asset) * availableDays;
     const carbonEmissions = conversionDecimal * usedFuel;
     return carbonEmissions;
 }
 
-export function directCarbontax(asset: any): number {
+export function carbonTax(asset: any, annualAvailability: number, startMonth: number, endMonth: number): number {
     const carbonTaxPerTon = 42; //€; tax for the Netherlands
-    const carbonEmitted = directCarbonOutput(asset) * 365;
+    const availableDays = availableDaysFromPercentage(annualAvailability, startMonth, endMonth);
+    const carbonEmitted = carbonOutput(asset, annualAvailability, startMonth, endMonth) * availableDays;
     const annualCarbonTax = carbonTaxPerTon * carbonEmitted;
     return annualCarbonTax;
-}
-
-export function directAnnualCost(asset: any): number {
-    const directCost = directFuelCost(asset) + directCarbontax(asset) + directCharterCost(asset);
-    return directCost;
 }
 
 /* ===============
     Costs per WTG
 ================ */
 
-export function wdtCostsPerWtg(asset: any, team: any, wtg: any, location: any, annualWorkability: number[]): number { // cell H41 in excel
-    const totalCostWdt = totalAnnualCost(asset, team, annualWorkability);
+export function wdtCostsPerWtg(asset: any, team: any, location: any, annualWorkability: number, startMonth: number, endMonth: number): number { // cell H41 in excel
+    const totalCostWdt = wdtAnnualCost(asset, team, annualWorkability, startMonth, endMonth);
     const amountOfWTG = location.wtg;
     const wdtCostsPerWtg = totalCostWdt / amountOfWTG;
     return wdtCostsPerWtg;
@@ -206,15 +189,15 @@ export function wdtCostsPerWtg(asset: any, team: any, wtg: any, location: any, a
    Costs per Required Workhour
 ============================ */
 
-export function directCostPerWorkHour(asset: any, team: any, annualWorkability: number[]): number {
-    const directCost = directAnnualCost(asset);
-    const deployableHours = annualDeployableHours(team, annualWorkability);
+export function directCostPerWorkHour(asset: any, team: any, annualWorkability: number, startMonth: number, endMonth: number): number {
+    const directCost = directAnnualCost(asset, annualWorkability, startMonth, endMonth);
+    const deployableHours = annualDeployableHours(team, annualWorkability, startMonth, endMonth);
     const directCostPerWorkHour = directCost / deployableHours;
     return directCostPerWorkHour;
 }
 
-export function directCostPerRequiredWorkHour(asset: any, wtg: any, location: any): number { // cell H55 in excel
-    const directCost = directAnnualCost(asset);
+export function directCostPerRequiredWorkHour(asset: any, wtg: any, location: any, annualWorkability: number, startMonth: number, endMonth: number): number { // cell H55 in excel
+    const directCost = directAnnualCost(asset, annualWorkability, startMonth, endMonth);
     const requiredHours = annualTotalRequiredHours(wtg, location);
     const directCostPerRequiredWorkHour = directCost / requiredHours;
     return directCostPerRequiredWorkHour;

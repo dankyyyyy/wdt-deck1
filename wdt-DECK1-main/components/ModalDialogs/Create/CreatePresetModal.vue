@@ -42,19 +42,9 @@
           </div>
 
           <div class="create-input">
-            <label for="name">Asset 1:</label>
-            <select id="wtg" v-model="preset.asset1" class="border-2 rounded-md text-left">
-                <option value="" disabled selected>Asset 1</option>
-                <option v-for="(option, index) in assets" :key="index" :value="option">
-                {{ option.name }}
-            </option>
-            </select>
-          </div>
-
-          <div class="create-input">
-            <label for="name">Asset 2:</label>
-            <select id="wtg" v-model="preset.asset2" class="border-2 rounded-md text-left">
-                <option value="" disabled selected>Asset 2</option>
+            <label for="name">Assets:</label>
+            <select id="assets" v-model="preset.assets" multiple="multiple" class="border-2 rounded-md text-left">
+                <option value="" disabled selected>Assets</option>
                 <option v-for="(option, index) in assets" :key="index" :value="option">
                 {{ option.name }}
             </option>
@@ -65,7 +55,7 @@
           <button type="submit" class="border-2 rounded-md px-2" @click="handleCancelClick">
             Cancel
           </button>
-          <button type="submit" class="rounded-md px-2 ml-2 action-button" @click="handleSaveClick">
+          <button type="submit" class="rounded-md px-2 ml-2 dialog-button" @click="handleSaveClick">
             Save
           </button>
         </div>
@@ -87,8 +77,7 @@ import { useWindTurbineGeneratorStore } from "~/stores/WindTurbineGeneratorStore
           name: "",
           location: null,
           wtg: null,
-          asset1: null,
-          asset2: null,
+          assets: null,
         },
         assets: [],
         wtgs: [],
@@ -106,7 +95,6 @@ import { useWindTurbineGeneratorStore } from "~/stores/WindTurbineGeneratorStore
       },
       async handleSaveClick() {
         const store = usePresetStore();
-        console.log(`Preset: ${this.preset.name}, ${this.preset.location}, ${this.preset.wtg}, ${this.preset.asset1}, ${this.preset.asset2}`);
         await store.post(this.preset);
         this.$emit("hideModal");
       },
