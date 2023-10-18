@@ -6,7 +6,7 @@
     <h1 class="generic-header">Locations</h1>
   </div>
 
-    <!-- <IconsAdd @click="showModal" class="cursor-pointer" /> -->
+  <IconsAdd @click="showModal" class="cursor-pointer" />
 
   <ModalDialogsCreateLocationModal v-if="isModalVisible" @hideModal="hideModal"
     @downloaded="sendDownloadedNotification" />

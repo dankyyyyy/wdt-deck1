@@ -31,5 +31,5 @@ export function generateLabelsFromAssets(): String[] {
 }
 
 export function isNumeric(value: any) {
-    return /^\d*\.?\d*$/.test(value);
+    return /^-?\d*\.?\d*$/.test(value);
 }

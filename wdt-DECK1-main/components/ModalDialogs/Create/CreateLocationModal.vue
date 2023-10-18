@@ -33,29 +33,29 @@
         </button>
       </div>
     </div>
-    </div>
+  </div>
 </template>
   
-  <script>
-  import { useLocationStore } from "~/stores/LocationStore";
-  import { useWeatherdataStore } from "~/stores/WeatherdataStore";
-  import { isNumeric } from "~/utils/chartUtils";
+<script>
+import { useLocationStore } from "~/stores/LocationStore";
+import { useWeatherdataStore } from "~/stores/WeatherdataStore";
+import { isNumeric } from "~/utils/chartUtils";
 import { showError } from "~/utils/globalErrorHandling";
-  import axios from "axios";
-  
-  export default {
-    name: "CreateLocationModal",
-    data() {
-      return {
-        location: {
-          _id: null,
-          name: "",
-          latitude: 0,
-          longitude: 0,
-          limit: 0,
-        },
-      };
-    },
+import axios from "axios";
+
+export default {
+  name: "CreateLocationModal",
+  data() {
+    return {
+      location: {
+        _id: null,
+        name: "",
+        latitude: 0,
+        longitude: 0,
+        limit: 0,
+      },
+    };
+  },
   methods: {
     handleCancelClick() {
       this.$emit("hideModal");
@@ -102,31 +102,32 @@ import { showError } from "~/utils/globalErrorHandling";
         const coordinates = this.decimalToCoordinates(this.location.longitude, this.location.latitude)
         this.callRetrieve(coordinates.North, coordinates.West, coordinates.South, coordinates.East, this.location.name);
         this.$emit("hideModal");
-      },
-      async callRetrieve(north, west, south, east, locName) {
-        try {
-            const c1 = north
-            const c2 = west
-            const c3 = south
-            const c4 = east
-            const name = locName
-            const yearNow = new Date().getFullYear()
-            for (let i = yearNow; i > yearNow-20; i = i-2) {
-            const response = await axios.get(`http://127.0.0.1:5555/data/${c1}/${c2}/${c3}/${c4}/${name}/${i}`) //python api url could be moved to .env
-            this.postData(response.data)
-            }
-          } catch (error) {
-          console.error('Error calling retrieve:', error);
+      }
+    },
+    async callRetrieve(north, west, south, east, locName) {
+      try {
+        const c1 = north
+        const c2 = west
+        const c3 = south
+        const c4 = east
+        const name = locName
+        const yearNow = new Date().getFullYear()
+        for (let i = yearNow; i > yearNow - 20; i = i - 2) {
+          const response = await axios.get(`http://127.0.0.1:5555/data/${c1}/${c2}/${c3}/${c4}/${name}/${i}`) //python api url could be moved to .env
+          this.postData(response.data)
         }
-        this.$emit("newAdded")
-      },
-      async postData(weatherData) {
-        try {
-          await useWeatherdataStore().postData(weatherData, this.location);
-        } catch (error) {
-          console.error('Error:', error);
-        }
-      },
+      } catch (error) {
+        console.error('Error calling retrieve:', error);
+      }
+      this.$emit("newAdded")
+    },
+    async postData(weatherData) {
+      try {
+        await useWeatherdataStore().postData(weatherData, this.location);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    },
     decimalToCoordinates(long, lat) {
       let north, west, south, east;
       north = Number(lat) + 0.75
