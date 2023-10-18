@@ -1,0 +1,1 @@
+.grid-container[data-v-7f4d873d]{display:grid;justify-content:center}.grid[data-v-7f4d873d]{grid-template-columns:repeat(auto-fill,minmax(100px,1fr))}.grid[data-v-7f4d873d],.summary-grid[data-v-7f4d873d]{display:flex;gap:16px}.summary-grid[data-v-7f4d873d]{grid-template-columns:repeat(auto-fit,minmax(min(30rem,100%),1fr))}.selected[data-v-7f4d873d]{background-color:#abd5e5}

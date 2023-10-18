@@ -1,0 +1,1 @@
+function r(o){const e=document.createElement("div");e.classList.add("error-bar");const t=document.createElement("span");t.classList.add("error-message"),t.textContent=o,e.appendChild(t),document.body.appendChild(e),setTimeout(()=>{e.classList.add("fade-out"),setTimeout(()=>{document.body.removeChild(e)},500)},5e3)}export{r as s};

@@ -1,0 +1,1 @@
+import{_ as o,B as t,c,a as e,b as n,o as a}from"./entry.03847b27.js";const r={},_={scoped:"",class:"bg-image"},d={class:"flex"},i={class:"main-content py-5 pr-5 h-screen w-full"};function l(p,f){const s=t("router-view");return a(),c("div",_,[e("div",d,[e("div",i,[n(s,{presets:""})])])])}const u=o(r,[["render",l]]);export{u as default};
