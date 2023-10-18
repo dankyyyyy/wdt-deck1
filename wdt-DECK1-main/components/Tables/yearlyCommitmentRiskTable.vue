@@ -42,9 +42,9 @@ export default {
 
                     const row = {
                         AssetName: asset.name,
-                        YearlyCommitment: `${formatNumberWithDecimal(yearlyCommitment(asset, team, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
-                        DowntimeCost: `${formatNumberWithDecimal(wdtAnnualCost(asset, team, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
-                        DirectCost: `${formatNumberWithDecimal(directAnnualCost(asset, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
+                        YearlyCommitment: `${formatNumberWithDecimal(yearlyCommitment(asset, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
+                        FuelandCO2: `${formatNumberWithDecimal(directAnnualCost(asset, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
+                        CharterCost: `${formatNumberWithDecimal(annualDayRate(asset))}€`,
                     }
                     tempRowData.push(row);
                 }

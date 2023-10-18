@@ -7,18 +7,18 @@ function unavailableDays(annualWorkability: number[], startMonth: number, endMon
     for (let i = startMonth; i < endMonth; i++) {
         unavailableDays += annualWorkability[i];
     }
-    return Math.ceil(unavailableDays);
+    return unavailableDays;
 }
 
 function availableDays(annualWorkability: number[], startMonth: number, endMonth: number): number {
     const amountOfMonths = Math.abs(startMonth - endMonth) + 1;
-    const availableDays = Math.floor((amountOfMonths * 30) - unavailableDays(annualWorkability, startMonth, endMonth));
+    const availableDays = (amountOfMonths * 30) - unavailableDays(annualWorkability, startMonth, endMonth);
     return availableDays;
 }
 
 function unavailableDaysFromPercentage(annualWorkability: number, startMonth: number, endMonth: number): number {
     const amountOfMonths = Math.abs(startMonth - endMonth) + 1;
-    const unavailableDays = Math.ceil((amountOfMonths * 30) * annualWorkability);
+    const unavailableDays = (365 - (amountOfMonths * 30) * annualWorkability);
     return unavailableDays;
 }
 
@@ -88,9 +88,9 @@ export function availablePerRequiredInPercent(wtg: any, team: any, location: any
    Complete Annual Cost
 =======================*/
 
-export function yearlyCommitment(asset: any, team: any, annualWorkability: number, startMonth: number, endMonth: number): number {
-    const totalCost = Math.round(wdtAnnualCost(asset, team, annualWorkability, startMonth, endMonth) + directAnnualCost(asset, annualWorkability, startMonth, endMonth));
-    return totalCost
+export function yearlyCommitment(asset: any, annualWorkability: number, startMonth: number, endMonth: number): number {
+    const totalCost = directAnnualCost(asset, annualWorkability, startMonth, endMonth) + annualDayRate(asset);
+    return totalCost;
 }
 
 /* ======================
@@ -122,8 +122,13 @@ export function downtimeSalaryCost(team: any, annualWorkability: number, startMo
 =====================*/
 
 export function directAnnualCost(asset: any, annualAvailability: number, startMonth: number, endMonth: number): number {
-    const directCost = fuelCost(asset, annualAvailability, startMonth, endMonth) + carbonTax(asset, annualAvailability, startMonth, endMonth) + charterCost(asset, annualAvailability, startMonth, endMonth);
+    const directCost = fuelCost(asset, annualAvailability, startMonth, endMonth) + carbonTax(asset, annualAvailability, startMonth, endMonth);
     return directCost;
+}
+
+export function annualDayRate(asset: any) {
+    const totalDayRate = asset.dayRate * 365;
+    return totalDayRate;
 }
 
 function dailyFuel(asset: any): number {
@@ -168,8 +173,7 @@ function carbonOutput(asset: any, annualAvailability: number, startMonth: number
 
 export function carbonTax(asset: any, annualAvailability: number, startMonth: number, endMonth: number): number {
     const carbonTaxPerTon = 42; //€; tax for the Netherlands
-    const availableDays = availableDaysFromPercentage(annualAvailability, startMonth, endMonth);
-    const carbonEmitted = carbonOutput(asset, annualAvailability, startMonth, endMonth) * availableDays;
+    const carbonEmitted = carbonOutput(asset, annualAvailability, startMonth, endMonth);
     const annualCarbonTax = carbonTaxPerTon * carbonEmitted;
     return annualCarbonTax;
 }
