@@ -34,16 +34,16 @@ export default {
       locations: [],
       isModalVisible: false,
       loading: true,
-      downloaded: false,
+      cardKey: false,
     };
   },
   async mounted() {
     this.locations = await useLocationStore().getAll();
-    this.locations.length == 0 ? "" : this.loading = false;
+    this.locations.length === 0 ? "" : this.loading = false;
   },
   async updated() {
     this.locations = await useLocationStore().getAll();
-    this.locations.length == 0 ? "" : this.loading = false;
+    this.locations.length === 0 ? "" : this.loading = false;
   },
   methods: {
     showModal() {
