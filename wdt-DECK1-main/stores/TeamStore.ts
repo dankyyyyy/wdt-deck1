@@ -5,6 +5,7 @@ import axios from "axios"
 export const useTeamStore = defineStore("TeamStore", {
   state: () => ({
     teams: [] as ITeam[],
+    selectedTeam: null as unknown as ITeam,
   }),
   actions: {
     async getByName(name: string) {
@@ -79,6 +80,12 @@ export const useTeamStore = defineStore("TeamStore", {
         console.error('Error deleting team: ', error);
       }
       this.getAll()
+    },
+    setSelectedTeam(team: ITeam) {
+      this.selectedTeam = team;
+    },
+    getSelectedTeam(): unknown | ITeam {
+      return this.selectedTeam;
     },
   }
 });

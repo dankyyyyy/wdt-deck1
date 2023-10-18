@@ -9,33 +9,32 @@ export default defineEventHandler(async (event) => {
         body._id,
         {
           $set: {
-            name: body.name, 
+            name: body.name,
             category: body.category,
             hs: body.hs,
             visibility: body.visibility,
             windSpeedLimit: body.windSpeedLimit,
             dayRate: body.dayRate,
             operationalFuelConsumption: body.operationalFuelConsumption,
-            dailyAvailableTimePerTeam: body.dailyAvailableTimePerTeam,
-            staffPerTeam: body.staffPerTeam,
-            totalYearlyAvailableTime: body.totalYearlyAvailableTime,
             vesselSpeed: body.vesselSpeed,
             fuelFlowLoitering: body.fuelFlowLoitering,
             loitering: body.loitering,
             highEngineActivity: body.highEngineActivity,
             helicopterSpeed: body.helicopterSpeed,
             cloudbase: body.cloudbase,
+            flightTime: body.flightTime,
+            team: body.team,
           },
         },
         { new: true }
       );
-    
+
         if (!updatedAsset) {
           throw createError({
             message: 'Asset not found.',
           });
         }
-        
+
         console.log('Updated Asset: ', updatedAsset);
         return { message: 'Asset updated.' }
       } catch (error) {
@@ -44,5 +43,3 @@ export default defineEventHandler(async (event) => {
         });
       }
     })
-
-    

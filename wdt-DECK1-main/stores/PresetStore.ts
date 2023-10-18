@@ -15,8 +15,8 @@ export const usePresetStore = defineStore("PresetStore", {
         data = filteredData;
         if (data.length === 1) {
           const preset = data[0];
-          return preset as IPreset 
-        }         
+          return preset as IPreset
+        }
       } catch (e) {
         console.error(e)
       }
@@ -83,5 +83,5 @@ export const usePresetStore = defineStore("PresetStore", {
     getSelectedPreset(): unknown | IPreset {
       return this.selectedPreset;
     },
-  } 
+  }
 });

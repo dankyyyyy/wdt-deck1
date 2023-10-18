@@ -1,18 +1,15 @@
 <template>
-    <div class="w-full h-full deck-frame-grey inline-block">
-      <div class="w-4/5 h-20 p-3">
-        <DropDownsSectionRecommendationPopUp />
-      </div>
-      <div class="w-1/5 h-20 p-3 flex">
-        <DropDownsSectionLocationDropdown class="mr-4" />
-        <DropDownsSectionWtgDropdown class="mr-4" />
-        <DropDownsSectionAsset1Dropdown class="mr-4" />
-        <DropDownsSectionAsset2Dropdown class="mr-20" />
-        <DropDownsSectionSubmitButton @loading="toggleChartKey" class="h-auto px-4 py-2" />
+  <div class="flex">
+    <div class="sidebar-container p-5 h-screen">
+      <Sidebar />
+    </div>
+    <div class="h-full deck-frame-translucent-w-sidebar inline-block">
+      <div class="heading-container">
+        <h1 class="generic-header">Availability</h1>
       </div>
       <div class="flex flex-col">
         <div v-for="id in ids" :key="id">
-          <FiltersFinGraphFilter :key="chartKey" @remove="handleRemove" :chartId="id" :amountOfCharts="ids.length" />
+          <FiltersAvailGraphFilter :key="chartKey" @remove="handleRemove" :chartId="id" :amountOfCharts="ids.length" />
         </div>
       </div>
       <div class="w-full p-3">
@@ -22,36 +19,60 @@
         </button>
       </div>
     </div>
-  </template>
-    
-  <script>
-  import { nullify } from '~/utils/chartUtils';
-  
-  export default {
-    layout: "default",
-    name: "Availability",
-    data() {
-      return {
-        ids: [],
-        chartKey: false,
-      };
+  </div>
+</template>
+
+<script>
+import { useLocationStore } from '~/stores/LocationStore';
+import { useFilterStore } from '~/stores/FilterStore';
+import { useWeatherdataStore } from '~/stores/WeatherdataStore';
+import { usePresetStore } from '~/stores/PresetStore';
+
+export default {
+  layout: "default",
+  name: "Availability",
+  data() {
+    return {
+      ids: [],
+      chartKey: false,
+      loading: true,
+    };
+  },
+  async mounted() {
+    this.ids.push(1);
+    await this.startChart();
+    this.toggleChartKey();
+    this.loading = false;
+  },
+  fetch() {
+    return this.startChart();
+  },
+  methods: {
+    addGraph() {
+      this.ids.push(this.ids[this.ids.length - 1] + 1);
     },
-    mounted() {
-      this.ids.push(1);
-      nullify();
+    handleRemove(id) {
+      if (this.ids.length !== 1) {
+        this.ids = this.ids.filter((el) => el !== id);
+      }
     },
-    methods: {
-      addGraph() {
-        this.ids.push(this.ids[this.ids.length - 1] + 1);
-      },
-      handleRemove(id) {
-        if (this.ids.length !== 1) {
-          this.ids = this.ids.filter((el) => el !== id);
-        }
-      },
-      toggleChartKey() {
-        this.chartKey = !this.chartKey;
-      },
+    toggleChartKey() {
+      this.chartKey = !this.chartKey;
     },
-  };
-  </script>
+    async startChart() {
+      const currentPreset = usePresetStore().getSelectedPreset();
+      const currentLocation = currentPreset.location;
+
+      useFilterStore().hideRecommendation = false;
+      useLocationStore().toggleLoading();
+      this.$emit("loading");
+
+      await useWeatherdataStore().getByLocationId(currentLocation._id);
+
+      useLocationStore().toggleLoading();
+      this.$emit("loading");
+      this.loading = false;
+    },
+  },
+};
+</script>

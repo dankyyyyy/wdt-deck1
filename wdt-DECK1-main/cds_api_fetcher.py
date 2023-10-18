@@ -75,6 +75,8 @@ def retrieve(c1, c2, c3, c4, name, year):
                 variable_name = variables[j]
                 j += 1
                 # print("Message {}: {} {} - {:.3f} {}".format(i, time, variable_name, values.mean(), lons.shape))
+                print(lons, ' ', lats)
+
 
                 # Collect the required data
                 year = time.year

@@ -1,11 +1,23 @@
+<template>
+  <div class="deck-frame-white">
+    <canvas v-bind:id="'availChart' + filterParams.chartId" class="chart-canvas"></canvas>
+  </div>
+</template>
+
+<style scoped>
+.chart-canvas {
+  width: 100em
+}
+</style>
+
 <script>
 import Chart from "chart.js/auto";
 import { Colors } from 'chart.js';
 import { start } from "@/utils/chartCalc/wdtCalc";
-import { useWeatherStore } from "@/stores/WeatherStore";
-import { useAssetStore } from "@/stores/AssetStore";
-import { useAvailStore } from "~/stores/AvailStore";
-import { useWindTurbineGeneratorStore } from "~/stores/WindTurbineGeneratorStore";
+import { usePresetStore } from "~/stores/PresetStore";
+import { useChartStore } from "~/stores/ChartStore";
+import "~/utils/chartUtils";
+import "~/utils/calculationUtils";
 
 Chart.register(Colors);
 
@@ -21,20 +33,17 @@ export default {
     },
   },
   setup(props) {
-    const availStore = useAvailStore();
-    const weatherStore = useWeatherStore();
-    const assetStore = useAssetStore();
-    const wtgStore = useWindTurbineGeneratorStore();
+    const chartStore = useChartStore();
+    const presetStore = usePresetStore();
 
-    if (useLocationStore().getSelectedLocation() != null) {
+    if (presetStore.getSelectedPreset() != null) {
       onMounted(() => {
-        // const assets = [useAssetStore().getSelectedAsset1(), useAssetStore().getSelectedAsset2()];
-        const wtg = useWindTurbineGeneratorStore().getSelectedWtg();
+        const currentPreset = presetStore.getSelectedPreset();
+        const assets = currentPreset.assets;
 
-        if (assetStore.assets.length === 0) assetStore.getAll();
-        var assets = assetStore.assets;
-        const filteredAssets = assets.filter(asset => asset.category !== "WindTurbineGenerator");
-        assets = filteredAssets;
+        chartStore.availData['Required Hours'] = [];
+        chartStore.availData['Available Hours'] = [];
+        chartStore.availData['Difference in Hours'] = [];
 
         for (let i = 0; i < assets.length; i++) {
           start(
@@ -45,33 +54,37 @@ export default {
             props.filterParams.years,
             assets[i]
           );
+
           const asset = assets[i];
-          availStore.assetsAvailability = weatherStore.assetsWdt;
-          
+          const team = asset.team;
+          const location = currentPreset.location;
+          const wtg = currentPreset.wtg;
+          const annualWorkability = yearlyWorkabilityPerAsset(chartStore.wdtData[asset.name], props.filterParams.startMonth, props.filterParams.endMonth);
+
+          chartStore.availData['Required Hours'].push(annualTotalRequiredHours(wtg, location));
+          chartStore.availData['Available Hours'].push(annualDeployableHours(team, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth));
+          chartStore.availData['Difference in Hours'].push(annualTotalHoursDifference(team, annualWorkability, location, wtg, props.filterParams.startMonth, props.filterParams.endMonth));
         }
 
         // Chart Construction
         const datasets = []
-        for (const x in weatherStore.assetsWdt) {
+        for (const x in chartStore.availData) {
           datasets.push({
             label: x,
-            data: weatherStore.assetsWdt[x].slice(
-              props.filterParams.startMonth - 1,
-              props.filterParams.endMonth
-            ),
+            data: chartStore.availData[x],
             borderRadius: 10,
           })
         }
-        //Create chart object
         const myChart = new Chart(
           document.getElementById("availChart" + props.filterParams.chartId),
           {
             type: "bar",
             data: {
-              labels: availStore.labels,
+              labels: generateLabelsFromAssets(),
               datasets,
             },
             options: {
+              maintainAspectRatio: false,
               plugins: {
                 colors: {
                   enabled: true,
@@ -80,9 +93,10 @@ export default {
                   enabled: true,
                   callbacks: {
                     label: (context) => {
-                      const assetName = context.dataset.label;
+                      const dataType = context.dataset.label;
                       const value = context.raw;
-                      return `${assetName}: ${value}%`;
+                      const formattedValue = formatNumberWithDecimal(value);
+                      return `${dataType}: ${formattedValue} hours`;
                     },
                   },
                 },
@@ -100,9 +114,3 @@ export default {
   },
 };
 </script>
-
-<template>
-  <div class="deck-frame-white">
-    <canvas v-bind:id="'availChart' + filterParams.chartId"></canvas>
-  </div>
-</template>

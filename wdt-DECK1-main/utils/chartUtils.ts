@@ -1,13 +1,35 @@
+import { useAssetStore } from "~/stores/AssetStore";
 import { useLocationStore } from "~/stores/LocationStore";
 import { usePresetStore } from "~/stores/PresetStore";
-import { IPreset } from "~/types";
+import { useTeamStore } from "~/stores/TeamStore";
+import { useWindTurbineGeneratorStore } from "~/stores/WindTurbineGeneratorStore";
+import { IPreset, ITeam, ILocation, IWindTurbineGenerator } from "~/types";
 
 export function nullify() {
     usePresetStore().setSelectedPreset(null as unknown as IPreset);
+    useAssetStore().nullifySelectedAssets();
+    useLocationStore().setSelectedLocation(null as unknown as ILocation);
+    useWindTurbineGeneratorStore().setSelectedWtg(null as unknown as IWindTurbineGenerator);
+    useTeamStore().setSelectedTeam(null as unknown as ITeam);
 }
 
 export function formatNumberWithDecimal(value: number) {
-    const parts = value.toString().split('.');
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    return parts.join('.');
+    return value.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+export function generateLabelsFromAssets(): String[] {
+    const preset = usePresetStore().getSelectedPreset() as IPreset;
+    const assets = preset.assets;
+    const names = [];
+
+    for (let i = 0; i < assets.length; i++) {
+        const name = assets[i].name;
+        names.push(name);
+    }
+
+    return names;
+}
+
+export function isNumeric(value: any) {
+    return /^\d*\.?\d*$/.test(value);
 }

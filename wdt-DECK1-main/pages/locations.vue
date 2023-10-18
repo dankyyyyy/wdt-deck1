@@ -1,13 +1,22 @@
 <template>
-  <div class="w-full h-full deck-frame-grey">
-    <div class="flex w-full justify-end">
-      <IconsAdd @click="showModal" class="cursor-pointer" />
-    </div>
-    <ModalDialogsCreateLocationModal v-if="isModalVisible" @hideModal="hideModal" @newAdded="toggleCardKey" />
-    <div v-if="!loading" class="flex flex-wrap">
-      <div v-for="location in locations" :key="location._id" class="p-5">
-        <CardsLocationCard :location="location" :key="cardKey" />
+  <NuxtLink to="/">
+    <IconsLogoInverted class="inline-block align-middle w-full" />
+  </NuxtLink>
+  <div class="heading-container">
+    <h1 class="generic-header">Locations</h1>
+  </div>
+
+    <!-- <IconsAdd @click="showModal" class="cursor-pointer" /> -->
+
+  <ModalDialogsCreateLocationModal v-if="isModalVisible" @hideModal="hideModal"
+    @downloaded="sendDownloadedNotification" />
+  <div deck-frame-translucent-container>
+    <div v-if="!loading" class="grid deck-frame-translucent">
+      <div v-for="location in locations" :key="location._id">
+        <CardsLocationCard :location="location" :downloaded="downloaded" @location-selected="handleLocationSelected"
+          @location-deselected="handleLocationDeselected" />
       </div>
+      <SubmitButton @click="navigateToNextPage" />
     </div>
     <div v-else>
       Loading data...
@@ -43,9 +52,19 @@ export default {
     hideModal() {
       this.isModalVisible = false;
     },
-    toggleCardKey(){
-      console.log('toggling');
-      this.cardKey = !this.cardKey;
+    sendDownloadedNotification() {
+      this.downloaded = true;
+    },
+    handleLocationSelected(location) {
+      useLocationStore().setSelectedLocation(location);
+    },
+    handleLocationDeselected() {
+      useLocationStore().setSelectedLocation(null);
+    },
+    navigateToNextPage() {
+      if (useLocationStore().getSelectedLocation() !== null) {
+        this.$router.push('/wtgs');
+      }
     }
   },
 };

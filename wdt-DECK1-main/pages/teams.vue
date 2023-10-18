@@ -1,15 +1,17 @@
 <template>
-  <div class="w-full h-full deck-frame-grey">
+    <NuxtLink to="/">
+      <IconsLogoInverted class="inline-block align-middle w-full" />
+    </NuxtLink>
     <div class="flex w-full justify-between p-5">
       <h1 class="text-2xl font-semibold">Teams</h1>
       <IconsAdd @click="showModal" class="cursor-pointer" />
     </div>
-    <div class="flex flex-col p-5">
+    <div deck-frame-translucent-container>
       <h2 class="text-lg font-semibold w-full pl-5">Available teams</h2>
 
       <ModalDialogsCreateTeamModal v-if="isModalVisible" @hideModal="hideModal" />
-      <div v-if="!loading" class="flex flex-wrap">
-        <div v-for="team in teams" :key="team._id" class="p-5">
+      <div v-if="!loading" class="grid deck-frame-translucent">
+        <div v-for="team in teams" :key="team._id">
           <CardsTeamCard :team="team" />
         </div>
       </div>
@@ -17,7 +19,6 @@
         Loading data...
       </div>
     </div>
-  </div>
 </template>
   
 <script>
@@ -46,6 +47,12 @@ export default {
     },
     hideModal() {
       this.isModalVisible = false;
+    },
+    handleTeamSelected(team) {
+      useTeamStore().setSelectedTeam(team);
+    },
+    handleTeamDeselected() {
+      useTeamStore().setSelectedTeam(null);
     },
   },
 };

@@ -9,10 +9,18 @@
         transparent);
   }
 
+  .deck-logo {
+    align: middle;
+    margin-bottom: 2rem;
+  }
+
   .deck-sidebar {
     background-color: #222f3e;
-    border-radius: 12px;
+    border-radius: 70px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+    min-height: 470px;
+    max-height: 470px;
+    min-width: 250px;
   }
 
   .sidebar-container {
@@ -21,8 +29,36 @@
     top: 0;
   }
 
+  .white-gradient {
+    background-image: linear-gradient(to right,
+        rgba(255, 255, 255, 0.6),
+        transparent);
+  }
+
+  /* ==============
+   Main Section
+  ============== */
+
   .main-content {
     width: calc(100vw - 400px);
+  }
+
+  .bg-image {
+    /*background-image: url('assets\wdt_background3.png'); */
+    /* background-image: url('assets\wdt_background2_low_opacity.png'); */
+    background-image: url('assets/wdt-background-temporary-blurred.png');
+    background-size: cover;
+    background-position: center center;
+    overflow-x: hidden;
+  }
+
+  .deck-frame-grey-container {
+    flex-wrap: wrap;
+    overflow-x: hidden;
+    max-width: 85%;
+    height: 40%;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
   }
 
   .deck-frame-grey {
@@ -31,7 +67,34 @@
     align-content: flex-start;
     background-color: #dfdfdf;
     border-radius: 12px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+    @apply p-5;
+  }
+
+  .deck-frame-translucent-container {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+  }
+
+  .deck-frame-translucent {
+    width: 98%;
+    border-radius: 70px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+    /* Drop shadow */
+    background-color: #dfdfdfdb;
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
+    @apply p-5;
+  }
+
+  .deck-frame-translucent-w-sidebar {
+    width: 82%;
+    border-radius: 70px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+    /* Drop shadow */
+    background-color: #dfdfdfdb;
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
     @apply p-5;
   }
 
@@ -41,7 +104,7 @@
     align-content: flex-start;
     background-color: #ffffff;
     border-radius: 12px;
-    padding: 0.75rem;
+    padding: 0.25rem;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   }
 
@@ -59,6 +122,10 @@
 
   .filter-input {
     @apply w-20 rounded-md border-2 text-center;
+  }
+
+  .wdt-filter-container {
+    align-content: end;
   }
 
   .button-87 {
@@ -202,16 +269,467 @@
   }
 
   .create-input {
-    @apply py-2 flex justify-between w-60;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 2rem;
   }
 
-  .action-button {
+  .dialog-button {
     background-color: #09a6d7;
     color: white;
   }
 
   .main-text-color {
     color: #000000;
+  }
+}
+
+@layer components {
+
+  /* ===================
+   Start Screen Section
+  =================== */
+
+  /* General Box Styling */
+  .clickable-box {
+    width: 80%;
+    /* Sets the width to 80% of the parent container */
+    max-width: 600px;
+    /* Sets a maximum width to maintain readability on larger screens */
+    min-width: fit-content;
+    height: 35vh;
+    /* Sets height to 50% of the viewport height */
+    max-height: 400px;
+    min-height: fit-content;
+    background-color: #ffffff;
+    border-radius: 70px;
+    /* Curvature of the box corners */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+    /* Drop shadow */
+    margin: 2.5%;
+    /* Percentages for margin to maintain spacing relative to the parent container */
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+    position: relative;
+    /* positioning of icon and text */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    /* Vertically center text and push it to the bottom */
+  }
+
+  /* Styles for the box on hover */
+  .clickable-box:hover {
+    background-color: #abd5e5;
+    /* Changes to DECK1 Blue with 25% opacity  */
+  }
+
+  /* Styles for the box when clicked */
+  .clickable-box:active {
+    background-color: rgba(255, 155, 56, 0.1);
+    /* #FF9B38 at 10% opacity when clicked */
+  }
+
+  /* Text Centering */
+
+  .clickable-box-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    /* Keeps the text at the bottom */
+    align-items: center;
+    height: 100%;
+    margin-bottom: 5%;
+  }
+
+  /* Style for the title */
+  .clickable-box-title {
+    font-weight: bold;
+    font-size: 1.48em;
+    text-align: center;
+    margin-top: auto;
+  }
+
+  /* Style for the subtitle */
+  .clickable-box-description {
+    font-size: 1.15em;
+    text-align: center;
+    margin-top: 2%;
+    margin-bottom: 5%;
+  }
+
+  /* Style for the icon */
+  .clickable-box-icon {
+    position: absolute;
+    /* position for the icon relative to the text */
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #333;
+    /* Icon Color */
+  }
+
+  /* ========================
+     Presets Screen Section
+  ======================== */
+
+  .grid {
+    display: flex;
+    grid-template-columns: repeat(auto-fit, minmax(min(30rem, 100%), 1fr));
+    gap: 16px;
+  }
+
+  .card-box {
+    width: 25rem;
+    margin: 10px;
+    border-radius: 70px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+    /* Drop shadow */
+    background-color: #ffffff;
+    cursor: pointer;
+  }
+
+  .selected-preset {
+    background-color: #abd5e5;
+    /* Change to DECK1 Blue with 25% opacity */
+  }
+
+  .box-image {
+    max-width: 100%;
+    margin-bottom: 3%;
+    margin-top: 25px;
+  }
+
+  .box-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 2%;
+    /* Add title styles */
+  }
+
+  .box-text {
+    font-size: 1em;
+    text-align: center;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-bottom: 25px;
+    font-weight: 500;
+  }
+
+  .box-text-type {
+    font-size: 1em;
+    text-align: center;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-bottom: 5px;
+    margin-top: 2px;
+    font-weight: 450;
+  }
+
+  .box-text hr {
+    height: 2px;
+    /*Width of the line*/
+    background-color: #000;
+    margin: 0 auto;
+    /* Centers the line */
+    width: 70%;
+    /* Length of the line*/
+    opacity: 70%;
+  }
+
+  .proceed-button {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background-color: #575757;
+    /* Grey color as it's inactive by default */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 36px;
+    font-weight: bold;
+    width: 2.79em;
+    height: 2.79em;
+    cursor: not-allowed;
+
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+    /* Drop shadow */
+  }
+
+  .active {
+    background-color: #4caf50;
+    cursor: pointer;
+  }
+
+}
+
+/* ================================
+     Customization Cards Section
+================================ */
+
+.customize-card-box {
+  width: 25rem;
+  margin: 10px;
+  border-radius: 70px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+  /* Drop shadow */
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.customize-box-text {
+  font-size: 1em;
+  text-align: center;
+  margin-left: 40px;
+  margin-right: 40px;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.customize-box-text-type {
+  font-size: 1em;
+  text-align: center;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  margin-top: 2px;
+  font-weight: 450;
+}
+
+.customize-box-text hr {
+  height: 2px;
+  /*Width of the line*/
+  background-color: #000;
+  margin: 0 auto;
+  /* Centers the line */
+  width: 70%;
+  /* Length of the line*/
+  opacity: 70%;
+}
+
+/* =================
+     Charts Section
+  ================= */
+
+.chart-canvas {
+  width: 100%;
+}
+
+
+/* Dual Charts */
+
+.dual-chart-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.cost-per-charts {
+  flex: 1;
+  max-width: 100%;
+  height: 550px;
+  margin: 2rem;
+}
+
+/* Tables */
+
+.table-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  min-width: 10.8rem;
+}
+
+/* Dashboard Tables */
+
+.dashboard-table {
+  width: 20.8rem;
+  height: 11.8rem;
+  max-height: 20rem;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.dashboard-table .ag-root-wrapper {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.dashboard-table .ag-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboard-table .ag-header-cell-label {
+  justify-content: center;
+}
+
+/* Summary Screen Section */
+
+.summary-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.summary-grid>* {
+  grid-row: 1;
+}
+
+.summary-table-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 10.8rem;
+  margin-top: 2rem;
+  grid-row: 2;
+}
+
+.summary-table {
+  width: 31.1rem;
+  height: 11.8rem;
+  max-height: 20rem;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.summary-table .ag-root-wrapper {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.summary-table .ag-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.summary-table .ag-header-cell-label {
+  justify-content: center;
+}
+
+/* Annual Availability Table [WDT] */
+
+.wdt-table {
+  width: 20.8rem;
+  height: 11.8rem;
+  max-height: 20rem;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-top: 2rem;
+}
+
+.wdt-table .ag-root-wrapper {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.wdt-table .ag-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wdt-table .ag-header-cell-label {
+  justify-content: center;
+}
+
+/* Financial Feasibility Table */
+
+.fin-table {
+  max-width: 51.7rem;
+  min-height: 9rem;
+  height: 11.8rem;
+  max-height: 20rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.direct-cost {
+  width: 51.7rem;
+}
+
+.yearly-commitment {
+  width: 41.4rem;
+}
+
+
+.fin-table .ag-root-wrapper {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.fin-table .ag-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fin-table .ag-header-cell-label {
+  justify-content: center;
+}
+
+/* ==================================
+   Generic Text Formatting Section
+================================== */
+
+.generic-header {
+  text-align: center;
+  font-weight: bold;
+  font-size: 2em;
+  margin-bottom: .5%;
+  justify-items: center;
+  align-items: center;
+  text-align: center;
+}
+
+.generic-header-left {
+  text-align: left;
+  font-weight: bold;
+  font-size: 1em;
+  margin-bottom: .5%;
+  justify-items: left;
+  align-items: left;
+  text-align: left;
+}
+
+.generic-header-medium {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.5em;
+  margin-bottom: .5%;
+  justify-items: center;
+  align-items: center;
+  text-align: center;
+}
+
+.heading-container {
+  margin: .5rem;
+}
+
+@layer utilities {
+
+  /* ================
+   Utilities Section
+  ================ */
+
+  /* import into pages to prevent horizontal and vertical scrolling */
+  .no-scroll {
+    overflow: hidden;
+    height: 90vh;
+    max-height: 90vh;
   }
 }
 
@@ -246,6 +764,8 @@
 }
 
 .submit-button {
+  background-color: #09a6d7;
+  color: white;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -271,6 +791,7 @@
   text-align: center;
   border-radius: 10px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  z-index: 10000;
 }
 
 .error-bar.fade-out {

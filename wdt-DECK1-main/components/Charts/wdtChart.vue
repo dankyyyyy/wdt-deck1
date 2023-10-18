@@ -1,9 +1,14 @@
+<template>
+  <div class="deck-frame-white">
+    <canvas v-bind:id="'wdtChart' + filterParams.chartId" class="chart-canvas"></canvas>
+  </div>
+</template>
+
 <script>
 import Chart from "chart.js/auto";
 import { Colors } from 'chart.js';
 import { start } from "@/utils/chartCalc/wdtCalc";
-import { useWeatherStore } from "@/stores/WeatherStore";
-import { useAssetStore } from "@/stores/AssetStore";
+import { useChartStore } from "~/stores/ChartStore";
 import { usePresetStore } from "~/stores/PresetStore";
 
 Chart.register(Colors);
@@ -20,14 +25,14 @@ export default {
     },
   },
   setup(props) {
-    const weatherStore = useWeatherStore();
-    const assetStore = useAssetStore();
+    const chartStore = useChartStore();
     const presetStore = usePresetStore();
 
     if (presetStore.getSelectedPreset() != null) {
       onMounted(() => {
-        if (assetStore.assets.length === 0) assetStore.getAll();
-        var assets = assetStore.assets;
+        const currentPreset = presetStore.getSelectedPreset();
+        const assets = currentPreset.assets;
+        const monthlyWorkability = [];
 
         for (let i = 0; i < assets.length; i++) {
           start(
@@ -39,15 +44,15 @@ export default {
             assets[i]
           );
           const asset = assets[i];
-          weatherStore.assetsWdt[asset.name] = monthlyWorkabilityPerAsset(weatherStore.assetsWdt[asset.name]);
-        }       
+          monthlyWorkability[asset.name] = monthlyWorkabilityPerAsset(chartStore.wdtData[asset.name], props.filterParams.startMonth, props.filterParams.endMonth);
+        }
 
         // Chart Construction
         const datasets = []
-        for (const x in weatherStore.assetsWdt) {
+        for (const x in monthlyWorkability) {
           datasets.push({
             label: x,
-            data: weatherStore.assetsWdt[x].slice(
+            data: monthlyWorkability[x].slice(
               props.filterParams.startMonth - 1,
               props.filterParams.endMonth
             ),
@@ -60,13 +65,14 @@ export default {
           {
             type: "bar",
             data: {
-              labels: weatherStore.labels.slice(
+              labels: chartStore.wdtLabels.slice(
                 props.filterParams.startMonth - 1,
                 props.filterParams.endMonth
               ),
               datasets,
             },
             options: {
+              maintainAspectRatio: false,
               plugins: {
                 colors: {
                   enabled: true,
@@ -95,9 +101,3 @@ export default {
   },
 };
 </script>
-
-<template>
-  <div class="deck-frame-white">
-    <canvas v-bind:id="'wdtChart' + filterParams.chartId"></canvas>
-  </div>
-</template>

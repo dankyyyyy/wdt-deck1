@@ -1,42 +1,32 @@
 <template>
-    <div class="w-70 h-min deck-frame-white">
-        <div class="w-full h-40 flex justify-center items-center">
-            Place for image
-        </div>
-        <div class="w-full border-t-2 border-black p-2">
-            <div class="flex justify-between">
-                <h2 class="font-semibold text-lg mb-2">{{ preset.name }}</h2>
-                <ModalDialogsDeletePresetModal :preset="preset" v-if="isDeleteModalVisible" @hideModal="hideModal" />
-
-                <div class="flex space-x-2">
-                    <IconsDelete @click="showDeleteModal" class="cursor-pointer" />
+    <div class="grid-container">
+        <div class="grid">
+            <div class="card-box" @click="selectPreset" :class="{ 'selected': isSelected }">
+                <div class="box-content">
+                    <IconsLogoInverted class="box-image inline-block align-middle w-full" />
+                    <div class="box-title">{{ preset.name }}</div>
+                    <div class="box-text">
+                        <hr />
+                        <label for="location">Location: </label>
+                        <p class="box-text-type">{{ preset.location.name }}</p>
+                        <hr />
+                        <label for="wtg">WTG (Model): </label>
+                        <p class="box-text-type">{{ preset.wtg.name }}</p>
+                        <hr />
+                        <label for="asset2">Assets: </label>
+                        <div v-for="(asset, key) in preset.assets" :key="key">
+                            <p class="box-text-type">{{ asset.name }}</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="flex justify-between">
-                <label for="location">Location: </label>
-                <p class="w-min whitespace-nowrap">{{ preset.location.name }}</p>
-            </div>
-
-            <div class="flex justify-between">
-                <label for="wtg">WTG (Model): </label>
-                <p class="w-min whitespace-nowrap">{{ preset.wtg.name }}</p>
-            </div>
-
-            <div class="flex justify-between">
-                <label for="asset1">Asset1: </label>
-                <p class="w-min whitespace-nowrap">{{ preset.asset1.name }}</p>
-            </div>
-
-            <div class="flex justify-between">
-                <label for="asset2">Asset2: </label>
-                <p class="w-min whitespace-nowrap">{{ preset.asset2.name }}</p>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import { usePresetStore } from '~/stores/PresetStore';
+
 
 export default {
     name: "PresetCard",
@@ -44,21 +34,42 @@ export default {
         preset: {
             type: Object,
             required: true,
-        }
+        },
     },
     data() {
-    return {
-      isUpdateModalVisible: false,
-      isDeleteModalVisible: false,
-    };
-  },
-  methods: {
-    showDeleteModal() {
-      this.isDeleteModalVisible = true;
+        return {
+            isSelected: false,
+        }
     },
-    hideModal() {
-      this.isDeleteModalVisible = false;
+    methods: {
+        selectPreset() {
+            const preset = this.preset;
+
+            if (usePresetStore().getSelectedPreset() === null) {
+                this.isSelected = true;
+                this.$emit("preset-selected", preset);
+            } else if (usePresetStore().getSelectedPreset()._id === preset._id) {
+                this.isSelected = false;
+                this.$emit("preset-deselected");
+            }
+        },
     },
-  },
 }
 </script>
+
+<style scoped>
+.grid-container {
+    display: grid;
+    justify-content: center;
+}
+
+.grid {
+    display: flex;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 16px;
+}
+
+.selected {
+    background-color: #abd5e5;
+}
+</style>

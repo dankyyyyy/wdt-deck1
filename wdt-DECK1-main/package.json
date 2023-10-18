@@ -21,6 +21,8 @@
     "@headlessui/vue": "^1.7.12",
     "@heroicons/vue": "^2.0.17",
     "@pinia/nuxt": "^0.4.7",
+    "ag-grid-community": "^30.2.0",
+    "ag-grid-vue3": "^30.2.0",
     "axios": "^1.4.0",
     "chart.js": "^4.2.1",
     "mongodb": "^5.8.1",
@@ -31,6 +33,7 @@
     "pyodide": "^0.23.4",
     "vue-carousel": "^0.18.0",
     "vue-chartjs": "^5.2.0",
+    "vue-router": "^4.2.5",
     "winston": "^3.10.0",
     "yarn": "^1.22.19"
   },
