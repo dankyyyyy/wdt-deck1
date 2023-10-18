@@ -541,6 +541,14 @@
   min-width: 10.8rem;
 }
 
+.commitment-color {
+  background-color: #e8bd6d;
+}
+
+.breakdown-color {
+  background-color: #6da4e8;
+}
+
 /* Dashboard Tables */
 
 .dashboard-table {
@@ -549,9 +557,10 @@
   max-height: 20rem;
   position: relative;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 16px;
   margin-left: 1rem;
   margin-right: 1rem;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.25);
 }
 
 .dashboard-table .ag-root-wrapper {
@@ -578,10 +587,6 @@
   text-align: center;
 }
 
-.summary-grid>* {
-  grid-row: 1;
-}
-
 .summary-table-container {
   display: flex;
   justify-content: center;
@@ -597,9 +602,10 @@
   max-height: 20rem;
   position: relative;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 16px;
   margin-left: 1.5rem;
   margin-right: 1.5rem;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
 }
 
 .summary-table .ag-root-wrapper {
@@ -625,8 +631,10 @@
   max-height: 20rem;
   position: relative;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 16px;
   margin-top: 2rem;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.25);
+
 }
 
 .wdt-table .ag-root-wrapper {
@@ -646,6 +654,24 @@
 
 /* Financial Feasibility Table */
 
+.fin-layout {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  text-align: center;
+}
+
+.fin-table-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  min-width: 10.8rem;
+  align-items: center;
+  text-align: center;
+}
+
 .fin-table {
   max-width: 51.7rem;
   min-height: 9rem;
@@ -654,7 +680,9 @@
   margin-bottom: 1.5rem;
   position: relative;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 16px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.25);
+
 }
 
 .direct-cost {
@@ -668,6 +696,7 @@
 
 .fin-table .ag-root-wrapper {
   border-radius: 16px;
+  border-color: #33333390;
   overflow: hidden;
 }
 
@@ -696,13 +725,11 @@
 }
 
 .generic-header-left {
-  text-align: left;
   font-weight: bold;
   font-size: 1em;
   margin-bottom: .5%;
-  justify-items: left;
-  align-items: left;
-  text-align: left;
+
+  text-align: center;
 }
 
 .generic-header-medium {

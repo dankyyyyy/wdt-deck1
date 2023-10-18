@@ -55,6 +55,7 @@ export default {
             headerName: label,
             field: label.replace(/ /g, ''),
             width: 165,
+            cellClass: label === 'Asset Name' || label === 'Yearly Commitment' ? 'commitment-color' : 'breakdown-color',
         }));
 
         const rowData = getRowData();

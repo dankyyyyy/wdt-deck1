@@ -11,13 +11,19 @@
     </div>
     <div v-else>
       <div style="justify-items: space-between; display: flex;">
-        <div class="table-container" style="justify-content: center;">
-          <h3 class="generic-header-left">Yearly Commitment</h3>
-          <TablesYearlyCommitmentTable :key="tableKey" :filterParams="filterParams" class="fin-table"/>
-          <h3 class="generic-header-left">Estimated Risk</h3>
-          <TablesEstimatedRiskTable :key="tableKey" :filterParams="filterParams" class="fin-table" />
-          <h3 class="generic-header-left">Efficiency (per WTG)</h3>
-          <TablesEfficiencyTable :key="tableKey" :filterParams="filterParams" class="fin-table" />
+        <div class="table-container">
+          <div class="fin-table-container">
+            <h3 class="generic-header-medium">Yearly Commitment</h3>
+            <TablesYearlyCommitmentTable :key="tableKey" :filterParams="filterParams" class="fin-table" />
+          </div>
+          <div class="fin-table-container">
+            <h3 class="generic-header-medium">Estimated Risk</h3>
+            <TablesEstimatedRiskTable :key="tableKey" :filterParams="filterParams" class="fin-table" />
+          </div>
+          <div class="fin-table-container">
+            <h3 class="generic-header-medium">Efficiency (per WTG)</h3>
+            <TablesEfficiencyTable :key="tableKey" :filterParams="filterParams" class="fin-table" />
+          </div>
         </div>
         <div class="w-1/5 h-full p-3">
           <Filters @buttonClick="handleApplyChanges" :filterProps="filterParams" />
