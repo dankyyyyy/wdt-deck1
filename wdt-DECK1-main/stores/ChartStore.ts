@@ -29,7 +29,6 @@ export const useChartStore = defineStore("ChartStore", {
         const perWTGLabels = ref<String[]>([
             "Asset Name",
             "Price per WTG",
-
         ]);
 
         const perWRKHRLabels = ref<String[]>([
@@ -37,39 +36,34 @@ export const useChartStore = defineStore("ChartStore", {
             "Price per WRKHR",
         ]);
 
-        const finChartLabels = ref<String[]>([
-            "Price per WTG",
-            "Price per Required Work Hour",
-        ]);
-
-        const finTableLabels = ref<String[]>([
+        const estimatedRiskTableLabels = ref<String[]>([
             "Asset Name",
             "Downtime Cost",
             "Lost Charter",
             "Lost Salary",
         ]);
 
-        const yearlyCommitmentRiskTableLabels = ref<String[]>([
+        const yearlyCommitmentTableLabels = ref<String[]>([
             "Asset Name",
             "Yearly Commitment",
             "Fuel and CO2",
             "Charter Cost",
         ]);
 
-        const yearlyDirectCostTableLabels = ref<String[]>([
+        const EfficiencyTableLabels = ref<String[]>([
             "Asset Name",
-            "Direct Cost",
-            "Charter",
+            "Total Cost",
             "Fuel",
             "CO2 Tax",
+            "Downtime Cost",
         ]);
 
-        const yearlyCommitmentTableLabels = ref<String[]>([
+        const dashboardYearlyCommitmentTableLabels = ref<String[]>([
             "Asset Name",
             "Yearly Commitment",
         ]);
 
-        const assetAvailabilityTableLabels = ref<String[]>([
+        const dashboardAssetAvailabilityTableLabels = ref<String[]>([
             "Asset Name",
             "Annual Availability",
         ]);
@@ -90,12 +84,11 @@ export const useChartStore = defineStore("ChartStore", {
             wdtTableLabels,
             perWTGLabels,
             perWRKHRLabels,
-            finChartLabels,
-            finTableLabels,
-            yearlyCommitmentRiskTableLabels,
-            yearlyDirectCostTableLabels,
+            estimatedRiskTableLabels,
             yearlyCommitmentTableLabels,
-            assetAvailabilityTableLabels,
+            EfficiencyTableLabels,
+            dashboardYearlyCommitmentTableLabels,
+            dashboardAssetAvailabilityTableLabels,
             assetSummaryTableLabels,
             availData,
         }

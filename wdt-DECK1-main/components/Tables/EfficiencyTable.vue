@@ -1,18 +1,17 @@
 <template>
-    <ag-grid-vue class="ag-theme-alpine fin-table yearly-commitment" :columnDefs="columnDefs" :rowData="rowData" />
+    <ag-grid-vue class="ag-theme-alpine fin-table direct-cost" :columnDefs="columnDefs" :rowData="rowData" />
 </template>
 
 <script>
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import { start } from "~/utils/chartCalc/wdtCalc";
 import { AgGridVue } from "ag-grid-vue3";
 import { useChartStore } from "~/stores/ChartStore";
 import { usePresetStore } from "~/stores/PresetStore";
-import { formatNumberWithDecimal } from "~/utils/chartUtils";
+import "~/utils/chartUtils";
 
 export default {
-    name: "FinancialTable",
+    name: "YearlyDirectCostTable",
     components: {
         AgGridVue,
     },
@@ -35,26 +34,19 @@ export default {
             if (presetStore.getSelectedPreset() != null) {
                 const currentPreset = presetStore.getSelectedPreset();
                 const assets = currentPreset.assets;
+                const location = currentPreset.location;
 
                 for (let i = 0; i < assets.length; i++) {
-                    start(
-                        props.filterParams.startHour,
-                        props.filterParams.endHour,
-                        props.filterParams.startMonth,
-                        props.filterParams.endMonth,
-                        props.filterParams.years,
-                        assets[i]
-                    );
-
                     const asset = assets[i];
                     const team = assets[i].team;
                     const annualWorkability = yearlyWorkabilityPerAsset(chartStore.wdtData[asset.name], props.filterParams.startMonth, props.filterParams.endMonth);
 
                     const row = {
                         AssetName: asset.name,
-                        DowntimeCost: `${formatNumberWithDecimal(wdtAnnualCost(asset, team, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
-                        LostCharter: `${formatNumberWithDecimal(annualCharterLoss(asset, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
-                        LostSalary: `${formatNumberWithDecimal(downtimeSalaryCost(team, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
+                        TotalCost: `${formatNumberWithDecimal(totalPerWtg(asset, team, location, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
+                        Fuel: `${formatNumberWithDecimal(fuelPerWtg(asset, location, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
+                        CO2Tax: `${formatNumberWithDecimal(CO2PerWtg(asset, location, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
+                        DowntimeCost: `${formatNumberWithDecimal(wdtPerWtg(asset, team, location, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
                     }
                     tempRowData.push(row);
                 }
@@ -62,12 +54,12 @@ export default {
             }
         }
 
-        const columnDefs = useChartStore().finTableLabels.map(label => ({
+        const columnDefs = useChartStore().EfficiencyTableLabels.map(label => ({
             headerName: label,
             field: label.replace(/ /g, ''),
             width: 165,
         }));
-        
+
         const rowData = getRowData();
 
         return {

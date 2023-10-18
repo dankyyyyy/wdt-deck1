@@ -695,6 +695,16 @@
   text-align: center;
 }
 
+.generic-header-left {
+  text-align: left;
+  font-weight: bold;
+  font-size: 1em;
+  margin-bottom: .5%;
+  justify-items: left;
+  align-items: left;
+  text-align: left;
+}
+
 .generic-header-medium {
   text-align: center;
   font-weight: bold;

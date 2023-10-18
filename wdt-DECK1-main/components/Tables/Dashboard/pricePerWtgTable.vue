@@ -43,7 +43,7 @@ export default {
 
                     const row = {
                         AssetName: asset.name,
-                        PriceperWTG: `${formatNumberWithDecimal(wdtCostsPerWtg(asset, team, location, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
+                        PriceperWTG: `${formatNumberWithDecimal(totalPerWtg(asset, team, location, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
                     }
                     tempRowData.push(row);
                 }

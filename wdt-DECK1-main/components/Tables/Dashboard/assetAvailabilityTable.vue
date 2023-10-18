@@ -50,7 +50,7 @@ export default {
             }
         }
 
-        const columnDefs = useChartStore().assetAvailabilityTableLabels.map(label => ({
+        const columnDefs = useChartStore().dashboardAssetAvailabilityTableLabels.map(label => ({
             headerName: label,
             field: label.replace(/ /g, ''),
             width: 165,

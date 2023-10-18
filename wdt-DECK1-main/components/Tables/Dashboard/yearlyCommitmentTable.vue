@@ -42,7 +42,7 @@ export default {
 
                     const row = {
                         AssetName: asset.name,
-                        YearlyCommitment: `${formatNumberWithDecimal(yearlyCommitment(asset, team, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
+                        YearlyCommitment: `${formatNumberWithDecimal(yearlyCommitment(asset, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
                     }
                     tempRowData.push(row);
                 }
@@ -50,7 +50,7 @@ export default {
             }
         };
 
-        const columnDefs = useChartStore().yearlyCommitmentTableLabels.map(label => ({
+        const columnDefs = useChartStore().dashboardYearlyCommitmentTableLabels.map(label => ({
             headerName: label,
             field: label.replace(/ /g, ''),
             width: 165,

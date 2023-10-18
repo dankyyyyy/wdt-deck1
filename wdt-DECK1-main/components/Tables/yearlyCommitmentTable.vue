@@ -51,7 +51,7 @@ export default {
                 return tempRowData;
             }
         }
-        const columnDefs = useChartStore().yearlyCommitmentRiskTableLabels.map(label => ({
+        const columnDefs = useChartStore().yearlyCommitmentTableLabels.map(label => ({
             headerName: label,
             field: label.replace(/ /g, ''),
             width: 165,

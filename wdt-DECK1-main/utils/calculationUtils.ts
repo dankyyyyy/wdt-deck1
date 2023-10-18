@@ -182,12 +182,37 @@ export function carbonTax(asset: any, annualAvailability: number, startMonth: nu
     Costs per WTG
 ================ */
 
-export function wdtCostsPerWtg(asset: any, team: any, location: any, annualWorkability: number, startMonth: number, endMonth: number): number { // cell H41 in excel
-    const totalCostWdt = wdtAnnualCost(asset, team, annualWorkability, startMonth, endMonth);
-    const amountOfWTG = location.wtg;
-    const wdtCostsPerWtg = totalCostWdt / amountOfWTG;
-    return wdtCostsPerWtg;
+export function totalPerWtg(asset: any, team: any, location: any, annualWorkability: number, startMonth: number, endMonth: number): number {
+    const totalCostWdt = fuelPerWtg(asset, location, annualWorkability, startMonth, endMonth) 
+                         + CO2PerWtg(asset, location, annualWorkability, startMonth, endMonth)
+                         + wdtPerWtg(asset, team, location, annualWorkability, startMonth, endMonth);
+    // const amountOfWTG = location.wtg;
+    // const totalPerWtg = totalCostWdt / amountOfWTG;
+    return totalCostWdt;
 }
+
+export function fuelPerWtg(asset: any, location: any, annualWorkability: number, startMonth: number, endMonth: number): number {
+    const yearlyFuelCost = fuelCost(asset, annualWorkability, startMonth, endMonth);
+    const amountOfWTG = location.wtg;
+    const fuelPerWtg = yearlyFuelCost / amountOfWTG;
+    return fuelPerWtg;
+}
+
+export function CO2PerWtg(asset: any, location: any, annualWorkability: number, startMonth: number, endMonth: number): number {
+    const yearlyCarbonTax = carbonTax(asset, annualWorkability, startMonth, endMonth);
+    const amountOfWTG = location.wtg;
+    const CO2PerWtg = yearlyCarbonTax / amountOfWTG;
+    return CO2PerWtg;
+}
+
+export function wdtPerWtg(asset: any, team: any, location: any, annualWorkability: number, startMonth: number, endMonth: number): number {
+    const annualWdtCost = wdtAnnualCost(asset, team, annualWorkability, startMonth, endMonth);
+    const amountOfWTG = location.wtg;
+    const wdtPerWTG = annualWdtCost / amountOfWTG;
+    return wdtPerWTG;
+}
+
+
 
 /* ============================
    Costs per Required Workhour
@@ -201,7 +226,7 @@ export function directCostPerWorkHour(asset: any, team: any, annualWorkability: 
 }
 
 export function directCostPerRequiredWorkHour(asset: any, wtg: any, location: any, annualWorkability: number, startMonth: number, endMonth: number): number { // cell H55 in excel
-    const directCost = directAnnualCost(asset, annualWorkability, startMonth, endMonth);
+    const directCost = yearlyCommitment(asset, annualWorkability, startMonth, endMonth);
     const requiredHours = annualTotalRequiredHours(wtg, location);
     const directCostPerRequiredWorkHour = directCost / requiredHours;
     return directCostPerRequiredWorkHour;
