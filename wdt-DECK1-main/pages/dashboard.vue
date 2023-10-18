@@ -7,6 +7,9 @@
                     <Sidebar />
                 </div>
                 <div class="h-full deck-frame-translucent-w-sidebar inline-block">
+                    <div class="heading-container">
+                        <h1 class="generic-header">Dashboard</h1>
+                    </div>
                     <!-- <div class="w-4/5 h-20 p-3">
                             <RecommendationPopUp />
                         </div> -->

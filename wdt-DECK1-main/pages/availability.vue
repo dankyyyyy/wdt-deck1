@@ -4,6 +4,9 @@
       <Sidebar />
     </div>
     <div class="h-full deck-frame-translucent-w-sidebar inline-block">
+      <div class="heading-container">
+        <h1 class="generic-header">Availability</h1>
+      </div>
       <div class="flex flex-col">
         <div v-for="id in ids" :key="id">
           <FiltersAvailGraphFilter :key="chartKey" @remove="handleRemove" :chartId="id" :amountOfCharts="ids.length" />

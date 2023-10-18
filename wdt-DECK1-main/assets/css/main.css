@@ -9,12 +9,17 @@
         transparent);
   }
 
+  .deck-logo {
+    align: middle;
+    margin-bottom: 2rem;
+  }
+
   .deck-sidebar {
     background-color: #222f3e;
     border-radius: 70px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
-    height: 15rem;
-    max-height: 600px;
+    min-height: 470px;
+    max-height: 470px;
     min-width: 250px;
   }
 
@@ -63,6 +68,12 @@
     background-color: #dfdfdf;
     border-radius: 12px;
     @apply p-5;
+  }
+
+  .deck-frame-translucent-container {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
   }
 
   .deck-frame-translucent {
@@ -258,7 +269,10 @@
   }
 
   .create-input {
-    @apply py-2 flex justify-between w-60;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 2rem;
   }
 
   .dialog-button {
@@ -536,8 +550,8 @@
   position: relative;
   overflow: hidden;
   border-radius: 12px;
-  margin-left: 1.5rem;
-  margin-right: 1.5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 .dashboard-table .ag-root-wrapper {
@@ -552,6 +566,54 @@
 }
 
 .dashboard-table .ag-header-cell-label {
+  justify-content: center;
+}
+
+/* Summary Screen Section */
+
+.summary-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.summary-grid>* {
+  grid-row: 1;
+}
+
+.summary-table-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 10.8rem;
+  margin-top: 2rem;
+  grid-row: 2;
+}
+
+.summary-table {
+  width: 31.1rem;
+  height: 11.8rem;
+  max-height: 20rem;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.summary-table .ag-root-wrapper {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.summary-table .ag-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.summary-table .ag-header-cell-label {
   justify-content: center;
 }
 
@@ -623,8 +685,28 @@
    Generic Text Formatting Section
 ================================== */
 
-.generic-header{
+.generic-header {
+  text-align: center;
+  font-weight: bold;
+  font-size: 2em;
+  margin-bottom: .5%;
+  justify-items: center;
+  align-items: center;
+  text-align: center;
+}
 
+.generic-header-medium {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.5em;
+  margin-bottom: .5%;
+  justify-items: center;
+  align-items: center;
+  text-align: center;
+}
+
+.heading-container {
+  margin: .5rem;
 }
 
 @layer utilities {

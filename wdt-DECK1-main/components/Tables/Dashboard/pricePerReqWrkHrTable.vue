@@ -1,5 +1,5 @@
 <template>
-    <ag-grid-vue class="ag-theme-alpine fin-table yearly-commitment" :columnDefs="columnDefs" :rowData="rowData" />
+    <ag-grid-vue class="ag-theme-alpine dashboard-table" :columnDefs="columnDefs" :rowData="rowData" />
 </template>
 
 <script>
@@ -11,7 +11,7 @@ import { usePresetStore } from "~/stores/PresetStore";
 import "~/utils/chartUtils";
 
 export default {
-    name: "YearlyCommitmentRiskTable",
+    name: "pricePerReqWrkHrTable",
     components: {
         AgGridVue,
     },

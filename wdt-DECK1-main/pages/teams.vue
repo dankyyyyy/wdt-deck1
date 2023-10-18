@@ -1,5 +1,4 @@
 <template>
-  <div class="h-full align-middle deck-frame-translucent">
     <NuxtLink to="/">
       <IconsLogoInverted class="inline-block align-middle w-full" />
     </NuxtLink>
@@ -7,11 +6,11 @@
       <h1 class="text-2xl font-semibold">Teams</h1>
       <IconsAdd @click="showModal" class="cursor-pointer" />
     </div>
-    <div class="flex flex-col p-5">
+    <div deck-frame-translucent-container>
       <h2 class="text-lg font-semibold w-full pl-5">Available teams</h2>
 
       <ModalDialogsCreateTeamModal v-if="isModalVisible" @hideModal="hideModal" />
-      <div v-if="!loading" class="grid">
+      <div v-if="!loading" class="grid deck-frame-translucent">
         <div v-for="team in teams" :key="team._id">
           <CardsTeamCard :team="team" />
         </div>
@@ -20,7 +19,6 @@
         Loading data...
       </div>
     </div>
-  </div>
 </template>
   
 <script>

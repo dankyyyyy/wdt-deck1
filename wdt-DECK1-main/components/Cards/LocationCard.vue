@@ -115,6 +115,12 @@ export default {
   gap: 16px;
 }
 
+.summary-grid {
+  display: flex;
+  grid-template-columns: repeat(auto-fit, minmax(min(30rem, 100%), 1fr));
+  gap: 16px;
+}
+
 .selected {
   background-color: #abd5e5;
   /* Change to DECK1 Blue with 25% opacity */

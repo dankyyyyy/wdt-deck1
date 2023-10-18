@@ -3,9 +3,12 @@
     <div class="sidebar-container p-5 h-screen">
       <Sidebar />
     </div>
-      <div class="h-full deck-frame-translucent-w-sidebar inline-block">
-        <FiltersFinGraphFilter :tableKey="tableKey"/>
+    <div class="h-full deck-frame-translucent-w-sidebar inline-block">
+      <div class="heading-container">
+        <h1 class="generic-header">Financial Feasibility</h1>
       </div>
+      <FiltersFinGraphFilter :tableKey="tableKey" />
+    </div>
   </div>
 </template>
 

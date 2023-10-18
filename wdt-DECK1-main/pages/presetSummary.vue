@@ -1,13 +1,31 @@
 <template>
-    <div class="h-full align-middle deck-frame-translucent">
-        <NuxtLink to="/">
-            <IconsLogoInverted class="inline-block align-middle w-full" />
-        </NuxtLink>
-        <div class="create-input">
-            <label for="name" class="box-title justify-center">Name: </label>
-            <input type="text" v-model="preset.name" class="border-2 rounded-md text-center justify-center" />
+    <NuxtLink to="/">
+        <IconsLogoInverted class="w-full inline-block deck-logo" />
+    </NuxtLink>
+    <div class="heading-container">
+        <h1 class="generic-header">Preset Summary</h1>
+    </div>
+
+    <div deck-frame-translucent-container>
+        <div class="deck-frame-translucent summary-layout">
+            <div class="generic-header-medium">
+                <label for="namePrompt">Please give a name to your preset! </label>
+            </div>
+            <div class="create-input">
+                <label for="name" class="box-title justify-center">Name: </label>
+                <input type="text" v-model="preset.name" class="border-2 rounded-md text-center justify-center" />
+            </div>
+            <div style="display: flex;">
+                <CardsLocationCard :location="location" />
+                <CardsWtgCard :wtg="wtg" />
+            </div>
+            <div class="summary-table-container">
+                <TablesAssetSummaryTable :assets="assets" class="summary-table" />
+            </div>
         </div>
     </div>
+
+
     <SubmitButton @click="createPreset" />
 </template>
 
@@ -22,6 +40,10 @@ export default {
     name: "PresetSummary",
     data() {
         return {
+            assets: useAssetStore().getSelectedAssets(),
+            location: useLocationStore().getSelectedLocation(),
+            wtg: useWindTurbineGeneratorStore().getSelectedWtg(),
+
             preset: {
                 name: "",
                 assets: useAssetStore().getSelectedAssets(),

@@ -15,16 +15,16 @@
           </div> -->
         </div>
         <div class="box-text">
-          <label for="limit">Wind Speed Limit: </label>
+          <label for="windSpeedLimit">Wind Speed Limit: </label>
           <p class="whitespace-nowrap">{{ wtg.windSpeedLimit }}m/s</p>
           <hr />
-          <label for="limit">Maintenance: </label>
+          <label for="plannedMaintenance ">Maintenance: </label>
           <p class="box-text-type">{{ wtg.plannedMaintenance }}h/WTG</p>
           <hr />
-          <label for="limit">Troubleshoot Visits: </label>
+          <label for="troubleshootVisits">Troubleshoot Visits: </label>
           <p class="box-text-type">{{ wtg.troubleshootVisits }}/WTG</p>
           <hr />
-          <label for="limit">Average TS Hours (per visit):</label>
+          <label for="averageTsHours">Average TS Hours (per visit):</label>
           <!--need to signify that the hours are split up between (typically) 3 staff, resulting in n/3 h/WTG-->
           <p class="box-text-type">{{ wtg.averageTsHours }}h</p>
         </div>

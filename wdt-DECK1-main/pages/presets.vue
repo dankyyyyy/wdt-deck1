@@ -1,23 +1,24 @@
 <template>
-    <div class="h-full align-middle deck-frame-translucent">
-        <NuxtLink to="/">
-            <IconsLogoInverted class="inline-block align-middle w-full" />
-        </NuxtLink>
-        <!-- <div class="flex w-full justify-between p-5">
-            <h1 class="text-2xl font-semibold"></h1>
-            <IconsAdd @click="showModal" class="cursor-pointer" />
-        </div> -->
+    <NuxtLink to="/">
+        <IconsLogoInverted class="inline-block align-middle w-full" />
+    </NuxtLink>
 
-        <!-- <ModalDialogsCreatePresetModal v-if="isModalVisible" @hideModal="hideModal" /> -->
+    <div class="heading-container">
+        <h1 class="generic-header">Preset Selection</h1>
+    </div>
 
-        <div class="grid" v-if="presets !== undefined">
+    <!-- <IconsAdd @click="showModal" class="cursor-pointer" /> -->
+
+    <!-- <ModalDialogsCreatePresetModal v-if="isModalVisible" @hideModal="hideModal" /> -->
+    <div class="deck-frame-translucent-container">
+        <div class="grid deck-frame-translucent" v-if="presets !== undefined">
             <div v-for="preset in presets" :key="preset.id">
                 <CardsPresetCard :preset="preset" @preset-selected="handlePresetSelected"
                     @preset-deselected="handlePresetDeselected" />
             </div>
         </div>
-        <SubmitButton @click="navigateToNextPage" />
     </div>
+    <SubmitButton @click="navigateToNextPage" />
 </template>
 
 <script>

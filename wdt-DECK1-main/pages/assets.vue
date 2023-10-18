@@ -1,27 +1,25 @@
 <template>
-  <div class="deck-frame-translucent align-middle h-full">
-    <NuxtLink to="/">
-      <IconsLogoInverted class="inline-block align-middle w-full" />
-    </NuxtLink>
-    <div class="flex w-full justify-between p-5">
-      <h1 class="text-2xl font-semibold">Assets</h1>
-      <IconsAdd @click="showModal" class="cursor-pointer" />
-      <!-- add on hover description like "by clicking on this "+" button you can add another asset to your fleet" -->
-    </div>
+  <NuxtLink to="/">
+    <IconsLogoInverted class="inline-block align-middle w-full" />
+  </NuxtLink>
+  <div class="heading-container">
+    <h1 class="generic-header">Assets</h1>
+  </div>
 
-    <!-- CreateAssetModal-->
-    <ModalDialogsCreateAssetModal v-if="isModalVisible" @hideModal="hideModal" />
+  <!-- <IconsAdd @click="showModal" class="cursor-pointer" /> -->
+  <!-- add on hover description like "by clicking on this "+" button you can add another asset to your fleet" -->
 
-    <div class="flex flex-col p-5">
-      <div class="grid" v-if="assets !== undefined">
-        <div v-for="asset in assets" :key="asset.id" class="p-5">
-          <CardsAssetCard :asset="asset" @asset-selected="handleAssetSelected"
-            @asset-deselected="handleAssetDeselected" />
-        </div>
+  <!-- CreateAssetModal-->
+  <ModalDialogsCreateAssetModal v-if="isModalVisible" @hideModal="hideModal" />
+
+  <div deck-frame-translucent-container>
+    <div class="grid deck-frame-translucent" v-if="assets !== undefined">
+      <div v-for="asset in assets" :key="asset.id" class="p-5">
+        <CardsAssetCard :asset="asset" @asset-selected="handleAssetSelected" @asset-deselected="handleAssetDeselected" />
       </div>
     </div>
-    <SubmitButton @click="navigateToNextPage" />
   </div>
+  <SubmitButton @click="navigateToNextPage" />
 </template>
 
 <script>

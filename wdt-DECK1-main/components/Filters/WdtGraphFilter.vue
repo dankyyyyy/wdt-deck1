@@ -21,12 +21,16 @@
         <div class="p-3">
           <ChartsWdtChart :key="wdtChartKey" :filterParams="filterParams" />
         </div>
-        <div class="table-container">
-          <TablesDashboardYearlyCommitmentTable :key="tableKey" :filterParams="filterParams" />
-          <TablesDashboardAssetAvailabilityTable :key="tableKey" :filterParams="filterParams" />
-          <TablesDashboardWdtTable :key="tableKey" :filterParams="filterParams" />
-          <TablesDashboardPricePerWtgTable :key="tableKey" :filterParams="filterParams" />
-          <TablesDashboardPricePerReqWrkHrTable :key="tableKey" :filterParams="filterParams" />
+        <div class="table-container summary-layout">
+          <div style="display: flex;">
+            <TablesDashboardYearlyCommitmentTable :key="tableKey" :filterParams="filterParams" />
+            <TablesDashboardAssetAvailabilityTable :key="tableKey" :filterParams="filterParams" />
+            <TablesDashboardWdtTable :key="tableKey" :filterParams="filterParams" />
+          </div>
+          <div style="display: flex; margin-top: 2rem;">
+            <TablesDashboardPricePerWtgTable :key="tableKey" :filterParams="filterParams" />
+            <TablesDashboardPricePerReqWrkHrTable :key="tableKey" :filterParams="filterParams" />
+          </div>
         </div>
       </div>
     </div>

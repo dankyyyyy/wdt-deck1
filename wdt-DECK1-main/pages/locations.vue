@@ -1,14 +1,17 @@
 <template>
-  <div class="h-full align-middle deck-frame-translucent">
-    <NuxtLink to="/">
-      <IconsLogoInverted class="inline-block align-middle w-full" />
-    </NuxtLink>
-    <div class="flex w-full justify-end">
-      <IconsAdd @click="showModal" class="cursor-pointer" />
-    </div>
-    <ModalDialogsCreateLocationModal v-if="isModalVisible" @hideModal="hideModal"
-      @downloaded="sendDownloadedNotification" />
-    <div v-if="!loading" class="grid">
+  <NuxtLink to="/">
+    <IconsLogoInverted class="inline-block align-middle w-full" />
+  </NuxtLink>
+  <div class="heading-container">
+    <h1 class="generic-header">Locations</h1>
+  </div>
+
+    <!-- <IconsAdd @click="showModal" class="cursor-pointer" /> -->
+
+  <ModalDialogsCreateLocationModal v-if="isModalVisible" @hideModal="hideModal"
+    @downloaded="sendDownloadedNotification" />
+  <div deck-frame-translucent-container>
+    <div v-if="!loading" class="grid deck-frame-translucent">
       <div v-for="location in locations" :key="location._id">
         <CardsLocationCard :location="location" :downloaded="downloaded" @location-selected="handleLocationSelected"
           @location-deselected="handleLocationDeselected" />

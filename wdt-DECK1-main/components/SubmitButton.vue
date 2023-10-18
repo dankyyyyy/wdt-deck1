@@ -10,12 +10,14 @@ import { usePresetStore } from '~/stores/PresetStore';
 import { useTeamStore } from '~/stores/TeamStore';
 import { useAssetStore } from '~/stores/AssetStore';
 import { useWindTurbineGeneratorStore } from '~/stores/WindTurbineGeneratorStore';
+import { useRouter } from 'vue-router';
 
 export default {
     name: "SubmitButton",
     computed: {
         isActive() {
-            const currentPath = window.location.pathname;
+            const router = useRouter();
+            const currentPath = router.currentRoute.value.path;
 
             switch (currentPath) {
                 case "/presets": {

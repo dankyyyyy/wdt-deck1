@@ -1,24 +1,25 @@
 <template>
-    <div class="h-full align-middle deck-frame-translucent">
-        <NuxtLink to="/">
-            <IconsLogoInverted class="inline-block align-middle w-full" />
-        </NuxtLink>
-        <div class="flex w-full justify-between p-5">
-            <h1 class="text-2xl font-semibold">Wind Turbine Generators</h1>
-            <IconsAdd @click="showModal" class="cursor-pointer" />
-            <!-- add on hover description like "by clicking on this "+" button you can add another asset to your fleet" -->
-        </div>
+    <NuxtLink to="/">
+        <IconsLogoInverted class="inline-block align-middle w-full" />
+    </NuxtLink>
+    <div class="heading-container">
+        <h1 class="generic-header">Wind Turbine Generators</h1>
+    </div>
 
-        <!-- CreateAssetModal-->
-        <ModalDialogsCreateWtgModal v-if="isModalVisible" @hideModal="hideModal" />
-        
-        <div class="flex flex-wrap pb-5" v-if="wtgs !== undefined">
+    <!-- <IconsAdd @click="showModal" class="cursor-pointer" /> -->
+    <!-- add on hover description like "by clicking on this "+" button you can add another asset to your fleet" -->
+
+    <!-- CreateWTGModal-->
+    <ModalDialogsCreateWtgModal v-if="isModalVisible" @hideModal="hideModal" />
+
+    <div deck-frame-translucent-container>
+        <div class="grid deck-frame-translucent" v-if="wtgs !== undefined">
             <div v-for="wtg in  wtgs " :key="wtg.id" class="p-5">
                 <CardsWtgCard :wtg="wtg" @wtg-selected="handleWtgSelected" @wtg-deselected="handleWtgDeselected" />
             </div>
         </div>
-        <SubmitButton @click="navigateToNextPage" />
     </div>
+    <SubmitButton @click="navigateToNextPage" />
 </template>
   
 <script>

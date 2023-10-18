@@ -15,12 +15,12 @@
           </div> -->
 
           <div class="customize-box-text">
-            <label for="limit">Wind Speed Limit: </label>
+            <label for="windSpeedLimit">Wind Speed Limit: </label>
             <p class="customize-box-text-type">{{ asset.windSpeedLimit }}m/s</p>
             <hr />
 
-            <div v-if="asset.category === 'Vessel' || asset.category === 'Helicopter'">
-              <label for="limit">H<sub>s</sub> Limit:</label>
+            <div>
+              <label for="hs">H<sub>s</sub> Limit:</label>
               <p class="customize-box-text-type">{{ asset.hs }}m</p>
               <hr />
               <label for="dayRate">Day Rate: </label>
@@ -30,51 +30,69 @@
             </div>
 
             <div v-if="asset.category === 'Vessel'">
-              <label for="limit">Vessel Speed: </label>
+              <label for="vesselSpeed">Vessel Speed: </label>
               <p class="customize-box-text-type">{{ asset.vesselSpeed }}kt</p>
               <hr />
-              <label for="limit">High Engine Activity: </label>
+              <label for="highEngineActivity">High Engine Activity: </label>
               <p class="customize-box-text-type">{{ asset.highEngineActivity }}h</p>
               <hr />
-              <label for="limit">Loitering: </label>
+              <label for="loitering">Loitering: </label>
               <p class="customize-box-text-type">{{ asset.loitering }}h</p>
               <hr />
             </div>
 
-              <div v-if="asset.category === 'Helicopter'">
-                <label for="limit">Helicopter Speed: </label>
-                <p class="customize-box-text-type">{{ asset.helicopterSpeed }}kt</p>
-                <hr />
-                <label for="limit">Cloudbase: </label>
-                <p class="customize-box-text-type">{{ asset.cloudbase }}m</p>
-                <hr />
-                <label for="limit">Visibility: </label>
-                <p class="customize-box-text-type">{{ asset.visibility }}km</p>
-                <hr />
-              </div>
-
-              <div v-if="asset.category === 'Vessel' || asset.category === 'Helicopter'">
-                <label for="limit">Fuel Consumption: </label>
-                <p class="customize-box-text-type">{{ asset.operationalFuelConsumption }}l/h</p>
-                <hr />
-              </div>
-
-              <div v-if="asset.category === 'Vessel'">
-                <label for="limit">Fuel Consumption when Loitering: </label>
-                <p class="customize-box-text-type">{{ asset.loiteringFuelConsumption }}l/h</p>
-              </div>
-
-              <div v-if="asset.category === 'Helicopter'">
-
-                <label for="limit">Flight Time (2 round trips): </label>
-                <p class="customize-box-text-type">{{ asset.flightTime }}h</p>
-
-              </div>
+            <div v-if="asset.category === 'Helicopter'">
+              <label for="helicopterSpeed">Helicopter Speed: </label>
+              <p class="customize-box-text-type">{{ asset.helicopterSpeed }}kt</p>
+              <hr />
+              <label for="cloudbase">Cloudbase: </label>
+              <p class="customize-box-text-type">{{ asset.cloudbase }}m</p>
+              <hr />
+              <label for="visibility">Visibility: </label>
+              <p class="customize-box-text-type">{{ asset.visibility }}km</p>
+              <hr />
             </div>
+
+            <div>
+              <label for="operationalFuelConsumption">Fuel Consumption: </label>
+              <p class="customize-box-text-type">{{ asset.operationalFuelConsumption }}l/h</p>
+              <hr />
+            </div>
+
+            <div v-if="asset.category === 'Vessel'">
+              <label for="loiteringFuelConsumption">Fuel Consumption when Loitering: </label>
+              <p class="customize-box-text-type">{{ asset.loiteringFuelConsumption }}l/h</p>
+              <hr/>
+            </div>
+
+            <div v-if="asset.category === 'Helicopter'">
+              <label for="flightTime">Flight Time (2 round trips): </label>
+              <p class="customize-box-text-type">{{ asset.flightTime }}h</p>
+              <hr/>
+            </div>
+             
+            <div>
+              <label for="teamName">Team Name: </label>
+              <p class="customize-box-text-type">{{ asset.team.name }}</p>
+              <hr/>
+            </div>
+
+            <div>
+              <label for="numberOfPersons">Team Size: </label>
+              <p class="customize-box-text-type">{{ asset.team.numberOfPersons }}</p>
+              <hr/>
+            </div>
+
+            <div>
+              <label for="shiftPeriod">Shift Length: </label>
+              <p class="customize-box-text-type">{{ asset.team.shiftPeriod }}h</p>
+            </div>
+            
           </div>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>

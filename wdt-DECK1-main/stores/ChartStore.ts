@@ -66,12 +66,18 @@ export const useChartStore = defineStore("ChartStore", {
 
         const yearlyCommitmentTableLabels = ref<String[]>([
             "Asset Name",
-            "Yearly Commitment"
+            "Yearly Commitment",
         ]);
 
         const assetAvailabilityTableLabels = ref<String[]>([
             "Asset Name",
-            "Annual Availability"
+            "Annual Availability",
+        ]);
+
+        const assetSummaryTableLabels = ref<String[]>([
+            "Asset Name",
+            "Team Name",
+            "Team Size",
         ]);
 
         const availData: any = {
@@ -90,6 +96,7 @@ export const useChartStore = defineStore("ChartStore", {
             yearlyDirectCostTableLabels,
             yearlyCommitmentTableLabels,
             assetAvailabilityTableLabels,
+            assetSummaryTableLabels,
             availData,
         }
     }
