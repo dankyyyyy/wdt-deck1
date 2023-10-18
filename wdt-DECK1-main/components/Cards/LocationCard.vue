@@ -4,20 +4,17 @@
       <div class="customize-card-box" @click="selectLocation" :class="{ 'selected': isSelected }">
         <div class="box-content">
           <IconsLogoInverted class="box-image inline-block align-middle w-full" />
-          <!-- <div v-if="!isDataRegistered">
-            <button @click="postData">Register data</button>
-          </div>
-          <div v-else>
-            <p>Data is present</p>
-          </div> -->
+         <div v-if="dataInformation.isFetching">
+      ⏳
+    </div>
+    <div v-else-if="dataInformation.isDataRegistered">
+      <p>Data is present</p>
+      <p>Latest record is {{dataInformation.latestDataYear }}</p>
+    </div>
+    <div v-else>
+      <p class="font-semibold">Data is missing</p>
+    </div>
           <h2 class="box-title">{{ location.name }}</h2>
-          <!--<ModalDialogsUpdateLocationModal :location="location" v-if="isUpdateModalVisible" @hideModal="hideModal" />
-          <ModalDialogsDeleteLocationModal :location="location" v-if="isDeleteModalVisible" @hideModal="hideModal" />
-
-          <div class="flex space-x-2">
-            <IconsUpdate @click="showUpdateModal" class="cursor-pointer" />
-            <IconsDelete @click="showDeleteModal" class="cursor-pointer" />
-          </div> -->
 
           <div class="box-text">
             <label for="latitude">Latitude: </label>
@@ -53,16 +50,23 @@ export default {
   },
   data() {
     return {
-      isDataRegistered: false,
-      isUpdateModalVisible: false,
-      isDeleteModalVisible: false,
+      dataInformation: {
+        isFetching: true,
+        isDataRegistered: false,
+        latestDataYear: null,
+      },
       isSelected: false,
     };
   },
   async mounted() {
-    if (await useWeatherdataStore().checkByLocationId(this.location._id)) {
-      this.isDataRegistered = true;
+    console.log("checking: ", this.location._id);
+    const foundData = await useWeatherdataStore().checkByLocationId(this.location._id)
+    console.log(foundData);
+    if (foundData !== undefined) {
+      this.dataInformation.isDataRegistered = true;
+      this.dataInformation.latestDataYear = foundData.Year;
     }
+    this.dataInformation.isFetching = false;
   },
   methods: {
     async postData() {
@@ -77,16 +81,6 @@ export default {
       } catch (error) {
         console.error('Error:', error);
       }
-    },
-    showUpdateModal() {
-      this.isUpdateModalVisible = true;
-    },
-    showDeleteModal() {
-      this.isDeleteModalVisible = true;
-    },
-    hideModal() {
-      this.isUpdateModalVisible = false;
-      this.isDeleteModalVisible = false;
     },
     selectLocation() {
       const location = this.location;

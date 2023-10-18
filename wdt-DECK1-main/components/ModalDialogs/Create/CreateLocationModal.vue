@@ -33,28 +33,29 @@
         </button>
       </div>
     </div>
-  </div>
+    </div>
 </template>
   
-<script>
-import { useLocationStore } from "~/stores/LocationStore";
-import { isNumeric } from "~/utils/chartUtils";
+  <script>
+  import { useLocationStore } from "~/stores/LocationStore";
+  import { useWeatherdataStore } from "~/stores/WeatherdataStore";
+  import { isNumeric } from "~/utils/chartUtils";
 import { showError } from "~/utils/globalErrorHandling";
-import axios from "axios";
-
-
-export default {
-  name: "CreateLocationModal",
-  data() {
-    return {
-      location: {
-        name: "",
-        latitude: 0,
-        longitude: 0,
-        limit: "",
-      },
-    };
-  },
+  import axios from "axios";
+  
+  export default {
+    name: "CreateLocationModal",
+    data() {
+      return {
+        location: {
+          _id: null,
+          name: "",
+          latitude: 0,
+          longitude: 0,
+          limit: 0,
+        },
+      };
+    },
   methods: {
     handleCancelClick() {
       this.$emit("hideModal");
@@ -94,28 +95,38 @@ export default {
         showError("Please make sure all fields are filled in.");
       } else {
         const store = useLocationStore();
-        await store.post(location);
-        const coordinates = this.decimalToCoordinates(location.longitude, location.latitude);
-        this.callRetrieve(coordinates.North, coordinates.West, coordinates.South, coordinates.East, location.name);
+        await store.post(this.location)
+        const newLoc = await store.getByName(this.location.name)
+        this.location._id = newLoc._id;
+
+        const coordinates = this.decimalToCoordinates(this.location.longitude, this.location.latitude)
+        this.callRetrieve(coordinates.North, coordinates.West, coordinates.South, coordinates.East, this.location.name);
         this.$emit("hideModal");
-      }
-    },
-    async callRetrieve(north, west, south, east, locName) {
-      try {
-        const c1 = north
-        const c2 = west
-        const c3 = south
-        const c4 = east
-        const name = locName
-        const yearNow = new Date().getFullYear()
-        for (let i = yearNow; i > yearNow - 20; i = i - 2) {
-          console.log('asdasd');
-          const response = await axios.get(`http://127.0.0.1:5555/data/${c1}/${c2}/${c3}/${c4}/${name}/${i}`); //python api url could be moved to .env
+      },
+      async callRetrieve(north, west, south, east, locName) {
+        try {
+            const c1 = north
+            const c2 = west
+            const c3 = south
+            const c4 = east
+            const name = locName
+            const yearNow = new Date().getFullYear()
+            for (let i = yearNow; i > yearNow-20; i = i-2) {
+            const response = await axios.get(`http://127.0.0.1:5555/data/${c1}/${c2}/${c3}/${c4}/${name}/${i}`) //python api url could be moved to .env
+            this.postData(response.data)
+            }
+          } catch (error) {
+          console.error('Error calling retrieve:', error);
         }
-      } catch (error) {
-        console.error('Error calling retrieve:', error);
-      }
-    },
+        this.$emit("newAdded")
+      },
+      async postData(weatherData) {
+        try {
+          await useWeatherdataStore().postData(weatherData, this.location);
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      },
     decimalToCoordinates(long, lat) {
       let north, west, south, east;
       north = Number(lat) + 0.75
