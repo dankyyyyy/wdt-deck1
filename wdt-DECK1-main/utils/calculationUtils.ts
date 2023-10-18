@@ -151,13 +151,6 @@ export function fuelCost(asset: any, annualAvailability: number, startMonth: num
     return directFuelCost;
 }
 
-export function charterCost(asset: any, annualAvailability: number, startMonth: number, endMonth: number) {
-    const dayRate = asset.dayRate;
-    const availableDays = availableDaysFromPercentage(annualAvailability, startMonth, endMonth);
-    const directCharterCost = dayRate * availableDays;
-    return directCharterCost;
-}
-
 function carbonOutput(asset: any, annualAvailability: number, startMonth: number, endMonth: number): number {
     var conversionDecimal = 0;
     if (asset.category === 'Vessel') {
@@ -182,13 +175,11 @@ export function carbonTax(asset: any, annualAvailability: number, startMonth: nu
     Costs per WTG
 ================ */
 
-export function totalPerWtg(asset: any, team: any, location: any, annualWorkability: number, startMonth: number, endMonth: number): number {
-    const totalCostWdt = fuelPerWtg(asset, location, annualWorkability, startMonth, endMonth) 
-                         + CO2PerWtg(asset, location, annualWorkability, startMonth, endMonth)
-                         + wdtPerWtg(asset, team, location, annualWorkability, startMonth, endMonth);
-    // const amountOfWTG = location.wtg;
-    // const totalPerWtg = totalCostWdt / amountOfWTG;
-    return totalCostWdt;
+export function yearlyCommitmentPerWtg(asset: any, location: any, annualWorkability: number, startMonth: number, endMonth: number): number {
+    const totalYearlyCommitment = yearlyCommitment(asset, annualWorkability, startMonth, endMonth);
+    const amountOfWTG = location.wtg;
+    const yearlyCommitmentPerWtg = totalYearlyCommitment / amountOfWTG;
+    return yearlyCommitmentPerWtg;
 }
 
 export function fuelPerWtg(asset: any, location: any, annualWorkability: number, startMonth: number, endMonth: number): number {
@@ -205,14 +196,12 @@ export function CO2PerWtg(asset: any, location: any, annualWorkability: number, 
     return CO2PerWtg;
 }
 
-export function wdtPerWtg(asset: any, team: any, location: any, annualWorkability: number, startMonth: number, endMonth: number): number {
-    const annualWdtCost = wdtAnnualCost(asset, team, annualWorkability, startMonth, endMonth);
+export function charterPerWtg(asset: any, location: any, annualWorkability: number, startMonth: number, endMonth: number): number {
+    const yearlyCharter = annualDayRate(asset);
     const amountOfWTG = location.wtg;
-    const wdtPerWTG = annualWdtCost / amountOfWTG;
-    return wdtPerWTG;
+    const charterPerWtg = yearlyCharter / amountOfWTG;
+    return charterPerWtg;
 }
-
-
 
 /* ============================
    Costs per Required Workhour

@@ -43,10 +43,10 @@ export default {
 
                     const row = {
                         AssetName: asset.name,
-                        TotalCost: `${formatNumberWithDecimal(totalPerWtg(asset, team, location, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
+                        YearlyCommitment: `${formatNumberWithDecimal(yearlyCommitmentPerWtg(asset, location, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
+                        Charter: `${formatNumberWithDecimal(charterPerWtg(asset, location, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
                         Fuel: `${formatNumberWithDecimal(fuelPerWtg(asset, location, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
                         CO2Tax: `${formatNumberWithDecimal(CO2PerWtg(asset, location, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
-                        DowntimeCost: `${formatNumberWithDecimal(wdtPerWtg(asset, team, location, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))}€`,
                     }
                     tempRowData.push(row);
                 }

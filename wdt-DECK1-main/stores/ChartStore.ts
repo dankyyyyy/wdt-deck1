@@ -52,10 +52,10 @@ export const useChartStore = defineStore("ChartStore", {
 
         const EfficiencyTableLabels = ref<String[]>([
             "Asset Name",
-            "Total Cost",
+            "Yearly Commitment",
+            "Charter",
             "Fuel",
             "CO2 Tax",
-            "Downtime Cost",
         ]);
 
         const dashboardYearlyCommitmentTableLabels = ref<String[]>([
