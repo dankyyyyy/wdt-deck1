@@ -11,9 +11,7 @@ c = cdsapi.Client(url="https://cds.climate.copernicus.eu/api/v2",
                   key="194760:1d68b23e-3621-4c23-b31a-bbb20a26e263")
 
 def retrieve(c1, c2, c3, c4, name, year):
-    previousYear = int(year)-1
-    name = name + year + "-" + str(previousYear) + ".grib"
-    years = [ year, str(previousYear) ]
+    name = name + str(year) + ".grib"
     variables = [
         '100m_u_component_of_wind', '100m_v_component_of_wind', 'significant_height_of_combined_wind_waves_and_swell', 'total_cloud_cover'
     ]
@@ -52,7 +50,7 @@ def retrieve(c1, c2, c3, c4, name, year):
                 'month': [
                     '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12',
                 ],
-                'year': years,
+                'year': year,
                 'variable': variables
             }, name)
 
