@@ -112,7 +112,7 @@ export default {
         const c4 = east
         const name = locName
         const yearNow = new Date().getFullYear()
-        for (let i = yearNow; i > yearNow - 20; i = i - 2) {
+        for (let i = yearNow; i > yearNow - 20; i--) {
           const response = await axios.get(`http://127.0.0.1:5555/data/${c1}/${c2}/${c3}/${c4}/${name}/${i}`) //python api url could be moved to .env
           this.postData(response.data)
         }
