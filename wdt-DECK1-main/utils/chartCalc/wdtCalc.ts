@@ -90,12 +90,12 @@ function evaluateHourDay(asset: any, element: any, newDay: boolean) {
     if (asset) {
       if (asset.category === "Vessel") {
         hoursAsset.push(
-          parseFloat(element.Sign[" wave height (Hs)"]) > asset.hs ? 1 : 0
+          parseFloat(element["Wave height"]) > asset.hs ? 1 : 0
         );
       } else if (asset.category === "Helicopter") {
         hoursAsset.push(
           parseFloat(element.Visibility) < asset.visibility ||
-            Number(element["VFR cloud"]) === asset.cloudbase
+            Number(element["Cloud base"]) === asset.cloudbase
             ? 1 : 0
         );
       }
