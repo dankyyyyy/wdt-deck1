@@ -35,14 +35,17 @@ export default {
       isModalVisible: false,
       loading: true,
       cardKey: false,
+      downloaded: false,
     };
   },
   async mounted() {
     this.locations = await useLocationStore().getAll();
+    this.locations.sort((a, b) => { return a.name.localeCompare(b.name)});
     this.locations.length === 0 ? "" : this.loading = false;
   },
   async updated() {
     this.locations = await useLocationStore().getAll();
+    this.locations.sort((a, b) => { return a.name.localeCompare(b.name)});
     this.locations.length === 0 ? "" : this.loading = false;
   },
   methods: {

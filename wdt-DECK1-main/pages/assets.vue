@@ -37,10 +37,12 @@ export default {
   },
   async mounted() {
     this.assets = await useAssetStore().getAll();
+    this.assets.sort((a, b) => { return a.name.localeCompare(b.name)});
     this.assets.length == 0 ? "" : this.loading = false;
   },
   async updated() {
     this.assets = await useAssetStore().getAll();
+    this.assets.sort((a, b) => { return a.name.localeCompare(b.name)});
     this.assets.length == 0 ? "" : this.loading = false;
   },
   methods: {

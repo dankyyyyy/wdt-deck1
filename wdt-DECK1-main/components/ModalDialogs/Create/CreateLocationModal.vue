@@ -95,51 +95,9 @@ export default {
         showError("Please make sure all fields are filled in.");
       } else {
         const store = useLocationStore();
-        await store.post(this.location)
-        const newLoc = await store.getByName(this.location.name)
-        this.location._id = newLoc._id;
-
-        const coordinates = this.decimalToCoordinates(this.location.longitude, this.location.latitude)
-        this.callRetrieve(coordinates.North, coordinates.West, coordinates.South, coordinates.East, this.location.name);
+        await store.post(this.location);
         this.$emit("hideModal");
       }
-    },
-    async callRetrieve(north, west, south, east, locName) {
-      try {
-        const c1 = north
-        const c2 = west
-        const c3 = south
-        const c4 = east
-        const name = locName
-        const yearNow = new Date().getFullYear()
-        for (let i = yearNow; i > yearNow - 20; i--) {
-          const response = await axios.get(`http://127.0.0.1:5555/data/${c1}/${c2}/${c3}/${c4}/${name}/${i}`) //python api url could be moved to .env
-          this.postData(response.data)
-        }
-      } catch (error) {
-        console.error('Error calling retrieve:', error);
-      }
-      this.$emit("newAdded")
-    },
-    async postData(weatherData) {
-      try {
-        await useWeatherdataStore().postData(weatherData, this.location);
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    },
-    decimalToCoordinates(long, lat) {
-      let north, west, south, east;
-      north = Number(lat) + 0.75
-      south = Number(lat) - 0.75
-      west = Number(long) - 0.75
-      east = Number(long) + 0.75
-      return {
-        North: north,
-        South: south,
-        East: east,
-        West: west,
-      };
     },
   },
 };

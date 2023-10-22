@@ -22,7 +22,6 @@ export function start(
   years: number,
   asset: any,
 ) {
-
   const chartStore = useChartStore();
   const dataStore = useWeatherdataStore();
 
@@ -47,18 +46,14 @@ export function start(
         }
       } else {
         evaluateHourDay(asset, element, true);
-
-        // without this part, one hour is skipped
         if (
           Number(element.Hour) >= timeRangeStart &&
           Number(element.Hour) <= timeRangeEnd
         ) {
           evaluateHourDay(asset, element, false);
         }
-        // increment current day
         current_day = Number(element.Day);
       }
-      // if month changes -> evaluate
       if (
         current_month != Number(element.Month) ||
         (Number(element.Month) === 12 &&

@@ -35,11 +35,12 @@ export default {
     },
     async mounted() {
         this.presets = await usePresetStore().getAll();
+        this.presets.sort((a, b) => { return a.name.localeCompare(b.name)});
         this.presets.length == 0 ? "" : this.loading = false;
-        console.log(usePresetStore().getSelectedPreset());
     },
     async updated() {
         this.presets = await usePresetStore().getAll();
+        this.presets.sort((a, b) => { return a.name.localeCompare(b.name)});
         this.presets.length == 0 ? "" : this.loading = false;
     },
     methods: {

@@ -37,10 +37,12 @@ export default {
     },
     async mounted() {
         this.wtgs = await useWindTurbineGeneratorStore().getAll();
+        this.wtgs.sort((a, b) => { return a.name.localeCompare(b.name)});
         this.wtgs.length == 0 ? "" : this.loading = false;
     },
     async updated() {
         this.wtgs = await useWindTurbineGeneratorStore().getAll();
+        this.wtgs.sort((a, b) => { return a.name.localeCompare(b.name)});
         this.wtgs.length == 0 ? "" : this.loading = false;
     },
     methods: {
