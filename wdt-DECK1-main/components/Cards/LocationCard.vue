@@ -4,16 +4,6 @@
       <div class="customize-card-box" @click="selectLocation" :class="{ 'selected': isSelected }">
         <div class="box-content">
           <IconsLogoInverted class="box-image inline-block align-middle w-full" />
-         <div v-if="dataInformation.isFetching">
-      ⏳
-    </div>
-    <div v-else-if="dataInformation.isDataRegistered">
-      <p>Data is present</p>
-      <p>Latest record is {{dataInformation.latestDataYear }}</p>
-    </div>
-    <div v-else>
-      <p class="font-semibold">Data is missing</p>
-    </div>
           <h2 class="box-title">{{ location.name }}</h2>
 
           <div class="box-text">
@@ -36,8 +26,6 @@
 </template>
 
 <script>
-import { useWeatherdataStore } from "~/stores/WeatherdataStore";
-import axios from "axios";
 import { useLocationStore } from "~/stores/LocationStore";
 
 export default {
@@ -50,38 +38,10 @@ export default {
   },
   data() {
     return {
-      dataInformation: {
-        isFetching: true,
-        isDataRegistered: false,
-        latestDataYear: null,
-      },
       isSelected: false,
     };
   },
-  async mounted() {
-    console.log("checking: ", this.location._id);
-    const foundData = await useWeatherdataStore().checkByLocationId(this.location._id)
-    console.log(foundData);
-    if (foundData !== undefined) {
-      this.dataInformation.isDataRegistered = true;
-      this.dataInformation.latestDataYear = foundData.Year;
-    }
-    this.dataInformation.isFetching = false;
-  },
   methods: {
-    async postData() {
-      try {
-        const response = await axios.delete(`http://127.0.0.1:5555/delete/${this.location.name}.json`);
-        console.log('File deleted successfully:', response.data);
-
-        const weatherData = await import(/* @vite-ignore */`~/static/${this.location.name}-weather.json`);
-        useWeatherdataStore().postData(weatherData.default, this.location);
-
-        this.isDataRegistered = true; // Update the reactivity of isDataRegistered
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    },
     selectLocation() {
       const location = this.location;
 
