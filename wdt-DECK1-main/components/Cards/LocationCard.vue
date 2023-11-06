@@ -14,6 +14,7 @@
           <div v-else>
             <p class="font-semibold" style="text-align: center;">Data is missing</p>
           </div>
+
           <h2 class="box-title">{{ location.name }}</h2>
 
           <div class="box-text">
@@ -37,7 +38,6 @@
 
 <script>
 import { useWeatherdataStore } from "~/stores/WeatherdataStore";
-import axios from "axios";
 import { useLocationStore } from "~/stores/LocationStore";
 
 export default {
@@ -61,74 +61,15 @@ export default {
   async mounted() {
     const foundData = await useWeatherdataStore().checkByLocationId(this.location._id)
     if (foundData !== undefined) {
-      console.log(this.location.name, ": data found!")
       this.dataInformation.isDataRegistered = true;
       this.dataInformation.latestDataYear = foundData.Year;
       this.dataInformation.isFetching = false;
     } else {
-      console.log(this.location.name, ": data not found; beginning fetch.");
-      const coordinates = this.decimalToCoordinates(this.location.longitude, this.location.latitude)
-      this.callRetrieve(coordinates.North, coordinates.West, coordinates.South, coordinates.East, this.location.name);
+      this.dataInformation.isDataRegistered = false;
       this.dataInformation.isFetching = false;
     }
-    
   },
   methods: {
-    async postData() {
-      try {
-        const response = await axios.delete(`http://127.0.0.1:5555/delete/${this.location.name}.json`);
-        console.log('File deleted successfully:', response.data);
-
-        const weatherData = await import(/* @vite-ignore */`~/static/${this.location.name}-weather.json`);
-        useWeatherdataStore().postData(weatherData.default, this.location);
-
-        this.isDataRegistered = true; // Update the reactivity of isDataRegistered
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    },
-    async callRetrieve(north, west, south, east, locName) {
-      try {
-        const c1 = north
-        const c2 = west
-        const c3 = south
-        const c4 = east
-        const name = locName
-        const yearNow = new Date().getFullYear()
-        for (let i = yearNow; i > yearNow - 20; i--) {
-          console.log(`request sent for ${name}, year: ${i}`);
-          const response = await axios.get(`http://127.0.0.1:5555/data/${c1}/${c2}/${c3}/${c4}/${name}/${i}`) //python api url could be moved to .env
-          
-          if (response.status === 200) {
-            console.log(`request completed for ${name}, year: ${i}`);
-            this.postData(response.data)
-          } else console.log(`request for ${name}, year: ${i} incomplete, error code: ${response.status}`);
-        }
-      } catch (error) {
-        console.error('Error calling retrieve:', error);
-      }
-      this.$emit("newAdded")
-    },
-    async postData(weatherData) {
-      try {
-        await useWeatherdataStore().postData(weatherData, this.location);
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    },
-    decimalToCoordinates(long, lat) {
-      let north, west, south, east;
-      north = Number(lat) + 0.75
-      south = Number(lat) - 0.75
-      west = Number(long) - 0.75
-      east = Number(long) + 0.75
-      return {
-        North: north,
-        South: south,
-        East: east,
-        West: west,
-      };
-    },
     selectLocation() {
       const location = this.location;
 
@@ -139,7 +80,7 @@ export default {
         this.isSelected = false;
         this.$emit("location-deselected");
       }
-    }
+    },
   },
 };
 </script>

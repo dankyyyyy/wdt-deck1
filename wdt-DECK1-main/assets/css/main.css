@@ -508,6 +508,27 @@
   opacity: 70%;
 }
 
+.download-button {
+  background-color: #575757;
+  /* Grey color as it's inactive by default */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 36px;
+  font-weight: bold;
+  width: 1.79em;
+  height: 1.79em;
+  cursor: not-allowed;
+
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+  /* Drop shadow */
+}
+
+.location-selected {
+  background-color: #09a6d7;
+  cursor: pointer;
+}
+
 /* =================
      Charts Section
   ================= */

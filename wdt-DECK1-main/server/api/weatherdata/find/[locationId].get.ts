@@ -26,8 +26,6 @@ export default defineEventHandler(async (event) => {
             }
             
         } while (!exit);
-    } else {
-        console.log("No document found in the first query.");
     } 
     return higherYearResults;
 })

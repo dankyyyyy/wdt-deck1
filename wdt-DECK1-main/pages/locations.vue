@@ -4,16 +4,17 @@
   </NuxtLink>
   <div class="heading-container">
     <h1 class="generic-header">Locations</h1>
+    <DownloadButton @click="fetchMissingData" />
   </div>
 
   <IconsAdd @click="showModal" class="cursor-pointer" />
+  
 
-  <ModalDialogsCreateLocationModal v-if="isModalVisible" @hideModal="hideModal"
-    @downloaded="sendDownloadedNotification" />
+  <ModalDialogsCreateLocationModal v-if="isModalVisible" @hideModal="hideModal" />
   <div deck-frame-translucent-container>
     <div v-if="!loading" class="grid deck-frame-translucent">
       <div v-for="location in locations" :key="location._id">
-        <CardsLocationCard :location="location" :downloaded="downloaded" @location-selected="handleLocationSelected"
+        <CardsLocationCard :location="location" @location-selected="handleLocationSelected"
           @location-deselected="handleLocationDeselected" />
       </div>
       <SubmitButton @click="navigateToNextPage" />
@@ -26,6 +27,8 @@
 
 <script>
 import { useLocationStore } from "~/stores/LocationStore";
+import axios from "axios";
+import { useWeatherdataStore } from "~/stores/WeatherdataStore";
 
 export default {
   name: "LocationList",
@@ -34,29 +37,91 @@ export default {
       locations: [],
       isModalVisible: false,
       loading: true,
-      cardKey: false,
-      downloaded: false,
     };
   },
   async mounted() {
     this.locations = await useLocationStore().getAll();
-    this.locations.sort((a, b) => { return a.name.localeCompare(b.name)});
+    this.locations.sort((a, b) => { return a.name.localeCompare(b.name) });
     this.locations.length === 0 ? "" : this.loading = false;
   },
   async updated() {
     this.locations = await useLocationStore().getAll();
-    this.locations.sort((a, b) => { return a.name.localeCompare(b.name)});
+    this.locations.sort((a, b) => { return a.name.localeCompare(b.name) });
     this.locations.length === 0 ? "" : this.loading = false;
   },
   methods: {
+    async fetchMissingData() {
+      console.log("Starting...")
+      const location = await useLocationStore().getSelectedLocation();
+      const coordinates = this.decimalToCoordinates(location.longitude, location.latitude);
+      this.callRetrieve(coordinates.North, coordinates.West, coordinates.South, coordinates.East, location.name);
+    },
+    async callRetrieve(north, west, south, east, locName) {
+      try {
+        const c1 = north
+        const c2 = west
+        const c3 = south
+        const c4 = east
+        const name = locName
+        const location = await useLocationStore().getByName(name);
+        const integrity = await this.checkIntegrity(location);
+        const yearNow = new Date().getFullYear();
+        console.log(integrity);
+
+        for (let i = yearNow; i > yearNow - 20; i--) {
+          if (integrity[i] === false) {
+            console.log(`request sent for ${name}, year: ${i}`);
+            const response = await axios.get(`http://127.0.0.1:5555/data/${c1}/${c2}/${c3}/${c4}/${name}/${i}`) //python api url could be moved to .env
+
+            if (response.status === 200) {
+              console.log(`request completed for ${name}, year: ${i}`);
+              this.postData(response.data, location)
+            } else console.log(`request for ${name}, year: ${i} incomplete, error code: ${response.status}`);
+          } else {
+            console.log(`Data for ${location.name} is up to date!`);
+          }
+        }
+      } catch (error) {
+        console.error('Error calling retrieve:', error);
+      }
+      this.$emit("newAdded")
+    },
+    async checkIntegrity(location) {
+      var integrity = [];
+      const yearNow = new Date().getFullYear()
+      for (let i = yearNow; i > yearNow - 20; i--) {
+          integrity[i] = await useWeatherdataStore().checkByYear(location._id, i);
+      }
+      return integrity;
+    },
+    async postData(weatherData, location) {
+      try {
+        // const response = await axios.delete(`http://127.0.0.1:5555/delete/${this.location.name}.json`);
+        // console.log('File deleted successfully:', response.data);
+        // const weatherData = await import(/* @vite-ignore */`~/static/${location.name}-weather.json`);
+        useWeatherdataStore().postData(weatherData, location);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    },
+    decimalToCoordinates(long, lat) {
+      let north, west, south, east;
+      north = Number(lat) + 0.75
+      south = Number(lat) - 0.75
+      west = Number(long) - 0.75
+      east = Number(long) + 0.75
+      return {
+        North: north,
+        South: south,
+        East: east,
+        West: west,
+      };
+    },
     showModal() {
       this.isModalVisible = true;
     },
     hideModal() {
       this.isModalVisible = false;
-    },
-    sendDownloadedNotification() {
-      this.downloaded = true;
     },
     handleLocationSelected(location) {
       useLocationStore().setSelectedLocation(location);

@@ -1,66 +1,48 @@
-# url: https://cds.climate.copernicus.eu/api/v2
-# key: 194760:1d68b23e-3621-4c23-b31a-bbb20a26e263
-
 import cdsapi
 import pupygrib
 import json
 import math
 import os
+import dotenv
 
-c = cdsapi.Client(url="https://cds.climate.copernicus.eu/api/v2",
-                  key="194760:1d68b23e-3621-4c23-b31a-bbb20a26e263")
+dotenv.load_dotenv()
+API_URL = os.getenv("API_URL")
+API_KEY = os.getenv("API_KEY")
+
+c = cdsapi.Client(url=API_URL, key=API_KEY)
+
+DAYS = [str(i).zfill(2) for i in range(1, 32)]
+TIMES = [f"{i:02d}:00" for i in range(24)]
+MONTHS = [str(i).zfill(2) for i in range(1, 13)]
+
+VARIABLES = [
+    "100m_u_component_of_wind",
+    "100m_v_component_of_wind",
+    "significant_height_of_combined_wind_waves_and_swell",
+    "total_cloud_cover",
+]
 
 def retrieve(c1, c2, c3, c4, name, year):
     name = name + str(year) + ".grib"
-    variables = [
-        '100m_u_component_of_wind', '100m_v_component_of_wind', 'significant_height_of_combined_wind_waves_and_swell', 'total_cloud_cover'
-    ]
     try:
         response = c.retrieve(
             'reanalysis-era5-single-levels',
             {
                 'product_type': 'reanalysis',
                 'format': 'grib',
-                'day': [
-                    '01', 
-                    '02', '03',
-                    '04', '05', '06',
-                    '07', '08', '09',
-                    '10', '11', '12',
-                    '13', '14', '15',
-                    '16', '17', '18',
-                    '19', '20', '21',
-                    '22', '23', '24',
-                    '25', '26', '27',
-                    '28', '29', '30',
-                    '31',
-                ],
-                'time': [
-                    '00:00', 
-                    '01:00', '02:00',
-                    '03:00', '04:00', '05:00',
-                    '06:00', '07:00', '08:00',
-                    '09:00', '10:00', '11:00',
-                    '12:00', '13:00', '14:00',
-                    '15:00', '16:00', '17:00',
-                    '18:00', '19:00', '20:00',
-                    '21:00', '22:00', '23:00',
-                ],
-                'area': [
-                    c1, c2, c3, c4
-                ],
-                'month': [
-                    '01', 
-                    '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12',
-                ],
+                'day': DAYS,
+                'time': TIMES,
+                'area': [c1, c2, c3, c4],
+                'month': MONTHS,
                 'year': year,
-                'variable': variables
+                'variable': VARIABLES
             }, name)
 
         if not response.error:
-            print("Data succesfully fetched")
+            print(f"SUCCESS: {name} created.")
         else:
-            print(response.error)
+            print(
+                f"FAILURE: {name} failed to be created with code {response.error}.")
 
         jsonData = []
 
@@ -70,13 +52,9 @@ def retrieve(c1, c2, c3, c4, name, year):
                 lons, lats = msg.get_coordinates()
                 time = msg.get_time()
                 values = msg.get_values()
-                variable_name = variables[j]
+                variable_name = VARIABLES[j]
                 j += 1
-                # print("Message {}: {} {} - {:.3f} {}".format(i, time, variable_name, values.mean(), lons.shape))
-                # print(lons, ' ', lats)
 
-
-                # Collect the required data
                 year = time.year
                 month = time.month
                 day = time.day
@@ -85,16 +63,12 @@ def retrieve(c1, c2, c3, c4, name, year):
                     waveHeight = round(values.mean(), 3)
                 if variable_name == "100m_u_component_of_wind":
                     windU = round(values.mean(), 3)
-                    # print(year," ",month," ",day," ",hour)
-                    # print("wind component U: ",windU)
                 if variable_name == "100m_v_component_of_wind":
                     windV = round(values.mean(), 3)
-                    # print("wind component V: ",windV)
-                    # print("Calculated wind speed: ", round(math.sqrt(windU**2 + windV**2), 3))
                 if variable_name == "total_cloud_cover":
                     cloudbase = round(values.mean(), 3)
 
-                if j == len(variables):
+                if j == len(VARIABLES):
                     j = 0
                     # Calculate windspeed from the wind components through: windspeed = sqrt(u^2 + v^2).
                     windspeed = round(math.sqrt(windU**2 + windV**2), 3)
@@ -139,7 +113,8 @@ def retrieve(c1, c2, c3, c4, name, year):
         return jsonDatas, 200
 
     except Exception as e:
-        return "NOT OK :(", 400
+        print(str(e))
+        return f"Data processing error at {name}, error: {response.error}"
 
 
 def deleteJson(name):
