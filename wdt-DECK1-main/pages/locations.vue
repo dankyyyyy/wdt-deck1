@@ -8,7 +8,7 @@
   </div>
 
   <IconsAdd @click="showModal" class="cursor-pointer" />
-  
+
 
   <ModalDialogsCreateLocationModal v-if="isModalVisible" @hideModal="hideModal" />
   <div deck-frame-translucent-container>
@@ -71,8 +71,6 @@ export default {
               console.log(`request completed for ${location.name}, year: ${i}`);
               this.postData(response.data, location)
             } else console.log(`request for ${location.name}, year: ${i} incomplete, error code: ${response.status}`);
-          } else {
-            console.log(`Data for ${location.name} is up to date!`);
           }
         }
       } catch (error) {
@@ -84,7 +82,7 @@ export default {
       var integrity = [];
       const yearNow = new Date().getFullYear()
       for (let i = yearNow; i > yearNow - 20; i--) {
-          integrity[i] = await useWeatherdataStore().checkByYear(location._id, i);
+        integrity[i] = await useWeatherdataStore().checkByYear(location._id, i);
       }
       return integrity;
     },
