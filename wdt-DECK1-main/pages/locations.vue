@@ -53,30 +53,24 @@ export default {
     async fetchMissingData() {
       console.log("Starting...")
       const location = await useLocationStore().getSelectedLocation();
-      const coordinates = this.decimalToCoordinates(location.longitude, location.latitude);
-      this.callRetrieve(coordinates.North, coordinates.West, coordinates.South, coordinates.East, location.name);
+      this.callRetrieve(location);
     },
-    async callRetrieve(north, west, south, east, locName) {
+    async callRetrieve(location) {
       try {
-        const c1 = north
-        const c2 = west
-        const c3 = south
-        const c4 = east
-        const name = locName
-        const location = await useLocationStore().getByName(name);
+        const coordinates = this.decimalToCoordinates(location.longitude, location.latitude);
         const integrity = await this.checkIntegrity(location);
         const yearNow = new Date().getFullYear();
         console.log(integrity);
 
         for (let i = yearNow; i > yearNow - 20; i--) {
           if (integrity[i] === false) {
-            console.log(`request sent for ${name}, year: ${i}`);
-            const response = await axios.get(`http://127.0.0.1:5555/data/${c1}/${c2}/${c3}/${c4}/${name}/${i}`) //python api url could be moved to .env
+            console.log(`request sent for ${location.name}, year: ${i}`);
+            const response = await axios.get(`http://127.0.0.1:5555/data/${coordinates.North}/${coordinates.West}/${coordinates.South}/${coordinates.East}/${location.name}/${i}`) //python api url could be moved to .env
 
             if (response.status === 200) {
-              console.log(`request completed for ${name}, year: ${i}`);
+              console.log(`request completed for ${location.name}, year: ${i}`);
               this.postData(response.data, location)
-            } else console.log(`request for ${name}, year: ${i} incomplete, error code: ${response.status}`);
+            } else console.log(`request for ${location.name}, year: ${i} incomplete, error code: ${response.status}`);
           } else {
             console.log(`Data for ${location.name} is up to date!`);
           }

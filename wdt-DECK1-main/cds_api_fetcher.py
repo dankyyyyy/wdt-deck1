@@ -9,6 +9,8 @@ dotenv.load_dotenv()
 API_URL = os.getenv("API_URL")
 API_KEY = os.getenv("API_KEY")
 
+
+
 c = cdsapi.Client(url=API_URL, key=API_KEY)
 
 DAYS = [str(i).zfill(2) for i in range(1, 32)]
@@ -37,12 +39,6 @@ def retrieve(c1, c2, c3, c4, name, year):
                 'year': year,
                 'variable': VARIABLES
             }, name)
-
-        if not response.error:
-            print(f"SUCCESS: {name} created.")
-        else:
-            print(
-                f"FAILURE: {name} failed to be created with code {response.error}.")
 
         jsonData = []
 
