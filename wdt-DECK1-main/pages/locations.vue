@@ -7,9 +7,6 @@
     <DownloadButton @click="fetchMissingData" />
   </div>
 
-  <IconsAdd @click="showModal" class="cursor-pointer" />
-
-
   <ModalDialogsCreateLocationModal v-if="isModalVisible" @hideModal="hideModal" />
   <div deck-frame-translucent-container>
     <div v-if="!loading" class="grid deck-frame-translucent">
@@ -17,6 +14,7 @@
         <CardsLocationCard :location="location" @location-selected="handleLocationSelected"
           @location-deselected="handleLocationDeselected" />
       </div>
+      <CreateButton @click="showModal" class="cursor-pointer"/>
       <SubmitButton @click="navigateToNextPage" />
     </div>
     <div v-else>

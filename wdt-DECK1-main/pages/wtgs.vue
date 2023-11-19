@@ -19,6 +19,7 @@
             </div>
         </div>
     </div>
+    <CreateButton @click="showModal" class="cursor-pointer"/>
     <SubmitButton @click="navigateToNextPage" />
 </template>
   

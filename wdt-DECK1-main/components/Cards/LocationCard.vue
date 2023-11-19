@@ -17,18 +17,18 @@
 
           <h2 class="box-title">{{ location.name }}</h2>
 
-          <div class="box-text">
+          <div class="customize-box-text">
             <label for="latitude">Latitude: </label>
-            <p class="box-text-type">{{ location.latitude }}</p>
+            <p class="customize-box-text-type">{{ location.latitude }}</p>
             <hr />
             <label for="longitude">Longitude: </label>
-            <p class="box-text-type">{{ location.longitude }}</p>
+            <p class="customize-box-text-type">{{ location.longitude }}</p>
             <hr />
             <label for="limit">Wind Speed Limit: </label>
-            <p class="box-text-type">{{ location.limit }}m/s</p>
+            <p class="customize-box-text-type">{{ location.limit }}m/s</p>
             <hr />
             <label for="turbines">Turbines: </label>
-            <p class="box-text-type">{{ location.wtg }}</p>
+            <p class="customize-box-text-type">{{ location.wtg }}</p>
           </div>
         </div>
       </div>
