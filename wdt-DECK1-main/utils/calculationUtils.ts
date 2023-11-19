@@ -7,6 +7,7 @@ function unavailableDays(annualWorkability: number[], startMonth: number, endMon
     for (let i = startMonth; i < endMonth; i++) {
         unavailableDays += annualWorkability[i];
     }
+    console.log(unavailableDays);
     return unavailableDays;
 }
 

@@ -22,6 +22,7 @@ VARIABLES = [
     "100m_v_component_of_wind",
     "significant_height_of_combined_wind_waves_and_swell",
     "total_cloud_cover",
+    "cloud_base_height",
 ]
 
 def retrieve(c1, c2, c3, c4, name, year):
@@ -63,6 +64,8 @@ def retrieve(c1, c2, c3, c4, name, year):
                     windV = round(values.mean(), 3)
                 if variable_name == "total_cloud_cover":
                     cloudbase = round(values.mean(), 3)
+                if variable_name == "cloud_base_height":
+                    visibility = values
 
                 if j == len(VARIABLES):
                     j = 0
@@ -76,6 +79,7 @@ def retrieve(c1, c2, c3, c4, name, year):
                         "Hour": hour,
                         "Wave height": waveHeight,
                         "Wind speed": windspeed,
+                        "Visibility": visibility,
                         "Cloud base": cloudbase
                     }
                     # Add the message data to the list

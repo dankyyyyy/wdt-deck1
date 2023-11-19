@@ -56,6 +56,7 @@ export default {
     async callRetrieve(location) {
       try {
         const coordinates = this.decimalToCoordinates(location.longitude, location.latitude);
+        console.log(`north: ${coordinates.North}, west: ${coordinates.West}, south: ${coordinates.South}, east: ${coordinates.East}`);
         const integrity = await this.checkIntegrity(location);
         const yearNow = new Date().getFullYear();
         console.log(integrity);
