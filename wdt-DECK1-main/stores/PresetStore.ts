@@ -32,7 +32,7 @@ export const usePresetStore = defineStore("PresetStore", {
     },
     async post(preset: IPreset) {
       try {
-        console.log('Creating preset ', preset.name, ' ', preset._id);
+        console.log('Creating preset ', preset.name);
         const response = await axios.post('/api/presets/create', preset);
         console.log(response.data.message);
         if (response.status === 200) {

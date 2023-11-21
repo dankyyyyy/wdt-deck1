@@ -8,11 +8,11 @@
             <p style="text-align: center;">Checking for data...</p>
           </div>
           <div v-else-if="dataInformation.isDataRegistered">
-            <p style="text-align: center;">Data is present</p>
-            <p style="text-align: center;">Latest record: {{ dataInformation.latestDataYear }}</p>
+            <p style="text-align: center;">Data Found</p>
+            <p style="text-align: center;">Latest Year Found: {{ dataInformation.latestDataYear }}</p>
           </div>
           <div v-else>
-            <p class="font-semibold" style="text-align: center;">Data is missing</p>
+            <p class="font-semibold" style="text-align: center;">No Data Found</p>
           </div>
 
           <h2 class="box-title">{{ location.name }}</h2>
@@ -56,13 +56,15 @@ export default {
         latestDataYear: null,
       },
       isSelected: false,
+      yearNow: new Date().getFullYear(),
+      yearStart: 2004,
     };
   },
   async mounted() {
     const foundData = await useWeatherdataStore().checkByLocationId(this.location._id)
     if (foundData !== undefined) {
       this.dataInformation.isDataRegistered = true;
-      this.dataInformation.latestDataYear = foundData.Year;
+      this.dataInformation.latestDataYear = await this.determineLatestYear();
       this.dataInformation.isFetching = false;
     } else {
       this.dataInformation.isDataRegistered = false;
@@ -80,6 +82,19 @@ export default {
         this.isSelected = false;
         this.$emit("location-deselected");
       }
+    },
+    async determineLatestYear() {
+      const integrity = await checkIntegrity(this.location);
+      var latestYear = null;
+      if (integrity[this.yearNow] === true) latestYear = this.yearNow; else {
+        for (let i = this.yearStart; i <= this.yearNow; i++) {
+          if (integrity[i] === true) {
+            latestYear = i;
+          } else break;
+        }
+      }
+
+      return latestYear;
     },
   },
 };

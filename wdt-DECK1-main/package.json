@@ -1,6 +1,10 @@
 {
-  "name": "nuxt-app",
+  "name": "wx-client",
   "private": true,
+  "engines": {
+    "npm": "<=9.6.7",
+    "node": ">=18.0.0 <=18.17.1"
+  },
   "scripts": {
     "build": "nuxt build",
     "dev": "node --max-old-space-size=8000 node_modules/nuxt/bin/nuxt.mjs dev",

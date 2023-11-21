@@ -27,6 +27,7 @@
 import { useLocationStore } from "~/stores/LocationStore";
 import axios from "axios";
 import { useWeatherdataStore } from "~/stores/WeatherdataStore";
+import "~/utils/chartUtils";
 
 export default {
   name: "LocationList",
@@ -35,6 +36,8 @@ export default {
       locations: [],
       isModalVisible: false,
       loading: true,
+      yearStart: 2004,
+      yearNow: new Date().getFullYear(),
     };
   },
   async mounted() {
@@ -55,13 +58,11 @@ export default {
     },
     async callRetrieve(location) {
       try {
-        const coordinates = this.decimalToCoordinates(location.longitude, location.latitude);
-        console.log(`north: ${coordinates.North}, west: ${coordinates.West}, south: ${coordinates.South}, east: ${coordinates.East}`);
-        const integrity = await this.checkIntegrity(location);
-        const yearNow = new Date().getFullYear();
+        const coordinates = decimalToCoordinates(location.longitude, location.latitude);
+        const integrity = await checkIntegrity(location);
         console.log(integrity);
 
-        for (let i = yearNow; i > yearNow - 20; i--) {
+        for (let i = this.yearStart; i <= this.yearNow; i++) {
           if (integrity[i] === false) {
             console.log(`request sent for ${location.name}, year: ${i}`);
             const response = await axios.get(`http://127.0.0.1:5555/data/${coordinates.North}/${coordinates.West}/${coordinates.South}/${coordinates.East}/${location.name}/${i}`) //python api url could be moved to .env
@@ -77,36 +78,12 @@ export default {
       }
       this.$emit("newAdded")
     },
-    async checkIntegrity(location) {
-      var integrity = [];
-      const yearNow = new Date().getFullYear()
-      for (let i = yearNow; i > yearNow - 20; i--) {
-        integrity[i] = await useWeatherdataStore().checkByYear(location._id, i);
-      }
-      return integrity;
-    },
     async postData(weatherData, location) {
       try {
-        // const response = await axios.delete(`http://127.0.0.1:5555/delete/${this.location.name}.json`);
-        // console.log('File deleted successfully:', response.data);
-        // const weatherData = await import(/* @vite-ignore */`~/static/${location.name}-weather.json`);
         useWeatherdataStore().postData(weatherData, location);
       } catch (error) {
         console.error('Error:', error);
       }
-    },
-    decimalToCoordinates(long, lat) {
-      let north, west, south, east;
-      north = Number(lat) + 0.75
-      south = Number(lat) - 0.75
-      west = Number(long) - 0.75
-      east = Number(long) + 0.75
-      return {
-        North: north,
-        South: south,
-        East: east,
-        West: west,
-      };
     },
     showModal() {
       this.isModalVisible = true;

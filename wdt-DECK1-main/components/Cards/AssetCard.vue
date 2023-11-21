@@ -49,7 +49,7 @@
               <p class="customize-box-text-type">{{ asset.cloudbase }}m</p>
               <hr />
               <label for="visibility">Visibility: </label>
-              <p class="customize-box-text-type">{{ asset.visibility }}km</p>
+              <p class="customize-box-text-type">{{ asset.visibility }}m</p>
               <hr />
             </div>
 

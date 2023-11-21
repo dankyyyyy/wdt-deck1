@@ -38,10 +38,8 @@
   
 <script>
 import { useLocationStore } from "~/stores/LocationStore";
-import { useWeatherdataStore } from "~/stores/WeatherdataStore";
 import { isNumeric } from "~/utils/chartUtils";
 import { showError } from "~/utils/globalErrorHandling";
-import axios from "axios";
 
 export default {
   name: "CreateLocationModal",

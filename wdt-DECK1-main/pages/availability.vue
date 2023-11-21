@@ -62,6 +62,7 @@ export default {
     async startChart() {
       const currentPreset = usePresetStore().getSelectedPreset();
       const currentLocation = currentPreset.location;
+      console.log(currentLocation);
 
       useFilterStore().hideRecommendation = false;
       useLocationStore().toggleLoading();
