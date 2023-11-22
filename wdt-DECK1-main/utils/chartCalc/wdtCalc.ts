@@ -5,14 +5,14 @@ import "@/utils/chartUtils";
 // THRESHOLD - percentage of a day that can be no-fly
 // determines availability (50%+ => available)
 const threshold: number = 0.5;
+const yearStart: number = 2004;
 
-let hoursAsset: number[] = []
-let daysAsset: number[] = []
-let monthsAsset: number[] = []
+let hours: number[] = []
+let days: number[] = []
+let months: number[] = []
 
-let current_day: number;
-let current_month: number;
-let amountOfYears: number;
+let current_day: number = 1;
+let current_month: number = 1;
 
 export function start(
   timeRangeStart: number,
@@ -22,112 +22,93 @@ export function start(
   years: number,
   asset: any,
 ) {
-  const chartStore = useChartStore();
-  const dataStore = useWeatherdataStore();
 
   startMonth = startMonth;
   endMonth = endMonth;
-  current_day = 1;
-  current_month = 1;
-  amountOfYears = 0;
-  monthsAsset = [];
+  timeRangeStart = timeRangeStart;
+  timeRangeEnd = timeRangeEnd;
 
+  const chartStore = useChartStore();
+  const dataStore = useWeatherdataStore();
   const weatherData: any = dataStore.currentData;
-  countYears(weatherData);
+
+  if (years !== years) chartStore.wdtData = [];
 
   weatherData.forEach((element: any) => {
-    if (element.Year >= amountOfYears - years + 1) {
+    for (let i = (element.Year - yearStart + 1); i <= years; i++) {
+
       if (current_day === Number(element.Day)) {
         if (
           Number(element.Hour) >= timeRangeStart &&
           Number(element.Hour) <= timeRangeEnd
-        ) {
-          evaluateHourDay(asset, element, false);
-        }
+        ) evaluateHour(asset, element, timeRangeStart, timeRangeEnd);
       } else {
-        evaluateHourDay(asset, element, true);
-        if (
-          Number(element.Hour) >= timeRangeStart &&
-          Number(element.Hour) <= timeRangeEnd
-        ) {
-          evaluateHourDay(asset, element, false);
-        }
+        evaluateDay();
         current_day = Number(element.Day);
       }
+
       if (
         current_month != Number(element.Month) ||
         (Number(element.Month) === 12 &&
           Number(element.Day) === 31 &&
           Number(element.Hour) === timeRangeEnd)
       ) {
-        monthsAsset = evaluateMonth(
-          monthsAsset,
-          daysAsset,
+        months = evaluateMonth(
+          months,
+          days,
           current_month,
           startMonth,
           endMonth
         );
-        daysAsset = [];
+        days = [];
         current_month = Number(element.Month);
       }
     }
   });
 
   for (let i = 0; i < 12; i++) {
-    monthsAsset[i] = monthsAsset[i] / years;
+    if (years !== 1) months[i] = months[i] / years;
   }
   const name = asset.name;
-  chartStore.wdtData[name] = monthsAsset;
+  chartStore.wdtData[name] = months;
+  months = [];
 }
 
-function evaluateHourDay(asset: any, element: any, newDay: boolean) {
-  if (!newDay) {
-    if (asset) {
-      if (asset.category === "Vessel") {
-        hoursAsset.push(
-          (parseFloat(element["Wave height"]) < asset.hs) || (parseFloat(element["Wind speed"]) < asset.windSpeedLimit) ? 1 : 0
-        );
-      } else if (asset.category === "Helicopter") {
-        hoursAsset.push(
-          parseFloat(element["Wind speed"]) < asset.windSpeedLimit ? 1 : 0
-            ? 1 : 0
-        );
-      }
+function evaluateHour(asset: any, element: any, timeRangeStart: number, timeRangeEnd: number) {
+  if (element.Hour >= timeRangeStart && element.Hour <= timeRangeEnd) {
+    if (asset.category === "Vessel") {
+      hours.push(
+        (parseFloat(element["Wave height"]) < asset.hs) ? 1 : 0
+      );
+    } else if (asset.category === "Helicopter") {
+      hours.push(
+        (parseFloat(element["Wind speed"]) < asset.windSpeedLimit) ? 1 : 0
+      );
     }
-  } else { // if next day, evaluate
-    daysAsset.push(
-      hoursAsset.filter((num) => num === 1).length / hoursAsset.length >=
-        threshold
-        ? 1 : 0
-    );
-    hoursAsset = [];
   }
 }
 
+function evaluateDay() {
+  days.push(
+    hours.filter((num) => num === 1).length / hours.length >=
+      threshold
+      ? 1 : 0
+  );
+  hours = [];
+}
+
+// month - 1 because values of month range from 1 to 12, but array indices from 0 to 11
+// changing this causes the first column in the chart to be empty
 function evaluateMonth(
-  monthArr: number[],
-  dayArr: number[],
+  months: number[],
+  days: number[],
   month: number,
   startMonth: number,
   endMonth: number
 ): number[] {
   if (month >= startMonth && month <= endMonth) {
-    if (monthArr[month - 1] != null) {
-      monthArr[month - 1] += dayArr.filter((num) => num === 1).length;
-    } // amountOfYears + 1 because it starts from 0
-    else {
-      monthArr[month - 1] = dayArr.filter((num) => num === 1).length;
-    }
+    if (months[month - 1] != null) months[month - 1] += days.filter((num) => num === 1).length;
+    else months[month - 1] = days.filter((num) => num === 1).length;
   }
-  return monthArr;
-}
-
-function countYears(weatherData: any) {
-  let maxYear = 0;
-  for (const item of weatherData) {
-    if (item.Year > maxYear) {
-      maxYear = item.Year;
-    }
-  }
-  amountOfYears = maxYear;
+  return months;
 }

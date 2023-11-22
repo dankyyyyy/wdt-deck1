@@ -4,7 +4,6 @@ import json
 import math
 import os
 import dotenv
-import numpy as np
 
 dotenv.load_dotenv()
 API_URL = os.getenv("API_URL")
@@ -84,7 +83,6 @@ def retrieve(c1, c2, c3, c4, name, year):
         else:
             print(f"File '{name}' does not exist.")
 
-        saveJson(jsonDatas, name)
         return jsonDatas, 200
 
     except Exception as e:

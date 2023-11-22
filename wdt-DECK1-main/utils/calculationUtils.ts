@@ -2,45 +2,60 @@
     Workability
 =============== */
 
-function unavailableDays(annualWorkability: number[], startMonth: number, endMonth: number): number {
-    var unavailableDays = 0;
-    for (let i = startMonth; i < endMonth; i++) {
-        unavailableDays += annualWorkability[i];
+function amountOfDays(startMonth: number, endMonth: number): number {
+    var days = 0;
+    for (let i = startMonth; i <= endMonth; i++) {
+        if (i === 4 || i === 6 || i === 9 || i  === 11) days += 30;
+        else if (i === 2) days += 28;
+        else days += 31;
     }
-    console.log(unavailableDays);
+    return days;
+}
+
+function unavailableDays(annualWorkability: number[], startMonth: number, endMonth: number): number {
+    const days = amountOfDays(startMonth, endMonth);
+    const unavailableDays = (days - availableDays(annualWorkability, startMonth, endMonth));
     return unavailableDays;
 }
 
 function availableDays(annualWorkability: number[], startMonth: number, endMonth: number): number {
-    const amountOfMonths = Math.abs(startMonth - endMonth) + 1;
-    const availableDays = (amountOfMonths * 30) - unavailableDays(annualWorkability, startMonth, endMonth);
+    var availableDays = 0;
+    for (let i = startMonth - 1; i < endMonth; i++) {
+        availableDays += (annualWorkability[i]);
+    }
     return availableDays;
 }
 
 function unavailableDaysFromPercentage(annualWorkability: number, startMonth: number, endMonth: number): number {
-    const amountOfMonths = Math.abs(startMonth - endMonth) + 1;
-    const unavailableDays = (365 - (amountOfMonths * 30) * annualWorkability);
+    const days = amountOfDays(startMonth, endMonth);
+    const unavailableDays = (days * (1 - annualWorkability));
     return unavailableDays;
 }
 
 function availableDaysFromPercentage(annualWorkability: number, startMonth: number, endMonth: number): number {
-    var amountOfMonths = Math.abs(startMonth - endMonth) + 1;
-    const availableDays = (amountOfMonths * 30) * annualWorkability;
+    const days = amountOfDays(startMonth, endMonth);
+    const availableDays = days * annualWorkability;
     return availableDays;
 }
 
 export function monthlyWorkabilityPerAsset(annualWorkability: number[], startMonth: number, endMonth: number): number[] {
     const monthlyWorkability: number[] = [];
+    var daysInMonth = 0;
+
     for (let i = startMonth - 1; i < endMonth; i++) {
-        monthlyWorkability[i] = Math.floor(((30 - annualWorkability[i]) / 30) * 100);
+        if (i + 1 === 4 || i + 1 === 6 || i + 1 === 9 || i + 1 === 11) daysInMonth = 30;
+        else if (i + 1 === 2) daysInMonth = 28;
+        else daysInMonth = 31;
+
+        monthlyWorkability[i] = Math.floor(((annualWorkability[i]) / daysInMonth) * 100);
     }
     return monthlyWorkability;
 }
 
 export function yearlyWorkabilityPerAsset(annualWorkability: number[], startMonth: number, endMonth: number): number {
-    var amountOfMonths = Math.abs(startMonth - endMonth) + 1;
+    const days = amountOfDays(startMonth, endMonth);
     const annualAvailability = availableDays(annualWorkability, startMonth, endMonth);
-    const workability = Math.floor((annualAvailability / (amountOfMonths * 30)) * 100) / 100;
+    const workability = Math.floor((annualAvailability / days) * 100) / 100;
     return workability;
 }
 
