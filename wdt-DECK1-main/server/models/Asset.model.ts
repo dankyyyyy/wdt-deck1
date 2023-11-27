@@ -18,6 +18,7 @@ const schema: mongoose.Schema = new mongoose.Schema(
 
         // Helicopter-only Attributes
         helicopterSpeed: { type: Number },
+        flightTime: { type: Number },
 
         team: { type: Object, required: true },
     },
