@@ -73,18 +73,6 @@
               <input type="text" v-model="asset.helicopterSpeed" class="border-2 rounded-md text-center" />
               <label for="helicopterSpeed"> kt</label>
             </div>
-
-            <div class="create-input">
-              <label for="limit">Cloudbase: </label>
-              <input type="text" v-model="asset.cloudbase" class="border-2 rounded-md text-center" />
-              <label for="cloudbase"> m</label>
-            </div>
-
-            <div class="create-input">
-              <label for="limit">Visibility: </label>
-              <input type="text" v-model="asset.visibility" class="border-2 rounded-md text-center" />
-              <label for="visibility"> km</label>
-            </div>
           </div>
 
           <div v-if="asset.category === 'Vessel' || asset.category === 'Helicopter'">
@@ -180,8 +168,6 @@ export default {
         asset.highEngineActivity === null ||
         asset.loitering === null ||
         asset.helicopterSpeed === null ||
-        asset.cloudbase === null ||
-        asset.visibility === null ||
         asset.operationalFuelConsumption === null ||
         asset.loiteringFuelConsumption === null ||
         asset.flightTime === null
@@ -203,8 +189,6 @@ export default {
         !isNumeric(asset.hs) ||
         !isNumeric(asset.dayRate) ||
         !isNumeric(asset.helicopterSpeed) ||
-        !isNumeric(asset.cloudbase) ||
-        !isNumeric(asset.visibility) ||
         !isNumeric(asset.operationalFuelConsumption) ||
         !isNumeric(asset.flightTime)
       )) {

@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { IPreset } from '@/types/index'
+import { type IPreset } from '@/types/index'
 import axios from "axios"
 
 export const usePresetStore = defineStore("PresetStore", {

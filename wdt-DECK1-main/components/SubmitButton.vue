@@ -23,6 +23,15 @@ export default {
                 case "/presets": {
                     return usePresetStore().getSelectedPreset() !== null;
                 }
+                case "/dashboard": {
+                    return usePresetStore().getSelectedPreset() !== null;
+                }
+                case "/availability": {
+                    return usePresetStore().getSelectedPreset() !== null;
+                }
+                case "/financialFeasibility": {
+                    return usePresetStore().getSelectedPreset() !== null;
+                }
                 case "/assets": {
                     return useAssetStore().getSelectedAssets().length !== 0;
                 }

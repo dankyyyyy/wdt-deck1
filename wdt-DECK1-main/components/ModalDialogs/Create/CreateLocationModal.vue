@@ -16,10 +16,6 @@
           <input type="text" v-model="location.longitude" class="border-2 rounded-md text-center" />
         </div>
         <div class="create-input">
-          <label for="limit">Limit: </label>
-          <input type="text" v-model="location.limit" class="border-2 rounded-md text-center" />
-        </div>
-        <div class="create-input">
           <label for="wtg">WTG: </label>
           <input type="text" v-model="location.wtg" class="border-2 rounded-md text-center" />
         </div>
@@ -50,7 +46,6 @@ export default {
         name: "",
         latitude: 0,
         longitude: 0,
-        limit: 0,
       },
     };
   },
