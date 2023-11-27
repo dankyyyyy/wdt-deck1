@@ -34,7 +34,6 @@ export default {
   data() {
     return {
       locations: [],
-      isModalVisible: false,
       loading: true,
       yearStart: 2004,
       yearNow: new Date().getFullYear(),
