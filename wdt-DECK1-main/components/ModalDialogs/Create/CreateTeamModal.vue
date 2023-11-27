@@ -66,16 +66,16 @@ export default {
       if (await this.isADupe(team)) {
         showError("Name already taken, please select a different one.");
       } else if (
+        team.name === "" ||
+        team.numberOfPersons === "" ||
+        team.shiftPeriod === ""
+      ) {
+        showError("Please make sure all fields are filled in.");
+      } else if (
         !isNumeric(team.numberOfPersons) ||
         !isNumeric(team.shiftPeriod)
       ) {
         showError("Please make sure all attributes except for name are numerical.");
-      } else if (
-        team.name === "" ||
-        team.numberOfPersons === null ||
-        team.shiftPeriod === null
-      ) {
-        showError("Please make sure all fields are filled in.");
       } else {
         const store = useTeamStore();
         await store.post(team);

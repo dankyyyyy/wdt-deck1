@@ -161,16 +161,16 @@ export default {
         showError("Name already taken, please select a different one.");
       } else if (
         asset.name === "" ||
-        asset.windSpeedLimit === null ||
-        asset.hs === null ||
-        asset.dayRate === null ||
-        asset.vesselSpeed === null ||
-        asset.highEngineActivity === null ||
-        asset.loitering === null ||
-        asset.helicopterSpeed === null ||
-        asset.operationalFuelConsumption === null ||
-        asset.loiteringFuelConsumption === null ||
-        asset.flightTime === null
+        asset.windSpeedLimit === "" ||
+        asset.hs === "" ||
+        asset.dayRate === "" ||
+        asset.vesselSpeed === "" ||
+        asset.highEngineActivity === "" ||
+        asset.loitering === "" ||
+        asset.helicopterSpeed === "" ||
+        asset.operationalFuelConsumption === "" ||
+        asset.loiteringFuelConsumption === "" ||
+        asset.flightTime === ""
       ) {
         showError("Please make sure all fields are filled in.");
       } else if (asset.category === 'Vessel' && (

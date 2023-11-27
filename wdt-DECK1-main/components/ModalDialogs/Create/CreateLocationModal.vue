@@ -72,20 +72,18 @@ export default {
       if (await this.isADupe(location)) {
         showError("Name already taken, please select a different one.");
       } else if (
+        location.name === "" ||
+        location.longitude === "" ||
+        location.latitude === "" ||
+        location.wtg === ""
+      ) {
+        showError("Please make sure all fields are filled in.");
+      } else if (
         !isNumeric(location.longitude) ||
         !isNumeric(location.latitude) ||
-        !isNumeric(location.limit) ||
         !isNumeric(location.wtg)
       ) {
         showError("Please make sure all attributes except name are numerical.");
-      } else if (
-        location.name === "" ||
-        location.longitude === null ||
-        location.latitude === null ||
-        location.limit === null ||
-        location.wtg === null
-      ) {
-        showError("Please make sure all fields are filled in.");
       } else {
         const store = useLocationStore();
         await store.post(this.location);
