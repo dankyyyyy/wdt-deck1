@@ -1,6 +1,6 @@
 <template>
   <div class="overlay" @click="hideModal">
-    <div class="modal rounded-lg flex-col" style="max-height: 80%; overflow-y: scroll; overflow-x: hidden;">
+    <div class="modal-overlay inline-block" style="max-height: 80%; overflow-y: scroll; overflow-x: hidden;">
       <div class="box-content">
         <h3 class="box-title">Asset Creation</h3>
         <div class="py-5 flex flex-col flex-wrap content-normal">
@@ -70,7 +70,7 @@
           <div v-else-if="asset.category === 'Helicopter'">
             <div class="create-input">
               <label for="helicopterSpeed">Helicopter Speed: </label>
-              <input type="text" v-model="asset.helicopterSpeed" class="border-2 rounded-md text-center" />
+              <input type="text" v-model="asset.helicopterSpeed" class="input-field" />
               <label for="helicopterSpeed"> kt</label>
             </div>
           </div>

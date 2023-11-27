@@ -115,6 +115,21 @@
     color: #818181;
   }
 
+  .modal-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 22%;
+    border-radius: 70px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+    /* Drop shadow */
+    background-color: #dfdfdfdb;
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
+    @apply p-5;
+  }
+
   .click-here {
     color: #222f3e;
     font-weight: 800;
