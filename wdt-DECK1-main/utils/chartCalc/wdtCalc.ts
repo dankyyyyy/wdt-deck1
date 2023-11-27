@@ -74,6 +74,7 @@ export function start(
   });
   calculateAverage(asset, years);
 
+  // Determines whether an hour is fly or no-fly if the wind speed and wave height are below the asset's limit (1:  fly, 0: no-fly)
   function evaluateHour(asset: any, element: any, timeRangeStart: number, timeRangeEnd: number) {
     if (element.Hour >= timeRangeStart && element.Hour <= timeRangeEnd) {
       hours.push(
@@ -82,6 +83,7 @@ export function start(
     }
   }
 
+  // if 50+% of the hours in a day are fly, the day is fly (1: fly, 0: no-fly)
   function evaluateDay() {
     days.push(
       hours.filter((num) => num === 1).length / hours.length >=
