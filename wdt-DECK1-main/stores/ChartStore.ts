@@ -74,6 +74,12 @@ export const useChartStore = defineStore("ChartStore", {
             "Team Size",
         ]);
 
+        const caseDetailsAssetsTableLabels = ref<String[]>([
+            "Asset Name",
+            "Team Name",
+            "Team Size",
+        ]);
+
         const availData: any = {
 
         }
@@ -90,6 +96,7 @@ export const useChartStore = defineStore("ChartStore", {
             dashboardYearlyCommitmentTableLabels,
             dashboardAssetAvailabilityTableLabels,
             assetSummaryTableLabels,
+            caseDetailsAssetsTableLabels,
             availData,
         }
     }
