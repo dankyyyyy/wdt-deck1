@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ILocation } from '@/types/index'
+import { type ILocation } from '@/types/index'
 import axios from "axios"
 
 export const useLocationStore = defineStore("LocationStore",{

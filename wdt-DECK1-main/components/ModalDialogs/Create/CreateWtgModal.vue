@@ -50,11 +50,13 @@ import { isNumeric } from "~/utils/chartUtils";
 import { showError } from "~/utils/globalErrorHandling";
 
 export default {
-    name: "CreateAssetModal",
+    name: "CreateWtgModal",
     data() {
         return {
             wtg: {
+                _id: null,
                 name: "",
+                limit: 0,
             },
         };
     },
@@ -81,20 +83,20 @@ export default {
             if (await this.isADupe(wtg)) {
                 showError("Name already taken, please select a different one.");
             } else if (
+                wtg.name === "" ||
+                wtg.windSpeedLimit === "" ||
+                wtg.plannedMaintenance === "" ||
+                wtg.troubleshootVisits === "" ||
+                wtg.averageTsHours === ""
+            ) {
+                showError("Please make sure all fields are filled in.");
+            } else if (
                 !isNumeric(wtg.windSpeedLimit) ||
                 !isNumeric(wtg.plannedMaintenance) ||
                 !isNumeric(wtg.troubleshootVisits) ||
                 !isNumeric(wtg.averageTsHours)
             ) {
                 showError("Please make sure all attributes except for name are numerical.");
-            } else if (
-                wtg.name === "" ||
-                wtg.windSpeedLimit === null ||
-                wtg.plannedMaintenance === null ||
-                wtg.troubleshootVisits === null ||
-                wtg.averageTsHours === null
-            ) {
-                showError("Please make sure all fields are filled in.");
             } else {
                 const store = useWindTurbineGeneratorStore();
                 await store.post(wtg);

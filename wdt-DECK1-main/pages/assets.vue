@@ -6,11 +6,8 @@
     <h1 class="generic-header">Assets</h1>
   </div>
 
-  <!-- <IconsAdd @click="showModal" class="cursor-pointer" /> -->
-  <!-- add on hover description like "by clicking on this "+" button you can add another asset to your fleet" -->
-
   <!-- CreateAssetModal-->
-  <ModalDialogsCreateAssetModal v-if="isModalVisible" @hideModal="hideModal" />
+  <ModalDialogsCreateAssetModal v-show="isModalVisible" @hideModal="hideModal" />
 
   <div deck-frame-translucent-container>
     <div class="grid deck-frame-translucent" v-if="assets !== undefined">
@@ -19,6 +16,7 @@
       </div>
     </div>
   </div>
+  <CreateButton @click="showModal" class="cursor-pointer" />
   <SubmitButton @click="navigateToNextPage" />
 </template>
 
@@ -37,10 +35,20 @@ export default {
   },
   async mounted() {
     this.assets = await useAssetStore().getAll();
+    this.assets.sort((a, b) => {
+      const nameA = a.name || '';
+      const nameB = b.name || '';
+      return nameA.localeCompare(nameB)
+    });
     this.assets.length == 0 ? "" : this.loading = false;
   },
   async updated() {
     this.assets = await useAssetStore().getAll();
+    this.assets.sort((a, b) => {
+      const nameA = a.name || '';
+      const nameB = b.name || '';
+      return nameA.localeCompare(nameB)
+    });
     this.assets.length == 0 ? "" : this.loading = false;
   },
   methods: {

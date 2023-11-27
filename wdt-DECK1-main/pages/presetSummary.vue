@@ -16,11 +16,11 @@
                 <input type="text" v-model="preset.name" class="border-2 rounded-md text-center justify-center" />
             </div>
             <div style="display: flex;">
-                <CardsLocationCard :location="location" />
-                <CardsWtgCard :wtg="wtg" />
+                <CardsLocationCard :location="preset.location" />
+                <CardsWtgCard :wtg="preset.wtg" />
             </div>
             <div class="summary-table-container">
-                <TablesAssetSummaryTable :assets="assets" class="summary-table" />
+                <TablesAssetSummaryTable :assets="preset.assets" class="summary-table" />
             </div>
         </div>
     </div>
@@ -34,16 +34,13 @@ import { usePresetStore } from '~/stores/PresetStore';
 import { useAssetStore } from '~/stores/AssetStore';
 import { useWindTurbineGeneratorStore } from '~/stores/WindTurbineGeneratorStore';
 import { useLocationStore } from '~/stores/LocationStore';
+import '~/utils/chartUtils';
 import { showError } from '~/utils/globalErrorHandling';
 
 export default {
     name: "PresetSummary",
     data() {
         return {
-            assets: useAssetStore().getSelectedAssets(),
-            location: useLocationStore().getSelectedLocation(),
-            wtg: useWindTurbineGeneratorStore().getSelectedWtg(),
-
             preset: {
                 name: "",
                 assets: useAssetStore().getSelectedAssets(),
@@ -56,29 +53,19 @@ export default {
         async createPreset() {
             await this.validatePreset(this.preset);
         },
-        async isADupe(preset) {
-            var isADupe = false;
-            const presets = await usePresetStore().getAll();
-
-            for (let i = 0; i < presets.length; i++) {
-                if (presets[i].name === preset.name) {
-                    isADupe = true;
-                    break;
-                }
-            }
-            return isADupe;
-        },
         async validatePreset(preset) {
-            if (await this.isADupe(preset)) {
+            if (await isADupe(preset)) {
                 showError("Name already taken, please select a different one.");
+            } else if (!isValid(preset.name)) {
+                showError("Please make sure your preset's name only contains letters, numbers, dashes and no other special characters.");
             } else if (preset.name === "") {
                 showError("Please select a name for your preset before proceeding.");
             } else {
                 const store = usePresetStore();
                 await store.post(preset);
                 usePresetStore().setSelectedPreset(preset);
-
-                if (usePresetStore().getSelectedPreset() !== null) {
+                
+                if (store.getByName(preset.name) !== null) {
                     this.$router.push('/availability');
                 }
             }

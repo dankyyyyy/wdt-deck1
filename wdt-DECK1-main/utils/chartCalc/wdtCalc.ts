@@ -5,14 +5,15 @@ import "@/utils/chartUtils";
 // THRESHOLD - percentage of a day that can be no-fly
 // determines availability (50%+ => available)
 const threshold: number = 0.5;
+const yearStart: number = 2004;
 
-let hoursAsset: number[] = []
-let daysAsset: number[] = []
-let monthsAsset: number[] = []
+let hours: number[] = []
+let days: number[] = []
+let months: number[] = []
 
-let current_day: number;
-let current_month: number;
-let amountOfYears: number;
+let current_day: number = 1;
+let current_month: number = 1;
+let current_year: number = 1;
 
 export function start(
   timeRangeStart: number,
@@ -22,118 +23,108 @@ export function start(
   years: number,
   asset: any,
 ) {
+  startMonth = startMonth;
+  endMonth = endMonth;
+  timeRangeStart = timeRangeStart;
+  timeRangeEnd = timeRangeEnd;
 
   const chartStore = useChartStore();
   const dataStore = useWeatherdataStore();
-
-  startMonth = startMonth;
-  endMonth = endMonth;
-  current_day = 1;
-  current_month = 1;
-  amountOfYears = 0;
-  monthsAsset = [];
-
   const weatherData: any = dataStore.currentData;
-  countYears(weatherData);
+
+  hours = [];
+  days = [];
+  months = [];
 
   weatherData.forEach((element: any) => {
-    if (element.Year >= amountOfYears - years + 1) {
+    for (let i = (element.Year - yearStart + 1); i <= years; i++) {
+      if (current_year != Number(element.Year)) {
+        months = [];
+        current_year = Number(element.Year);
+      }
+
       if (current_day === Number(element.Day)) {
         if (
           Number(element.Hour) >= timeRangeStart &&
           Number(element.Hour) <= timeRangeEnd
-        ) {
-          evaluateHourDay(asset, element, false);
-        }
+        ) evaluateHour(asset, element, timeRangeStart, timeRangeEnd);
       } else {
-        evaluateHourDay(asset, element, true);
-
-        // without this part, one hour is skipped
-        if (
-          Number(element.Hour) >= timeRangeStart &&
-          Number(element.Hour) <= timeRangeEnd
-        ) {
-          evaluateHourDay(asset, element, false);
-        }
-        // increment current day
+        evaluateDay();
         current_day = Number(element.Day);
       }
-      // if month changes -> evaluate
+
       if (
         current_month != Number(element.Month) ||
         (Number(element.Month) === 12 &&
           Number(element.Day) === 31 &&
           Number(element.Hour) === timeRangeEnd)
       ) {
-        monthsAsset = evaluateMonth(
-          monthsAsset,
-          daysAsset,
+        months = evaluateMonth(
+          months,
+          days,
           current_month,
           startMonth,
           endMonth
         );
-        daysAsset = [];
+        chartStore.wdtData[`${asset.name}${i}`] = months;
+        days = [];
         current_month = Number(element.Month);
       }
     }
   });
-
-  for (let i = 0; i < 12; i++) {
-    monthsAsset[i] = monthsAsset[i] / years;
-  }
-  const name = asset.name;
-  chartStore.wdtData[name] = monthsAsset;
+  calculateAverage(asset, years);
 }
 
-function evaluateHourDay(asset: any, element: any, newDay: boolean) {
-  if (!newDay) {
-    if (asset) {
-      if (asset.category === "Vessel") {
-        hoursAsset.push(
-          parseFloat(element["Wave height"]) > asset.hs ? 1 : 0
-        );
-      } else if (asset.category === "Helicopter") {
-        hoursAsset.push(
-          parseFloat(element.Visibility) < asset.visibility ||
-            Number(element["Cloud base"]) === asset.cloudbase
-            ? 1 : 0
-        );
-      }
-    }
-  } else { // if next day, evaluate
-    daysAsset.push(
-      hoursAsset.filter((num) => num === 1).length / hoursAsset.length >=
-        threshold
-        ? 1 : 0
+// Determines whether an hour is fly or no-fly if the wind speed and wave height are below the asset's limit (1:  fly, 0: no-fly)
+function evaluateHour(asset: any, element: any, timeRangeStart: number, timeRangeEnd: number) {
+  if (element.Hour >= timeRangeStart && element.Hour <= timeRangeEnd) {
+    hours.push(
+      ((parseFloat(element["Wind speed"]) < asset.windSpeedLimit) && (parseFloat(element["Wave height"]) < asset.hs)) ? 1 : 0
     );
-    hoursAsset = [];
   }
 }
 
+// if 50+% of the hours in a day are fly, the day is fly (1: fly, 0: no-fly)
+function evaluateDay() {
+  days.push(
+    hours.filter((num) => num === 1).length / hours.length >=
+      threshold
+      ? 1 : 0
+  );
+  hours = [];
+}
+
+// month - 1 because values of month range from 1 to 12, but array indices from 0 to 11
+// changing this causes the first column in the chart to be empty
 function evaluateMonth(
-  monthArr: number[],
-  dayArr: number[],
+  months: number[],
+  days: number[],
   month: number,
   startMonth: number,
   endMonth: number
 ): number[] {
   if (month >= startMonth && month <= endMonth) {
-    if (monthArr[month - 1] != null) {
-      monthArr[month - 1] += dayArr.filter((num) => num === 1).length;
-    } // amountOfYears + 1 because it starts from 0
-    else {
-      monthArr[month - 1] = dayArr.filter((num) => num === 1).length;
-    }
+    if (months[month - 1] != null) months[month - 1] += days.filter((num) => num === 1).length;
+    else months[month - 1] = days.filter((num) => num === 1).length;
   }
-  return monthArr;
+  return months;
 }
 
-function countYears(weatherData: any) {
-  let maxYear = 0;
-  for (const item of weatherData) {
-    if (item.Year > maxYear) {
-      maxYear = item.Year;
+function calculateAverage(this: any, asset: any, years: number) {
+  const chartStore = useChartStore();
+  let sumMonths: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  for (let i = 1; i <= years; i++) {
+    for (let j = 0; j < 12; j++) {
+      sumMonths[j] += chartStore.wdtData[`${asset.name}${i}`].at(j);
     }
   }
-  amountOfYears = maxYear;
+
+  let average = [];
+  for (let i = 0; i < 12; i++) {
+    average[i] = Math.floor(sumMonths[i] / years);
+  }
+
+  if (average[1] > 28) average[1] = 28;
+
+  chartStore.wdtData[asset.name] = average;
 }

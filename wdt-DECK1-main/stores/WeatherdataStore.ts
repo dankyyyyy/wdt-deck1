@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ILocation, IWeatherdata } from '@/types/index'
+import { type ILocation, type IWeatherdata } from '@/types/index'
 import axios from "axios"
 
 interface IWeatherdataStoreState {
@@ -16,7 +16,6 @@ export const useWeatherdataStore = defineStore("WeatherdataStore", {
     }),
 
     actions: {
-        //check if data is registered with the provided location id
         async checkByLocationId(locationId: string) {
             try {
                 let data = await $fetch<IWeatherdata[]>(`/api/weatherdata/find/${locationId}`);
@@ -25,7 +24,18 @@ export const useWeatherdataStore = defineStore("WeatherdataStore", {
                 console.error(e)
             }
         },
-        async getByLocationId(locationId: string){
+        async checkByYear(locationId: string, year: Number): Promise<boolean> {
+            try {
+                if (year !== undefined) {
+                    let data = await $fetch<IWeatherdata>(`api/weatherdata/findByYear/${locationId}?year=${year}`);
+                    if (data !== undefined) return true
+                    else return false
+                } else return false
+            } catch {
+                return false;
+            }
+        },
+        async getByLocationId(locationId: string) {
             try {
                 let data = this.allFetchedData[locationId];
                 if (!data) {
@@ -35,7 +45,7 @@ export const useWeatherdataStore = defineStore("WeatherdataStore", {
                 this.currentData = data;
                 return data;
             } catch (e) {
-                console.error(e)
+                return;
             }
         },
         async postData(weatherData: any[], location: ILocation): Promise<Boolean> {

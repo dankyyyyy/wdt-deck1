@@ -26,6 +26,12 @@ export default {
     mongodbUri: process.env.MONGO_URI,
   },
   nitro: {
-    plugins: ['@/server/db/index.ts']
+    plugins: ['@/server/db/index.ts'],
+    vercel: {
+      functions: {
+        maxDuration: 100,
+        memory: 2008
+      }
+    }
   }
 };

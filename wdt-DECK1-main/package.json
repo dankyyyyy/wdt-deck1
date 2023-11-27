@@ -1,6 +1,10 @@
 {
-  "name": "nuxt-app",
+  "name": "wx-client",
   "private": true,
+  "engines": {
+    "npm": "10.1.0",
+    "node": ">=18.0.0 <=18.17.1"
+  },
   "scripts": {
     "build": "nuxt build",
     "dev": "node --max-old-space-size=8000 node_modules/nuxt/bin/nuxt.mjs dev",
@@ -25,9 +29,9 @@
     "ag-grid-vue3": "^30.2.0",
     "axios": "^1.4.0",
     "chart.js": "^4.2.1",
-    "mongodb": "^5.8.1",
+    "mongodb": "^5.9.1",
     "mongoose": "^7.1.0",
-    "nuxt": "^3.3.3",
+    "nuxt": "^3.8.2",
     "papaparse": "^5.4.1",
     "pinia": "^2.1.6",
     "pyodide": "^0.23.4",

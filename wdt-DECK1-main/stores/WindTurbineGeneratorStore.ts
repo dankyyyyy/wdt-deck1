@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { IWindTurbineGenerator } from '@/types/index'
+import { type IWindTurbineGenerator } from '@/types/index'
 import axios from "axios"
 
 export const useWindTurbineGeneratorStore = defineStore("WindTurbineGeneratorStore", {

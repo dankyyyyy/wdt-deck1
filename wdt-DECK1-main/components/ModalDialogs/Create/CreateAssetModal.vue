@@ -1,125 +1,115 @@
 <template>
   <div class="overlay" @click="hideModal">
     <div class="modal rounded-lg flex-col" style="max-height: 80%; overflow-y: scroll; overflow-x: hidden;">
-      <h3 class="font-semibold box-title">Asset Creation</h3>
-      <div class="py-5 flex flex-col flex-wrap content-normal">
-        <div class="create-input">
-          <label for="name">Name: </label>
-          <input type="text" v-model="asset.name" class="border-2 rounded-md text-center" />
-        </div>
-
-        <div class="create-input">
-          <label for="name">Category:</label>
-          <select name="category" v-model="asset.category" class="border-2 rounded-md text-left">
-            <option value="Vessel">Vessel</option>
-            <option value="Helicopter">Helicopter</option>
-          </select>
-        </div>
-
-        <div class="create-input">
-          <label for="name">Team:</label>
-          <select id="team" v-model="asset.team" class="border-2 rounded-md text-left">
-            <option value="" disabled selected>Team</option>
-            <option v-for="(option, index) in teams" :key="index" :value="option">
-              {{ option.name }}
-            </option>
-          </select>
-        </div>
-
-        <div v-if="asset.category === 'Vessel' || asset.category === 'Helicopter'">
-          <div class="create-input whitespace-nowrap">
-            <label for="windSpeedLimit">Wind Speed Limit: </label>
-            <input type="text" v-model="asset.windSpeedLimit" class="border-2 rounded-md text-center " />
-            <label for="windSpeedLimit"> m/s</label>
-          </div>
-
-          <div class="create-input whitespace-nowrap">
-            <label for="limit">H<sub>S</sub> Limit: </label>
-            <input type="text" v-model="asset.hs" class="border-2 rounded-md text-center " />
-            <label for="limit"> m</label>
-          </div>
-
-          <div class="create-input whitespace-nowrap">
-            <label for="dayRate">Day Rate: </label>
-            <input type="text" v-model="asset.dayRate" class="border-2 rounded-md text-center " />
-            <label for="dayRate"> €</label>
-          </div>
-        </div>
-
-        <div v-if="asset.category === 'Vessel'">
-          <div class="create-input whitespace-nowrap">
-            <label for="vesselSpeed">Vessel Speed: </label>
-            <input type="text" v-model="asset.vesselSpeed" class="border-2 rounded-md text-center " />
-            <label for="vesselSpeed"> kt</label>
-          </div>
-
-          <div class="create-input whitespace-nowrap">
-            <label for="highEngineActivity">High Engine Activity: </label>
-            <input type="text" v-model="asset.highEngineActivity" class="border-2 rounded-md text-center " />
-            <label for="highEngineActivity"> h</label>
-          </div>
-
-          <div class="create-input whitespace-nowrap">
-            <label for="highEngineActivity">Loitering: </label>
-            <input type="text" v-model="asset.loitering" class="border-2 rounded-md text-center " />
-            <label for="highEngineActivity"> h</label>
-          </div>
-        </div>
-
-        <div v-else-if="asset.category === 'Helicopter'">
+      <div class="box-content">
+        <h3 class="box-title">Asset Creation</h3>
+        <div class="py-5 flex flex-col flex-wrap content-normal">
           <div class="create-input">
-            <label for="helicopterSpeed">Helicopter Speed: </label>
-            <input type="text" v-model="asset.helicopterSpeed" class="border-2 rounded-md text-center" />
-            <label for="helicopterSpeed"> kt</label>
+            <label for="name">Name: </label>
+            <input type="text" v-model="asset.name" class="input-field" />
           </div>
 
           <div class="create-input">
-            <label for="limit">Cloudbase: </label>
-            <input type="text" v-model="asset.cloudbase" class="border-2 rounded-md text-center" />
-            <label for="cloudbase"> m</label>
+            <label for="name">Category:</label>
+            <select name="category" v-model="asset.category" class="input-field">
+              <option value="Vessel">Vessel</option>
+              <option value="Helicopter">Helicopter</option>
+            </select>
           </div>
 
           <div class="create-input">
-            <label for="limit">Visibility: </label>
-            <input type="text" v-model="asset.visibility" class="border-2 rounded-md text-center" />
-            <label for="visibility"> km</label>
+            <label for="name">Team:</label>
+            <select id="team" v-model="asset.team" class="input-field">
+              <option value="" disabled selected>Team</option>
+              <option v-for="(option, index) in teams" :key="index" :value="option">
+                {{ option.name }}
+              </option>
+            </select>
           </div>
-        </div>
 
-        <div v-if="asset.category === 'Vessel' || asset.category === 'Helicopter'">
-          <div class="create-input whitespace-nowrap">
-            <label for="highEngineActivity">Fuel Consumption: </label>
-            <input type="text" v-model="asset.operationalFuelConsumption" class="border-2 rounded-md text-center " />
-            <label for="highEngineActivity"> l/h</label>
-          </div>
-        </div>
+          <div v-if="asset.category === 'Vessel' || asset.category === 'Helicopter'">
+            <div class="create-input whitespace-nowrap">
+              <label for="windSpeedLimit">Wind Speed Limit: </label>
+              <input type="text" v-model="asset.windSpeedLimit" class="input-field" />
+              <label for="windSpeedLimit"> m/s</label>
+            </div>
 
-        <div v-if="asset.category === 'Vessel'">
-          <div class="create-input whitespace-nowrap">
-            <label for="highEngineActivity">Fuel Consumption when Loitering: </label>
-            <input type="text" v-model="asset.loiteringFuelConsumption" class="border-2 rounded-md text-center " />
-            <label for="highEngineActivity"> l/h</label>
-          </div>
-        </div>
+            <div class="create-input whitespace-nowrap">
+              <label for="limit">H<sub>S</sub> Limit: </label>
+              <input type="text" v-model="asset.hs" class="input-field" />
+              <label for="limit"> m</label>
+            </div>
 
-        <div v-else-if="asset.category === 'Helicopter'">
-          <div class="create-input whitespace-nowrap">
-            <label for="highEngineActivity">Flight Time (2 round trips): </label>
-            <input type="text" v-model="asset.flightTime" class="border-2 rounded-md text-center " />
-            <label for="highEngineActivity"> h</label>
+            <div class="create-input whitespace-nowrap">
+              <label for="dayRate">Day Rate: </label>
+              <input type="text" v-model="asset.dayRate" class="input-field" />
+              <label for="dayRate"> €</label>
+            </div>
+          </div>
+
+          <div v-if="asset.category === 'Vessel'">
+            <div class="create-input whitespace-nowrap">
+              <label for="vesselSpeed">Vessel Speed: </label>
+              <input type="text" v-model="asset.vesselSpeed" class="input-field" />
+              <label for="vesselSpeed"> kt</label>
+            </div>
+
+            <div class="create-input whitespace-nowrap">
+              <label for="highEngineActivity">High Engine Activity: </label>
+              <input type="text" v-model="asset.highEngineActivity" class="input-field" />
+              <label for="highEngineActivity"> h</label>
+            </div>
+
+            <div class="create-input whitespace-nowrap">
+              <label for="highEngineActivity">Loitering: </label>
+              <input type="text" v-model="asset.loitering" class="input-field" />
+              <label for="highEngineActivity"> h</label>
+            </div>
+          </div>
+
+          <div v-else-if="asset.category === 'Helicopter'">
+            <div class="create-input">
+              <label for="helicopterSpeed">Helicopter Speed: </label>
+              <input type="text" v-model="asset.helicopterSpeed" class="border-2 rounded-md text-center" />
+              <label for="helicopterSpeed"> kt</label>
+            </div>
+          </div>
+
+          <div v-if="asset.category === 'Vessel' || asset.category === 'Helicopter'">
+            <div class="create-input whitespace-nowrap">
+              <label for="highEngineActivity">Fuel Consumption: </label>
+              <input type="text" v-model="asset.operationalFuelConsumption" class="input-field" />
+              <label for="highEngineActivity"> l/h</label>
+            </div>
+          </div>
+
+          <div v-if="asset.category === 'Vessel'">
+            <div class="create-input whitespace-nowrap">
+              <label for="highEngineActivity">Fuel Consumption when Loitering: </label>
+              <input type="text" v-model="asset.loiteringFuelConsumption" class="input-field" />
+              <label for="highEngineActivity"> l/h</label>
+            </div>
+          </div>
+
+          <div v-else-if="asset.category === 'Helicopter'">
+            <div class="create-input whitespace-nowrap">
+              <label for="highEngineActivity">Flight Time (2 round trips): </label>
+              <input type="text" v-model="asset.flightTime" class="input-field" />
+              <label for="highEngineActivity"> h</label>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="flex w-full justify-between">
-        <button type="submit" class="border-2 rounded-md px-2" @click="showTeamModal">Create a Team</button>
-        <ModalDialogsCreateTeamModal v-if="isTeamModalVisible" @hideModal="hideTeamModal" />
-        <div class="flex w-full justify-end">
-          <button type="submit" class="border-2 rounded-md px-2" @click="handleCancelClick">
-            Cancel
-          </button>
-          <button type="submit" class="rounded-md px-2 ml-2 dialog-button" @click="handleSaveClick">
-            Save
-          </button>
+        <div class="flex w-full justify-between">
+          <button type="submit" class="border-2 rounded-md px-2" @click="showTeamModal">Create a Team</button>
+          <ModalDialogsCreateTeamModal v-if="isTeamModalVisible" @hideModal="hideTeamModal" />
+          <div class="flex w-full justify-end">
+            <button type="submit" class="border-2 rounded-md px-2" @click="handleCancelClick">
+              Cancel
+            </button>
+            <button type="submit" class="rounded-md px-2 ml-2 dialog-button" @click="handleSaveClick">
+              Save
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -171,18 +161,16 @@ export default {
         showError("Name already taken, please select a different one.");
       } else if (
         asset.name === "" ||
-        asset.windSpeedLimit === null ||
-        asset.hs === null ||
-        asset.dayRate === null ||
-        asset.vesselSpeed === null ||
-        asset.highEngineActivity === null ||
-        asset.loitering === null ||
-        asset.helicopterSpeed === null ||
-        asset.cloudbase === null ||
-        asset.visibility === null ||
-        asset.operationalFuelConsumption === null ||
-        asset.loiteringFuelConsumption === null ||
-        asset.flightTime === null
+        asset.windSpeedLimit === "" ||
+        asset.hs === "" ||
+        asset.dayRate === "" ||
+        asset.vesselSpeed === "" ||
+        asset.highEngineActivity === "" ||
+        asset.loitering === "" ||
+        asset.helicopterSpeed === "" ||
+        asset.operationalFuelConsumption === "" ||
+        asset.loiteringFuelConsumption === "" ||
+        asset.flightTime === ""
       ) {
         showError("Please make sure all fields are filled in.");
       } else if (asset.category === 'Vessel' && (
@@ -201,8 +189,6 @@ export default {
         !isNumeric(asset.hs) ||
         !isNumeric(asset.dayRate) ||
         !isNumeric(asset.helicopterSpeed) ||
-        !isNumeric(asset.cloudbase) ||
-        !isNumeric(asset.visibility) ||
         !isNumeric(asset.operationalFuelConsumption) ||
         !isNumeric(asset.flightTime)
       )) {

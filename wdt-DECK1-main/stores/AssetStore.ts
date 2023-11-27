@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { IAsset } from '@/types/index'
+import { type IAsset } from '@/types/index'
 import axios from "axios"
 
 export const useAssetStore = defineStore("AssetStore", {

@@ -1,4 +1,5 @@
 import { ILocation } from "~/types";
+import "~/utils/chartUtils";
 
 export async function checkConnection(location: ILocation): Promise<number> {
     const name = location.name;
@@ -6,10 +7,10 @@ export async function checkConnection(location: ILocation): Promise<number> {
     const lat = location.latitude;
     const coordinates = decimalToCoordinates(long, lat);
 
-    const c1 = coordinates.north;
-    const c2 = coordinates.west;
-    const c3 = coordinates.south;
-    const c4 = coordinates.east;
+    const c1 = coordinates.North;
+    const c2 = coordinates.West;
+    const c3 = coordinates.South;
+    const c4 = coordinates.East;
 
     const url = `/data/${c1}/${c2}/${c3}/${c4}/${name}`;
 
@@ -41,18 +42,18 @@ export function showError(message: string) {
     }, 5000);
 }
 
-export function decimalToCoordinates(long: number, lat: number) {
-    const longDir = long >= 0 ? (long === 0 ? 'N' : 'E') : 'W';
-    const latDir = lat >= 0 ? (lat === 0 ? 'E' : 'N') : 'S';
-    const absoluteDecimalLong = Math.abs(long);
-    const absoluteDecimalLat = Math.abs(lat);
-    return {
-        north: latDir === 'N' ? absoluteDecimalLat : absoluteDecimalLat * (-1),
-        south: latDir === 'S' ? absoluteDecimalLat : absoluteDecimalLat * (-1),
-        west: longDir === 'W' ? absoluteDecimalLong : absoluteDecimalLong * (-1),
-        east: longDir === 'E' ? absoluteDecimalLong : absoluteDecimalLong * (-1),
-    };
-}
+// export function decimalToCoordinates(long: number, lat: number) {
+//     const longDir = long >= 0 ? (long === 0 ? 'N' : 'E') : 'W';
+//     const latDir = lat >= 0 ? (lat === 0 ? 'E' : 'N') : 'S';
+//     const absoluteDecimalLong = Math.abs(long);
+//     const absoluteDecimalLat = Math.abs(lat);
+//     return {
+//         north: latDir === 'N' ? absoluteDecimalLat : absoluteDecimalLat * (-1),
+//         south: latDir === 'S' ? absoluteDecimalLat : absoluteDecimalLat * (-1),
+//         west: longDir === 'W' ? absoluteDecimalLong : absoluteDecimalLong * (-1),
+//         east: longDir === 'E' ? absoluteDecimalLong : absoluteDecimalLong * (-1),
+//     };
+// }
 
 async function handleData(data: any): Promise<number> {
     const result = data.data;

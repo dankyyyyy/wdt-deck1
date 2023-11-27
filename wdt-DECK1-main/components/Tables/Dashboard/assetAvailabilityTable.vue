@@ -42,7 +42,7 @@ export default {
 
                     const row = {
                         AssetName: asset.name,
-                        AnnualAvailability: `${annualDeployableHours(team, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth)} hours`,
+                        AnnualAvailability: `${formatNumberWithDecimal(annualDeployableHours(team, annualWorkability, props.filterParams.startMonth, props.filterParams.endMonth))} hours`,
                     }
                     tempRowData.push(row);
                 }

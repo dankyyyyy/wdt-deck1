@@ -264,7 +264,7 @@
     padding: 20px;
     z-index: 10000;
     display: flex;
-    width: 400px;
+    width: 30rem;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
   }
 
@@ -273,6 +273,14 @@
     align-items: center;
     text-align: center;
     margin-bottom: 2rem;
+  }
+
+  .input-field {
+    margin-left: 0.5rem;
+    border-width: 2px;
+    border-radius: 0.375rem;
+    text-align: left;
+    width: 10rem;
   }
 
   .dialog-button {
@@ -458,6 +466,49 @@
     /* Drop shadow */
   }
 
+  .create-button {
+    position: fixed;
+    bottom: 150px;
+    right: 25px;
+    background-color: #76c2e0;
+    /* Grey color as it's inactive by default */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 36px;
+    font-weight: bold;
+    width: 2.79em;
+    height: 2.79em;
+    cursor: not-allowed;
+
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+    /* Drop shadow */
+  }
+
+  .download-button {
+    position: fixed;
+    bottom: 275px;
+    right: 25px;
+    background-color: #575757;
+    /* Grey color as it's inactive by default */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 36px;
+    font-weight: bold;
+    width: 2.79em;
+    height: 2.79em;
+    cursor: not-allowed;
+
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+    /* Drop shadow */
+  }
+
+  .location-selected {
+    background-color: #09a6d7;
+    cursor: pointer;
+  }
+
   .active {
     background-color: #4caf50;
     cursor: pointer;
@@ -542,11 +593,11 @@
 }
 
 .commitment-color {
-  background-color: #e8bd6d;
+  background-color: #abd5e5;
 }
 
 .breakdown-color {
-  background-color: #6da4e8;
+  background-color: #69605648;
 }
 
 /* Dashboard Tables */

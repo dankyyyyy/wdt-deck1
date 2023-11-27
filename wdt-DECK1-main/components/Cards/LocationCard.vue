@@ -4,20 +4,28 @@
       <div class="customize-card-box" @click="selectLocation" :class="{ 'selected': isSelected }">
         <div class="box-content">
           <IconsLogoInverted class="box-image inline-block align-middle w-full" />
+          <div v-if="dataInformation.isFetching" style="align-items: center;">
+            <p style="text-align: center;">Checking for data...</p>
+          </div>
+          <div v-else-if="dataInformation.isDataRegistered">
+            <p style="text-align: center;">Data Found</p>
+            <p style="text-align: center;">Latest Year Found: {{ dataInformation.latestDataYear }}</p>
+          </div>
+          <div v-else>
+            <p class="font-semibold" style="text-align: center;">No Data Found</p>
+          </div>
+
           <h2 class="box-title">{{ location.name }}</h2>
 
-          <div class="box-text">
+          <div class="customize-box-text">
             <label for="latitude">Latitude: </label>
-            <p class="box-text-type">{{ location.latitude }}</p>
+            <p class="customize-box-text-type">{{ location.latitude }}</p>
             <hr />
             <label for="longitude">Longitude: </label>
-            <p class="box-text-type">{{ location.longitude }}</p>
-            <hr />
-            <label for="limit">Wind Speed Limit: </label>
-            <p class="box-text-type">{{ location.limit }}m/s</p>
+            <p class="customize-box-text-type">{{ location.longitude }}</p>
             <hr />
             <label for="turbines">Turbines: </label>
-            <p class="box-text-type">{{ location.wtg }}</p>
+            <p class="customize-box-text-type">{{ location.wtg }}</p>
           </div>
         </div>
       </div>
@@ -26,6 +34,7 @@
 </template>
 
 <script>
+import { useWeatherdataStore } from "~/stores/WeatherdataStore";
 import { useLocationStore } from "~/stores/LocationStore";
 
 export default {
@@ -38,8 +47,23 @@ export default {
   },
   data() {
     return {
+      dataInformation: {
+        isDataRegistered: false,
+        latestDataYear: null,
+      },
       isSelected: false,
+      yearNow: new Date().getFullYear(),
+      yearStart: 2004,
     };
+  },
+  async mounted() {
+    const foundData = await useWeatherdataStore().checkByLocationId(this.location._id)
+    if (foundData !== undefined) {
+      this.dataInformation.isDataRegistered = true;
+      this.dataInformation.latestDataYear = await this.determineLatestYear();
+    } else {
+      this.dataInformation.isDataRegistered = false;
+    }
   },
   methods: {
     selectLocation() {
@@ -52,7 +76,20 @@ export default {
         this.isSelected = false;
         this.$emit("location-deselected");
       }
-    }
+    },
+    async determineLatestYear() {
+      const integrity = await checkIntegrity(this.location);
+      var latestYear = null;
+      if (integrity[this.yearNow] === true) latestYear = this.yearNow; else {
+        for (let i = this.yearStart; i <= this.yearNow; i++) {
+          if (integrity[i] === true) {
+            latestYear = i;
+          } else break;
+        }
+      }
+
+      return latestYear;
+    },
   },
 };
 </script>
