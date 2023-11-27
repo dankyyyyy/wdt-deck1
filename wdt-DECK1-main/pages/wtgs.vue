@@ -38,12 +38,18 @@ export default {
     },
     async mounted() {
         this.wtgs = await useWindTurbineGeneratorStore().getAll();
-        this.wtgs.sort((a, b) => { return a.name.localeCompare(b.name)});
+        this.wtgs.sort((a, b) => { 
+            const nameA = a.name || '';
+            const nameB = b.name || '';
+            return nameA.localeCompare(nameB)});
         this.wtgs.length == 0 ? "" : this.loading = false;
     },
     async updated() {
         this.wtgs = await useWindTurbineGeneratorStore().getAll();
-        this.wtgs.sort((a, b) => { return a.name.localeCompare(b.name)});
+        this.wtgs.sort((a, b) => { 
+            const nameA = a.name || '';
+            const nameB = b.name || '';
+            return nameA.localeCompare(nameB)});
         this.wtgs.length == 0 ? "" : this.loading = false;
     },
     methods: {

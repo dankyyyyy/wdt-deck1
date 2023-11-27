@@ -14,7 +14,7 @@
         <CardsLocationCard :location="location" @location-selected="handleLocationSelected"
           @location-deselected="handleLocationDeselected" />
       </div>
-      <CreateButton @click="showModal" class="cursor-pointer"/>
+      <CreateButton @click="showModal" class="cursor-pointer" />
       <SubmitButton @click="navigateToNextPage" />
     </div>
     <div v-else>
@@ -42,12 +42,20 @@ export default {
   },
   async mounted() {
     this.locations = await useLocationStore().getAll();
-    this.locations.sort((a, b) => { return a.name.localeCompare(b.name) });
+    this.locations.sort((a, b) => {
+      const nameA = a.name || '';
+      const nameB = b.name || '';
+      return nameA.localeCompare(nameB)
+    });
     this.locations.length === 0 ? "" : this.loading = false;
   },
   async updated() {
     this.locations = await useLocationStore().getAll();
-    this.locations.sort((a, b) => { return a.name.localeCompare(b.name) });
+    this.locations.sort((a, b) => {
+      const nameA = a.name || '';
+      const nameB = b.name || '';
+      return nameA.localeCompare(nameB)
+    });
     this.locations.length === 0 ? "" : this.loading = false;
   },
   methods: {

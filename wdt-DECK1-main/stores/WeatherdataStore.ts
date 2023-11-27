@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ILocation, IWeatherdata } from '@/types/index'
+import { type ILocation, type IWeatherdata } from '@/types/index'
 import axios from "axios"
 
 interface IWeatherdataStoreState {

@@ -7,7 +7,7 @@
   </div>
 
   <!-- CreateAssetModal-->
-    <ModalDialogsCreateAssetModal v-show="isModalVisible" @hideModal="hideModal" />
+  <ModalDialogsCreateAssetModal v-show="isModalVisible" @hideModal="hideModal" />
 
   <div deck-frame-translucent-container>
     <div class="grid deck-frame-translucent" v-if="assets !== undefined">
@@ -35,12 +35,20 @@ export default {
   },
   async mounted() {
     this.assets = await useAssetStore().getAll();
-    this.assets.sort((a, b) => { return a.name.localeCompare(b.name); });
+    this.assets.sort((a, b) => {
+      const nameA = a.name || '';
+      const nameB = b.name || '';
+      return nameA.localeCompare(nameB)
+    });
     this.assets.length == 0 ? "" : this.loading = false;
   },
   async updated() {
     this.assets = await useAssetStore().getAll();
-    this.assets.sort((a, b) => { return a.name.localeCompare(b.name); });
+    this.assets.sort((a, b) => {
+      const nameA = a.name || '';
+      const nameB = b.name || '';
+      return nameA.localeCompare(nameB)
+    });
     this.assets.length == 0 ? "" : this.loading = false;
   },
   methods: {

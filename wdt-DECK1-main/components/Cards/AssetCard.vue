@@ -45,12 +45,6 @@
               <label for="helicopterSpeed">Helicopter Speed: </label>
               <p class="customize-box-text-type">{{ asset.helicopterSpeed }}kt</p>
               <hr />
-              <label for="cloudbase">Cloudbase: </label>
-              <p class="customize-box-text-type">{{ asset.cloudbase }}m</p>
-              <hr />
-              <label for="visibility">Visibility: </label>
-              <p class="customize-box-text-type">{{ asset.visibility }}m</p>
-              <hr />
             </div>
 
             <div>

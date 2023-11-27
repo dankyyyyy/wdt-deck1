@@ -4,7 +4,7 @@ import { usePresetStore } from "~/stores/PresetStore";
 import { useTeamStore } from "~/stores/TeamStore";
 import { useWeatherdataStore } from "~/stores/WeatherdataStore";
 import { useWindTurbineGeneratorStore } from "~/stores/WindTurbineGeneratorStore";
-import { IPreset, ITeam, ILocation, IWindTurbineGenerator } from "~/types";
+import { type IPreset, type ITeam, type ILocation, type IWindTurbineGenerator } from "~/types";
 
 export function nullify() {
     usePresetStore().setSelectedPreset(null as unknown as IPreset);
@@ -32,7 +32,7 @@ export function generateLabelsFromAssets(): String[] {
 }
 
 export function isValid(value: any) {
-    return /^[a-zA-Z0-9.() -]+$/.test(value);
+    return /^[a-zA-Z0-9.() _-]+$/.test(value);
 }
 
 export function isNumeric(value: any) {

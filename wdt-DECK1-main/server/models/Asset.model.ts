@@ -6,7 +6,6 @@ const schema: mongoose.Schema = new mongoose.Schema(
         name: { type: String, required: true },
         category: { type: String, required: true },
         hs: { type: Number },
-        visibility: { type: Number },
         windSpeedLimit: { type: Number },
         dayRate: { type: Number },
         operationalFuelConsumption: { type: Number },
@@ -19,7 +18,6 @@ const schema: mongoose.Schema = new mongoose.Schema(
 
         // Helicopter-only Attributes
         helicopterSpeed: { type: Number },
-        cloudbase: { type: Number },
 
         team: { type: Object, required: true },
     },

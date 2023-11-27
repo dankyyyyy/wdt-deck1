@@ -24,9 +24,6 @@
             <label for="longitude">Longitude: </label>
             <p class="customize-box-text-type">{{ location.longitude }}</p>
             <hr />
-            <label for="limit">Wind Speed Limit: </label>
-            <p class="customize-box-text-type">{{ location.limit }}m/s</p>
-            <hr />
             <label for="turbines">Turbines: </label>
             <p class="customize-box-text-type">{{ location.wtg }}</p>
           </div>
@@ -51,7 +48,6 @@ export default {
   data() {
     return {
       dataInformation: {
-        isFetching: true,
         isDataRegistered: false,
         latestDataYear: null,
       },
@@ -65,10 +61,8 @@ export default {
     if (foundData !== undefined) {
       this.dataInformation.isDataRegistered = true;
       this.dataInformation.latestDataYear = await this.determineLatestYear();
-      this.dataInformation.isFetching = false;
     } else {
       this.dataInformation.isDataRegistered = false;
-      this.dataInformation.isFetching = false;
     }
   },
   methods: {
