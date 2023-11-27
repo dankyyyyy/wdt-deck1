@@ -64,8 +64,8 @@ export default {
                 const store = usePresetStore();
                 await store.post(preset);
                 usePresetStore().setSelectedPreset(preset);
-
-                if (usePresetStore().getSelectedPreset() !== null) {
+                
+                if (store.getByName(preset.name) !== null) {
                     this.$router.push('/availability');
                 }
             }

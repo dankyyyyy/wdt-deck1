@@ -31,17 +31,13 @@ export const usePresetStore = defineStore("PresetStore", {
       }
     },
     async post(preset: IPreset) {
-      try {
-        console.log('Creating preset ', preset.name);
-        const response = await axios.post('/api/presets/create', preset);
-        console.log(response.data.message);
-        if (response.status === 200) {
-          console.log('Preset created successfully\n', response);
-        } else {
-          console.error('Preset creation failed with status', response.status);
-        }
-      } catch (error) {
-        console.error('Error creating preset: ', error);
+      console.log('Creating preset ', preset.name);
+      const response = await axios.post('/api/presets/create', preset);
+      console.log(response.data.message);
+      if (response.status === 200) {
+        console.log('Preset created successfully\n', response);
+      } else {
+        console.error('Preset creation failed with status', response.status);
       }
       this.getAll()
     },
