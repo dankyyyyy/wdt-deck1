@@ -1,29 +1,31 @@
 <template>
   <div class="overlay">
-    <div class="modal-overlay">
+    <div class="modal-overlay" style="max-height: 80%; overflow-y: hidden; overflow-x: hidden;">
       <h3 class="font-semibold box-title">Location Creation</h3>
-      <div class="py-5 flex flex-col flex-wrap content-center">
-        <div class="create-input">
-          <label for="name">Name: </label>
-          <input type="text" v-model="location.name" class="border-2 rounded-md text-center" />
+      <div class="modal-content">
+        <div class="py-5 flex flex-col flex-wrap content-center">
+          <div class="create-input">
+            <label for="name">Name: </label>
+            <input type="text" v-model="location.name" class="border-2 rounded-md text-center" />
+          </div>
+          <div class="create-input">
+            <label for="latitude">Latitude: </label>
+            <input type="text" v-model="location.latitude" class="border-2 rounded-md text-center" />
+          </div>
+          <div class="create-input">
+            <label for="longitude">Longitude: </label>
+            <input type="text" v-model="location.longitude" class="border-2 rounded-md text-center" />
+          </div>
+          <div class="create-input">
+            <label for="wtg">WTG: </label>
+            <input type="text" v-model="location.wtg" class="border-2 rounded-md text-center" />
+          </div>
         </div>
-        <div class="create-input">
-          <label for="latitude">Latitude: </label>
-          <input type="text" v-model="location.latitude" class="border-2 rounded-md text-center" />
-        </div>
-        <div class="create-input">
-          <label for="longitude">Longitude: </label>
-          <input type="text" v-model="location.longitude" class="border-2 rounded-md text-center" />
-        </div>
-        <div class="create-input">
-          <label for="wtg">WTG: </label>
-          <input type="text" v-model="location.wtg" class="border-2 rounded-md text-center" />
+        <div class="modal-button-container">
+          <ModalCancelButton @click="handleCancelClick" />
+          <ModalSaveButton @click="handleSaveClick" />
         </div>
       </div>
-      <div class="modal-button-container">
-            <ModalCancelButton @click="handleCancelClick"/>
-            <ModalSaveButton @click="handleSaveClick"/>
-        </div>
     </div>
   </div>
 </template>

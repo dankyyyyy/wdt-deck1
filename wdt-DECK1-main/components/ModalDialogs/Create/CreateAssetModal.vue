@@ -1,8 +1,8 @@
 <template>
   <div class="overlay" @click="hideModal">
-    <div class="modal-overlay inline-block" style="max-height: 80%; overflow-y: scroll; overflow-x: hidden;">
-      <div class="box-content">
-        <h3 class="box-title">Asset Creation</h3>
+    <div class="modal-overlay inline-block" style="max-height: 80%; overflow-y: hidden; overflow-x: hidden;">
+      <h3 class="box-title">Asset Creation</h3>
+      <div class="modal-content">
         <div class="py-5 flex flex-col flex-wrap content-normal">
           <div class="create-input">
             <label for="name">Name: </label>
@@ -100,10 +100,10 @@
           </div>
         </div>
         <div class="modal-button-container">
-          <ModalCreateTeamButton @click="showTeamModal"/>
+          <ModalCreateTeamButton @click="showTeamModal" />
           <ModalDialogsCreateTeamModal v-if="isTeamModalVisible" @hideModal="hideTeamModal" />
-            <ModalCancelButton @click="handleCancelClick"/>
-            <ModalSaveButton @click="handleSaveClick"/>
+          <ModalCancelButton @click="handleCancelClick" />
+          <ModalSaveButton @click="handleSaveClick" />
         </div>
       </div>
     </div>

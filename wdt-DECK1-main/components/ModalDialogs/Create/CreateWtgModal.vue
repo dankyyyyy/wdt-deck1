@@ -1,41 +1,43 @@
 <template>
     <div class="overlay">
-        <div class="modal-overlay" style="max-height: 80%; overflow-y: scroll; overflow-x: hidden;">
-            <h3 class="font-semibold box-title">WTG Creation</h3>
-            <div class="py-5 flex flex-col flex-wrap content-normal">
-                <div class="create-input">
-                    <label for="name">Name: </label>
-                    <input type="text" v-model="wtg.name" class="border-2 rounded-md text-center" />
-                </div>
+        <div class="modal-overlay" style="max-height: 80%; overflow-y: hidden; overflow-x: hidden;">
+            <h3 class="box-title">WTG Creation</h3>
+            <div class="modal-content">
+                <div class="py-5 flex flex-col flex-wrap content-normal">
+                    <div class="create-input">
+                        <label for="name">Name: </label>
+                        <input type="text" v-model="wtg.name" class="border-2 rounded-md text-center" />
+                    </div>
 
-                <div class="create-input whitespace-nowrap">
-                    <label for="windSpeedLimit">Wind Speed Limit: </label>
-                    <input type="text" v-model="wtg.windSpeedLimit" class="border-2 rounded-md text-center " />
-                    <label for="windSpeedLimit"> m/s</label>
-                </div>
+                    <div class="create-input whitespace-nowrap">
+                        <label for="windSpeedLimit">Wind Speed Limit: </label>
+                        <input type="text" v-model="wtg.windSpeedLimit" class="border-2 rounded-md text-center " />
+                        <label for="windSpeedLimit"> m/s</label>
+                    </div>
 
-                <div class="create-input whitespace-nowrap">
-                    <label for="limit">Planned Maintenance: </label>
-                    <input type="text" v-model="wtg.plannedMaintenance" class="border-2 rounded-md text-center" />
-                    <label for="plannedMaintenance"> h/WTG</label>
-                </div>
+                    <div class="create-input whitespace-nowrap">
+                        <label for="limit">Planned Maintenance: </label>
+                        <input type="text" v-model="wtg.plannedMaintenance" class="border-2 rounded-md text-center" />
+                        <label for="plannedMaintenance"> h/WTG</label>
+                    </div>
 
-                <div class="create-input whitespace-nowrap">
-                    <label for="limit">Troubleshoot Visits: </label>
-                    <input type="text" v-model="wtg.troubleshootVisits" class="border-2 rounded-md text-center" />
-                    <label for="troubleshootVisits"> /WTG</label>
-                </div>
+                    <div class="create-input whitespace-nowrap">
+                        <label for="limit">Troubleshoot Visits: </label>
+                        <input type="text" v-model="wtg.troubleshootVisits" class="border-2 rounded-md text-center" />
+                        <label for="troubleshootVisits"> /WTG</label>
+                    </div>
 
-                <div class="create-input whitespace-nowrap">
-                    <label for="limit">Average TS hours: </label>
-                    <input type="text" v-model="wtg.averageTsHours" class="border-2 rounded-md text-center" />
-                    <label for="averageTsHours"> h</label>
+                    <div class="create-input whitespace-nowrap">
+                        <label for="limit">Average TS hours: </label>
+                        <input type="text" v-model="wtg.averageTsHours" class="border-2 rounded-md text-center" />
+                        <label for="averageTsHours"> h</label>
+                    </div>
+                </div>
+                <div class="modal-button-container">
+                    <ModalCancelButton @click="handleCancelClick" />
+                    <ModalSaveButton @click="handleSaveClick" />
                 </div>
             </div>
-            <div class="modal-button-container">
-            <ModalCancelButton @click="handleCancelClick"/>
-            <ModalSaveButton @click="handleSaveClick"/>
-        </div>
         </div>
     </div>
 </template>
