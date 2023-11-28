@@ -3,13 +3,13 @@
     <div class="overlay" @click="handleBackgroundClick">
         <div class="modal-overlay" @click="handleOverlayClick">
             <div class="box-content">
-                <h3 class="box-title">{{ caseName }}</h3>
+                <h3 class="generic-header">{{ preset.name.name }}</h3>
                 <div style="display: flex; justify-content: center; text-align: center;">
-                    <h1 class="box-text">{{ caseLocation }}</h1>
-                    <h1 class="box-text">{{ caseWtg }}</h1>
+                    <CardsLocationCard :location="preset.location" />
+                    <CardsWtgCard :wtg="preset.wtg" />
                 </div>
                 <div class="summary-table-container">
-                    <TablesAssetSummaryTable v-if="caseAssets" :assets="caseAssets" class="summary-table" />
+                    <TablesCaseDetailsAssetsTable :assets="preset.assets" class="summary-table" />
                 </div>
             </div>
         </div>
@@ -25,13 +25,24 @@ import '~/utils/chartUtils';
 import { showError } from '~/utils/globalErrorHandling';
 
 export default {
-    
+    name: "PresetSummary",
+    data() {
+        return {
+            preset: {
+                name: usePresetStore().getSelectedPreset(),
+                assets: usePresetStore().getSelectedPreset().assets,
+                location: usePresetStore().getSelectedPreset().location,
+                wtg: usePresetStore().getSelectedPreset().wtg,
+            },
+        };
+    },
+
     async mounted() {
-        const currentPreset = usePresetStore().getSelectedPreset();
-        this.caseName = currentPreset.name;
-        this.caseAssets = currentPreset.assets;
-        this.caseLocation = currentPreset.location.name;
-        this.caseWtg = currentPreset.wtg.name;
+        // const currentPreset = usePresetStore().getSelectedPreset();
+        // this.caseName = currentPreset.name;
+        // this.caseAssets = currentPreset.assets;
+        // this.caseLocation = currentPreset.location.name;
+        // this.caseWtg = currentPreset.wtg.name;
 
         document.addEventListener('click', this.handleDocumentClick);
     },

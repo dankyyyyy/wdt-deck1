@@ -120,7 +120,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 22%;
+    width: 36%;
     border-radius: 70px;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
     /* Drop shadow */
@@ -505,6 +505,25 @@
     bottom: 275px;
     right: 25px;
     background-color: #575757;
+    /* Grey color as it's inactive by default */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 36px;
+    font-weight: bold;
+    width: 2.79em;
+    height: 2.79em;
+    cursor: not-allowed;
+
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+    /* Drop shadow */
+  }
+
+  .info-button {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background-color: #76c2e0;
     /* Grey color as it's inactive by default */
     color: white;
     border: none;

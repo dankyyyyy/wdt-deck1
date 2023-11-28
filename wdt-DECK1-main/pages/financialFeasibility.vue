@@ -7,8 +7,12 @@
       <div class="heading-container">
         <h1 class="generic-header">Financial Feasibility</h1>
       </div>
+
+      <ModalDialogsInformationalCaseDetailsModal v-show="isModalVisible" @hideModal="hideModal" />
+
       <FiltersFinGraphFilter :tableKey="tableKey" />
     </div>
+    <CaseDetailsButton @click="showModal" class="cursor-pointer" />
   </div>
 </template>
 
