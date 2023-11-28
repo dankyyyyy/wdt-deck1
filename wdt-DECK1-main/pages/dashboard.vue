@@ -53,6 +53,7 @@ export default {
             ids: [],
             chartKey: false,
             tableKey: false,
+            isModalVisible: false,
         };
     },
     async mounted() {
@@ -67,6 +68,12 @@ export default {
         return this.startChart();
     },
     methods: {
+        showModal() {
+            this.isModalVisible = true;
+        },
+        hideModal() {
+            this.isModalVisible = false;
+        },
         addGraph() {
             this.ids.push(this.ids[this.ids.length - 1] + 1);
         },

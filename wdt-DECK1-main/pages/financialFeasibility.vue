@@ -28,6 +28,8 @@ export default {
   data() {
     return {
       loading: true,
+      tableKey: false,
+      isModalVisible: false,
     };
   },
   async mounted() {
@@ -35,6 +37,12 @@ export default {
     this.toggleTableKey();
   },
   methods: {
+    showModal() {
+      this.isModalVisible = true;
+    },
+    hideModal() {
+      this.isModalVisible = false;
+    },
     async startTables() {
       const currentPreset = usePresetStore().getSelectedPreset();
       const currentLocation = currentPreset.location;
