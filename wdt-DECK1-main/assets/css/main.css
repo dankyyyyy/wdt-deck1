@@ -44,9 +44,9 @@
   }
 
   .bg-image {
-    /*background-image: url('assets\wdt_background3.png'); */
-    /* background-image: url('assets\wdt_background2_low_opacity.png'); */
-    background-image: url('assets/wdt-background-temporary-blurred.png');
+    /*background-image: url('assets/wdt_background3.png'); */
+    background-image: url('assets/wdt_background2_low_opacity.png');
+    /* background-image: url('assets/wdt-background-temporary-blurred.png'); */
     background-size: cover;
     background-position: center center;
     overflow-x: hidden;
