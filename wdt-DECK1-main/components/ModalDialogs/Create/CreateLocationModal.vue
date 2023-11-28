@@ -1,6 +1,6 @@
 <template>
-  <div class="overlay" @click="hideModal">
-    <div class="modal rounded-lg flex-col">
+  <div class="overlay">
+    <div class="modal-overlay">
       <h3 class="font-semibold box-title">Location Creation</h3>
       <div class="py-5 flex flex-col flex-wrap content-center">
         <div class="create-input">
@@ -20,14 +20,10 @@
           <input type="text" v-model="location.wtg" class="border-2 rounded-md text-center" />
         </div>
       </div>
-      <div class="flex w-full justify-end">
-        <button type="submit" class="border-2 rounded-md px-2" @click="handleCancelClick">
-          Cancel
-        </button>
-        <button type="submit" class="rounded-md px-2 ml-2 dialog-button" @click="handleSaveClick">
-          Save
-        </button>
-      </div>
+      <div class="modal-button-container">
+            <ModalCancelButton @click="handleCancelClick"/>
+            <ModalSaveButton @click="handleSaveClick"/>
+        </div>
     </div>
   </div>
 </template>

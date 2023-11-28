@@ -1,6 +1,6 @@
 <template>
-    <div class="overlay" @click="hideModal">
-        <div class="modal rounded-lg flex-col" style="max-height: 80%; overflow-y: scroll; overflow-x: hidden;">
+    <div class="overlay">
+        <div class="modal-overlay" style="max-height: 80%; overflow-y: scroll; overflow-x: hidden;">
             <h3 class="font-semibold box-title">WTG Creation</h3>
             <div class="py-5 flex flex-col flex-wrap content-normal">
                 <div class="create-input">
@@ -32,14 +32,10 @@
                     <label for="averageTsHours"> h</label>
                 </div>
             </div>
-            <div class="flex w-full justify-end">
-                <button type="submit" class="border-2 rounded-md px-2" @click="handleCancelClick">
-                    Cancel
-                </button>
-                <button type="submit" class="rounded-md px-2 ml-2 dialog-button" @click="handleSaveClick">
-                    Save
-                </button>
-            </div>
+            <div class="modal-button-container">
+            <ModalCancelButton @click="handleCancelClick"/>
+            <ModalSaveButton @click="handleSaveClick"/>
+        </div>
         </div>
     </div>
 </template>

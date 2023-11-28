@@ -43,6 +43,6 @@
   
   <script>
   export default {
-    name: "LogoInverted",
+    name: "LogoInvertedLarge",
   };
   </script>

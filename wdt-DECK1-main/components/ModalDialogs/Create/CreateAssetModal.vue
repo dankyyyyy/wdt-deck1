@@ -99,17 +99,11 @@
             </div>
           </div>
         </div>
-        <div class="flex w-full justify-between">
-          <button type="submit" class="border-2 rounded-md px-2" @click="showTeamModal">Create a Team</button>
+        <div class="modal-button-container">
+          <ModalCreateTeamButton @click="showTeamModal"/>
           <ModalDialogsCreateTeamModal v-if="isTeamModalVisible" @hideModal="hideTeamModal" />
-          <div class="flex w-full justify-end">
-            <button type="submit" class="border-2 rounded-md px-2" @click="handleCancelClick">
-              Cancel
-            </button>
-            <button type="submit" class="rounded-md px-2 ml-2 dialog-button" @click="handleSaveClick">
-              Save
-            </button>
-          </div>
+            <ModalCancelButton @click="handleCancelClick"/>
+            <ModalSaveButton @click="handleSaveClick"/>
         </div>
       </div>
     </div>
