@@ -908,6 +908,121 @@
   margin: .5rem;
 }
 
+/* =============================
+   Maritime Asset Map Section
+============================= */
+
+/* CONTAINERS */
+
+.section {
+  height: 40rem;
+  width: 105%;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.generic-container {
+  display: flex;
+  justify-content: left;
+  flex-wrap: wrap;
+  width: 110%;
+  height: 22.5rem;
+}
+
+.info-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.section-color-1 {
+  background-color: #FFBF7D;
+}
+
+.section-color-2 {
+  background-color: #8CA3AA;
+}
+
+/* TEXT STYLING */
+
+.page-header {
+  font-size: 10rem;
+  font-family: 'RussoOne-Regular', sans-serif;
+}
+
+.section-header-black {
+  font-size: 3.5rem;
+  font-family: 'RussoOne-Regular', sans-serif;
+  color: black;
+
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+
+.section-header-white {
+  font-size: 3.5rem;
+  font-family: 'RussoOne-Regular', sans-serif;
+  color: white;
+
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+
+.info-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  /* Keeps the text at the bottom */
+  align-items: center;
+  height: 100%;
+  margin-bottom: 5%;
+}
+
+/* ELEMENTS */
+
+.info-image-box {
+  width: 30rem;
+  margin: 10px;
+  margin-left: 4rem;
+  margin-right: 4rem;
+  border-radius: 70px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.info-text-box {
+  width: 30rem;
+  margin: 10px;
+  margin-left: 4rem;
+  margin-right: 4rem;
+  border-radius: 70px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+  /* Drop shadow */
+  background-color: #ffffff45;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box-content {
+  text-align: center;
+}
+
+/* IMAGE FORMATTING */
+
+.info-card-image {
+  max-width: 100%;
+  margin-bottom: 3%;
+  margin-top: 25px;
+}
+
 @layer utilities {
 
   /* ================
@@ -989,4 +1104,14 @@
 
 .error-message {
   color: #fff;
+}
+
+/* FONTS */
+
+@font-face {
+  font-family: 'RussoOne-Regular';
+  src: url('assets/fonts/RussoOne-Regular.ttf') format('truetype');
+  /* Adjust the path and filename accordingly */
+  font-weight: normal;
+  font-style: normal;
 }
