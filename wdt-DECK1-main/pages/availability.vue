@@ -7,6 +7,9 @@
       <div class="heading-container">
         <h1 class="generic-header">Availability</h1>
       </div>
+
+      <ModalDialogsInformationalCaseDetailsModal v-show="isModalVisible" @hideModal="hideModal" />
+
       <div class="flex flex-col">
         <div v-for="id in ids" :key="id">
           <FiltersAvailGraphFilter :key="chartKey" @remove="handleRemove" :chartId="id" :amountOfCharts="ids.length" />
@@ -19,6 +22,7 @@
         </button>
       </div>
     </div>
+    <CaseDetailsButton @click="showModal" class="cursor-pointer" />
   </div>
 </template>
 
@@ -36,6 +40,7 @@ export default {
       ids: [],
       chartKey: false,
       loading: true,
+      isModalVisible: false,
     };
   },
   async mounted() {
@@ -43,11 +48,19 @@ export default {
     await this.startChart();
     this.toggleChartKey();
     this.loading = false;
+    const currentPreset = usePresetStore().getSelectedPreset();
+    this.caseName = currentPreset.name;
   },
   fetch() {
     return this.startChart();
   },
   methods: {
+    showModal() {
+      this.isModalVisible = true;
+    },
+    hideModal() {
+      this.isModalVisible = false;
+    },
     addGraph() {
       this.ids.push(this.ids[this.ids.length - 1] + 1);
     },

@@ -1,8 +1,8 @@
 <template>
   <div class="overlay" @click="hideModal">
-    <div class="modal rounded-lg flex-col" style="max-height: 80%; overflow-y: scroll; overflow-x: hidden;">
-      <div class="box-content">
-        <h3 class="box-title">Asset Creation</h3>
+    <div class="modal-overlay inline-block" style="max-height: 80%; overflow-y: hidden; overflow-x: hidden;">
+      <h3 class="box-title">Asset Creation</h3>
+      <div class="modal-content">
         <div class="py-5 flex flex-col flex-wrap content-normal">
           <div class="create-input">
             <label for="name">Name: </label>
@@ -70,7 +70,7 @@
           <div v-else-if="asset.category === 'Helicopter'">
             <div class="create-input">
               <label for="helicopterSpeed">Helicopter Speed: </label>
-              <input type="text" v-model="asset.helicopterSpeed" class="border-2 rounded-md text-center" />
+              <input type="text" v-model="asset.helicopterSpeed" class="input-field" />
               <label for="helicopterSpeed"> kt</label>
             </div>
           </div>
@@ -99,17 +99,11 @@
             </div>
           </div>
         </div>
-        <div class="flex w-full justify-between">
-          <button type="submit" class="border-2 rounded-md px-2" @click="showTeamModal">Create a Team</button>
+        <div class="modal-button-container">
+          <ModalCreateTeamButton @click="showTeamModal" />
           <ModalDialogsCreateTeamModal v-if="isTeamModalVisible" @hideModal="hideTeamModal" />
-          <div class="flex w-full justify-end">
-            <button type="submit" class="border-2 rounded-md px-2" @click="handleCancelClick">
-              Cancel
-            </button>
-            <button type="submit" class="rounded-md px-2 ml-2 dialog-button" @click="handleSaveClick">
-              Save
-            </button>
-          </div>
+          <ModalCancelButton @click="handleCancelClick" />
+          <ModalSaveButton @click="handleSaveClick" />
         </div>
       </div>
     </div>

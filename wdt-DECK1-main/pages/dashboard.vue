@@ -10,6 +10,9 @@
                     <div class="heading-container">
                         <h1 class="generic-header">Dashboard</h1>
                     </div>
+
+                    <ModalDialogsInformationalCaseDetailsModal v-show="isModalVisible" @hideModal="hideModal" />
+
                     <!-- <div class="w-4/5 h-20 p-3">
                             <RecommendationPopUp />
                         </div> -->
@@ -29,6 +32,7 @@
                 </div>
             </div>
         </div>
+        <CaseDetailsButton @click="showModal" class="cursor-pointer" />
     </div>
 </template>
   
@@ -49,6 +53,7 @@ export default {
             ids: [],
             chartKey: false,
             tableKey: false,
+            isModalVisible: false,
         };
     },
     async mounted() {
@@ -63,6 +68,12 @@ export default {
         return this.startChart();
     },
     methods: {
+        showModal() {
+            this.isModalVisible = true;
+        },
+        hideModal() {
+            this.isModalVisible = false;
+        },
         addGraph() {
             this.ids.push(this.ids[this.ids.length - 1] + 1);
         },

@@ -3,7 +3,7 @@
     <div class="grid">
       <div class="customize-card-box" @click="selectLocation" :class="{ 'selected': isSelected }">
         <div class="box-content">
-          <IconsLogoInverted class="box-image inline-block align-middle w-full" />
+          <IconsMapPin class="box-image inline-block align-middle w-full" />
           <div v-if="dataInformation.isFetching" style="align-items: center;">
             <p style="text-align: center;">Checking for data...</p>
           </div>

@@ -7,8 +7,12 @@
       <div class="heading-container">
         <h1 class="generic-header">Financial Feasibility</h1>
       </div>
+
+      <ModalDialogsInformationalCaseDetailsModal v-show="isModalVisible" @hideModal="hideModal" />
+
       <FiltersFinGraphFilter :tableKey="tableKey" />
     </div>
+    <CaseDetailsButton @click="showModal" class="cursor-pointer" />
   </div>
 </template>
 
@@ -24,6 +28,8 @@ export default {
   data() {
     return {
       loading: true,
+      tableKey: false,
+      isModalVisible: false,
     };
   },
   async mounted() {
@@ -31,6 +37,12 @@ export default {
     this.toggleTableKey();
   },
   methods: {
+    showModal() {
+      this.isModalVisible = true;
+    },
+    hideModal() {
+      this.isModalVisible = false;
+    },
     async startTables() {
       const currentPreset = usePresetStore().getSelectedPreset();
       const currentLocation = currentPreset.location;

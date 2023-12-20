@@ -44,9 +44,9 @@
   }
 
   .bg-image {
-    /*background-image: url('assets\wdt_background3.png'); */
-    /* background-image: url('assets\wdt_background2_low_opacity.png'); */
-    background-image: url('assets/wdt-background-temporary-blurred.png');
+    /*background-image: url('assets/wdt_background3.png'); */
+    background-image: url('assets/wdt_background2_low_opacity.png');
+    /* background-image: url('assets/wdt-background-temporary-blurred.png'); */
     background-size: cover;
     background-position: center center;
     overflow-x: hidden;
@@ -113,6 +113,20 @@
     justify-content: center;
     align-items: center;
     color: #818181;
+  }
+
+  .modal-overlay {
+    position: fixed;
+    top: 47%;
+    left: 48.5%;
+    transform: translate(-50%, -50%);
+    border-radius: 70px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+    /* Drop shadow */
+    background-color: #dfdfdfdb;
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
+    @apply p-5;
   }
 
   .click-here {
@@ -479,7 +493,7 @@
     font-weight: bold;
     width: 2.79em;
     height: 2.79em;
-    cursor: not-allowed;
+    cursor: pointer;
 
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
     /* Drop shadow */
@@ -498,7 +512,104 @@
     font-weight: bold;
     width: 2.79em;
     height: 2.79em;
-    cursor: not-allowed;
+    cursor: pointer;
+
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+    /* Drop shadow */
+  }
+
+  .info-button {
+    position: fixed;
+    bottom: 25px;
+    left: 25px;
+    background-color: #f5cea1;
+    /* Grey color as it's inactive by default */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 36px;
+    font-weight: bold;
+    width: 2.79em;
+    height: 2.79em;
+    cursor: pointer;
+
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+    /* Drop shadow */
+  }
+
+  .modal-content {
+    max-height: 80vh;
+    overflow-y: auto !important;
+    /* Add a scrollbar if the content overflows */
+  }
+
+  .modal-button-container {
+    margin-top: 1rem;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+  }
+
+  .modal-save-button {
+    margin-top: 1rem;
+
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background-color: #76c2e0;
+    /* Grey color as it's inactive by default */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 36px;
+    font-weight: bold;
+    width: 1.39em;
+    height: 1.39em;
+    cursor: pointer;
+
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+    /* Drop shadow */
+  }
+
+  .modal-cancel-button {
+    margin-top: 1rem;
+
+    position: fixed;
+    bottom: 25px;
+    left: 28px;
+    background-color: #e07676;
+    /* Grey color as it's inactive by default */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 36px;
+    font-weight: bold;
+    width: 1.39em;
+    height: 1.39em;
+    cursor: pointer;
+
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+    /* Drop shadow */
+  }
+
+  .modal-team-button {
+    margin-top: 1rem;
+
+    position: fixed;
+    bottom: 25px;
+    right: 44.5%;
+    background-color: #ffffffc1;
+    /* Grey color as it's inactive by default */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 36px;
+    font-weight: bold;
+    width: 1.39em;
+    height: 1.39em;
+    cursor: pointer;
 
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
     /* Drop shadow */

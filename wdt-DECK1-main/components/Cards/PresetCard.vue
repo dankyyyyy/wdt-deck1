@@ -3,7 +3,7 @@
         <div class="grid">
             <div class="card-box" @click="selectPreset" :class="{ 'selected': isSelected }">
                 <div class="box-content">
-                    <IconsLogoInverted class="box-image inline-block align-middle w-full" />
+                    <IconsCollectionsOutlined class="box-image inline-block align-middle w-full" />
                     <div class="box-title">{{ preset.name }}</div>
                     <div class="box-text">
                         <hr />
