@@ -914,7 +914,7 @@
 
 /* CONTAINERS */
 
-.section {
+.generic-section {
   height: 40rem;
   width: 105%;
   background-size: cover;
@@ -923,6 +923,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.option-section {
+  min-height: 75rem;
+  width: 105%;
+  background-size: cover;
+  background-position: center;
+  display: flex;
 }
 
 .generic-container {
@@ -947,11 +955,105 @@
   background-color: #8CA3AA;
 }
 
+/* Region Options */
+
+.options-section-left {
+  background-image: url('assets/northsea.jpg');
+  width: 48.2%;
+  /* Color of the text */
+  color: black;
+}
+
+.options-section-right {
+  background-image: url('assets/balticsea.jpg');
+  width: 50%;
+  /* Color of the text */
+  color: black;
+}
+
+.options-section-left,
+.options-section-right {
+  background-size: cover;
+  filter: saturate(20%);
+  /* Transitions for zoom and saturaton */
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.options-section-left:hover,
+.options-section-right:hover {
+  transform: scale(1.05);
+  filter: saturate(100%);
+}
+
+.options-section-left:hover {
+  text-shadow: -3px 3px 7px #FFBF7D;
+}
+
+.options-section-right:hover {
+  text-shadow: 3px 3px 7px #FFBF7D;
+}
+
+/* Turbine Type Options */
+
+/* Monopile */
+.options-section-2-first {
+  background-image: url('assets/turbine-monopile.jpg');
+  width: 32%;
+  /* Color of the text */
+  color: black;
+}
+
+/* Jacket */
+.options-section-2-second {
+  background-image: url('assets/turbine-jacket.jpg');
+  width: 32%;
+  /* Color of the text */
+  color: black;
+}
+
+/* Floating */
+.options-section-2-third {
+  background-image: url('assets/turbine-floating.jpg');
+  width: 33%;
+  /* Color of the text */
+  color: black;
+}
+
+.options-section-2-first,
+.options-section-2-second,
+.options-section-2-third {
+  background-size: cover;
+  filter: saturate(20%);
+  /* Transitions for zoom and saturaton */
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.options-section-2-first:hover,
+.options-section-2-second:hover,
+.options-section-2-third:hover {
+  transform: scale(1.05);
+  filter: saturate(100%);
+}
+
+.options-section-2-first:hover {
+  text-shadow: -3px 3px 7px #FFBF7D;
+}
+
+.options-section-2-second:hover {
+  text-shadow: 0px 3px 7px #FFBF7D;
+}
+
+.options-section-2-third:hover {
+  text-shadow: 3px 3px 7px #FFBF7D;
+}
+
+
 /* TEXT STYLING */
 
 .page-header {
   font-size: 10rem;
   font-family: 'RussoOne-Regular', sans-serif;
+  margin-right: 4rem;
 }
 
 .section-header-black {
@@ -961,6 +1063,8 @@
 
   text-decoration: underline;
   text-decoration-style: dotted;
+
+  margin-right: 4rem;
 }
 
 .section-header-white {
@@ -970,16 +1074,39 @@
 
   text-decoration: underline;
   text-decoration-style: dotted;
+
+  margin-right: 4rem;
 }
 
 .info-text {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  /* Keeps the text at the bottom */
+  justify-content: center;
   align-items: center;
   height: 100%;
-  margin-bottom: 5%;
+}
+
+.option-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  font-size: 8rem;
+  font-family: 'RussoOne-Regular', sans-serif;
+}
+
+.left {
+  align-items: flex-start;
+  margin-left: 5%;
+}
+
+.right {
+  align-items: flex-end;
+  margin-right: 5%;
+}
+
+.center {
+  align-items: center;
 }
 
 /* ELEMENTS */
@@ -987,7 +1114,6 @@
 .info-image-box {
   width: 30rem;
   margin: 10px;
-  margin-left: 4rem;
   margin-right: 4rem;
   border-radius: 70px;
 
@@ -999,8 +1125,7 @@
 .info-text-box {
   width: 30rem;
   margin: 10px;
-  margin-left: 4rem;
-  margin-right: 4rem;
+  margin-right: 6.8rem;
   border-radius: 70px;
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
   /* Drop shadow */

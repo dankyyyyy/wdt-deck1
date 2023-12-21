@@ -6,14 +6,12 @@
         </NuxtLink>
 
         <!-- First Section -->
-        <div class="section">
-            <div class="heading-container">
-                <h1 class="page-header">Maritime Asset Map</h1>
-            </div>
+        <div class="generic-section">
+            <h1 class="page-header">Maritime Asset Map</h1>
         </div>
 
         <!-- Second Section -->
-        <div class="section section-color-1">
+        <div class="generic-section section-color-1">
             <h2 class="section-header-black">How does it work?</h2>
             <div class="grid info-card-container">
                 <!-- Info Cards with pictures and text -->
@@ -25,18 +23,18 @@
 
                 <!-- Step 2 - Choose type and model of turbine -->
                 <InfoCard :infoText="card2.infoText">
-                    <IconsWindmillLarge class="inline-block align-middle w-full"/>
+                    <IconsWindmillLarge class="inline-block align-middle w-full" />
                 </InfoCard>
 
                 <!-- Step 3 - Get a recommendation -->
                 <InfoCard :infoText="card3.infoText">
-                    <IconsRecommendation class="inline-block align-middle w-full"/>
+                    <IconsRecommendation class="inline-block align-middle w-full" />
                 </InfoCard>
             </div>
         </div>
 
         <!-- Third Section -->
-        <div class="section section-color-2">
+        <div class="generic-section section-color-2">
             <h2 class="section-header-white">Powered by:</h2>
             <div class="grid info-card-container">
                 <!-- Info Cards for the third section -->
@@ -48,14 +46,53 @@
 
                 <!-- Depth data site -->
                 <InfoCard :infoText="card5.infoText">
+                    <IconsGebcoLogo class="inline-block align-middle w-full" />
                 </InfoCard>
 
                 <!-- Our algorithm -->
                 <InfoCard :infoText="card6.infoText">
+                    <IconsLogoInvertedLargest class="inline-block align-middle w-full" />
                 </InfoCard>
 
             </div>
         </div>
+
+        <div class="option-section">
+            <!-- North Sea -->
+            <div class="options-section-left">
+                <div class="option-text right">
+                    North Sea
+                </div>
+            </div>
+            <!-- Baltic Sea -->
+            <div class="options-section-right">
+                <div class="option-text left">
+                    Baltic Sea
+                </div>
+            </div>
+        </div>
+
+        <div class="option-section">
+            <!-- Monopile -->
+            <div class="options-section-2-first">
+                <div class="option-text center">
+                    Monopile
+                </div>
+            </div>
+            <!-- Jacket -->
+            <div class="options-section-2-second">
+                <div class="option-text center">
+                    Jacket
+                </div>
+            </div>
+            <!-- Floating -->
+            <div class="options-section-2-third">
+                <div class="option-text center">
+                    Floating
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
 
