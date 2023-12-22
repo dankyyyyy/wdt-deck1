@@ -912,7 +912,7 @@
    Maritime Asset Map Section
 ============================= */
 
-/* CONTAINERS */
+/* SECTIONS & CONTAINERS */
 
 .generic-section {
   height: 40rem;
@@ -933,12 +933,45 @@
   display: flex;
 }
 
-.generic-container {
+.map-section {
+  height: 80rem;
+  width: 105%;
+  background-size: cover;
+  background-position: center;
   display: flex;
-  justify-content: left;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer {
+  height: 15rem;
+  width: 105%;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.intermediate-container {
+  height: 10rem;
+  width: 105%;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.map-container {
+  display: flex;
   flex-wrap: wrap;
-  width: 110%;
-  height: 22.5rem;
+  justify-content: space-between;
+  height: 80rem;
+  width: 100%;
 }
 
 .info-card-container {
@@ -1046,7 +1079,6 @@
 .options-section-2-third:hover {
   text-shadow: 3px 3px 7px #FFBF7D;
 }
-
 
 /* TEXT STYLING */
 

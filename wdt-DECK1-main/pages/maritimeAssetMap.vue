@@ -57,6 +57,10 @@
             </div>
         </div>
 
+        <div class="intermediate-container">
+            <h2 class="section-header-black">Select installation region:</h2>
+        </div>
+
         <div class="option-section">
             <!-- North Sea -->
             <div class="options-section-left">
@@ -70,6 +74,10 @@
                     Baltic Sea
                 </div>
             </div>
+        </div>
+
+        <div class="intermediate-container">
+            <h2 class="section-header-black">Select installation type:</h2>
         </div>
 
         <div class="option-section">
@@ -93,66 +101,55 @@
             </div>
         </div>
 
+        <!-- Fourth Section -->
+
+        <div class="intermediate-container">
+            <h2 class="section-header-black">Our recommendation</h2>
+        </div>
+
+        <div class="map-section">
+                <LeafletMap />
+        </div>
+    </div>
+
+    <div class="intermediate-container">
+
+    </div>
+
+    <div class="footer">
+
     </div>
 </template>
 
 <script>
 import InfoCard from '~/components/Cards/InfoCard.vue';
-
-// Region Card
-import MapFilled from '~/components/icons/MapFilled.vue';
-
-// Turbine Card
-import Windmill from '~/components/icons/WindmillLarge.vue';
-
-// Recommendation Card
-import Recommendation from '~/components/icons/Recommendation.vue';
-
-// CDS Card
-import CDS_Logo from '~/components/icons/CopernicusLogo.vue';
-
-
-// Depth Data Site Card
-import DepthSite_Logo from '~/assets/placeholder-info-image.jpg';
-
-
-// Our Algorithm Card
-import DECK1_Logo from '~/components/icons/LogoInverted.vue';
+import LeafletMap from '~/components/LeafletMap.vue';
 
 export default {
     components: {
         InfoCard,
-        MapFilled,
-        Windmill,
-        Recommendation,
-        DECK1_Logo,
+        LeafletMap,
     },
     data() {
         return {
             // Data to be displayed in the info cards is assigned here.
             // For the images, Vue components are used as SVGs.
             card1: {
-                imageSrc: MapFilled,
                 infoText: 'RegionText',
             },
             card2: {
-                imageSrc: Windmill,
                 infoText: 'Text for Image 2',
             },
             card3: {
-                imageSrc: Recommendation,
                 infoText: 'Text for Image 3',
             },
             card4: {
-                imageSrc: CDS_Logo,
                 infoText: 'Text for Image 4',
             },
             card5: {
-                imageSrc: DepthSite_Logo,
                 infoText: 'Text for Image 5',
             },
             card6: {
-                imageSrc: DECK1_Logo,
                 infoText: 'Text for Image 6',
             },
         };

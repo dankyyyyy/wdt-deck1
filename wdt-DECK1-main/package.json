@@ -13,9 +13,13 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@nuxt/typescript-build": "^3.0.2",
     "@nuxtjs/tailwindcss": "^6.6.5",
+    "@types/leaflet": "^1.9.8",
+    "@vue-leaflet/vue-leaflet": "0.6.1",
     "autoprefixer": "^10.4.14",
     "json-loader": "^0.5.7",
+    "leaflet": "1.8.0",
     "postcss": "^8.4.21",
     "postcss-import": "^15.1.0",
     "postcss-nesting": "^12.0.1",
@@ -32,16 +36,15 @@
     "mongodb": "^5.9.1",
     "mongoose": "^7.1.0",
     "nuxt": "^3.8.2",
+    "nuxt-property-decorator": "^2.9.1",
     "papaparse": "^5.4.1",
     "pinia": "^2.1.6",
     "pyodide": "^0.23.4",
+    "vue": "^3.3.13",
     "vue-carousel": "^0.18.0",
     "vue-chartjs": "^5.2.0",
     "vue-router": "^4.2.5",
     "winston": "^3.10.0",
     "yarn": "^1.22.19"
-  },
-  "overrides": {
-    "vue": "latest"
   }
 }
