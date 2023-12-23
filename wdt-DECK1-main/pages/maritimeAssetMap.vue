@@ -31,10 +31,12 @@
                     <IconsRecommendation class="inline-block align-middle w-full" />
                 </InfoCard>
             </div>
+            <button @click="scrollToSection('third-section')">How does it work?</button>
+            <button @click="scrollToSection('fourth-section')">Options Section</button>
         </div>
 
         <!-- Third Section -->
-        <div class="generic-section section-color-2">
+        <div id="third-section" class="generic-section section-color-2">
             <h2 class="section-header-white">Powered by:</h2>
             <div class="grid info-card-container">
                 <!-- Info Cards for the third section -->
@@ -57,7 +59,9 @@
             </div>
         </div>
 
-        <div class="intermediate-container">
+        <!-- Fourth Section -->
+
+        <div id="fourth-section" class="intermediate-container">
             <h2 class="section-header-black">Select installation region:</h2>
         </div>
 
@@ -101,19 +105,20 @@
             </div>
         </div>
 
-        <!-- Fourth Section -->
+        <!-- Fifth Section -->
 
         <div class="intermediate-container">
             <h2 class="section-header-black">Our recommendation</h2>
         </div>
 
         <div class="map-section">
-                <LeafletMap />
+            <LeafletMap />
         </div>
     </div>
 
     <div class="intermediate-container">
-
+        <button>Save as</button>
+        <button @click="scrollToSection('fourth-section')">Try again</button>
     </div>
 
     <div class="footer">
@@ -153,6 +158,15 @@ export default {
                 infoText: 'Text for Image 6',
             },
         };
+    },
+    methods: {
+        scrollToSection(sectionId) {
+            // Scroll to the element with the specified id
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
     },
 };
 </script>
