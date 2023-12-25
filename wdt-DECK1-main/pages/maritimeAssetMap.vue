@@ -11,7 +11,7 @@
         </div>
 
         <!-- Second Section -->
-        <div class="generic-section section-color-1">
+        <div class="generic-section flex section-color-1">
             <h2 class="section-header-black">How does it work?</h2>
             <div class="grid info-card-container">
                 <!-- Info Cards with pictures and text -->
@@ -31,8 +31,14 @@
                     <IconsRecommendation class="inline-block align-middle w-full" />
                 </InfoCard>
             </div>
-            <button @click="scrollToSection('third-section')">How does it work?</button>
-            <button @click="scrollToSection('fourth-section')">Options Section</button>
+
+            <div class="grid info-card-container">
+                <!-- To Powered by -->
+                <ButtonCard :infoText="card9.infoText" @click="scrollToSection('third-section')" />
+
+                <!-- To Options -->
+                <ButtonCard :infoText="card10.infoText" @click="scrollToSection('fourth-section')" />
+            </div>
         </div>
 
         <!-- Third Section -->
@@ -116,9 +122,17 @@
         </div>
     </div>
 
-    <div class="intermediate-container">
-        <button>Save as</button>
-        <button @click="scrollToSection('fourth-section')">Try again</button>
+    <div class="grid intermediate-container">
+
+        <!-- Save Recommendation -->
+        <TransparentCard :infoText="card7.infoText">
+            <RecommendationSaveButton />
+        </TransparentCard>
+
+        <!-- Retry Anchor -->
+        <TransparentCard :infoText="card8.infoText">
+            <RetryButton @click="scrollToSection('fourth-section')" />
+        </TransparentCard>
     </div>
 
     <div class="footer">
@@ -128,17 +142,27 @@
 
 <script>
 import InfoCard from '~/components/Cards/InfoCard.vue';
+import ButtonCard from '~/components/Cards/ButtonCard.vue';
+import TransparentCard from '~/components/Cards/TransparentCard.vue';
 import LeafletMap from '~/components/LeafletMap.vue';
+import RetryButton from '~/components/RetryButton.vue';
+import RecommendationSaveButton from '~/components/RecommendationSaveButton.vue';
 
 export default {
     components: {
         InfoCard,
+        ButtonCard,
+        TransparentCard,
         LeafletMap,
+        RetryButton,
+        RecommendationSaveButton,
     },
     data() {
         return {
             // Data to be displayed in the info cards is assigned here.
             // For the images, Vue components are used as SVGs.
+
+            //Info Cards
             card1: {
                 infoText: 'RegionText',
             },
@@ -157,6 +181,22 @@ export default {
             card6: {
                 infoText: 'Text for Image 6',
             },
+
+            // Buttons
+
+            card7: {
+                infoText: 'Is this the one?',
+            },
+            card8: {
+                infoText: 'Not quite it?',
+            },
+            card9: {
+                infoText: 'Learn more',
+            },
+            card10: {
+                infoText: 'Get started',
+            }
+
         };
     },
     methods: {

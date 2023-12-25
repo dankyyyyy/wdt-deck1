@@ -518,12 +518,25 @@
     /* Drop shadow */
   }
 
+  .generic-button {
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 36px;
+    font-weight: bold;
+    width: 2.79em;
+    height: 2.79em;
+    cursor: pointer;
+
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+    /* Drop shadow */
+  }
+
   .info-button {
     position: fixed;
     bottom: 25px;
     left: 25px;
     background-color: #f5cea1;
-    /* Grey color as it's inactive by default */
     color: white;
     border: none;
     border-radius: 50%;
@@ -956,12 +969,11 @@
 }
 
 .intermediate-container {
-  height: 10rem;
+  height: 15rem;
   width: 105%;
   background-size: cover;
   background-position: center;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -1082,6 +1094,18 @@
 
 /* TEXT STYLING */
 
+.bold {
+  font-weight: bold;
+}
+
+.prompt {
+  font-size: 1.5rem;
+}
+
+.regular {
+  font-size: 1rem;
+}
+
 .page-header {
   font-size: 10rem;
   font-family: 'RussoOne-Regular', sans-serif;
@@ -1166,7 +1190,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  
 }
+
+.button-box {
+  width: 15rem;
+  margin: 10px;
+  margin-top: 30%;
+  margin-right: 6.8rem;
+  border-radius: 70px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
 
 .box-content {
   text-align: center;
@@ -1178,6 +1217,30 @@
   max-width: 100%;
   margin-bottom: 3%;
   margin-top: 25px;
+
+}
+
+/* ELEMENT FORMATING */
+
+.column {
+  flex: 1;
+  flex-direction: column;
+}
+
+/* COLOR STYLES */
+
+/* Buttons */
+
+.primary-button {
+  background-color: #FFBF7D;
+}
+
+.secondary-button {
+  background-color: #8CA3AA;
+}
+
+.neutral-button {
+  background-color: #575757;
 }
 
 @layer utilities {
@@ -1222,6 +1285,10 @@
 
 ::-webkit-scrollbar-button {
   display: none;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 .submit-button {
