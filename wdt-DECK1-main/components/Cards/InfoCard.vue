@@ -1,14 +1,14 @@
 <template>
     <div class="grid-container">
         <div class="grid">
-            <div class="info-image-box">
+            <div class="generic-box info-image-box">
                 <div class="box-content">
                     <slot class="info-card-image inline-block align-middle w-full" />
                 </div>
             </div>
         </div>
         <div class="grid">
-            <div class="info-text-box">
+            <div class="generic-box info-text-box">
                 <div class="box-content">
                     <p class="info-text">
                         {{ infoText }}

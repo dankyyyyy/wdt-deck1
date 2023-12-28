@@ -1,7 +1,7 @@
 <template>
     <div class="grid-container">
         <div class="grid">
-            <div class="info-text-box">
+            <div class="generic-box info-text-box">
                 <div class="box-content">
                     <p class="info-text bold prompt">
                         {{ infoText }}
@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="grid">
-            <div class="info-image-box">
+            <div class="generic-box info-image-box">
                 <div class="box-content">
                     <slot />
                 </div>

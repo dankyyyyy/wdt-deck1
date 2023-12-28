@@ -939,7 +939,7 @@
 }
 
 .option-section {
-  min-height: 75rem;
+  height: 75rem;
   width: 105%;
   background-size: cover;
   background-position: center;
@@ -968,7 +968,7 @@
   align-items: center;
 }
 
-.intermediate-container {
+.intermediate-section {
   height: 15rem;
   width: 105%;
   background-size: cover;
@@ -1005,15 +1005,11 @@
 .options-section-left {
   background-image: url('assets/northsea.jpg');
   width: 48.2%;
-  /* Color of the text */
-  color: black;
 }
 
 .options-section-right {
   background-image: url('assets/balticsea.jpg');
   width: 50%;
-  /* Color of the text */
-  color: black;
 }
 
 .options-section-left,
@@ -1044,24 +1040,18 @@
 .options-section-2-first {
   background-image: url('assets/turbine-monopile.jpg');
   width: 32%;
-  /* Color of the text */
-  color: black;
 }
 
 /* Jacket */
 .options-section-2-second {
   background-image: url('assets/turbine-jacket.jpg');
   width: 32%;
-  /* Color of the text */
-  color: black;
 }
 
 /* Floating */
 .options-section-2-third {
   background-image: url('assets/turbine-floating.jpg');
   width: 33%;
-  /* Color of the text */
-  color: black;
 }
 
 .options-section-2-first,
@@ -1092,7 +1082,9 @@
   text-shadow: 3px 3px 7px #FFBF7D;
 }
 
+/*--------------*/
 /* TEXT STYLING */
+/*--------------*/
 
 .bold {
   font-weight: bold;
@@ -1112,21 +1104,9 @@
   margin-right: 4rem;
 }
 
-.section-header-black {
+.section-header {
   font-size: 3.5rem;
   font-family: 'RussoOne-Regular', sans-serif;
-  color: black;
-
-  text-decoration: underline;
-  text-decoration-style: dotted;
-
-  margin-right: 4rem;
-}
-
-.section-header-white {
-  font-size: 3.5rem;
-  font-family: 'RussoOne-Regular', sans-serif;
-  color: white;
 
   text-decoration: underline;
   text-decoration-style: dotted;
@@ -1165,44 +1145,37 @@
   align-items: center;
 }
 
+/*----------*/
 /* ELEMENTS */
+/*----------*/
 
-.info-image-box {
-  width: 30rem;
+.generic-box {
   margin: 10px;
-  margin-right: 4rem;
   border-radius: 70px;
 
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.info-image-box {
+  width: 30rem;
+  margin-right: 4rem;
 }
 
 .info-text-box {
   width: 30rem;
-  margin: 10px;
   margin-right: 6.8rem;
-  border-radius: 70px;
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
-  /* Drop shadow */
   background-color: #ffffff45;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
 }
 
 .button-box {
   width: 15rem;
-  margin: 10px;
   margin-top: 30%;
   margin-right: 6.8rem;
-  border-radius: 70px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
 }
 
@@ -1211,7 +1184,9 @@
   text-align: center;
 }
 
+/*------------------*/
 /* IMAGE FORMATTING */
+/*------------------*/
 
 .info-card-image {
   max-width: 100%;
@@ -1220,14 +1195,18 @@
 
 }
 
+/*-------------------*/
 /* ELEMENT FORMATING */
+/*-------------------*/
 
 .column {
   flex: 1;
   flex-direction: column;
 }
 
+/*--------------*/
 /* COLOR STYLES */
+/*--------------*/
 
 /* Buttons */
 
@@ -1241,6 +1220,20 @@
 
 .neutral-button {
   background-color: #575757;
+}
+
+.neutral-button-2 {
+  background-color: rgba(255, 255, 255, 0.873);
+}
+
+/* Text */
+
+.black {
+ color:black
+}
+
+.white {
+  color:white
 }
 
 @layer utilities {

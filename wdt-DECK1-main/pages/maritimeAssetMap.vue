@@ -12,7 +12,7 @@
 
         <!-- Second Section -->
         <div class="generic-section flex section-color-1">
-            <h2 class="section-header-black">How does it work?</h2>
+            <h2 class="section-header black">How does it work?</h2>
             <div class="grid info-card-container">
                 <!-- Info Cards with pictures and text -->
 
@@ -43,7 +43,7 @@
 
         <!-- Third Section -->
         <div id="third-section" class="generic-section section-color-2">
-            <h2 class="section-header-white">Powered by:</h2>
+            <h2 class="section-header white">Powered by:</h2>
             <div class="grid info-card-container">
                 <!-- Info Cards for the third section -->
 
@@ -67,44 +67,44 @@
 
         <!-- Fourth Section -->
 
-        <div id="fourth-section" class="intermediate-container">
-            <h2 class="section-header-black">Select installation region:</h2>
+        <div id="fourth-section" class="intermediate-section">
+            <h2 class="section-header black">Select installation region:</h2>
         </div>
 
         <div class="option-section">
             <!-- North Sea -->
-            <div class="options-section-left">
+            <div class="options-section-left black">
                 <div class="option-text right">
                     North Sea
                 </div>
             </div>
             <!-- Baltic Sea -->
-            <div class="options-section-right">
+            <div class="options-section-right black">
                 <div class="option-text left">
                     Baltic Sea
                 </div>
             </div>
         </div>
 
-        <div class="intermediate-container">
-            <h2 class="section-header-black">Select installation type:</h2>
+        <div class="intermediate-section">
+            <h2 class="section-header black">Select installation type:</h2>
         </div>
 
         <div class="option-section">
             <!-- Monopile -->
-            <div class="options-section-2-first">
+            <div class="options-section-2-first black">
                 <div class="option-text center">
                     Monopile
                 </div>
             </div>
             <!-- Jacket -->
-            <div class="options-section-2-second">
+            <div class="options-section-2-second black">
                 <div class="option-text center">
                     Jacket
                 </div>
             </div>
             <!-- Floating -->
-            <div class="options-section-2-third">
+            <div class="options-section-2-third black">
                 <div class="option-text center">
                     Floating
                 </div>
@@ -113,8 +113,8 @@
 
         <!-- Fifth Section -->
 
-        <div class="intermediate-container">
-            <h2 class="section-header-black">Our recommendation</h2>
+        <div class="intermediate-section">
+            <h2 class="section-header black">Our recommendation</h2>
         </div>
 
         <div class="map-section">
@@ -122,7 +122,7 @@
         </div>
     </div>
 
-    <div class="grid intermediate-container">
+    <div class="grid intermediate-section">
 
         <!-- Save Recommendation -->
         <TransparentCard :infoText="card7.infoText">

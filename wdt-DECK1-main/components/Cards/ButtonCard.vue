@@ -1,7 +1,7 @@
 <template>
     <div class="grid-container">
         <div class="grid">
-            <div class="button-box pointer secondary-button">
+            <div class="generic-box button-box pointer neutral-button-2">
                 <div class="box-content">
                     <p class="info-text bold prompt">
                         {{ infoText }}
