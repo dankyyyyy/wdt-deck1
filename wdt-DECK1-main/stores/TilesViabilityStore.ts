@@ -25,7 +25,7 @@ export const useTileInfoStore = defineStore("TileInfoStore", {
         });
 
         // Using relative URL directly in Axios call
-        const response = await axios.get(`/api/v1/tile-water-depth`, { params });
+        const response = await axios.get(`/api/v1/get-water-depth-for-tile`, { params });
         this.tileInfo = response.data;
         console.log(response.data);
       } catch (error) {
