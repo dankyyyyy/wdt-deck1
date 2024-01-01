@@ -119,16 +119,26 @@
 
         <div class="map-section">
             <LeafletMap ref="leafletMap" />
-            <button @click="emitClearTilesEvent" class="delete-button">Clear Tiles</button>
+            <button @click="emitClearTilesEvent" class="delete-button bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out focus:outline-none focus:shadow-outline">
+                Clear Tiles
+            </button>
         </div>
 
-        <div class="tiles-list">
-            <h3>Tiles Coordinates and Depth</h3>
+        <div class="tiles-list bg-white shadow-md rounded-lg overflow-hidden mx-4 my-4 max-w-sm">
+            <h3 class="text-lg font-semibold text-gray-700 p-4">Tiles List</h3>
             <ul>
-                <li v-for="(tile, index) in tileInfoList" :key="index">
-                    {{ formatCoordinates(tile.coordinates) }} - Depth: 
-                    {{ tile.info && tile.info.average_depth ? `${tile.info.average_depth}m` : 'Not available' }}
-                </li>
+                <li v-for="(tile, index) in tileInfoList" :key="index" class="border-b last:border-b-0">
+                <div @click="tile.showDetails = !tile.showDetails" class="cursor-pointer p-4 hover:bg-gray-100 flex items-center justify-between transition">
+                <span>Tile #{{ index + 1 }}</span>
+                <span :class="{'transform rotate-180': tile.showDetails, 'transform rotate-0': !tile.showDetails}" class="transition-transform">
+                    &#x25BC; <!-- Unicode down arrow, rotates when clicked -->
+                </span>
+                </div>
+                <div v-if="tile.showDetails" class="p-4 bg-gray-50">
+                <div class="text-gray-600">Coordinates: {{ formatCoordinates(tile.coordinates) }}</div>
+                <div class="text-gray-600">Depth: {{ tile.info && tile.info.average_depth ? `${tile.info.average_depth}m` : 'Not available' }}</div>
+                </div>
+            </li>
             </ul>
         </div>
     </div>
@@ -197,11 +207,12 @@ export default {
 
         const formatCoordinates = (tile) => {
             return tile.map(point => {
-                const lat = point.latitude?.toFixed(4) ?? 'Unknown';
-                const lon = point.longitude?.toFixed(4) ?? 'Unknown';
-                return `(${lat}, ${lon})`;
+                const lat = point.lat?.toFixed(4) ?? 'Unknown';
+                const lng = point.lng?.toFixed(4) ?? 'Unknown';
+                return `(${lat}, ${lng})`;
             }).join(', ');
         };
+
 
         onMounted(async () => {
             const savedTiles = getCookie('tiles');
@@ -277,6 +288,7 @@ export default {
         emitClearTilesEvent() {
             if (this.$refs.leafletMap) {
                 this.$refs.leafletMap.clearTiles();
+                setCookie('tiles', []);
             } else {
                 console.error("could not find child leaflet map")
             }

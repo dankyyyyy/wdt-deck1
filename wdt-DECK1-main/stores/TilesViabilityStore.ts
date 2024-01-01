@@ -30,8 +30,6 @@ export const useTileInfoStore = defineStore("TileInfoStore", {
       }
     },
 
-    // Other actions can be added here similar to the LocationStore example
-
     toggleLoading() {
       this.loading = !this.loading;
     },
