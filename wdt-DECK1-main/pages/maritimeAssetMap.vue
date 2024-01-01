@@ -118,7 +118,18 @@
         </div>
 
         <div class="map-section">
-            <LeafletMap />
+            <LeafletMap ref="leafletMap" />
+            <button @click="emitClearTilesEvent" class="delete-button">Clear Tiles</button>
+        </div>
+
+        <div class="tiles-list">
+            <h3>Tiles Coordinates and Depth</h3>
+            <ul>
+                <li v-for="(tile, index) in tileInfoList" :key="index">
+                    {{ formatCoordinates(tile.coordinates) }} - Depth: 
+                    {{ tile.info && tile.info.average_depth ? `${tile.info.average_depth}m` : 'Not available' }}
+                </li>
+            </ul>
         </div>
     </div>
 
@@ -147,6 +158,8 @@ import TransparentCard from '~/components/Cards/TransparentCard.vue';
 import LeafletMap from '~/components/LeafletMap.vue';
 import RetryButton from '~/components/RetryButton.vue';
 import RecommendationSaveButton from '~/components/RecommendationSaveButton.vue';
+import { useTileInfoStore } from '@/stores/TilesViabilityStore';
+import { getCookie } from '@/utils/cookieHandler';
 
 export default {
     components: {
@@ -156,6 +169,60 @@ export default {
         LeafletMap,
         RetryButton,
         RecommendationSaveButton,
+    },
+    setup() {
+        const tilesViabilityStore = useTileInfoStore();
+        const tiles = ref([]);
+        const tileInfoList = ref([]);
+
+        const fetchTileInfo = async (tile) => {
+            await tilesViabilityStore.fetchTileInfo(tile.map(coord => ({
+                latitude: coord.lat,
+                longitude: coord.lng
+            })));
+            tileInfoList.value.push({
+                coordinates: tile,
+                info: tilesViabilityStore.tileInfo,
+            });
+        };
+
+        const addAndFetchTileInfo = async (newTile) => {
+            tiles.value.push(newTile);
+            await fetchTileInfo(newTile);
+            tileInfoList.value.push({
+                coordinates: newTile,
+                info: tilesViabilityStore.tileInfo,
+            });
+        };
+
+        const formatCoordinates = (tile) => {
+            return tile.map(point => {
+                const lat = point.latitude?.toFixed(4) ?? 'Unknown';
+                const lon = point.longitude?.toFixed(4) ?? 'Unknown';
+                return `(${lat}, ${lon})`;
+            }).join(', ');
+        };
+
+        onMounted(async () => {
+            const savedTiles = getCookie('tiles');
+            if (savedTiles) {
+                tiles.value = savedTiles;
+                for (const tile of savedTiles) {
+                    await fetchTileInfo(tile);
+                    tileInfoList.value.push({
+                        coordinates: tile,
+                        info: tilesViabilityStore.tileInfo,
+                    });
+                }
+            }
+        });
+
+        return {
+            tiles,
+            tileInfoList,
+            addAndFetchTileInfo,
+            formatCoordinates,
+        };
     },
     data() {
         return {
@@ -205,6 +272,13 @@ export default {
             const targetSection = document.getElementById(sectionId);
             if (targetSection) {
                 targetSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        emitClearTilesEvent() {
+            if (this.$refs.leafletMap) {
+                this.$refs.leafletMap.clearTiles();
+            } else {
+                console.error("could not find child leaflet map")
             }
         },
     },

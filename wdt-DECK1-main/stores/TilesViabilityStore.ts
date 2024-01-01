@@ -1,31 +1,26 @@
+import { type ICoordinate, type ITileInfo } from '@/types/index'
 import { defineStore } from "pinia";
 import axios from "axios";
 
-interface Coordinate {
-  latitude: number;
-  longitude: number;
-}
-
-interface TileInfo {
-  average_depth: number;
-}
-
 export const useTileInfoStore = defineStore("TileInfoStore", {
   state: () => ({
-    tileInfo: null as TileInfo | null,
+    tileInfo: null as ITileInfo | null,
     loading: false,
   }),
   actions: {
-    async fetchTileInfo(coordinates: Coordinate[]) {
+    async fetchTileInfo(coordinates: ICoordinate[]) {
       this.loading = true;
       try {
         const params = new URLSearchParams();
-        coordinates.forEach((coord: Coordinate) => {
+        coordinates.forEach((coord: ICoordinate) => {
           params.append('coords', `${coord.latitude},${coord.longitude}`);
         });
+        // Construct the full URL for debugging
+        const fullUrl = `http://localhost:8000/api/v1/get-water-depth-for-tile?${params.toString()}`;
+        console.log('Making request to:', fullUrl);
 
         // Using relative URL directly in Axios call
-        const response = await axios.get(`/api/v1/get-water-depth-for-tile`, { params });
+        const response = await axios.get(fullUrl);
         this.tileInfo = response.data;
         console.log(response.data);
       } catch (error) {
@@ -41,11 +36,11 @@ export const useTileInfoStore = defineStore("TileInfoStore", {
       this.loading = !this.loading;
     },
 
-    setSelectedTileInfo(tileInfo: TileInfo) {
+    setSelectedTileInfo(tileInfo: ITileInfo) {
       this.tileInfo = tileInfo;
     },
 
-    getSelectedTileInfo(): TileInfo | null {
+    getSelectedTileInfo(): ITileInfo | null {
       return this.tileInfo;
     },
   },
