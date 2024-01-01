@@ -75,14 +75,3 @@ export interface IWeatherdata {
     Cloud: number;
     locationId: ILocation;
 }
-
-//coordinate
-export interface ICoordinate {
-    latitude: number;
-    longitude: number;
-  }
-  
-//tileinfo
-export interface ITileInfo {
-    average_depth: number;
-  }

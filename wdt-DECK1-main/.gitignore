@@ -46,12 +46,6 @@ Generated\ Files/
 TestResult.xml
 nunit-*.xml
 
-# Python virtual environments
-venv/
-env/
-ENV/
-services/test_env/
-
 # Build Results of an ATL Project
 [Dd]ebugPS/
 [Rr]eleasePS/
