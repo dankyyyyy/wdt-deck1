@@ -118,7 +118,28 @@
         </div>
 
         <div class="map-section">
-            <LeafletMap />
+            <LeafletMap ref="leafletMap" />
+            <button @click="emitClearTilesEvent" class="delete-button bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out focus:outline-none focus:shadow-outline">
+                Clear Tiles
+            </button>
+        </div>
+
+        <div class="tiles-list bg-white shadow-md rounded-lg overflow-hidden mx-4 my-4 max-w-sm">
+            <h3 class="text-lg font-semibold text-gray-700 p-4">Tiles List</h3>
+            <ul>
+                <li v-for="(tile, index) in tileInfoList" :key="index" class="border-b last:border-b-0">
+                <div @click="tile.showDetails = !tile.showDetails" class="cursor-pointer p-4 hover:bg-gray-100 flex items-center justify-between transition">
+                <span>Tile #{{ index + 1 }}</span>
+                <span :class="{'transform rotate-180': tile.showDetails, 'transform rotate-0': !tile.showDetails}" class="transition-transform">
+                    &#x25BC; <!-- Unicode down arrow, rotates when clicked -->
+                </span>
+                </div>
+                <div v-if="tile.showDetails" class="p-4 bg-gray-50">
+                <div class="text-gray-600">Coordinates: {{ formatCoordinates(tile.coordinates) }}</div>
+                <div class="text-gray-600">Depth: {{ tile.info && tile.info.average_depth ? `${tile.info.average_depth}m` : 'Not available' }}</div>
+                </div>
+            </li>
+            </ul>
         </div>
     </div>
 
@@ -147,6 +168,8 @@ import TransparentCard from '~/components/Cards/TransparentCard.vue';
 import LeafletMap from '~/components/LeafletMap.vue';
 import RetryButton from '~/components/RetryButton.vue';
 import RecommendationSaveButton from '~/components/RecommendationSaveButton.vue';
+import { useTileInfoStore } from '@/stores/TilesViabilityStore';
+import { getCookie } from '@/utils/cookieHandler';
 
 export default {
     components: {
@@ -156,6 +179,61 @@ export default {
         LeafletMap,
         RetryButton,
         RecommendationSaveButton,
+    },
+    setup() {
+        const tilesViabilityStore = useTileInfoStore();
+        const tiles = ref([]);
+        const tileInfoList = ref([]);
+
+        const fetchTileInfo = async (tile) => {
+            await tilesViabilityStore.fetchTileInfo(tile.map(coord => ({
+                latitude: coord.lat,
+                longitude: coord.lng
+            })));
+            tileInfoList.value.push({
+                coordinates: tile,
+                info: tilesViabilityStore.tileInfo,
+            });
+        };
+
+        const addAndFetchTileInfo = async (newTile) => {
+            tiles.value.push(newTile);
+            await fetchTileInfo(newTile);
+            tileInfoList.value.push({
+                coordinates: newTile,
+                info: tilesViabilityStore.tileInfo,
+            });
+        };
+
+        const formatCoordinates = (tile) => {
+            return tile.map(point => {
+                const lat = point.lat?.toFixed(4) ?? 'Unknown';
+                const lng = point.lng?.toFixed(4) ?? 'Unknown';
+                return `(${lat}, ${lng})`;
+            }).join(', ');
+        };
+
+
+        onMounted(async () => {
+            const savedTiles = getCookie('tiles');
+            if (savedTiles) {
+                tiles.value = savedTiles;
+                for (const tile of savedTiles) {
+                    await fetchTileInfo(tile);
+                    tileInfoList.value.push({
+                        coordinates: tile,
+                        info: tilesViabilityStore.tileInfo,
+                    });
+                }
+            }
+        });
+
+        return {
+            tiles,
+            tileInfoList,
+            addAndFetchTileInfo,
+            formatCoordinates,
+        };
     },
     data() {
         return {
@@ -205,6 +283,14 @@ export default {
             const targetSection = document.getElementById(sectionId);
             if (targetSection) {
                 targetSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        emitClearTilesEvent() {
+            if (this.$refs.leafletMap) {
+                this.$refs.leafletMap.clearTiles();
+                setCookie('tiles', []);
+            } else {
+                console.error("could not find child leaflet map")
             }
         },
     },
