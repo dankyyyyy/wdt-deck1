@@ -119,19 +119,21 @@
 
         <div class="map-section">
             <LeafletMap ref="leafletMap" />
-            <button @click="emitClearTilesEvent" class="delete-button bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out focus:outline-none focus:shadow-outline">
-                Clear Tiles
-            </button>
         </div>
 
-        <div class="tiles-list bg-white shadow-md rounded-lg overflow-hidden mx-4 my-4 max-w-sm">
+        <button @click="emitClearTilesEvent"
+                class="delete-button bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out focus:outline-none focus:shadow-outline">
+                Clear Tiles
+            </button>
+            
+         <div class="tiles-list">
             <h3 class="text-lg font-semibold text-gray-700 p-4">Tiles List</h3>
             <ul>
                 <li v-for="(tile, index) in tileInfoList" :key="index" class="border-b last:border-b-0">
                 <div @click="tile.showDetails = !tile.showDetails" class="cursor-pointer p-4 hover:bg-gray-100 flex items-center justify-between transition">
                 <span>Tile #{{ index + 1 }}</span>
                 <span :class="{'transform rotate-180': tile.showDetails, 'transform rotate-0': !tile.showDetails}" class="transition-transform">
-                    &#x25BC; <!-- Unicode down arrow, rotates when clicked -->
+                    &#x25BC;
                 </span>
                 </div>
                 <div v-if="tile.showDetails" class="p-4 bg-gray-50">
@@ -141,22 +143,26 @@
             </li>
             </ul>
         </div>
-    </div>
 
-    <div class="grid intermediate-section">
+        <div class="grid intermediate-section">
+            <TilesCard />
+        </div>
 
-        <!-- Save Recommendation -->
-        <TransparentCard :infoText="card7.infoText">
-            <RecommendationSaveButton />
-        </TransparentCard>
+        <div class="grid intermediate-section">
 
-        <!-- Retry Anchor -->
-        <TransparentCard :infoText="card8.infoText">
-            <RetryButton @click="scrollToSection('fourth-section')" />
-        </TransparentCard>
-    </div>
+            <!-- Save Recommendation -->
+            <TransparentCard :infoText="card7.infoText">
+                <RecommendationSaveButton />
+            </TransparentCard>
 
-    <div class="footer">
+            <!-- Retry Anchor Button -->
+            <TransparentCard :infoText="card8.infoText">
+                <RetryButton @click="scrollToSection('fourth-section')" />
+            </TransparentCard>
+        </div>
+
+        <div class="footer">
+        </div>
 
     </div>
 </template>
@@ -165,8 +171,10 @@
 import InfoCard from '~/components/Cards/InfoCard.vue';
 import ButtonCard from '~/components/Cards/ButtonCard.vue';
 import TransparentCard from '~/components/Cards/TransparentCard.vue';
+import TilesCard from '~/components/Cards/TilesCard.vue';
 import LeafletMap from '~/components/LeafletMap.vue';
 import RetryButton from '~/components/RetryButton.vue';
+import DeleteButton from '~/components/DeleteButton.vue';
 import RecommendationSaveButton from '~/components/RecommendationSaveButton.vue';
 import { useTileInfoStore } from '@/stores/TilesViabilityStore';
 import { getCookie } from '@/utils/cookieHandler';
@@ -176,8 +184,10 @@ export default {
         InfoCard,
         ButtonCard,
         TransparentCard,
+        TilesCard,
         LeafletMap,
         RetryButton,
+        DeleteButton,
         RecommendationSaveButton,
     },
     setup() {

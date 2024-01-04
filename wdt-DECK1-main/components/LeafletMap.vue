@@ -1,19 +1,13 @@
 <template>
   <div class="map-container">
-    <l-map 
-      v-if="isClient" 
-      ref="map" 
-      v-model:zoom="zoom" 
-      :center="[47.41322, -1.219482]" 
-      @click="handleMapClick"
-      @mousemove="handleMouseMove" 
-      @mouseleave="hideTooltip">
+    <l-map v-if="isClient" ref="map" v-model:zoom="zoom" :center="[47.41322, -1.219482]" :options="mapOptions"
+      @click="handleMapClick" @mousemove="handleMouseMove" @mouseleave="hideTooltip">
 
       <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
 
       <!-- Render multiple tiles -->
-      <l-polygon v-for="(tile, index) in tiles" :key="index" :lat-lngs="tile" 
-                 :color="tileBorderColor" :weight="tileBorderWeight" :fill-opacity="0.2">
+      <l-polygon v-for="(tile, index) in tiles" :key="index" :lat-lngs="tile" :color="tileBorderColor"
+        :weight="tileBorderWeight" :fill-opacity="0.2">
       </l-polygon>
     </l-map>
 
@@ -38,7 +32,7 @@ export default {
   },
   data() {
     return {
-      zoom: 8,
+      zoom: 7.5,
       tiles: [],
       tileColor: "blue",
       isClient: false,
@@ -46,6 +40,10 @@ export default {
       currentLon: 0,
       tileBorderColor: 'black',  // Default border color
       tileBorderWeight: 1,       // Default border weight (thin line)
+      mapOptions: {
+        scrollWheelZoom: false,
+        zoomControl: false,
+      },
     };
   },
   mounted() {

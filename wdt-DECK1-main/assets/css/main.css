@@ -518,6 +518,27 @@
     /* Drop shadow */
   }
 
+  .generic-button-small {
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 36px;
+    font-weight: bold;
+    width: 1em;
+    height: 1em;
+    cursor: pointer;
+
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+    /* Drop shadow */
+    transition: background-color 0.3s ease;
+    /* Smooth transition for background color */
+  }
+
+  /* Hover state */
+  .generic-button-small:hover {
+    background-color: rgb(254, 76, 76);
+  }
+
   .generic-button {
     color: white;
     border: none;
@@ -1170,6 +1191,13 @@
   background-color: #ffffff45;
 }
 
+.tiles-list {
+  width: 30rem;
+  margin-left: 2.9rem;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.45);
+  background-color: #ffffff45;
+}
+
 .button-box {
   width: 15rem;
   margin-top: 30%;
@@ -1229,11 +1257,11 @@
 /* Text */
 
 .black {
- color:black
+  color: black
 }
 
 .white {
-  color:white
+  color: white
 }
 
 @layer utilities {
