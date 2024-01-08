@@ -22,12 +22,14 @@ class BathymetryHelper:
     """
 
     def __init__(self):
-        self.dataset = self.load_dataset(Constants.DATASET_PATH)
         logging.basicConfig(level=logging.INFO)
 
-    def load_dataset(self, dataset_path):
+    def load_dataset(self, region):
         try:
-            return nc.Dataset(dataset_path)
+            if region == 'north':
+                return nc.Dataset(Constants.BATHYMETRIC_NORTH_PATH)
+            elif region == 'baltic':
+                return nc.Dataset(Constants.BATHYMETRIC_BALTIC_PATH)
         except Exception as e:
             logging.error(f"Error loading dataset: {e}", exc_info=True)
             raise
@@ -45,7 +47,7 @@ class BathymetryHelper:
         """
         return np.abs(values - target).argmin()
 
-    async def get_depth_at_coordinates(self, lat, lon):
+    async def get_depth_at_coordinates(self, lat, lon, region):
         """
         Retrieves the depth at specified latitude and longitude coordinates.
 
@@ -60,6 +62,7 @@ class BathymetryHelper:
             Exception: If there is an error in retrieving the depth.
         """
         try:
+            self.dataset = self.load_dataset(region)
             lat_idx = self.find_nearest_index(self.dataset.variables['lat'][:], lat)
             lon_idx = self.find_nearest_index(self.dataset.variables['lon'][:], lon)
             elevation = self.dataset.variables['elevation'][lat_idx, lon_idx]
@@ -68,13 +71,13 @@ class BathymetryHelper:
             logging.error(f"Error retrieving depth at coordinates ({lat}, {lon}): {e}", exc_info=True)
             raise
 
-    async def get_average_depth(self, coordinates):
+    async def get_average_depth(self, coordinates, region):
         """
         Calculates the average depth for a list of latitude and longitude coordinates.
 
         Parameters:
             coordinates (list of tuple): A list of tuples where each tuple contains latitude
-                                         and longitude values.
+            and longitude values.
 
         Returns:
             float: The calculated average depth. Returns 0 if invalid coordinates are provided.
@@ -85,11 +88,15 @@ class BathymetryHelper:
         if not coordinates:
             logging.error("Invalid coordinates provided")
             return 0
+        
+        if not region:
+            logging.error("Invalid region provided.")
+            return 0
 
         depths = []
         for lat, lon in coordinates:
             try:
-                depth = await self.get_depth_at_coordinates(lat, lon)
+                depth = await self.get_depth_at_coordinates(lat, lon, region)
                 depths.append(depth)
             except Exception as e:
                 logging.error(f"Error calculating depth for coordinates ({lat}, {lon}): {e}", exc_info=True)

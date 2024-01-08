@@ -19,4 +19,3 @@ interface LatLng {
       { lat: clickedLatLng.lat - latChange, lng: clickedLatLng.lng + lngChange }
     ];
   }
-  

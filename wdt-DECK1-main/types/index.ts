@@ -85,4 +85,6 @@ export interface ICoordinate {
 //tileinfo
 export interface ITileInfo {
     average_depth: number;
+    average_wind_speed: number;
+    // average_wave_height: number;
   }
