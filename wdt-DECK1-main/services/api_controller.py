@@ -1,4 +1,6 @@
 import logging
+import os
+import psutil
 
 from flask import Blueprint, jsonify, request
 
@@ -67,3 +69,30 @@ async def get_water_depth():
     except Exception as e:
         logging.error(f"Error calculating average depth for single coordinate: {e}")
         return jsonify({"error": "Error processing request"}), 500
+
+@api_blueprint.route('/get-health', methods=['GET'])
+async def get_health():
+    '''Looks whether the bathymetry data exists.
+
+    Returns:
+    - bathymetry data existance verification
+    - general hardware usage 
+    '''
+    bathymetry_data_exists = os.path.exists("bathymetric data/gebco_denmark.nc")
+
+    # System metrics
+    cpu_usage = psutil.cpu_percent(interval=1)
+    ram = psutil.virtual_memory()
+    ram_usage_percent = ram.percent
+    ram_free_gb = ram.available / (1024**3)  # Convert from bytes to GB
+
+    health_info = {
+        "bathymetry_data_exists": bathymetry_data_exists,
+        "virtual_cpu_usage": f"{cpu_usage:.2f}", # Format to 2 decimal places
+        "ram_usage": ram_usage_percent,
+        "ram_free": f"{ram_free_gb:.2f}"  # Format to 2 decimal places
+    }
+
+    status_code = 200 if bathymetry_data_exists else 404
+
+    return jsonify(health_info), status_code
