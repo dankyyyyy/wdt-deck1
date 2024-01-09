@@ -72,6 +72,12 @@ async def get_water_depth():
 
 @api_blueprint.route('/get-health', methods=['GET'])
 async def get_health():
+    '''Looks whether the bathymetry data exists.
+
+    Returns:
+    - bathymetry data existance verification
+    - general hardware usage 
+    '''
     bathymetry_data_exists = os.path.exists("bathymetric data/gebco_denmark.nc")
 
     # System metrics
@@ -82,11 +88,11 @@ async def get_health():
 
     health_info = {
         "bathymetry_data_exists": bathymetry_data_exists,
-        "virtual_cpu_usage": f"{cpu_usage:.2f}",
+        "virtual_cpu_usage": f"{cpu_usage:.2f}", # Format to 2 decimal places
         "ram_usage": ram_usage_percent,
         "ram_free": f"{ram_free_gb:.2f}"  # Format to 2 decimal places
     }
 
-    status_code = 200 if bathymetry_data_exists else 500
+    status_code = 200 if bathymetry_data_exists else 404
 
     return jsonify(health_info), status_code
