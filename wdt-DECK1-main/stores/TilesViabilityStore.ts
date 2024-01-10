@@ -81,6 +81,7 @@ export const useTileInfoStore = defineStore("TileInfoStore", {
         params.append('windSpeedLimit', this.windSpeedLimit!.toString());
 
         coordinates.forEach((coord: ICoordinate) => {
+          console.log(`${coord.latitude},${coord.longitude}`);
           params.append('coords', `${coord.latitude},${coord.longitude}`);
         });
         const fullUrl = `http://localhost:8000/api/v1/get-tile-viability?${params.toString()}`;

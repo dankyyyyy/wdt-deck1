@@ -302,7 +302,7 @@ export default {
 
             for (let lat = north; lat > south; lat -= (stepSizeLat)) {
                 for (let lng = west; lng < east; lng += (stepSizeLng)) {
-                    const coordinates = createTile([lat, lng]);
+                    const coordinates = createTile({lat, lng});
                     console.log(coordinates);
                     viability = await useTileInfoStore().handleViabilityRequest(coordinates);
                     // console.log("Coordinates:", coordinates, "Viability:", viability);
