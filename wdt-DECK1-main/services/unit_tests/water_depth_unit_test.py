@@ -5,25 +5,24 @@ from tiles_viability_service.bathymetry_helper import BathymetryHelper
 from validation.water_depth_validation import WaterDepthValidator
 
 class TestWaterDepthValidator(unittest.TestCase):
+
     def setUp(self):
-        self.bathymetry_helper = BathymetryHelper()
-        self.bathymetry_helper.get_depth_at_coordinates = AsyncMock(return_value=20.0)
-        self.validator = WaterDepthValidator(self.bathymetry_helper)
+        self.validator = WaterDepthValidator()
 
-    @pytest.mark.asyncio
-    async def test_validate_and_get_depth(self):
-        # Test with valid parameters
-        lat, lon = 56.0, 10.0
-        result, status_code = await self.validator.validate_and_get_depth(lat, lon)
-        self.assertEqual(status_code, 200)
-        self.assertEqual(result, {"latitude": lat, "longitude": lon, "depth": 20.0})
+    def test_validate_coordinates(self):
+        # Test with valid coordinates
+        valid_coordinates = [(56.0, 10.0), (-25.0, 45.0), (35.0, -120.0), (60.0, 30.0)]
+        self.assertTrue(self.validator.validate_coordinates(valid_coordinates))
 
-        # Test with missing latitude
-        result, status_code = await self.validator.validate_and_get_depth(None, lon)
-        self.assertEqual(status_code, 400)
-        self.assertIn("error", result)
+        # Test with invalid coordinates
+        invalid_coordinates = [(56.0, 10.0), (-95.0, 45.0)]  # -95.0 is out of range
+        self.assertFalse(self.validator.validate_coordinates(invalid_coordinates))
 
-        # Test with missing longitude
-        result, status_code = await self.validator.validate_and_get_depth(lat, None)
-        self.assertEqual(status_code, 400)
-        self.assertIn("error", result)
+    def test_validate_coordinate_count(self):
+        # Test with correct number of coordinates
+        correct_count_coordinates = [(56.0, 10.0), (-25.0, 45.0), (35.0, -120.0), (60.0, 30.0)]
+        self.assertTrue(self.validator.validate_coordinate_count(correct_count_coordinates))
+
+        # Test with incorrect number of coordinates
+        incorrect_count_coordinates = [(56.0, 10.0), (-25.0, 45.0)]
+        self.assertFalse(self.validator.validate_coordinate_count(incorrect_count_coordinates))
