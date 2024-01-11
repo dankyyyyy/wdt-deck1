@@ -1,0 +1,5 @@
+{
+    "TVS-01-001": "Incorrect number of coordinate pairs provided. Expected 4, got {num}",
+    "TVS-01-002": "Invalid coordinate: Latitude {lat}, Longitude {lon}",
+    "TVS-05-001": "Error calculating depth for coordinates ({lat}, {lon}): {e}!"
+}

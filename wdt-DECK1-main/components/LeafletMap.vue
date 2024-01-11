@@ -42,6 +42,10 @@ export default {
       tileBorderColor: 'black',  // Default border color
       tileBorderWeight: 1,       // Default border weight (thin line)
       selectedRegion: null,
+      mapOptions: {
+        scrollWheelZoom: false,
+        zoomControl: false,
+      },
     };
   },
   computed: {
