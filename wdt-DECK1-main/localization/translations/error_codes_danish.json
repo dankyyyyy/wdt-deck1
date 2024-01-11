@@ -1,0 +1,5 @@
+{
+    "TVS-01-001": "Forkert antal koordinatpar angivet. Forventede 4, fik {num}",
+    "TVS-01-002": "Ugyldig koordinat: Breddegrad {lat}, Længdegrad {lon}",
+    "TVS-05-001": "Fejl ved beregning af dybde for koordinater ({lat}, {lon}): {e}!"
+}
