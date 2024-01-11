@@ -1,6 +1,6 @@
 <template>
   <div class="map-container">
-    <l-map v-if="isClient" ref="map" v-model:zoom="zoom" :center="center"
+    <l-map v-if="isClient" ref="map" v-model:zoom="zoom" :center="center" :options="mapOptions" @click="handleMapClick"
       @mousemove="handleMouseMove" @mouseleave="hideTooltip">
 
       <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>

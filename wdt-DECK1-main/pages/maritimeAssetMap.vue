@@ -126,12 +126,7 @@
             </button>
         </div>
 
-        <button @click="emitClearTilesEvent"
-                class="delete-button bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out focus:outline-none focus:shadow-outline">
-                Clear Tiles
-            </button>
-            
-         <div class="tiles-list">
+        <div class="tiles-list">
             <h3 class="text-lg font-semibold text-gray-700 p-4">Tiles List</h3>
             <ul>
                 <li v-for="(tile, index) in tileInfoList" :key="index" class="border-b last:border-b-0">
@@ -153,10 +148,10 @@
                 </li>
             </ul>
         </div>
-
+        <!-- 
         <div class="grid intermediate-section">
             <TilesCard />
-        </div>
+        </div> -->
 
         <div class="grid intermediate-section">
 
@@ -232,38 +227,38 @@ export default {
 
             //Info Cards
             card1: {
-                infoText: 'RegionText',
+                infoText: "Select a specific area for which you desire a suggestion. Currently, there are only two regions available, namely the North Sea and Baltic Sea, with additional regions anticipated to be included in the future.",
             },
             card2: {
-                infoText: 'Text for Image 2',
+                infoText: "Select both the mounting type and turbine model. The three mounting options—Monopile, Jacket, and Floating—enable us to specify the depth range for the recommendation. Choose a turbine model from the provided list, aiding us in evaluating the optimal location based on the wind limits of the turbines.",
             },
             card3: {
-                infoText: 'Text for Image 3',
+                infoText: "Get a personalized recommendation! Our algorithm analyzes the parameters you provide, utilizing barometric data and historical weather information to generate the most suitable offshore windfarm location suggestion in your chosen region.",
             },
             card4: {
-                infoText: 'Text for Image 4',
+                infoText: "When evaluating the viability of a specific location, historical weather data, including wind speeds and wave height, is employed. This information is sourced from the European Union's Copernicus database.",
             },
             card5: {
-                infoText: 'Text for Image 5',
+                infoText: "Depth information is employed to identify the appropriate location according to the chosen mounting type. This data is retrieved from the GEBCO Barometric database.",
             },
             card6: {
-                infoText: 'Text for Image 6',
+                infoText: "Our algorithm.",
             },
 
             // Buttons
 
             card7: {
-                infoText: 'Is this the one?',
+                infoText: "Is this the one?",
             },
             card8: {
-                infoText: 'Not quite it?',
+                infoText: "Not quite it?",
             },
             card9: {
-                infoText: 'Learn more',
+                infoText: "Learn more",
             },
             card10: {
-                infoText: 'Get started',
-            },
+                infoText: "Get started",
+            }
         };
     },
     methods: {
