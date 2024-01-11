@@ -1,12 +1,12 @@
 <template>
   <div class="map-container">
-    <l-map v-if="isClient" ref="map" v-model:zoom="zoom" :center="[47.41322, -1.219482]" :options="mapOptions"
-      @click="handleMapClick" @mousemove="handleMouseMove" @mouseleave="hideTooltip">
+    <l-map v-if="isClient" ref="map" v-model:zoom="zoom" :center="center"
+      @mousemove="handleMouseMove" @mouseleave="hideTooltip">
 
       <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
 
       <!-- Render multiple tiles -->
-      <l-polygon v-for="(tile, index) in tiles" :key="index" :lat-lngs="tile" :color="tileBorderColor"
+      <l-polygon v-for="(tile, index) in tiles" :key="index" :lat-lngs="tile" :color="tileBorderColor" @click="handleMapClick" @clear-tiles="clearTiles"
         :weight="tileBorderWeight" :fill-opacity="0.2">
       </l-polygon>
     </l-map>
@@ -19,9 +19,9 @@
 <script>
 import { LMap, LTileLayer, LPolygon } from "@vue-leaflet/vue-leaflet";
 import Tooltip from './Tooltip.vue';
-import "leaflet/dist/leaflet.css";
-import { createTile } from '../utils/tileLogic';
-import { getCookie, setCookie } from '../utils/cookieHandler';
+import "leaflet/dist/leaflet.css"
+import { getCookie } from '../utils/cookieHandler';
+import { useTileInfoStore } from '../stores/TilesViabilityStore';
 
 export default {
   components: {
@@ -32,7 +32,8 @@ export default {
   },
   data() {
     return {
-      zoom: 7.5,
+      zoom: 6,
+      center: [57.2639, 9.5018],
       tiles: [],
       tileColor: "blue",
       isClient: false,
@@ -40,37 +41,49 @@ export default {
       currentLon: 0,
       tileBorderColor: 'black',  // Default border color
       tileBorderWeight: 1,       // Default border weight (thin line)
+      selectedRegion: null,
       mapOptions: {
         scrollWheelZoom: false,
         zoomControl: false,
       },
     };
   },
+  computed: {
+    regionFromStore() {
+      return useTileInfoStore().getSelectedRegion();
+    },
+  },
   mounted() {
     this.isClient = true;
 
     const savedTiles = getCookie('tiles');
     if (savedTiles) {
-      this.tiles = savedTiles;
+      useTileInfoStore().setTilesFromCookie(savedTiles);
     }
+
+    this.selectedRegion = useTileInfoStore().getSelectedRegion();
+  },
+  watch: {
+    regionFromStore(newRegion) {
+      this.selectedRegion = newRegion;
+      this.updateMapCenter(this.selectedRegion);
+    },
   },
   methods: {
-    handleMapClick(e) {
+    async handleMapClick(e) {
       // Check if latlng exists in the event object
       if (e.latlng) {
         const clickedLatLng = { lat: e.latlng.lat, lng: e.latlng.lng };
 
-        // Use the createTile function
+        // Draw the tile
         const tileCoordinates = createTile(clickedLatLng);
 
         // Add the new tile to the array of tiles and save to cookie
-        this.tiles.push(tileCoordinates);
-        setCookie('tiles', this.tiles);
-      } else {
-        console.error('Event object does not contain latlng property');
+        useTileInfoStore().addTile(tileCoordinates);
+        const tileInfo = await useTileInfoStore().fetchTileInfo(tileCoordinates);
+        useTileInfoStore().addTileInfo(tileCoordinates, tileInfo);
       }
-    }
-    ,
+    },
     handleMouseMove(e) {
       // Check if originalEvent exists and ctrlKey is pressed
       if (e.originalEvent && e.originalEvent.ctrlKey) {
@@ -78,6 +91,10 @@ export default {
       } else {
         this.hideTooltip();
       }
+    },
+    updateMapCenter(region) {
+      if (region === 'north') this.center = [56.5110, 3.5156]
+      else if (region === 'baltic') this.center = [58.488, 19.8633];
     },
     updateTooltip(e) {
       this.currentLat = e.latlng.lat;
@@ -90,7 +107,8 @@ export default {
       }
     },
     clearTiles() {
-      this.tiles = [];
+      while (this.tiles.length > 0) {
+        this.tiles.pop();}
     },
     // Method to update tile border color and weight
     updateTileStyle(color, weight) {

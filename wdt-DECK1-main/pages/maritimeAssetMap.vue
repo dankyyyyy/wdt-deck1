@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <NuxtLink to="/">
             <IconsLogoInverted class="inline-block align-middle w-full" />
         </NuxtLink>
@@ -73,52 +72,58 @@
 
         <div class="option-section">
             <!-- North Sea -->
-            <div class="options-section-left black">
+            <div class="options-section-left black" @click="selectRegion('north'), scrollToSection('fifth-section')">
                 <div class="option-text right">
                     North Sea
                 </div>
             </div>
             <!-- Baltic Sea -->
-            <div class="options-section-right black">
+            <div class="options-section-right black" @click="selectRegion('baltic'), scrollToSection('fifth-section')">
                 <div class="option-text left">
                     Baltic Sea
                 </div>
             </div>
         </div>
 
-        <div class="intermediate-section">
+        <!-- Fifth Section -->
+
+        <div id="fifth-section" class="intermediate-section">
             <h2 class="section-header black">Select installation type:</h2>
         </div>
 
         <div class="option-section">
-            <!-- Monopile -->
+            <!-- Shallow -->
             <div class="options-section-2-first black">
-                <div class="option-text center">
-                    Monopile
+                <div class="option-text center" @click="setType('shallow'), scrollToSection('sixth-section')">
+                    Shallow
                 </div>
             </div>
-            <!-- Jacket -->
+            <!-- Transitional -->
             <div class="options-section-2-second black">
-                <div class="option-text center">
-                    Jacket
+                <div class="option-text center" @click="setType('transitional'), scrollToSection('sixth-section')">
+                    Transitional
                 </div>
             </div>
-            <!-- Floating -->
+            <!-- Deepwater -->
             <div class="options-section-2-third black">
-                <div class="option-text center">
-                    Floating
+                <div class="option-text center" @click="setType('deepwater'), scrollToSection('sixth-section')">
+                    Deepwater
                 </div>
             </div>
         </div>
 
-        <!-- Fifth Section -->
+        <!-- Sixth Section -->
 
-        <div class="intermediate-section">
+        <div id="sixth-section" class="intermediate-section">
             <h2 class="section-header black">Our recommendation</h2>
         </div>
 
         <div class="map-section">
             <LeafletMap ref="leafletMap" />
+            <button @click="clearTiles, $emit('clear-tiles')"
+                class="delete-button bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out focus:outline-none focus:shadow-outline">
+                Clear Tiles
+            </button>
         </div>
 
         <button @click="emitClearTilesEvent"
@@ -130,17 +135,22 @@
             <h3 class="text-lg font-semibold text-gray-700 p-4">Tiles List</h3>
             <ul>
                 <li v-for="(tile, index) in tileInfoList" :key="index" class="border-b last:border-b-0">
-                <div @click="tile.showDetails = !tile.showDetails" class="cursor-pointer p-4 hover:bg-gray-100 flex items-center justify-between transition">
-                <span>Tile #{{ index + 1 }}</span>
-                <span :class="{'transform rotate-180': tile.showDetails, 'transform rotate-0': !tile.showDetails}" class="transition-transform">
-                    &#x25BC;
-                </span>
-                </div>
-                <div v-if="tile.showDetails" class="p-4 bg-gray-50">
-                <div class="text-gray-600">Coordinates: {{ formatCoordinates(tile.coordinates) }}</div>
-                <div class="text-gray-600">Depth: {{ tile.info && tile.info.average_depth ? `${tile.info.average_depth}m` : 'Not available' }}</div>
-                </div>
-            </li>
+                    <div @click="tile.showDetails = !tile.showDetails"
+                        class="cursor-pointer p-4 hover:bg-gray-100 flex items-center justify-between transition">
+                        <span>Tile #{{ index + 1 }}</span>
+                        <span :class="{ 'transform rotate-180': tile.showDetails, 'transform rotate-0': !tile.showDetails }"
+                            class="transition-transform">
+                            &#x25BC; <!-- Unicode down arrow, rotates when clicked -->
+                        </span>
+                    </div>
+                    <div v-if="tile.showDetails" class="p-4 bg-gray-50">
+                        <div class="text-gray-600">Coordinates: {{ formatCoordinates(tile.coordinates) }}</div>
+                        <div class="text-gray-600">Depth: {{ tile.info && tile.info.average_depth ?
+                            `${tile.info.average_depth}m` : 'Not available' }}</div>
+                        <div class="text-gray-600">Wind Speed: {{ tile.info && tile.info.average_wind_speed ?
+                            `${tile.info.average_wind_speed}m/s` : 'Not available' }}</div>
+                    </div>
+                </li>
             </ul>
         </div>
 
@@ -178,6 +188,7 @@ import DeleteButton from '~/components/DeleteButton.vue';
 import RecommendationSaveButton from '~/components/RecommendationSaveButton.vue';
 import { useTileInfoStore } from '@/stores/TilesViabilityStore';
 import { getCookie } from '@/utils/cookieHandler';
+import { createTile } from '@/utils/tileLogic';
 
 export default {
     components: {
@@ -192,59 +203,28 @@ export default {
     },
     setup() {
         const tilesViabilityStore = useTileInfoStore();
-        const tiles = ref([]);
-        const tileInfoList = ref([]);
-
-        const fetchTileInfo = async (tile) => {
-            await tilesViabilityStore.fetchTileInfo(tile.map(coord => ({
-                latitude: coord.lat,
-                longitude: coord.lng
-            })));
-            tileInfoList.value.push({
-                coordinates: tile,
-                info: tilesViabilityStore.tileInfo,
-            });
-        };
-
-        const addAndFetchTileInfo = async (newTile) => {
-            tiles.value.push(newTile);
-            await fetchTileInfo(newTile);
-            tileInfoList.value.push({
-                coordinates: newTile,
-                info: tilesViabilityStore.tileInfo,
-            });
-        };
-
-        const formatCoordinates = (tile) => {
-            return tile.map(point => {
-                const lat = point.lat?.toFixed(4) ?? 'Unknown';
-                const lng = point.lng?.toFixed(4) ?? 'Unknown';
-                return `(${lat}, ${lng})`;
-            }).join(', ');
-        };
-
+        var tiles = ref([]);
+        var tileInfoList = ref([]);
 
         onMounted(async () => {
             const savedTiles = getCookie('tiles');
-            if (savedTiles) {
-                tiles.value = savedTiles;
-                for (const tile of savedTiles) {
-                    await fetchTileInfo(tile);
-                    tileInfoList.value.push({
-                        coordinates: tile,
-                        info: tilesViabilityStore.tileInfo,
-                    });
-                }
+            const savedTileInfo = getCookie('tileInfo');
+            if (savedTiles.length !== 0) {
+
+                tilesViabilityStore.setTilesFromCookie(savedTiles);
+                tiles = tilesViabilityStore.getTiles();
+
+                tilesViabilityStore.setTileInfoListFromCookie(savedTileInfo);
+                tileInfoList = tilesViabilityStore.getTileInfoList();
             }
         });
 
         return {
             tiles,
             tileInfoList,
-            addAndFetchTileInfo,
-            formatCoordinates,
         };
     },
+
     data() {
         return {
             // Data to be displayed in the info cards is assigned here.
@@ -283,11 +263,46 @@ export default {
             },
             card10: {
                 infoText: 'Get started',
-            }
-
+            },
         };
     },
     methods: {
+        // async tileViability() {
+        //     var viability = false;
+        //     const coordinateBounds = await tilesViabilityStore.handleCoordinateBoundsRequest();
+        //     const north = coordinateBounds.bounds[0];
+        //     const west = coordinateBounds.bounds[1];
+        //     const south = coordinateBounds.bounds[2];
+        //     const east = coordinateBounds.bounds[3];
+
+        //     const stepSize = Math.sqrt(50 * 1000 * 1000) / 2; // 50 km² in square meters
+        //     const stepSizeLat = stepSize / 111320;
+        //     const stepSizeLng = stepSize / (40075000 * Math.cos(Math.PI * north / 180) / 360);
+
+        //     for (let lat = north; lat > south; lat -= (stepSizeLat)) {
+        //         for (let lng = west; lng < east; lng += (stepSizeLng)) {
+        //             const coordinates = createTile({lat, lng});
+        //             console.log(coordinates);
+        //             viability = await tilesViabilityStore.handleViabilityRequest(coordinates);
+        //             // console.log("Coordinates:", coordinates, "Viability:", viability);
+
+        //             if (viability) {
+        //                 this.tiles.push(coordinates);
+        //                 setCookie('tiles', this.tiles);
+        //             }
+        //         }
+        //     }
+        //     console.log(this.tiles);
+        // },
+
+        formatCoordinates(tile) {
+            return tile.map(point => {
+                const lat = point.lat?.toFixed(4) ?? 'Unknown';
+                const lng = point.lng?.toFixed(4) ?? 'Unknown';
+                return `(${lat}, ${lng})`;
+            }).join(', ');
+        },
+
         scrollToSection(sectionId) {
             // Scroll to the element with the specified id
             const targetSection = document.getElementById(sectionId);
@@ -295,13 +310,13 @@ export default {
                 targetSection.scrollIntoView({ behavior: 'smooth' });
             }
         },
-        emitClearTilesEvent() {
-            if (this.$refs.leafletMap) {
-                this.$refs.leafletMap.clearTiles();
-                setCookie('tiles', []);
-            } else {
-                console.error("could not find child leaflet map")
-            }
+
+        selectRegion(region) {
+            useTileInfoStore().setSelectedRegion(region);
+        },
+
+        setType(type) {
+            useTileInfoStore().setType(type);
         },
     },
 };

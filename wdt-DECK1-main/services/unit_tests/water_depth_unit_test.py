@@ -2,12 +2,12 @@ import pytest
 import unittest
 from unittest.mock import AsyncMock
 from tiles_viability_service.bathymetry_helper import BathymetryHelper
-from validation.water_depth_validation import WaterDepthValidator
+from services.validation.data_validation import DataValidator
 
 class TestWaterDepthValidator(unittest.TestCase):
 
     def setUp(self):
-        self.validator = WaterDepthValidator()
+        self.validator = DataValidator(self.bathymetry_helper)
 
     def test_validate_coordinates(self):
         # Test with valid coordinates

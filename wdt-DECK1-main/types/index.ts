@@ -77,12 +77,14 @@ export interface IWeatherdata {
 }
 
 //coordinate
-export interface ICoordinate {
-    latitude: number;
-    longitude: number;
+export interface LatLng {
+    lat: number;
+    lng: number;
   }
   
 //tileinfo
 export interface ITileInfo {
     average_depth: number;
+    average_wind_speed: number;
+    // average_wave_height: number;
   }
