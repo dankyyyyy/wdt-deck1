@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <NuxtLink to="/">
             <IconsLogoInverted class="inline-block align-middle w-full" />
         </NuxtLink>
@@ -95,19 +94,19 @@
         <div class="option-section">
             <!-- Shallow -->
             <div class="options-section-2-first black">
-                <div class="option-text center" @click="setType('shallow'), scrollToSection('sixth-section'), tileViability()">
+                <div class="option-text center" @click="setType('shallow'), scrollToSection('sixth-section')">
                     Shallow
                 </div>
             </div>
             <!-- Transitional -->
             <div class="options-section-2-second black">
-                <div class="option-text center" @click="setType('transitional'), scrollToSection('sixth-section'), tileViability()">
+                <div class="option-text center" @click="setType('transitional'), scrollToSection('sixth-section')">
                     Transitional
                 </div>
             </div>
             <!-- Deepwater -->
             <div class="options-section-2-third black">
-                <div class="option-text center" @click="setType('deepwater'), scrollToSection('sixth-section'), tileViability()">
+                <div class="option-text center" @click="setType('deepwater'), scrollToSection('sixth-section')">
                     Deepwater
                 </div>
             </div>
@@ -121,7 +120,7 @@
 
         <div class="map-section">
             <LeafletMap ref="leafletMap" />
-            <button @click="emitClearTilesEvent"
+            <button @click="clearTiles, $emit('clear-tiles')"
                 class="delete-button bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out focus:outline-none focus:shadow-outline">
                 Clear Tiles
             </button>
@@ -191,60 +190,28 @@ export default {
     },
     setup() {
         const tilesViabilityStore = useTileInfoStore();
-        const tiles = ref([]);
-        const tileInfoList = ref([]);
-
-        const fetchTileInfo = async (tile) => {
-            await tilesViabilityStore.fetchTileInfo(tile.map(coord => ({
-                latitude: coord.lat,
-                longitude: coord.lng
-            })));
-            tileInfoList.value.push({
-                coordinates: tile,
-                info: tilesViabilityStore.tileInfo,
-            });
-        };
-
-        const addAndFetchTileInfo = async (newTile) => {
-            tiles.value.push(newTile);
-            await fetchTileInfo(newTile);
-            tileInfoList.value.push({
-                coordinates: newTile,
-                info: tilesViabilityStore.tileInfo,
-            });
-        };
-
-        const formatCoordinates = (tile) => {
-            return tile.map(point => {
-                const lat = point.lat?.toFixed(4) ?? 'Unknown';
-                const lng = point.lng?.toFixed(4) ?? 'Unknown';
-                return `(${lat}, ${lng})`;
-            }).join(', ');
-        };
+        var tiles = ref([]);
+        var tileInfoList = ref([]);
 
         onMounted(async () => {
-            tiles.value = [];
-            tileInfoList.value = [];
             const savedTiles = getCookie('tiles');
+            const savedTileInfo = getCookie('tileInfo');
             if (savedTiles.length !== 0) {
-                tiles.value = savedTiles;
-                for (const tile of tiles.value) {
-                    await fetchTileInfo(tile);
-                    tileInfoList.value.push({
-                        coordinates: tile,
-                        info: tilesViabilityStore.tileInfo,
-                    });
-                }
+
+                tilesViabilityStore.setTilesFromCookie(savedTiles);
+                tiles = tilesViabilityStore.getTiles();
+
+                tilesViabilityStore.setTileInfoListFromCookie(savedTileInfo);
+                tileInfoList = tilesViabilityStore.getTileInfoList();
             }
         });
 
         return {
             tiles,
             tileInfoList,
-            addAndFetchTileInfo,
-            formatCoordinates,
         };
     },
+
     data() {
         return {
             // Data to be displayed in the info cards is assigned here.
@@ -287,33 +254,40 @@ export default {
         };
     },
     methods: {
-        async tileViability() {
-            var viability = false;
-            const coordinateBounds = await useTileInfoStore().handleCoordinateBoundsRequest();
-            console.log(coordinateBounds);
-            const north = coordinateBounds.bounds[0];
-            const west = coordinateBounds.bounds[1];
-            const south = coordinateBounds.bounds[2];
-            const east = coordinateBounds.bounds[3];
+        // async tileViability() {
+        //     var viability = false;
+        //     const coordinateBounds = await tilesViabilityStore.handleCoordinateBoundsRequest();
+        //     const north = coordinateBounds.bounds[0];
+        //     const west = coordinateBounds.bounds[1];
+        //     const south = coordinateBounds.bounds[2];
+        //     const east = coordinateBounds.bounds[3];
 
-            const stepSize = Math.sqrt(50 * 1000 * 1000) / 2; // 50 km² in square meters
-            const stepSizeLat = stepSize / 111320;
-            const stepSizeLng = stepSize / (40075000 * Math.cos(Math.PI * north / 180) / 360);
+        //     const stepSize = Math.sqrt(50 * 1000 * 1000) / 2; // 50 km² in square meters
+        //     const stepSizeLat = stepSize / 111320;
+        //     const stepSizeLng = stepSize / (40075000 * Math.cos(Math.PI * north / 180) / 360);
 
-            for (let lat = north; lat > south; lat -= (stepSizeLat)) {
-                for (let lng = west; lng < east; lng += (stepSizeLng)) {
-                    const coordinates = createTile({lat, lng});
-                    console.log(coordinates);
-                    viability = await useTileInfoStore().handleViabilityRequest(coordinates);
-                    // console.log("Coordinates:", coordinates, "Viability:", viability);
+        //     for (let lat = north; lat > south; lat -= (stepSizeLat)) {
+        //         for (let lng = west; lng < east; lng += (stepSizeLng)) {
+        //             const coordinates = createTile({lat, lng});
+        //             console.log(coordinates);
+        //             viability = await tilesViabilityStore.handleViabilityRequest(coordinates);
+        //             // console.log("Coordinates:", coordinates, "Viability:", viability);
 
-                    if (viability) {
-                        this.tiles.push(coordinates);
-                        setCookie('tiles', this.tiles);
-                    }
-                }
-            }
-            console.log(this.tiles);
+        //             if (viability) {
+        //                 this.tiles.push(coordinates);
+        //                 setCookie('tiles', this.tiles);
+        //             }
+        //         }
+        //     }
+        //     console.log(this.tiles);
+        // },
+
+        formatCoordinates(tile) {
+            return tile.map(point => {
+                const lat = point.lat?.toFixed(4) ?? 'Unknown';
+                const lng = point.lng?.toFixed(4) ?? 'Unknown';
+                return `(${lat}, ${lng})`;
+            }).join(', ');
         },
 
         scrollToSection(sectionId) {
@@ -326,12 +300,10 @@ export default {
 
         selectRegion(region) {
             useTileInfoStore().setSelectedRegion(region);
-            setCookie('region', region);
         },
 
         setType(type) {
             useTileInfoStore().setType(type);
-            setCookie('type', type);
         },
     },
 };

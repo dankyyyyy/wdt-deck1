@@ -6,7 +6,7 @@
       <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
 
       <!-- Render multiple tiles -->
-      <l-polygon v-for="(tile, index) in tiles" :key="index" :lat-lngs="tile" :color="tileBorderColor"
+      <l-polygon v-for="(tile, index) in tiles" :key="index" :lat-lngs="tile" :color="tileBorderColor" @click="handleMapClick" @clear-tiles="clearTiles"
         :weight="tileBorderWeight" :fill-opacity="0.2">
       </l-polygon>
     </l-map>
@@ -20,8 +20,7 @@
 import { LMap, LTileLayer, LPolygon } from "@vue-leaflet/vue-leaflet";
 import Tooltip from './Tooltip.vue';
 import "leaflet/dist/leaflet.css"
-import { createTile } from '../utils/tileLogic';
-import { getCookie, setCookie } from '../utils/cookieHandler';
+import { getCookie } from '../utils/cookieHandler';
 import { useTileInfoStore } from '../stores/TilesViabilityStore';
 
 export default {
@@ -53,10 +52,10 @@ export default {
   mounted() {
     this.isClient = true;
 
-    // const savedTiles = getCookie('tiles');
-    // if (savedTiles) {
-    //   this.tiles = savedTiles;
-    // }
+    const savedTiles = getCookie('tiles');
+    if (savedTiles) {
+      useTileInfoStore().setTilesFromCookie(savedTiles);
+    }
 
     this.selectedRegion = useTileInfoStore().getSelectedRegion();
   },
@@ -67,19 +66,20 @@ export default {
     },
   },
   methods: {
-    // handleMapClick(e) {
-    //   // Check if latlng exists in the event object
-    //   if (e.latlng) {
-    //     const clickedLatLng = { lat: e.latlng.lat, lng: e.latlng.lng };
+    async handleMapClick(e) {
+      // Check if latlng exists in the event object
+      if (e.latlng) {
+        const clickedLatLng = { lat: e.latlng.lat, lng: e.latlng.lng };
 
-    //     // Draw the tile
-    //     const tileCoordinates = createTile(clickedLatLng);
+        // Draw the tile
+        const tileCoordinates = createTile(clickedLatLng);
 
-    //     // Add the new tile to the array of tiles and save to cookie
-    //     this.tiles.push(tileCoordinates);
-    //     setCookie('tiles', this.tiles);
-    //   }
-    // },
+        // Add the new tile to the array of tiles and save to cookie
+        useTileInfoStore().addTile(tileCoordinates);
+        const tileInfo = await useTileInfoStore().fetchTileInfo(tileCoordinates);
+        useTileInfoStore().addTileInfo(tileCoordinates, tileInfo);
+      }
+    },
     handleMouseMove(e) {
       // Check if originalEvent exists and ctrlKey is pressed
       if (e.originalEvent && e.originalEvent.ctrlKey) {
@@ -103,7 +103,8 @@ export default {
       }
     },
     clearTiles() {
-      this.tiles = [];
+      while (this.tiles.length > 0) {
+        this.tiles.pop();}
     },
     // Method to update tile border color and weight
     updateTileStyle(color, weight) {

@@ -77,9 +77,9 @@ export interface IWeatherdata {
 }
 
 //coordinate
-export interface ICoordinate {
-    latitude: number;
-    longitude: number;
+export interface LatLng {
+    lat: number;
+    lng: number;
   }
   
 //tileinfo

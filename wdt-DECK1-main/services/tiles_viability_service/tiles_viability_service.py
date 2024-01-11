@@ -26,6 +26,7 @@ class TilesViabilityService:
         
         depth = await self.retrieve_water_depth(coordinates, region)
         print(depth)
+        print(type)
         depth_viable = False
 
         if type == 'deepwater':
@@ -41,21 +42,28 @@ class TilesViabilityService:
                 depth_viable = True
                 return depth_viable
             
-        wind_speed = await self.retrieve_wind_speed(coordinates, region)
-        print(wind_speed)
-        wind_speed_viable = False
-
-        if wind_speed_limit >= wind_speed:
-            wind_speed_viable = True
-            return wind_speed_viable
-        
         print(depth_viable)
-        print(wind_speed_viable)
-        
-        if depth_viable and wind_speed_viable:
+
+        if depth_viable:
             return True
+        else: return False
         
-        print(depth_viable, wind_speed_viable)
+        # wind_speed = await self.retrieve_wind_speed(coordinates, region)
+        # print(wind_speed)
+        # wind_speed_viable = False
+
+        # if wind_speed_limit >= wind_speed:
+        #     wind_speed_viable = True
+        #     return wind_speed_viable
+        
+        # print(depth_viable)
+        # print(wind_speed_viable)
+        
+        # if depth_viable and wind_speed_viable:
+        #     return True
+        # else: return False
+        
+        # print(depth_viable, wind_speed_viable)
 
     async def retrieve_water_depth(self, coordinates, region):
         """
