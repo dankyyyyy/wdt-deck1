@@ -62,8 +62,11 @@ class WeatherHelper:
             lon_idx = self.find_nearest_index(
                 self.dataset.variables['longitude'][:], lon)
 
-            u_component = np.ma.masked_less(self.dataset.variables['u10'][lat_idx][lon_idx], 0)
-            v_component = np.ma.masked_less(self.dataset.variables['v10'][lat_idx][lon_idx], 0)
+            # u_component = np.ma.masked_less(self.dataset.variables['u10'][lat_idx][lon_idx], 0)
+            # v_component = np.ma.masked_less(self.dataset.variables['v10'][lat_idx][lon_idx], 0)
+
+            u_component = self.dataset.variables['u10'][lat_idx][lon_idx]
+            v_component = self.dataset.variables['v10'][lat_idx][lon_idx]
 
             u_component_averaged = np.mean(u_component)
             v_component_averaged = np.mean(v_component)

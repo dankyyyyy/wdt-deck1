@@ -25,9 +25,6 @@ class TilesViabilityService:
         """
         
         depth = await self.retrieve_water_depth(coordinates, region)
-        print(depth)
-        print(type)
-        depth_viable = False
 
         if type == 'deepwater':
             if depth >= 60:

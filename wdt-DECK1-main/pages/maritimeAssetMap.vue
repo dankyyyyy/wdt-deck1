@@ -94,19 +94,19 @@
         <div class="option-section">
             <!-- Shallow -->
             <div class="options-section-2-first black">
-                <div class="option-text center" @click="setType('shallow'), scrollToSection('sixth-section')">
+                <div class="option-text center" @click="setType('shallow'), tileViability(), scrollToSection('sixth-section')">
                     Shallow
                 </div>
             </div>
             <!-- Transitional -->
             <div class="options-section-2-second black">
-                <div class="option-text center" @click="setType('transitional'), scrollToSection('sixth-section')">
+                <div class="option-text center" @click="setType('transitional'), tileViability(), scrollToSection('sixth-section')">
                     Transitional
                 </div>
             </div>
             <!-- Deepwater -->
             <div class="options-section-2-third black">
-                <div class="option-text center" @click="setType('deepwater'), scrollToSection('sixth-section')">
+                <div class="option-text center" @click="setType('deepwater'), tileViability(), scrollToSection('sixth-section')">
                     Deepwater
                 </div>
             </div>
@@ -120,7 +120,7 @@
 
         <div class="map-section">
             <LeafletMap ref="leafletMap" />
-            <button @click="clearTiles, $emit('clear-tiles')"
+            <button @click="clearTiles(), $emit('clear-tiles')"
                 class="delete-button bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out focus:outline-none focus:shadow-outline">
                 Clear Tiles
             </button>
@@ -183,7 +183,6 @@ import DeleteButton from '~/components/DeleteButton.vue';
 import RecommendationSaveButton from '~/components/RecommendationSaveButton.vue';
 import { useTileInfoStore } from '@/stores/TilesViabilityStore';
 import { getCookie } from '@/utils/cookieHandler';
-import { createTile } from '@/utils/tileLogic';
 
 export default {
     components: {
@@ -196,32 +195,33 @@ export default {
         DeleteButton,
         RecommendationSaveButton,
     },
-    setup() {
+
+    mounted() {
         const tilesViabilityStore = useTileInfoStore();
-        var tiles = ref([]);
-        var tileInfoList = ref([]);
 
-        onMounted(async () => {
-            const savedTiles = getCookie('tiles');
-            const savedTileInfo = getCookie('tileInfo');
-            if (savedTiles.length !== 0) {
+        const savedTiles = getCookie('tiles') || [];
+        const savedTileInfo = getCookie('tileInfo') || [];
 
-                tilesViabilityStore.setTilesFromCookie(savedTiles);
-                tiles = tilesViabilityStore.getTiles();
+        if (savedTiles.length !== 0) {
+            tilesViabilityStore.setTilesFromCookie(savedTiles);
+            this.tiles = tilesViabilityStore.getTiles();
 
-                tilesViabilityStore.setTileInfoListFromCookie(savedTileInfo);
-                tileInfoList = tilesViabilityStore.getTileInfoList();
-            }
-        });
+            tilesViabilityStore.setTileInfoListFromCookie(savedTileInfo);
+            this.tileInfoList = tilesViabilityStore.getTileInfoList();
+        } else {
+            console.log("No tiles saved in cookie.");
+        }
 
-        return {
-            tiles,
-            tileInfoList,
-        };
+        const savedType = getCookie('type');
+        if (savedType !== null) {
+            tilesViabilityStore.setTypeFromCookie(savedType);
+        } else {
+            console.log("No type saved in cookie.");
+        }
     },
-
     data() {
         return {
+            tileInfoList: [],
             // Data to be displayed in the info cards is assigned here.
             // For the images, Vue components are used as SVGs.
 
@@ -262,33 +262,48 @@ export default {
         };
     },
     methods: {
-        // async tileViability() {
-        //     var viability = false;
-        //     const coordinateBounds = await tilesViabilityStore.handleCoordinateBoundsRequest();
-        //     const north = coordinateBounds.bounds[0];
-        //     const west = coordinateBounds.bounds[1];
-        //     const south = coordinateBounds.bounds[2];
-        //     const east = coordinateBounds.bounds[3];
+        async tileViability() {
+            var viability = false;
+            var tiles = [];
 
-        //     const stepSize = Math.sqrt(50 * 1000 * 1000) / 2; // 50 km² in square meters
-        //     const stepSizeLat = stepSize / 111320;
-        //     const stepSizeLng = stepSize / (40075000 * Math.cos(Math.PI * north / 180) / 360);
+            const coordinateBounds = await useTileInfoStore().handleCoordinateBoundsRequest();
+            const north = coordinateBounds.bounds[0];
+            const west = coordinateBounds.bounds[1];
+            const south = coordinateBounds.bounds[2];
+            const east = coordinateBounds.bounds[3];
 
-        //     for (let lat = north; lat > south; lat -= (stepSizeLat)) {
-        //         for (let lng = west; lng < east; lng += (stepSizeLng)) {
-        //             const coordinates = createTile({lat, lng});
-        //             console.log(coordinates);
-        //             viability = await tilesViabilityStore.handleViabilityRequest(coordinates);
-        //             // console.log("Coordinates:", coordinates, "Viability:", viability);
+            const stepSize = Math.sqrt(400 * 1000 * 1000); // 400km^2 (one side of the tile)
+            const stepSizeLat = stepSize / 111320; // step size divided by the length of one degree of latitude in meters
+            const stepSizeLng = stepSize / (40075000 * Math.cos(Math.PI * north / 180) / 360); // step size divided by the length of one degree of longitude in meters
 
-        //             if (viability) {
-        //                 this.tiles.push(coordinates);
-        //                 setCookie('tiles', this.tiles);
-        //             }
-        //         }
-        //     }
-        //     console.log(this.tiles);
-        // },
+            var totalTiles = 1;
+
+            for (let lat = north; lat > south; lat -= (stepSizeLat)) {
+                for (let lng = west; lng < east; lng += (stepSizeLng)) {
+                    console.log(totalTiles)
+
+                    const coordinates = createTile({lat, lng});
+                    console.log(coordinates);
+                    viability = await useTileInfoStore().handleViabilityRequest(coordinates);
+                    // console.log("Coordinates:", coordinates, "Viability:", viability);
+
+                    if (viability) {
+                        console.log(viability, "viability true condition entered");
+                        useTileInfoStore().addTile(coordinates);
+                        tiles = useTileInfoStore().getTiles();
+
+                        const tileInfo = await useTileInfoStore().fetchTileInfo(coordinates);
+                        console.log(tileInfo);
+                        useTileInfoStore().addTileInfo(coordinates, tileInfo);
+                        this.tileInfoList = useTileInfoStore().getTileInfoList();
+
+                        console.log(tiles[tiles.length - 1], this.tileInfoList[this.tileInfoList.length - 1]);
+                    }
+                    totalTiles++;
+                }
+            }
+            console.log(tiles);
+        },
 
         formatCoordinates(tile) {
             return tile.map(point => {
@@ -308,11 +323,19 @@ export default {
 
         selectRegion(region) {
             useTileInfoStore().setSelectedRegion(region);
+            setCookie('region', region);
         },
 
         setType(type) {
             useTileInfoStore().setType(type);
+            setCookie('type', type);
         },
+
+        clearTiles() {
+            useTileInfoStore().clearTiles();
+            this.tiles = useTileInfoStore().getTiles();
+            this.tileInfoList = useTileInfoStore().getTileInfoList();
+        }
     },
 };
 </script>

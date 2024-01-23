@@ -1,12 +1,12 @@
 <template>
   <div class="map-container">
-    <l-map v-if="isClient" ref="map" v-model:zoom="zoom" :center="center" :options="mapOptions" @click="handleMapClick"
-      @mousemove="handleMouseMove" @mouseleave="hideTooltip">
+    <l-map v-if="isClient" ref="map" v-model:zoom="zoom" :center="center" :options="mapOptions"
+      @clear-tiles="clearTiles" @mousemove="handleMouseMove" @mouseleave="hideTooltip">
 
       <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
 
       <!-- Render multiple tiles -->
-      <l-polygon v-for="(tile, index) in tiles" :key="index" :lat-lngs="tile" :color="tileBorderColor" @click="handleMapClick" @clear-tiles="clearTiles"
+      <l-polygon v-for="(tile, index) in tiles" :key="index" :lat-lngs="tile" :color="tileBorderColor"
         :weight="tileBorderWeight" :fill-opacity="0.2">
       </l-polygon>
     </l-map>
@@ -52,6 +52,10 @@ export default {
     regionFromStore() {
       return useTileInfoStore().getSelectedRegion();
     },
+
+    tilesFromStore() {
+      return useTileInfoStore().getTiles();
+    }
   },
   mounted() {
     this.isClient = true;
@@ -59,31 +63,49 @@ export default {
     const savedTiles = getCookie('tiles');
     if (savedTiles) {
       useTileInfoStore().setTilesFromCookie(savedTiles);
+      this.tiles = useTileInfoStore().getTiles();
     }
 
-    this.selectedRegion = useTileInfoStore().getSelectedRegion();
+    const savedRegion = getCookie('region');
+    if (savedRegion) {
+      useTileInfoStore().setRegionfromCookie(savedRegion);
+      this.selectedRegion = useTileInfoStore().getSelectedRegion();
+    }
   },
+
   watch: {
     regionFromStore(newRegion) {
       this.selectedRegion = newRegion;
       this.updateMapCenter(this.selectedRegion);
+      this.clearTiles();
+    },
+
+    tilesFromStore(newTiles) {
+      this.tiles = newTiles;
+      console.log(this.tiles);
     },
   },
+
   methods: {
-    async handleMapClick(e) {
-      // Check if latlng exists in the event object
-      if (e.latlng) {
-        const clickedLatLng = { lat: e.latlng.lat, lng: e.latlng.lng };
+    // handleMapClick(e) {
+    //   console.log('handleMapClick called:', new Date().toISOString(), this.tiles.length);
+    //   // Check if latlng exists in the event object
+    //   if (e.latlng) {
+    //     console.log(e.latlng, new Date().toISOString());
+    //     const clickedLatLng = { lat: e.latlng.lat, lng: e.latlng.lng };
+    //     console.log(clickedLatLng);
 
-        // Draw the tile
-        const tileCoordinates = createTile(clickedLatLng);
+    //     // Draw the tile
+    //     const tileCoordinates = createTile(clickedLatLng);
 
-        // Add the new tile to the array of tiles and save to cookie
-        useTileInfoStore().addTile(tileCoordinates);
-        const tileInfo = await useTileInfoStore().fetchTileInfo(tileCoordinates);
-        useTileInfoStore().addTileInfo(tileCoordinates, tileInfo);
-      }
-    },
+    //     // Add the new tile to the array of tiles and save to cookie
+    //     useTileInfoStore().addTile(tileCoordinates);
+    //     this.tiles = useTileInfoStore().getTiles();
+    //   } else {
+    //     console.log("Invalid coordinates.", e.latlng, new Date().toISOString(), this.tiles.length);
+    //   }
+    // },
+
     handleMouseMove(e) {
       // Check if originalEvent exists and ctrlKey is pressed
       if (e.originalEvent && e.originalEvent.ctrlKey) {
@@ -107,8 +129,8 @@ export default {
       }
     },
     clearTiles() {
-      while (this.tiles.length > 0) {
-        this.tiles.pop();}
+      useTileInfoStore().clearTiles();
+      this.tiles = useTileInfoStore().getTiles();
     },
     // Method to update tile border color and weight
     updateTileStyle(color, weight) {
