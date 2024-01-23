@@ -82,30 +82,10 @@ export default {
 
     tilesFromStore(newTiles) {
       this.tiles = newTiles;
-      console.log(this.tiles);
     },
   },
 
   methods: {
-    // handleMapClick(e) {
-    //   console.log('handleMapClick called:', new Date().toISOString(), this.tiles.length);
-    //   // Check if latlng exists in the event object
-    //   if (e.latlng) {
-    //     console.log(e.latlng, new Date().toISOString());
-    //     const clickedLatLng = { lat: e.latlng.lat, lng: e.latlng.lng };
-    //     console.log(clickedLatLng);
-
-    //     // Draw the tile
-    //     const tileCoordinates = createTile(clickedLatLng);
-
-    //     // Add the new tile to the array of tiles and save to cookie
-    //     useTileInfoStore().addTile(tileCoordinates);
-    //     this.tiles = useTileInfoStore().getTiles();
-    //   } else {
-    //     console.log("Invalid coordinates.", e.latlng, new Date().toISOString(), this.tiles.length);
-    //   }
-    // },
-
     handleMouseMove(e) {
       // Check if originalEvent exists and ctrlKey is pressed
       if (e.originalEvent && e.originalEvent.ctrlKey) {

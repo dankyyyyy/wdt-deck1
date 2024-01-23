@@ -52,7 +52,7 @@ export const useTileInfoStore = defineStore("TileInfoStore", {
           params.append('coords', `${coord.lat},${coord.lng}`);
         });
         const fullUrl = `http://localhost:8000/api/v1/get-water-depth-for-tile?${params.toString()}`;
-        console.log('Making request to:', fullUrl);
+        // console.log('Making request to:', fullUrl);
 
         // Using relative URL directly in Axios call
         const response = await axios.get(fullUrl);
@@ -79,7 +79,7 @@ export const useTileInfoStore = defineStore("TileInfoStore", {
           params.append('coords', `${coord.lat},${coord.lng}`);
         });
         const fullUrl = `http://localhost:8000/api/v1/get-wind-speed-for-tile?${params.toString()}`;
-        console.log('Making request to:', fullUrl);
+        // console.log('Making request to:', fullUrl);
 
         // Using relative URL directly in Axios call
         const response = await axios.get(fullUrl);
@@ -110,7 +110,7 @@ export const useTileInfoStore = defineStore("TileInfoStore", {
           params.append('coords', `${coord.lat},${coord.lng}`);
         });
         const fullUrl = `http://localhost:8000/api/v1/get-tile-viability?${params.toString()}`;
-        console.log('Making request to:', fullUrl);
+        // console.log('Making request to:', fullUrl);
 
         // Using relative URL directly in Axios call
         const response = await axios.get(fullUrl);
@@ -131,7 +131,7 @@ export const useTileInfoStore = defineStore("TileInfoStore", {
         params.append('region', this.region!);
 
         const fullUrl = `http://localhost:8000/api/v1/get-region-bounds?${params.toString()}`;
-        console.log('Making request to:', fullUrl);
+        // console.log('Making request to:', fullUrl);
 
         // Using relative URL directly in Axios call
         const response = await axios.get(fullUrl);

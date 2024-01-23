@@ -299,7 +299,7 @@ export default {
             // Scroll to the element with the specified id
             const targetSection = document.getElementById(sectionId);
             if (targetSection) {
-                targetSection.scrollIntoView({ behavior: 'smooth' });
+                targetSection.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest', offsetTop: 0});
             }
         },
 

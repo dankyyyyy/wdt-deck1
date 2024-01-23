@@ -41,7 +41,7 @@ class TilesViabilityService:
         if wind_speed_limit >= wind_speed:
             wind_speed_viable = True
 
-        print(depth_viable, wind_speed_viable)
+        # print(depth_viable, wind_speed_viable)
 
         return depth_viable and wind_speed_viable 
 
@@ -66,7 +66,7 @@ class TilesViabilityService:
         
         try:
             average_depth = await self.bathymetry_helper.get_average_depth(coordinates, region)
-            logging.info(f"Average depth calculated: {average_depth}")
+            # logging.info(f"Average depth calculated: {average_depth}")
             return average_depth
         except Exception as e:
             logging.error(f"Error occurred during tile viability processing: {e}", exc_info=True)
@@ -83,7 +83,7 @@ class TilesViabilityService:
             
         try:
             average_wind_speed = await self.weather_helper.get_average_wind_speed(coordinates, region)
-            logging.info(f"Average wind speed calculated: {average_wind_speed}")
+            # logging.info(f"Average wind speed calculated: {average_wind_speed}")
             return average_wind_speed
         except Exception as e:
             logging.error(f"Error occurred during tile viability processing: {e}", exc_info=True)

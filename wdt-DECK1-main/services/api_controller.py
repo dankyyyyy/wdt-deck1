@@ -43,7 +43,7 @@ async def get_tile_viability():
 
     try:
         viability = await tilesService.process_tile_viability(coordinates, region, type, wind_speed_limit)
-        logging.info(f"Tile viability determined: {viability}")
+        # logging.info(f"Tile viability determined: {viability}")
         return jsonify({'viability': viability}), 200
     except Exception as e:
         logging.error(f"Error determining viability: {e}")
@@ -72,7 +72,7 @@ async def get_water_depth_for_tile():
 
     try:
         average_depth = await tilesService.retrieve_water_depth(coordinates, region)
-        logging.info(f"Average depth calculated: {average_depth}")
+        # logging.info(f"Average depth calculated: {average_depth}")
         return jsonify({"average_depth": average_depth}), 200
     except Exception as e:
         logging.error(f"Error calculating average depth: {e}")
@@ -100,7 +100,7 @@ async def get_wind_speed_for_tile():
 
     try:
         average_wind_speed = await tilesService.retrieve_wind_speed(coordinates, region)
-        logging.info(f"Average wind speed calculated: {average_wind_speed}")
+        # logging.info(f"Average wind speed calculated: {average_wind_speed}")
         return jsonify({"average_wind_speed": average_wind_speed}), 200
     except Exception as e:
         logging.error(f"Error calculating average wind speed: {e}")
