@@ -29,38 +29,21 @@ class TilesViabilityService:
         if type == 'deepwater':
             if depth >= 60:
                 depth_viable = True
-                return depth_viable
         elif type == 'transitional':
             if depth >= 30 and depth <= 60:
                 depth_viable = True
-                return depth_viable
         elif type == 'shallow':
-            if depth <= 30:
+            if depth <= 30 and depth > 0:
                 depth_viable = True
-                return depth_viable
             
-        print(depth_viable)
+        wind_speed = await self.retrieve_wind_speed(coordinates, region)
 
-        if depth_viable:
-            return True
-        else: return False
-        
-        # wind_speed = await self.retrieve_wind_speed(coordinates, region)
-        # print(wind_speed)
-        # wind_speed_viable = False
+        if wind_speed_limit >= wind_speed:
+            wind_speed_viable = True
 
-        # if wind_speed_limit >= wind_speed:
-        #     wind_speed_viable = True
-        #     return wind_speed_viable
-        
-        # print(depth_viable)
-        # print(wind_speed_viable)
-        
-        # if depth_viable and wind_speed_viable:
-        #     return True
-        # else: return False
-        
-        # print(depth_viable, wind_speed_viable)
+        print(depth_viable, wind_speed_viable)
+
+        return depth_viable and wind_speed_viable 
 
     async def retrieve_water_depth(self, coordinates, region):
         """

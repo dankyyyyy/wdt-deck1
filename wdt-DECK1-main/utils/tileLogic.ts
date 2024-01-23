@@ -1,7 +1,7 @@
 import type { LatLng } from "@/types/index";
 
 export function createTile(clickedLatLng: LatLng): LatLng[] {
-  const tileSize = Math.sqrt(50 * 1000 * 1000); // 50 km² tile root for side length
+  const tileSize = Math.sqrt(200 * 1000 * 1000); // 50 km² tile root for side length
   const halfSide = tileSize / 2;
 
   // Approximate conversion from meters to latitude/longitude degrees

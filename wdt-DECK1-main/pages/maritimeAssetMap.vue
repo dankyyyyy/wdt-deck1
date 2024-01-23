@@ -94,19 +94,22 @@
         <div class="option-section">
             <!-- Shallow -->
             <div class="options-section-2-first black">
-                <div class="option-text center" @click="setType('shallow'), tileViability(), scrollToSection('sixth-section')">
+                <div class="option-text center"
+                    @click="setType('shallow'), tileViability(), scrollToSection('sixth-section')">
                     Shallow
                 </div>
             </div>
             <!-- Transitional -->
             <div class="options-section-2-second black">
-                <div class="option-text center" @click="setType('transitional'), tileViability(), scrollToSection('sixth-section')">
+                <div class="option-text center"
+                    @click="setType('transitional'), tileViability(), scrollToSection('sixth-section')">
                     Transitional
                 </div>
             </div>
             <!-- Deepwater -->
             <div class="options-section-2-third black">
-                <div class="option-text center" @click="setType('deepwater'), tileViability(), scrollToSection('sixth-section')">
+                <div class="option-text center"
+                    @click="setType('deepwater'), tileViability(), scrollToSection('sixth-section')">
                     Deepwater
                 </div>
             </div>
@@ -117,16 +120,16 @@
         <div id="sixth-section" class="intermediate-section">
             <h2 class="section-header black">Our recommendation</h2>
         </div>
-
+        
         <div class="map-section">
             <LeafletMap ref="leafletMap" />
-            <button @click="clearTiles(), $emit('clear-tiles')"
+            <!-- <button @click="clearTiles(), $emit('clear-tiles')"
                 class="delete-button bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out focus:outline-none focus:shadow-outline">
                 Clear Tiles
-            </button>
+            </button> -->
         </div>
 
-        <div class="tiles-list">
+        <!-- <div class="tiles-list">
             <h3 class="text-lg font-semibold text-gray-700 p-4">Tiles List</h3>
             <ul>
                 <li v-for="(tile, index) in tileInfoList" :key="index" class="border-b last:border-b-0">
@@ -135,22 +138,18 @@
                         <span>Tile #{{ index + 1 }}</span>
                         <span :class="{ 'transform rotate-180': tile.showDetails, 'transform rotate-0': !tile.showDetails }"
                             class="transition-transform">
-                            &#x25BC; <!-- Unicode down arrow, rotates when clicked -->
+                            &#x25BC;
                         </span>
                     </div>
                     <div v-if="tile.showDetails" class="p-4 bg-gray-50">
                         <div class="text-gray-600">Coordinates: {{ formatCoordinates(tile.coordinates) }}</div>
                         <div class="text-gray-600">Depth: {{ tile.info && tile.info.average_depth ?
-                            `${tile.info.average_depth}m` : 'Not available' }}</div>
+                            `${tile.info.average_depth.average_depth}m` : 'Not available' }}</div>
                         <div class="text-gray-600">Wind Speed: {{ tile.info && tile.info.average_wind_speed ?
-                            `${tile.info.average_wind_speed}m/s` : 'Not available' }}</div>
+                            `${tile.info.average_wind_speed.average_wind_speed}m/s` : 'Not available' }}</div>
                     </div>
                 </li>
             </ul>
-        </div>
-        <!-- 
-        <div class="grid intermediate-section">
-            <TilesCard />
         </div> -->
 
         <div class="grid intermediate-section">
@@ -162,7 +161,7 @@
 
             <!-- Retry Anchor Button -->
             <TransparentCard :infoText="card8.infoText">
-                <RetryButton @click="scrollToSection('fourth-section')" />
+                <RetryButton @click="scrollToSection('fourth-section'), clearTiles(), selectRegion(null), setType(null)" />
             </TransparentCard>
         </div>
 
@@ -263,46 +262,29 @@ export default {
     },
     methods: {
         async tileViability() {
-            var viability = false;
-            var tiles = [];
-
             const coordinateBounds = await useTileInfoStore().handleCoordinateBoundsRequest();
             const north = coordinateBounds.bounds[0];
             const west = coordinateBounds.bounds[1];
             const south = coordinateBounds.bounds[2];
             const east = coordinateBounds.bounds[3];
 
-            const stepSize = Math.sqrt(400 * 1000 * 1000); // 400km^2 (one side of the tile)
+            const stepSize = Math.sqrt(200 * 1000 * 1000); // 20000km (one side of the tile)
             const stepSizeLat = stepSize / 111320; // step size divided by the length of one degree of latitude in meters
             const stepSizeLng = stepSize / (40075000 * Math.cos(Math.PI * north / 180) / 360); // step size divided by the length of one degree of longitude in meters
 
-            var totalTiles = 1;
-
             for (let lat = north; lat > south; lat -= (stepSizeLat)) {
                 for (let lng = west; lng < east; lng += (stepSizeLng)) {
-                    console.log(totalTiles)
-
-                    const coordinates = createTile({lat, lng});
-                    console.log(coordinates);
-                    viability = await useTileInfoStore().handleViabilityRequest(coordinates);
-                    // console.log("Coordinates:", coordinates, "Viability:", viability);
+                    const coordinates = createTile({ lat, lng });
+                    const viability = await useTileInfoStore().handleViabilityRequest(coordinates);
 
                     if (viability) {
                         console.log(viability, "viability true condition entered");
                         useTileInfoStore().addTile(coordinates);
-                        tiles = useTileInfoStore().getTiles();
-
-                        const tileInfo = await useTileInfoStore().fetchTileInfo(coordinates);
-                        console.log(tileInfo);
-                        useTileInfoStore().addTileInfo(coordinates, tileInfo);
-                        this.tileInfoList = useTileInfoStore().getTileInfoList();
-
-                        console.log(tiles[tiles.length - 1], this.tileInfoList[this.tileInfoList.length - 1]);
+                        await useTileInfoStore().fetchTileInfo(coordinates);
                     }
-                    totalTiles++;
                 }
             }
-            console.log(tiles);
+            this.tileInfoList = useTileInfoStore().getTileInfoList();
         },
 
         formatCoordinates(tile) {

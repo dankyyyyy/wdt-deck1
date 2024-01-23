@@ -23,13 +23,22 @@ export const useTileInfoStore = defineStore("TileInfoStore", {
       try {
         this.tileInfo!.average_depth = await this.handleWaterDepthRequest(coordinates);
         this.tileInfo!.average_wind_speed = await this.handleWindSpeedRequest(coordinates);
+        this.addTileInfo(coordinates, this.tileInfo!);
       } catch (error) {
         console.error('Error fetching tile info:', error);
       } finally {
         this.toggleLoading();
       }
-
     },
+
+    addTileInfo(coordinates: LatLng[], tileInfo: ITileInfo): void {
+      this.tileInfoList.push({
+        coordinates: coordinates,
+        info: tileInfo,
+      });
+      setCookie('tileinfo', this.tileInfoList);
+    },
+    
     async handleWaterDepthRequest(coordinates: []) {
       this.toggleLoading();
       try {
@@ -194,14 +203,6 @@ export const useTileInfoStore = defineStore("TileInfoStore", {
         this.tileInfoList.pop();
       }
 
-      setCookie('tileinfo', this.tileInfoList);
-    },
-
-    addTileInfo(coordinates: LatLng[], tileInfo: ITileInfo): void {
-      this.tileInfoList.push({
-        coordinates: coordinates,
-        info: tileInfo,
-      });
       setCookie('tileinfo', this.tileInfoList);
     },
 
